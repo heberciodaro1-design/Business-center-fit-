@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Business Center Fit | By Ciodarofitness</title>
+    <title>BC Fit | By Ciodarofitness</title>
     <style>
         :root {
             --bg-deep: #07090e;
@@ -288,8 +288,8 @@
 <body>
 
     <header>
-        <div class="brand-title">Ciodarofitness // Business Center Fit</div>
-        <div id="clock" class="live-clock">--:--:--</div>
+        <div class="brand-title">BC Fit <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: normal; margin-left: 8px;">By Ciodarofitness</span></div>
+        <div id="clock" class="live-clock hidden">--:--:--</div>
     </header>
 
     <main>
@@ -299,8 +299,9 @@
                 
                 <!-- Login Admin -->
                 <div class="card" style="margin-bottom: 0;">
-                    <h2>Acceso Administrador</h2>
-                    <p class="subtitle">Panel exclusivo - Heber Ciodaro.</p>
+                    <h1 style="color: #ffffff; font-size: 2.2rem; font-weight: 800; letter-spacing: 1px; margin-bottom: 0.2rem;">BC Fit</h1>
+                    <p style="color: var(--bronze); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1.5rem;">By Ciodarofitness</p>
+                    <p class="subtitle">Acceso al panel de administración general.</p>
                     <form id="loginForm">
                         <div class="form-group">
                             <label>Correo Electrónico</label>
@@ -319,8 +320,8 @@
 
                 <!-- Solicitud Pública por Enlace -->
                 <div class="card" style="margin-bottom: 0;">
-                    <h2>Solicitud de Licencia / Afiliación</h2>
-                    <p class="subtitle">Entrenadores o clientes interesados en adquirir la plataforma.</p>
+                    <h2 style="color: #ffffff; font-size: 1.5rem; font-weight: 700;">Solicitud de Licencia</h2>
+                    <p class="subtitle">Entrenadores o clientes interesados en afiliarse.</p>
                     <form id="requestLicenseForm">
                         <div class="form-group">
                             <label>Nombre y Apellido / Marca</label>
@@ -353,7 +354,7 @@
             <div class="dashboard-header">
                 <div>
                     <h2>Panel de Control Global</h2>
-                    <p class="subtitle">Gestión Administrativa - Ciodarofitness</p>
+                    <p class="subtitle">Gestión Administrativa - By Ciodarofitness</p>
                 </div>
                 <button class="btn-secondary" onclick="logout()">Cerrar Sesión</button>
             </div>
@@ -560,12 +561,14 @@
             e.preventDefault();
             document.getElementById('authSection').classList.add('hidden');
             document.getElementById('dashboardView').classList.remove('hidden');
+            document.getElementById('clock').classList.remove('hidden'); // Mostrar reloj al entrar al panel
             updateDashboard();
         });
 
         function logout() {
             document.getElementById('dashboardView').classList.add('hidden');
             document.getElementById('authSection').classList.remove('hidden');
+            document.getElementById('clock').classList.add('hidden'); // Ocultar reloj en el login
         }
 
         document.getElementById('requestLicenseForm').addEventListener('submit', function(e) {
@@ -686,7 +689,6 @@
             document.getElementById('profileSubtitle').innerText = `Teléfono: ${ath.phone} | Edad: ${ath.age} años | Plan: $${ath.cost} (Abonado: $${ath.partial}) | Inicio: ${ath.startDate}`;
             document.getElementById('currentProfileAthleteId').value = id;
 
-            // Ocultar otras pestañas y mostrar expediente
             document.querySelectorAll('#dashboardView > .card').forEach(c => c.classList.add('hidden'));
             document.getElementById('tabAthleteProfile').classList.remove('hidden');
 
