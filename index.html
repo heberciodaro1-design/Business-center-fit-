@@ -27,13 +27,12 @@
 <body class="bg-darkBg text-silverText font-sans antialiased min-h-screen flex flex-col justify-between">
 
     <div id="login-container" class="flex-grow flex items-center justify-center p-4">
-        
         <div id="auth-screen" class="bg-cardBg border border-cardBorder rounded-2xl p-8 w-full max-w-md shadow-2xl relative overflow-hidden backdrop-blur-md">
             <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-bronzeDark via-bronzeLight to-bronzeDark"></div>
             
             <div class="text-center mb-6 pt-2">
                 <span class="inline-block px-3 py-1 mb-3 text-[10px] font-bold tracking-widest uppercase bg-bronzeDark/30 text-bronzeLight rounded-full border border-bronzeMain/30">
-                    SaaS Engine v2.5
+                    SaaS Engine v3.0 Pro
                 </span>
                 <h1 class="text-3xl font-black tracking-wider text-silverText">BUSINESS CENTER <span class="text-transparent bg-clip-text bg-gradient-to-r from-bronzeLight to-bronzeMain">FIT</span></h1>
                 <div class="mt-2 inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-darkBg border border-bronzeMain/40 shadow-inner">
@@ -62,55 +61,12 @@
             <div id="login-error" class="hidden mt-4 p-3 bg-red-950/40 border border-red-500/30 rounded-xl text-xs text-red-300 text-center">
                 Acceso denegado: Usa heber@ciodarofitness.com / 123456
             </div>
-
-            <div class="mt-6 text-center border-t border-cardBorder pt-4">
-                <p class="text-xs text-silverMuted">¿Nuevo entrenador? <button onclick="toggleAuthView('register')" class="text-bronzeLight hover:underline font-bold">Solicitar Licencia Multi-Tenant</button></p>
-            </div>
         </div>
-
-        <div id="register-screen" class="hidden bg-cardBg border border-cardBorder rounded-2xl p-8 w-full max-w-md shadow-2xl relative overflow-hidden backdrop-blur-md">
-            <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-bronzeDark via-bronzeLight to-bronzeDark"></div>
-            
-            <div class="text-center mb-6 pt-2">
-                <h2 class="text-2xl font-black tracking-wider text-silverText">SOLICITAR INQUILINO</h2>
-                <p class="text-silverMuted text-[11px] mt-1 uppercase">Sujeto a aprobación estricta de Ciodarofitness</p>
-            </div>
-
-            <form onsubmit="handleRegister(event)" class="space-y-4">
-                <div>
-                    <label class="block text-[11px] font-bold uppercase tracking-widest text-silverMuted mb-1.5">Nombre del Entrenador</label>
-                    <input type="text" required class="w-full bg-darkBg border border-cardBorder rounded-xl px-4 py-3 text-silverText text-sm focus:outline-none focus:border-bronzeMain" placeholder="Tu Nombre">
-                </div>
-                <div>
-                    <label class="block text-[11px] font-bold uppercase tracking-widest text-silverMuted mb-1.5">Correo Electrónico</label>
-                    <input type="email" required class="w-full bg-darkBg border border-cardBorder rounded-xl px-4 py-3 text-silverText text-sm focus:outline-none focus:border-bronzeMain" placeholder="tucorreo@email.com">
-                </div>
-                <div>
-                    <label class="block text-[11px] font-bold uppercase tracking-widest text-silverMuted mb-1.5">Contraseña Deseada</label>
-                    <div class="relative">
-                        <input type="password" id="reg-pass" required class="w-full bg-darkBg border border-cardBorder rounded-xl px-4 py-3 pr-12 text-silverText text-sm focus:outline-none focus:border-bronzeMain" placeholder="••••••••">
-                        <button type="button" onclick="togglePassword('reg-pass', this)" class="absolute right-3 top-1/2 -translate-y-1/2 text-xl focus:outline-none">👁️</button>
-                    </div>
-                </div>
-                <button type="submit" class="w-full bg-gradient-to-r from-bronzeDark via-bronzeMain to-bronzeDark text-darkBg font-black py-3.5 rounded-xl transition tracking-wider text-sm shadow-lg">
-                    ENVIAR SOLICITUD MAESTRA
-                </button>
-            </form>
-
-            <div id="register-success" class="hidden mt-4 p-3 bg-emerald-950/40 border border-emerald-500/30 rounded-xl text-xs text-emerald-300 text-center">
-                ¡Solicitud enviada con éxito! Quedará en espera de habilitación manual.
-            </div>
-
-            <div class="mt-6 text-center border-t border-cardBorder pt-4">
-                <button onclick="toggleAuthView('login')" class="text-xs text-silverMuted hover:text-silverText font-bold uppercase">← Volver al Login</button>
-            </div>
-        </div>
-
     </div>
 
     <div id="dashboard-screen" class="hidden fixed inset-0 bg-darkBg flex flex-col md:flex-row z-50 overflow-hidden">
         
-        <aside class="w-full md:w-72 bg-cardBg border-r border-cardBorder flex flex-col justify-between p-6">
+        <aside class="w-full md:w-72 bg-cardBg border-r border-cardBorder flex flex-col justify-between p-6 overflow-y-auto">
             <div>
                 <div class="mb-8 flex items-center justify-between">
                     <div>
@@ -130,10 +86,13 @@
                     <button onclick="switchTab('tab-metrics')" id="btn-metrics" class="w-full text-left flex items-center space-x-3 hover:bg-darkBg text-silverMuted hover:text-silverText px-4 py-3.5 rounded-xl transition text-sm font-medium">
                       <span>📊</span> <span>Métricas Antropométricas</span>
                     </button>
+                    <button onclick="switchTab('tab-financial')" id="btn-financial" class="w-full text-left flex items-center space-x-3 hover:bg-darkBg text-silverMuted hover:text-silverText px-4 py-3.5 rounded-xl transition text-sm font-medium">
+                      <span>💰</span> <span>Sistema Financiero (MRR)</span>
+                    </button>
                 </nav>
             </div>
 
-            <div>
+            <div class="mt-6">
                 <div class="bg-darkBg p-4 rounded-xl border border-cardBorder mb-4">
                     <p class="text-[11px] font-bold text-silverText">Admin Maestro</p>
                     <p class="text-xs text-bronzeLight font-semibold mt-0.5">Heber Ciodaro</p>
@@ -150,92 +109,95 @@
                 <header class="flex justify-between items-center pb-6 border-b border-cardBorder">
                     <div>
                         <h2 class="text-3xl font-black text-silverText tracking-tight">Licencias e Inquilinos</h2>
-                        <p class="text-sm text-silverMuted mt-1">Control jerárquico de entrenadores asociados.</p>
+                        <p class="text-sm text-silverMuted mt-1">Control jerárquico de entrenadores asociados al ecosistema.</p>
                     </div>
                 </header>
-
-                <div class="bg-cardBg border border-cardBorder rounded-2xl overflow-hidden shadow-xl">
-                    <div class="p-5 border-b border-cardBorder font-bold text-sm text-silverText">Solicitudes Pendientes de Entrenadores</div>
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left border-collapse text-sm">
-                            <thead>
-                                <tr class="bg-darkBg/80 text-silverMuted uppercase text-[10px] font-bold tracking-widest border-b border-cardBorder">
-                                    <th class="p-4">Entrenador</th>
-                                    <th class="p-4">Tenant ID</th>
-                                    <th class="p-4">Estatus</th>
-                                    <th class="p-4 text-right">Acción</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-cardBorder">
-                                <tr>
-                                    <td class="p-4 font-bold text-silverText">Carlos Mendoza</td>
-                                    <td class="p-4 font-mono text-xs text-bronzeLight">tenant_carlos_99</td>
-                                    <td class="p-4"><span id="status-1" class="px-2.5 py-1 bg-amber-500/20 text-amber-300 text-xs rounded-full font-semibold border border-amber-500/30">Pendiente</span></td>
-                                    <td class="p-4 text-right space-x-2">
-                                        <button onclick="authorizeTenant(1, 'Aprobado')" class="bg-emerald-600 hover:bg-emerald-500 text-white px-3 py-1.5 rounded-lg text-xs font-bold uppercase">Autorizar</button>
-                                        <button onclick="authorizeTenant(1, 'Denegado')" class="bg-red-600/50 hover:bg-red-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold uppercase">Denegar</button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                <div class="bg-cardBg border border-cardBorder rounded-2xl overflow-hidden shadow-xl p-6">
+                    <p class="text-sm text-silverText font-bold mb-4">Inquilinos Activos en la Red</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-darkBg p-4 rounded-xl border border-cardBorder">
+                            <p class="text-xs font-bold text-bronzeLight">Tenant ID: #TN-001</p>
+                            <p class="text-base font-bold text-silverText mt-1">Carlos Mendoza Fitness</p>
+                            <span class="inline-block mt-2 px-2.5 py-0.5 bg-emerald-500/20 text-emerald-300 text-[10px] rounded-full font-semibold border border-emerald-500/30">Licencia Activa</span>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div id="tab-clients" class="hidden space-y-6">
-                <header class="flex justify-between items-center pb-6 border-b border-cardBorder">
-                    <div>
-                        <h2 class="text-3xl font-black text-silverText tracking-tight">Cartera de Alumnos y Atletas</h2>
-                        <p class="text-sm text-silverMuted mt-1">Supervisión de planes y asesorías personalizadas.</p>
-                    </div>
+                <header class="pb-6 border-b border-cardBorder">
+                    <h2 class="text-3xl font-black text-silverText tracking-tight">Cartera de Alumnos y Atletas</h2>
+                    <p class="text-sm text-silverMuted mt-1">Supervisión de planes y requerimientos especiales.</p>
                 </header>
-
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div class="bg-cardBg border border-cardBorder p-5 rounded-2xl shadow">
-                        <p class="text-xs uppercase tracking-widest text-silverMuted font-bold">Alumna Activa</p>
+                        <p class="text-xs uppercase tracking-widest text-silverMuted font-bold">Atleta Activa</p>
                         <p class="text-xl font-black text-silverText mt-2">Lady Cáceres</p>
-                        <p class="text-xs text-bronzeLight mt-1">Plan de Nutrición Especializado</p>
+                        <p class="text-xs text-bronzeLight mt-1">Plan Nutricional Avanzado</p>
                     </div>
                     <div class="bg-cardBg border border-cardBorder p-5 rounded-2xl shadow">
-                        <p class="text-xs uppercase tracking-widest text-silverMuted font-bold">Alumna Activa</p>
+                        <p class="text-xs uppercase tracking-widest text-silverMuted font-bold">Atleta Activa</p>
                         <p class="text-xl font-black text-silverText mt-2">Sra. Yanira</p>
                         <p class="text-xs text-bronzeLight mt-1">Ajuste de Proteínas (Pollo/Atún)</p>
                     </div>
                     <div class="bg-cardBg border border-cardBorder p-5 rounded-2xl shadow">
-                        <p class="text-xs uppercase tracking-widest text-silverMuted font-bold">Alumna Activa</p>
+                        <p class="text-xs uppercase tracking-widest text-silverMuted font-bold">Atleta Activa</p>
                         <p class="text-xl font-black text-silverText mt-2">Mari Ferrer</p>
                         <p class="text-xs text-bronzeLight mt-1">Sin Carnes Rojas (Pescado/Huevos)</p>
                     </div>
                 </div>
             </div>
-
-            <div id="tab-metrics" class="hidden space-y-6">
+                        <div id="tab-metrics" class="hidden space-y-6">
                 <header class="pb-6 border-b border-cardBorder">
-                    <h2 class="text-3xl font-black text-silverText tracking-tight">Calculadora Antropométrica & Biomecánica</h2>
-                    <p class="text-sm text-silverMuted mt-1">Evaluación de composición corporal y requerimientos calóricos.</p>
+                    <h2 class="text-3xl font-black text-silverText tracking-tight">Métricas Antropométricas & Biomecánica</h2>
+                    <p class="text-sm text-silverMuted mt-1">Evaluación de composición corporal y gasto energético total.</p>
                 </header>
 
-                <div class="bg-cardBg border border-cardBorder p-6 rounded-2xl shadow-xl max-w-xl">
-                    <h3 class="text-lg font-bold text-silverText mb-4">Simulador de Requerimientos del Atleta</h3>
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-xs uppercase text-silverMuted font-bold mb-1">Peso Actual (kg)</label>
-                            <input type="number" id="calc-peso" value="104" class="w-full bg-darkBg border border-cardBorder rounded-xl px-4 py-2.5 text-sm text-silverText">
-                        </div>
-                        <div>
-                            <label class="block text-xs uppercase text-silverMuted font-bold mb-1">Estatura (cm)</label>
-                            <input type="number" id="calc-estatura" value="180" class="w-full bg-darkBg border border-cardBorder rounded-xl px-4 py-2.5 text-sm text-silverText">
-                        </div>
-                        <button onclick="calcularMetricas()" class="w-full bg-gradient-to-r from-bronzeDark via-bronzeMain to-bronzeDark text-darkBg font-black py-3 rounded-xl text-sm uppercase tracking-wider">
-                            Calcular Déficit / Gasto Calórico
-                        </button>
-                        <div id="calc-resultado" class="hidden p-4 bg-darkBg border border-bronzeMain/30 rounded-xl text-xs text-bronzeLight font-medium"></div>
+                <div class="bg-cardBg border border-cardBorder p-6 rounded-2xl shadow-xl max-w-xl space-y-4">
+                    <h3 class="text-lg font-bold text-silverText">Calculadora de Requerimientos del Atleta</h3>
+                    <div>
+                        <label class="block text-xs uppercase text-silverMuted font-bold mb-1">Peso Actual (kg)</label>
+                        <input type="number" id="calc-peso" value="104" class="w-full bg-darkBg border border-cardBorder rounded-xl px-4 py-2.5 text-sm text-silverText">
+                    </div>
+                    <div>
+                        <label class="block text-xs uppercase text-silverMuted font-bold mb-1">Estatura (cm)</label>
+                        <input type="number" id="calc-estatura" value="180" class="w-full bg-darkBg border border-cardBorder rounded-xl px-4 py-2.5 text-sm text-silverText">
+                    </div>
+                    <button onclick="calcularMetricas()" class="w-full bg-gradient-to-r from-bronzeDark via-bronzeMain to-bronzeDark text-darkBg font-black py-3 rounded-xl text-sm uppercase tracking-wider shadow-lg">
+                        Calcular Gasto Calórico / Macronutrientes
+                    </button>
+                    <div id="calc-resultado" class="hidden p-4 bg-darkBg border border-bronzeMain/30 rounded-xl text-xs text-bronzeLight font-medium space-y-1"></div>
+                </div>
+            </div>
+
+            <div id="tab-financial" class="hidden space-y-6">
+                <header class="pb-6 border-b border-cardBorder">
+                    <h2 class="text-3xl font-black text-silverText tracking-tight">Sistema Financiero & Facturación SaaS</h2>
+                    <p class="text-sm text-silverMuted mt-1">Control de ingresos recurrentes, MRR y comisiones de plataforma.</p>
+                </header>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-cardBg border border-cardBorder p-5 rounded-2xl shadow">
+                        <p class="text-xs uppercase tracking-widest text-silverMuted font-bold">MRR (Ingreso Recurrente)</p>
+                        <p class="text-2xl font-black text-bronzeLight mt-2">$2,450.00 USD</p>
+                        <p class="text-xs text-emerald-400 mt-1">↑ +15% este mes</p>
+                    </div>
+                    <div class="bg-cardBg border border-cardBorder p-5 rounded-2xl shadow">
+                        <p class="text-xs uppercase tracking-widest text-silverMuted font-bold">Licencias Activas</p>
+                        <p class="text-2xl font-black text-silverText mt-2">18 Entrenadores</p>
+                        <p class="text-xs text-silverMuted mt-1">Plan Maestro Ciodarofitness</p>
+                    </div>
+                    <div class="bg-cardBg border border-cardBorder p-5 rounded-2xl shadow">
+                        <p class="text-xs uppercase tracking-widest text-silverMuted font-bold">Comisión de Pasarela</p>
+                        <p class="text-2xl font-black text-silverText mt-2">3.5% + $0.50</p>
+                        <p class="text-xs text-bronzeLight mt-1">Estado: Operativo</p>
                     </div>
                 </div>
             </div>
 
         </main>
     </div>
+
     <script>
         function togglePassword(fieldId, btn) {
             const input = document.getElementById(fieldId);
@@ -245,16 +207,6 @@
             } else {
                 input.type = "password";
                 btn.innerText = "👁️";
-            }
-        }
-
-        function toggleAuthView(view) {
-            if(view === 'register') {
-                document.getElementById('auth-screen').classList.add('hidden');
-                document.getElementById('register-screen').classList.remove('hidden');
-            } else {
-                document.getElementById('register-screen').classList.add('hidden');
-                document.getElementById('auth-screen').classList.remove('hidden');
             }
         }
 
@@ -271,54 +223,42 @@
             }
         }
 
-        function handleRegister(event) {
-            event.preventDefault();
-            document.getElementById('register-success').classList.remove('hidden');
-            setTimeout(() => {
-                toggleAuthView('login');
-                document.getElementById('register-success').classList.add('hidden');
-            }, 3000);
-        }
-
         function handleLogout() {
             document.getElementById('dashboard-screen').classList.add('hidden');
             document.getElementById('login-container').classList.remove('hidden');
             document.getElementById('login-email').value = '';
             document.getElementById('login-pass').value = '';
             document.getElementById('login-error').classList.add('hidden');
-            toggleAuthView('login');
         }
 
         function switchTab(tabId) {
             document.getElementById('tab-tenants').classList.add('hidden');
             document.getElementById('tab-clients').classList.add('hidden');
             document.getElementById('tab-metrics').classList.add('hidden');
+            document.getElementById('tab-financial').classList.add('hidden');
             
             document.getElementById('btn-tenants').className = "w-full text-left flex items-center space-x-3 hover:bg-darkBg text-silverMuted hover:text-silverText px-4 py-3.5 rounded-xl transition text-sm font-medium";
             document.getElementById('btn-clients').className = "w-full text-left flex items-center space-x-3 hover:bg-darkBg text-silverMuted hover:text-silverText px-4 py-3.5 rounded-xl transition text-sm font-medium";
             document.getElementById('btn-metrics').className = "w-full text-left flex items-center space-x-3 hover:bg-darkBg text-silverMuted hover:text-silverText px-4 py-3.5 rounded-xl transition text-sm font-medium";
+            document.getElementById('btn-financial').className = "w-full text-left flex items-center space-x-3 hover:bg-darkBg text-silverMuted hover:text-silverText px-4 py-3.5 rounded-xl transition text-sm font-medium";
 
             document.getElementById(tabId).classList.remove('hidden');
             event.currentTarget.className = "w-full text-left flex items-center space-x-3 bg-darkBg border border-bronzeMain/50 text-silverText px-4 py-3.5 rounded-xl font-semibold text-sm shadow transition";
         }
 
-        function authorizeTenant(id, action) {
-            const statusSpan = document.getElementById(`status-${id}`);
-            if(action === 'Aprobado') {
-                statusSpan.className = "px-2.5 py-1 bg-emerald-500/20 text-emerald-300 text-xs rounded-full font-semibold border border-emerald-500/30";
-                statusSpan.innerText = "Tenant Autorizado";
-            } else {
-                statusSpan.className = "px-2.5 py-1 bg-red-500/20 text-red-300 text-xs rounded-full font-semibold border border-red-500/30";
-                statusSpan.innerText = "Acceso Denegado";
-            }
-        }
-
         function calcularMetricas() {
-            const peso = parseFloat(document.getElementById('calc-peso').value);
+            const peso = parseFloat(document.getElementById('calc-peso').value) || 0;
+            const estatura = parseFloat(document.getElementById('calc-estatura').value) || 0;
             const resultadoDiv = document.getElementById('calc-resultado');
-            const estimacionCalorica = peso * 30; 
+            
+            const gastoBasal = peso * 24; 
+            const gastoTotal = gastoBasal * 1.375; 
+            
             resultadoDiv.classList.remove('hidden');
-            resultadoDiv.innerHTML = `<strong>Análisis Antropométrico Base:</strong><br>• Gasto Energético Estimado: ~${estimacionCalorica} kcal/día<br>• Protocolo Sugerido: Ajuste inteligente de macronutrientes bajo lineamientos de Ciodarofitness.`;
+            resultadoDiv.innerHTML = `<strong>Análisis Antropométrico Ciodarofitness:</strong><br>
+                • Gasto Basal Estimado: ~${gastoBasal.toFixed(0)} kcal/día<br>
+                • Gasto Energético Total (TDEE): ~${gastoTotal.toFixed(0)} kcal/día<br>
+                • Protocolo Sugerido: Optimización de ingesta proteica y control de déficit calórico bajo parámetros profesionales.`;
         }
     </script>
 </body>
