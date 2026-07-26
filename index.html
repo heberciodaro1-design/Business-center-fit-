@@ -77,7 +77,7 @@
             margin-bottom: 2rem;
         }
 
-        h2, h3 {
+        h2, h3, h4 {
             color: var(--text-main);
             margin-bottom: 0.5rem;
         }
@@ -169,6 +169,7 @@
 
         .btn-approve { background: var(--success); color: #fff; padding: 0.4rem 0.8rem; font-size: 0.75rem; width: auto; margin-right: 0.3rem; }
         .btn-deny { background: var(--danger); color: #fff; padding: 0.4rem 0.8rem; font-size: 0.75rem; width: auto; }
+        .btn-info { background: var(--bronze); color: #000; padding: 0.4rem 0.8rem; font-size: 0.75rem; width: auto; font-weight: bold; }
 
         .hidden { display: none !important; }
 
@@ -282,12 +283,6 @@
             color: var(--bronze);
             border-bottom: 2px solid var(--bronze);
         }
-
-        .metrics-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 1rem;
-        }
     </style>
 </head>
 <body>
@@ -298,14 +293,14 @@
     </header>
 
     <main>
-        <!-- VISTA DE LOGIN Y SOLICITUD PÚBLICA POR ENLACE -->
+        <!-- VISTA DE LOGIN Y SOLICITUD PÚBLICA -->
         <section id="authSection">
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem;">
                 
                 <!-- Login Admin -->
                 <div class="card" style="margin-bottom: 0;">
                     <h2>Acceso Administrador</h2>
-                    <p class="subtitle">Panel de control exclusivo - Heber Ciodaro.</p>
+                    <p class="subtitle">Panel exclusivo - Heber Ciodaro.</p>
                     <form id="loginForm">
                         <div class="form-group">
                             <label>Correo Electrónico</label>
@@ -322,7 +317,7 @@
                     </form>
                 </div>
 
-                <!-- Solicitud Pública de Afiliación (Entrada por Enlace) -->
+                <!-- Solicitud Pública por Enlace -->
                 <div class="card" style="margin-bottom: 0;">
                     <h2>Solicitud de Licencia / Afiliación</h2>
                     <p class="subtitle">Entrenadores o clientes interesados en adquirir la plataforma.</p>
@@ -384,17 +379,16 @@
                 </div>
             </div>
 
-            <!-- NAVEGACIÓN -->
+            <!-- NAVEGACIÓN PRINCIPAL ENUMERADA -->
             <div class="nav-tabs">
-                <button class="tab-btn active" onclick="switchTab('tabRequests', this)">1. Gestión Afiliaciones (<span id="badgePending">0</span>)</button>
-                <button class="tab-btn" onclick="switchTab('tabAthletes', this)">2. Registro y Atletas</button>
-                <button class="tab-btn" onclick="switchTab('tabMetrics', this)">3. Antropometría Mensual</button>
-                <button class="tab-btn" onclick="switchTab('tabTools', this)">4. Herramientas y Calculadoras</button>
+                <button class="tab-btn active" onclick="switchTab('tabRequests', this)">1. Gestión de Afiliaciones (<span id="badgePending">0</span>)</button>
+                <button class="tab-btn" onclick="switchTab('tabAthletes', this)">2. Gestión de Atletas</button>
+                <button class="tab-btn" onclick="switchTab('tabTools', this)">3. Herramientas Globales</button>
             </div>
 
             <!-- 1. GESTIÓN DE AFILIACIONES / SOLICITUDES -->
             <div id="tabRequests" class="card">
-                <h3>Solicitudes de Licencias y Afiliaciones</h3>
+                <h3>1. Gestión de Afiliaciones y Solicitudes de Licencia</h3>
                 <p class="subtitle">Aprueba, deniega o elimina definitivamente solicitudes de nuevos interesados.</p>
                 <table>
                     <thead>
@@ -411,18 +405,20 @@
                 </table>
             </div>
 
-            <!-- 2. REGISTRO DE ATLETAS -->
+            <!-- 2. GESTIÓN DE ATLETAS (LISTA Y FORMULARIO DE REGISTRO) -->
             <div id="tabAthletes" class="card hidden">
-                <h3>Registro General de Atletas</h3>
-                <p class="subtitle">Control de fechas, abonos parciales, costos y pagos totales.</p>
+                <h3>2. Gestión de Atletas y Registro General</h3>
+                <p class="subtitle">Control de fechas de inicio, cortes mensuales, costos, abonos y acceso al expediente.</p>
                 
                 <form id="athleteForm" style="background: var(--bg-deep); padding: 1.5rem; border-radius: 6px; border: 1px solid var(--border); margin-bottom: 2rem;">
                     <h4 style="color: var(--bronze); margin-bottom: 1rem; font-size: 0.95rem;">+ Registrar Nuevo Atleta</h4>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem;">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
                         <div class="form-group"><label>Nombre del Atleta</label><input type="text" id="athName" required placeholder="Ej. Juan Pérez"></div>
                         <div class="form-group"><label>Teléfono / WhatsApp</label><input type="text" id="athPhone" required placeholder="+58 414..."></div>
-                        <div class="form-group"><label>Fecha de Inicio</label><input type="date" id="athStartDate" required></div>
-                        <div class="form-group"><label>Costo Total del Plan ($)</label><input type="number" id="athCost" required placeholder="100"></div>
+                        <div class="form-group"><label>Edad</label><input type="number" id="athAge" placeholder="30"></div>
+                        <div class="form-group"><label>Estatura Inicial (cm)</label><input type="number" id="athHeight" placeholder="180"></div>
+                        <div class="form-group"><label>Fecha de Inicio (Cortes)</label><input type="date" id="athStartDate" required></div>
+                        <div class="form-group"><label>Costo del Plan ($)</label><input type="number" id="athCost" required placeholder="100"></div>
                         <div class="form-group"><label>Abono Parcial ($)</label><input type="number" id="athPartial" placeholder="50"></div>
                     </div>
                     <button type="submit" style="margin-top: 1rem; width: auto; padding: 0.6rem 1.5rem; font-size: 0.85rem;">Registrar Atleta en el Sistema</button>
@@ -433,10 +429,10 @@
                         <tr>
                             <th>Atleta</th>
                             <th>Contacto</th>
-                            <th>Inicio / Corte</th>
+                            <th>Inicio / Cortes</th>
                             <th>Costo / Abono</th>
                             <th>Estado Pago</th>
-                            <th>Acciones</th>
+                            <th>Acciones del Perfil</th>
                         </tr>
                     </thead>
                     <tbody id="athletesTableBody">
@@ -445,37 +441,50 @@
                 </table>
             </div>
 
-            <!-- 3. MEDIDAS ANTROPOMÉTRICAS MENSUALES -->
-            <div id="tabMetrics" class="card hidden">
-                <h3>Evaluación y Medidas Antropométricas Mensuales</h3>
-                <p class="subtitle">Historial comparativo mes a mes, cálculo automático de IMC y % de grasa, con opción a PDF.</p>
-                
-                <form id="metricForm" style="background: var(--bg-deep); padding: 1.5rem; border-radius: 6px; border: 1px solid var(--border); margin-bottom: 2rem;">
-                    <h4 style="color: var(--bronze); margin-bottom: 1rem; font-size: 0.95rem;">+ Agregar Registro Antropométrico Mensual</h4>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem;">
-                        <div class="form-group"><label>Seleccionar Atleta</label><select id="metricAthleteSelect"><option value="">-- Seleccione --</option></select></div>
-                        <div class="form-group"><label>Mes / Fecha Registro</label><input type="text" id="metricMonth" placeholder="Ej. Julio 2026"></div>
-                        <div class="form-group"><label>Peso Actual (kg)</label><input type="number" id="mWeight" step="0.1" placeholder="104"></div>
-                        <div class="form-group"><label>Estatura (cm)</label><input type="number" id="mHeight" placeholder="180"></div>
-                        <div class="form-group"><label>Cuello (cm)</label><input type="number" id="mNeck" step="0.1"></div>
-                        <div class="form-group"><label>Tórax (cm)</label><input type="number" id="mChest" step="0.1"></div>
-                        <div class="form-group"><label>Bíceps (cm)</label><input type="number" id="mBiceps" step="0.1"></div>
-                        <div class="form-group"><label>Cintura (cm)</label><input type="number" id="mWaist" step="0.1"></div>
-                        <div class="form-group"><label>Glúteo (cm)</label><input type="number" id="mGlutes" step="0.1"></div>
-                        <div class="form-group"><label>Cuádriceps (cm)</label><input type="number" id="mLeg" step="0.1"></div>
-                        <div class="form-group"><label>Pantorrilla (cm)</label><input type="number" id="mCalf" step="0.1"></div>
+            <!-- VISTA DE EXPEDIENTE DEL ATLETA (INTERNO) -->
+            <div id="tabAthleteProfile" class="card hidden">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem;">
+                    <div>
+                        <h3 id="profileTitle" style="color: var(--bronze);">Expediente de Atleta</h3>
+                        <p class="subtitle" id="profileSubtitle" style="margin-bottom: 0;">Información personal, financiera y medidas antropométricas mensuales.</p>
                     </div>
-                    <button type="submit" style="margin-top: 1rem; width: auto; padding: 0.6rem 1.5rem; font-size: 0.85rem;">Guardar y Calcular Métricas</button>
+                    <button class="btn-secondary" onclick="backToAthletesList()">← Volver a la Lista</button>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <h4>Historial Antropométrico Mensual</h4>
+                    <button class="btn-info" onclick="exportProfilePDF()">Extraer Expediente para PDF</button>
+                </div>
+
+                <!-- Formulario para agregar medidas mensuales al expediente -->
+                <form id="metricForm" style="background: var(--bg-deep); padding: 1.5rem; border-radius: 6px; border: 1px solid var(--border); margin-bottom: 2rem;">
+                    <input type="hidden" id="currentProfileAthleteId">
+                    <h4 style="color: var(--bronze); margin-bottom: 1rem; font-size: 0.95rem;">+ Agregar Registro Antropométrico del Mes</h4>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem;">
+                        <div class="form-group"><label>Mes / Periodo</label><input type="text" id="mMonth" placeholder="Ej. Julio 2026" required></div>
+                        <div class="form-group"><label>Peso Actual (kg)</label><input type="number" id="mWeight" step="0.1" required placeholder="104"></div>
+                        <div class="form-group"><label>Estatura (cm)</label><input type="number" id="mHeight" required placeholder="180"></div>
+                        <div class="form-group"><label>Cuello (cm)</label><input type="number" id="mNeck" step="0.1" placeholder="40"></div>
+                        <div class="form-group"><label>Tórax (cm)</label><input type="number" id="mChest" step="0.1" placeholder="110"></div>
+                        <div class="form-group"><label>Bíceps (cm)</label><input type="number" id="mBiceps" step="0.1" placeholder="38"></div>
+                        <div class="form-group"><label>Cintura (cm)</label><input type="number" id="mWaist" step="0.1" placeholder="85"></div>
+                        <div class="form-group"><label>Glúteo (cm)</label><input type="number" id="mGlutes" step="0.1" placeholder="100"></div>
+                        <div class="form-group"><label>Cuádriceps (cm)</label><input type="number" id="mLeg" step="0.1" placeholder="60"></div>
+                        <div class="form-group"><label>Pantorrilla (cm)</label><input type="number" id="mCalf" step="0.1" placeholder="38"></div>
+                    </div>
+                    <button type="submit" style="margin-top: 1rem; width: auto; padding: 0.6rem 1.5rem; font-size: 0.85rem;">Guardar Medidas del Mes</button>
                 </form>
 
-                <div id="metricsHistoryContainer">
-                    <p class="empty-state">Seleccione o agregue métricas para ver el historial comparativo.</p>
+                <div id="profileMetricsContainer">
+                    <p class="empty-state">No hay registros antropométricos en este expediente.</p>
                 </div>
             </div>
 
-            <!-- 4. HERRAMIENTAS Y CALCULADORAS GLOBALES -->
+            <!-- 3. HERRAMIENTAS GLOBALES -->
             <div id="tabTools" class="card hidden">
-                <h3>Herramientas Profesionales de Evaluación</h3>
+                <h3>3. Herramientas y Calculadoras Profesionales</h3>
+                <p class="subtitle">Utilidades de consulta rápida con reloj y hora en vivo.</p>
+                
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 1rem;">
                     
                     <!-- IMC -->
@@ -484,7 +493,7 @@
                         <div class="form-group"><label>Peso (kg)</label><input type="number" id="tImcW" placeholder="104"></div>
                         <div class="form-group"><label>Altura (cm)</label><input type="number" id="tImcH" placeholder="180"></div>
                         <button onclick="calcToolIMC()" style="padding: 0.6rem; font-size: 0.85rem;">Calcular IMC</button>
-                        <div id="tImcRes" class="result-box hidden" style="margin-top: 1rem; padding: 0.8rem; background: var(--surface); border-left: 3px solid var(--bronze);"></div>
+                        <div id="tImcRes" class="hidden" style="margin-top: 1rem; padding: 0.8rem; background: var(--surface); border-left: 3px solid var(--bronze);"></div>
                     </div>
 
                     <!-- Gasto Calórico -->
@@ -498,7 +507,7 @@
                             </div>
                         </div>
                         <button onclick="calcToolCal()" style="padding: 0.6rem; font-size: 0.85rem;">Calcular Calorías</button>
-                        <div id="tCalRes" class="result-box hidden" style="margin-top: 1rem; padding: 0.8rem; background: var(--surface); border-left: 3px solid var(--bronze);"></div>
+                        <div id="tCalRes" class="hidden" style="margin-top: 1rem; padding: 0.8rem; background: var(--surface); border-left: 3px solid var(--bronze);"></div>
                     </div>
 
                     <!-- Porcentaje de Grasa -->
@@ -511,7 +520,7 @@
                             </div>
                         </div>
                         <button onclick="calcToolFat()" style="padding: 0.6rem; font-size: 0.85rem;">Estimar Grasa</button>
-                        <div id="tFatRes" class="result-box hidden" style="margin-top: 1rem; padding: 0.8rem; background: var(--surface); border-left: 3px solid var(--bronze);"></div>
+                        <div id="tFatRes" class="hidden" style="margin-top: 1rem; padding: 0.8rem; background: var(--surface); border-left: 3px solid var(--bronze);"></div>
                     </div>
 
                 </div>
@@ -524,6 +533,7 @@
         let pendingRequests = [];
         let athletes = [];
         let anthropometrics = [];
+        let activeProfileId = null;
 
         document.getElementById('shareableLink').value = window.location.href.split('#')[0];
 
@@ -531,7 +541,7 @@
             const linkInput = document.getElementById('shareableLink');
             linkInput.select();
             navigator.clipboard.writeText(linkInput.value);
-            alert("¡Enlace de solicitud copiado con éxito!");
+            alert("¡Enlace copiado al portapapeles!");
         }
 
         function togglePassword() {
@@ -567,7 +577,7 @@
                 phone: document.getElementById('reqPhone').value,
                 type: document.getElementById('reqType').value
             });
-            alert("¡Solicitud enviada correctamente! Heber Ciodaro la revisará en breve.");
+            alert("¡Solicitud enviada con éxito!");
             this.reset();
             updateDashboard();
         });
@@ -579,6 +589,8 @@
                 id: Date.now(),
                 name: document.getElementById('athName').value,
                 phone: document.getElementById('athPhone').value,
+                age: document.getElementById('athAge').value || 'N/D',
+                height: document.getElementById('athHeight').value || '180',
                 startDate: document.getElementById('athStartDate').value,
                 cost: parseFloat(document.getElementById('athCost').value) || 0,
                 partial: parseFloat(document.getElementById('athPartial').value) || 0
@@ -586,29 +598,24 @@
             athletes.push(newAth);
             this.reset();
             updateDashboard();
-            updateAthleteDropdown();
-            alert("Atleta registrado con éxito.");
+            alert("Atleta registrado correctamente.");
         });
 
-        // Registro Antropométrico
+        // Registro de Antropometría dentro del expediente
         document.getElementById('metricForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            const athId = document.getElementById('metricAthleteSelect').value;
-            if(!athId) { alert("Seleccione un atleta."); return; }
-            
             const w = parseFloat(document.getElementById('mWeight').value) || 0;
             const h = parseFloat(document.getElementById('mHeight').value) || 0;
             const waist = parseFloat(document.getElementById('mWaist').value) || 0;
             const neck = parseFloat(document.getElementById('mNeck').value) || 0;
 
-            // Cálculos automáticos
             const imc = h > 0 ? (w / Math.pow(h/100, 2)).toFixed(1) : 0;
             const fatEst = (waist && neck) ? Math.max(5, Math.round(495 / (1.0324 - 0.19077 * Math.log10(waist - neck) + 0.15456 * Math.log10(h || 180)) - 450)) : 15;
 
             const record = {
                 id: Date.now(),
-                athleteId: athId,
-                month: document.getElementById('metricMonth').value || "Mes Actual",
+                athleteId: activeProfileId,
+                month: document.getElementById('mMonth').value,
                 weight: w,
                 height: h,
                 neck: neck,
@@ -624,8 +631,8 @@
 
             anthropometrics.push(record);
             this.reset();
-            renderMetricsHistory();
-            alert("Métricas mensuales y cálculos guardados correctamente.");
+            openAthleteProfile(activeProfileId);
+            alert("Métrica mensual guardada en el expediente.");
         });
 
         function updateDashboard() {
@@ -655,12 +662,13 @@
                     const paidFull = a.partial >= a.cost;
                     return `
                         <tr>
-                            <td>${a.name}</td>
-                            <td>${a.phone}</td>
+                            <td><strong>${a.name}</strong></td>
+                            <td>📱 ${a.phone}</td>
                             <td>Inicio: ${a.startDate}</td>
                             <td>$${a.cost} | Abonado: $${a.partial}</td>
                             <td><strong style="color: ${paidFull ? 'var(--success)' : 'var(--bronze)'};">${paidFull ? 'Pagado Total' : 'Abono Parcial'}</strong></td>
                             <td>
+                                <button class="btn-info" onclick="openAthleteProfile(${a.id})">Ver Expediente</button>
                                 <button class="btn-approve" onclick="payTotal(${a.id})" style="font-size: 0.7rem; padding: 0.3rem;">Pago Total</button>
                                 <button class="btn-deny" onclick="deleteAthlete(${a.id})" style="font-size: 0.7rem; padding: 0.3rem;">Eliminar</button>
                             </td>
@@ -669,18 +677,93 @@
                 }).join('');
         }
 
-        function updateAthleteDropdown() {
-            const select = document.getElementById('metricAthleteSelect');
-            select.innerHTML = `<option value="">-- Seleccione Atleta --</option>` + athletes.map(a => `<option value="${a.id}">${a.name}</option>`).join('');
+        function openAthleteProfile(id) {
+            activeProfileId = id;
+            const ath = athletes.find(a => a.id === id);
+            if(!ath) return;
+
+            document.getElementById('profileTitle').innerText = `Expediente de: ${ath.name}`;
+            document.getElementById('profileSubtitle').innerText = `Teléfono: ${ath.phone} | Edad: ${ath.age} años | Plan: $${ath.cost} (Abonado: $${ath.partial}) | Inicio: ${ath.startDate}`;
+            document.getElementById('currentProfileAthleteId').value = id;
+
+            // Ocultar otras pestañas y mostrar expediente
+            document.querySelectorAll('#dashboardView > .card').forEach(c => c.classList.add('hidden'));
+            document.getElementById('tabAthleteProfile').classList.remove('hidden');
+
+            renderProfileMetrics(id);
+        }
+
+        function backToAthletesList() {
+            document.getElementById('tabAthleteProfile').classList.add('hidden');
+            document.getElementById('tabAthletes').classList.remove('hidden');
+        }
+
+        function renderProfileMetrics(athleteId) {
+            const container = document.getElementById('profileMetricsContainer');
+            const athMetrics = anthropometrics.filter(m => m.athleteId == athleteId);
+
+            if(athMetrics.length === 0) {
+                container.innerHTML = `<p class="empty-state">No hay registros mensuales en el expediente de este atleta aún.</p>`;
+                return;
+            }
+
+            container.innerHTML = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Mes / Periodo</th>
+                            <th>Peso</th>
+                            <th>IMC</th>
+                            <th>% Grasa</th>
+                            <th>Cuello</th>
+                            <th>Tórax</th>
+                            <th>Bíceps</th>
+                            <th>Cintura</th>
+                            <th>Glúteo</th>
+                            <th>Pierna</th>
+                            <th>Pantorrilla</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${athMetrics.map(m => `
+                            <tr>
+                                <td><strong>${m.month}</strong></td>
+                                <td>${m.weight} kg</td>
+                                <td style="color: var(--bronze);">${m.imc}</td>
+                                <td>${m.fat}%</td>
+                                <td>${m.neck || '-'} cm</td>
+                                <td>${m.chest || '-'} cm</td>
+                                <td>${m.biceps || '-'} cm</td>
+                                <td>${m.waist || '-'} cm</td>
+                                <td>${m.glutes || '-'} cm</td>
+                                <td>${m.leg || '-'} cm</td>
+                                <td>${m.calf || '-'} cm</td>
+                                <td>
+                                    <button onclick="deleteMetric(${m.id})" class="btn-deny" style="padding: 0.2rem 0.5rem; font-size: 0.7rem;">Eliminar</button>
+                                </td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+        }
+
+        function deleteMetric(id) {
+            anthropometrics = anthropometrics.filter(m => m.id !== id);
+            renderProfileMetrics(activeProfileId);
+        }
+
+        function exportProfilePDF() {
+            window.print();
         }
 
         function approveRequest(id) {
             const idx = pendingRequests.findIndex(r => r.id === id);
             if(idx !== -1) {
                 const item = pendingRequests.splice(idx, 1)[0];
-                athletes.push({ id: Date.now(), name: item.name, phone: item.phone, startDate: new Date().toISOString().split('T')[0], cost: 100, partial: 100 });
+                athletes.push({ id: Date.now(), name: item.name, phone: item.phone, age: '28', height: '175', startDate: new Date().toISOString().split('T')[0], cost: 100, partial: 100 });
                 updateDashboard();
-                updateAthleteDropdown();
             }
         }
 
@@ -693,74 +776,11 @@
             athletes = athletes.filter(a => a.id !== id);
             anthropometrics = anthropometrics.filter(m => m.athleteId != id);
             updateDashboard();
-            updateAthleteDropdown();
-            renderMetricsHistory();
         }
 
         function payTotal(id) {
             const ath = athletes.find(a => a.id === id);
             if(ath) { ath.partial = ath.cost; updateDashboard(); }
-        }
-
-        function renderMetricsHistory() {
-            const container = document.getElementById('metricsHistoryContainer');
-            if(anthropometrics.length === 0) {
-                container.innerHTML = `<p class="empty-state">No hay registros antropométricos guardados.</p>`;
-                return;
-            }
-
-            container.innerHTML = athletes.map(ath => {
-                const athMetrics = anthropometrics.filter(m => m.athleteId == ath.id);
-                if(athMetrics.length === 0) return '';
-
-                return `
-                    <div style="background: var(--bg-deep); border: 1px solid var(--border); border-radius: 6px; padding: 1.5rem; margin-bottom: 1.5rem;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                            <h4 style="color: var(--bronze);">Atleta: ${ath.name} (Historial Mensual)</h4>
-                            <button class="btn-secondary" onclick="exportPDF('${ath.name}')" style="font-size: 0.75rem;">Extraer para PDF</button>
-                        </div>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Mes</th>
-                                    <th>Peso</th>
-                                    <th>IMC</th>
-                                    <th>% Grasa</th>
-                                    <th>Cintura</th>
-                                    <th>Bíceps</th>
-                                    <th>Glúteo</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                ${athMetrics.map(m => `
-                                    <tr>
-                                        <td><strong>${m.month}</strong></td>
-                                        <td>${m.weight} kg</td>
-                                        <td>${m.imc}</td>
-                                        <td>${m.fat}%</td>
-                                        <td>${m.waist || '-'} cm</td>
-                                        <td>${m.biceps || '-'} cm</td>
-                                        <td>${m.glutes || '-'} cm</td>
-                                        <td>
-                                            <button onclick="deleteMetric(${m.id})" class="btn-deny" style="padding: 0.2rem 0.5rem; font-size: 0.7rem;">Eliminar</button>
-                                        </td>
-                                    </tr>
-                                `).join('')}
-                            </tbody>
-                        </table>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        function deleteMetric(id) {
-            anthropometrics = anthropometrics.filter(m => m.id !== id);
-            renderMetricsHistory();
-        }
-
-        function exportPDF(athleteName) {
-            window.print(); // Abre el cuadro de impresión nativo optimizado para PDF del navegador
         }
 
         function switchTab(tabId, btn) {
@@ -772,7 +792,7 @@
             btn.classList.add('active');
         }
 
-        // Herramientas
+        // Calculadoras Globales
         function calcToolIMC() {
             const w = parseFloat(document.getElementById('tImcW').value);
             const h = parseFloat(document.getElementById('tImcH').value) / 100;
