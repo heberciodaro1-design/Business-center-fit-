@@ -3,18 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Business Center Fit - Login</title>
+    <title>Business Center Fit - Ciodarofitness</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Estilos personalizados para los tonos bronce, plateado y negro */
         .bg-bronze-gradient {
             background: linear-gradient(135deg, #d4af37 0%, #aa771c 50%, #8a5812 100%);
         }
         .text-bronze {
             color: #d4af37;
-        }
-        .border-bronze {
-            border-color: rgba(212, 175, 55, 0.3);
         }
         .border-bronze-focus:focus {
             border-color: #d4af37;
@@ -26,7 +22,7 @@
 </head>
 <body class="bg-[#0b0f19] text-gray-100 min-h-screen flex items-center justify-center p-4">
 
-    <div class="max-w-md w-full bg-[#131b2e] p-7 rounded-[2rem] border border-gray-800/80 shadow-2xl relative overflow-hidden">
+    <div id="vista-login" class="max-w-md w-full bg-[#131b2e] p-7 rounded-[2rem] border border-gray-800/80 shadow-2xl relative overflow-hidden transition-all duration-300">
         <div class="absolute top-0 left-0 right-0 h-1.5 bg-bronze-gradient"></div>
 
         <div class="text-center space-y-3 mb-8 mt-2">
@@ -44,7 +40,7 @@
             </div>
         </div>
 
-        <form onsubmit="manejarLogin(event)" class="space-y-5">
+        <form onsubmit="iniciarSesionDirecta(event)" class="space-y-5">
             <div>
                 <label class="text-[11px] text-gray-400 block mb-1.5 uppercase font-bold tracking-wider">Correo Electrónico</label>
                 <input type="email" id="correo" required value="heber@ciodarofitness.com" class="w-full bg-[#0b0f19] border border-gray-800 rounded-xl p-3.5 text-sm focus:outline-none border-bronze-focus text-white placeholder-gray-600 transition">
@@ -70,16 +66,45 @@
         </div>
     </div>
 
+    <div id="vista-panel" class="max-w-md w-full bg-[#131b2e] p-7 rounded-[2rem] border border-gray-800/80 shadow-2xl relative overflow-hidden hidden space-y-6">
+        <div class="absolute top-0 left-0 right-0 h-1.5 bg-bronze-gradient"></div>
+
+        <div class="flex justify-between items-center mt-2">
+            <div>
+                <h2 class="text-lg font-black tracking-wider text-white">BUSINESS CENTER</h2>
+                <p class="text-xs text-bronze font-bold">PANEL DE CONTROL</p>
+            </div>
+            <button onclick="cerrarSesion()" class="bg-[#0b0f19] border border-gray-800 text-gray-400 hover:text-white text-xs px-3 py-1.5 rounded-xl transition">
+                Salir ↩
+            </button>
+        </div>
+
+        <div class="bg-[#0b0f19] p-5 rounded-2xl border border-gray-800 text-center space-y-2">
+            <p class="text-xs text-gray-400 uppercase tracking-widest">Estado de Licencia</p>
+            <p class="text-sm font-bold text-emerald-400">Activa & Conectada (SaaS Engine)</p>
+        </div>
+
+        <div class="text-center py-6 text-gray-400 text-xs">
+            Sistema listo para la gestión de tus clientes y finanzas con estética profesional.
+        </div>
+    </div>
+
     <script>
         function togglePassword() {
             const input = document.getElementById('password');
             input.type = input.type === 'password' ? 'text' : 'password';
         }
 
-        function manejarLogin(e) {
+        function iniciarSesionDirecta(e) {
             e.preventDefault();
-            // Aquí puedes conectar la validación o redirección a tu panel interno
-            alert('¡Acceso concedido al Business Center Fit!');
+            // Transición limpia sin alertas molestas
+            document.getElementById('vista-login').classList.add('hidden');
+            document.getElementById('vista-panel').classList.remove('hidden');
+        }
+
+        function cerrarSesion() {
+            document.getElementById('vista-panel').classList.add('hidden');
+            document.getElementById('vista-login').classList.remove('hidden');
         }
     </script>
 </body>
