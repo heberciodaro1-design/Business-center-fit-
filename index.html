@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Business Center Fit | Plataforma Multi-Tenant By ciodarofitness</title>
+    <title>Business Center Fit | Plataforma Completa By ciodarofitness</title>
     
     <!-- Configuración PWA para Móviles -->
     <link rel="manifest" href="manifest.json">
@@ -35,37 +35,33 @@
 </head>
 <body class="bg-darkBg text-silverText font-sans antialiased min-h-screen flex flex-col justify-between selection:bg-bronzeMain selection:text-darkBg">
 
-    <!-- CONTENEDOR PRINCIPAL -->
-    <div class="flex-grow flex items-center justify-center p-4">
+    <!-- CONTENEDOR DE ACCESO -->
+    <div id="login-container" class="flex-grow flex items-center justify-center p-4">
         
-        <!-- PANTALLA DE ACCESO (LOGIN) -->
+        <!-- PANTALLA DE LOGIN -->
         <div id="auth-screen" class="bg-cardBg border border-cardBorder rounded-2xl p-8 w-full max-w-md shadow-2xl relative overflow-hidden backdrop-blur-md">
             <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-bronzeDark via-bronzeLight to-bronzeDark"></div>
             
             <div class="text-center mb-6 pt-2">
                 <span class="inline-block px-3 py-1 mb-3 text-[10px] font-bold tracking-widest uppercase bg-bronzeDark/30 text-bronzeLight rounded-full border border-bronzeMain/30">
-                    Multi-Tenant SaaS v2.0
+                    SaaS Engine v2.5
                 </span>
                 <h1 class="text-3xl font-black tracking-wider text-silverText">BUSINESS CENTER <span class="text-transparent bg-clip-text bg-gradient-to-r from-bronzeLight to-bronzeMain">FIT</span></h1>
                 
-                <!-- Tu Marca Protegida -->
                 <div class="mt-2 inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-darkBg border border-bronzeMain/40 shadow-inner">
                     <span class="text-[10px] font-bold uppercase tracking-widest text-silverMuted">By</span>
                     <span class="text-xs font-black tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-bronzeLight via-bronzeMain to-bronzeLight uppercase">ciodarofitness</span>
                 </div>
-
-                <p class="text-silverMuted text-[11px] mt-3 font-medium tracking-wide uppercase">Núcleo de Operaciones Protegido</p>
             </div>
 
-            <!-- Formulario de Ingreso -->
             <form onsubmit="handleLogin(event)" class="space-y-4">
                 <div>
                     <label class="block text-[11px] font-bold uppercase tracking-widest text-silverMuted mb-2">Correo Electrónico</label>
-                    <input type="email" id="login-email" required class="w-full bg-darkBg border border-cardBorder rounded-xl px-4 py-3 text-silverText text-sm focus:outline-none focus:border-bronzeMain transition shadow-inner" placeholder="ej. heber@ciodarofitness.com">
+                    <input type="email" id="login-email" required class="w-full bg-darkBg border border-cardBorder rounded-xl px-4 py-3 text-silverText text-sm focus:outline-none focus:border-bronzeMain transition shadow-inner" placeholder="heber@ciodarofitness.com">
                 </div>
                 <div>
                     <label class="block text-[11px] font-bold uppercase tracking-widest text-silverMuted mb-2">Contraseña</label>
-                    <input type="password" id="login-pass" required class="w-full bg-darkBg border border-cardBorder rounded-xl px-4 py-3 text-silverText text-sm focus:outline-none focus:border-bronzeMain transition shadow-inner" placeholder="••••••••">
+                    <input type="password" id="login-pass" required class="w-full bg-darkBg border border-cardBorder rounded-xl px-4 py-3 text-silverText text-sm focus:outline-none focus:border-bronzeMain transition shadow-inner" placeholder="••••••">
                 </div>
                 <button type="submit" class="w-full bg-gradient-to-r from-bronzeDark via-bronzeMain to-bronzeDark text-darkBg font-black py-3.5 rounded-xl transition transform hover:scale-[1.01] tracking-wider text-sm shadow-lg shadow-bronzeMain/10">
                     ACCEDER AL SISTEMA
@@ -73,55 +69,15 @@
             </form>
 
             <div id="login-error" class="hidden mt-4 p-3 bg-red-950/40 border border-red-500/30 rounded-xl text-xs text-red-300 text-center">
-                Acceso denegado: Credenciales incorrectas o cuenta pendiente de autorización.
-            </div>
-
-            <div class="mt-6 text-center border-t border-cardBorder pt-4">
-                <p class="text-xs text-silverMuted">¿Nuevo entrenador? <button onclick="toggleView('register-screen')" class="text-bronzeLight hover:underline font-bold">Solicitar Licencia Multi-Tenant</button></p>
+                Acceso denegado: Usa heber@ciodarofitness.com / 123456
             </div>
         </div>
-
-        <!-- PANTALLA DE SOLICITUD DE LICENCIA -->
-        <div id="register-screen" class="hidden bg-cardBg border border-cardBorder rounded-2xl p-8 w-full max-w-md shadow-2xl relative overflow-hidden backdrop-blur-md">
-            <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-bronzeDark via-bronzeLight to-bronzeDark"></div>
-            
-            <div class="text-center mb-6 pt-2">
-                <h2 class="text-2xl font-black tracking-wider text-silverText">SOLICITAR INQUILINO</h2>
-                <p class="text-silverMuted text-[11px] mt-1 uppercase">Sujeto a aprobación estricta de Ciodarofitness</p>
-            </div>
-
-            <form onsubmit="handleRegister(event)" class="space-y-4">
-                <div>
-                    <label class="block text-[11px] font-bold uppercase tracking-widest text-silverMuted mb-1.5">Nombre del Entrenador</label>
-                    <input type="text" required class="w-full bg-darkBg border border-cardBorder rounded-xl px-4 py-3 text-silverText text-sm focus:outline-none focus:border-bronzeMain" placeholder="Tu Nombre">
-                </div>
-                <div>
-                    <label class="block text-[11px] font-bold uppercase tracking-widest text-silverMuted mb-1.5">Correo Electrónico</label>
-                    <input type="email" required class="w-full bg-darkBg border border-cardBorder rounded-xl px-4 py-3 text-silverText text-sm focus:outline-none focus:border-bronzeMain" placeholder="tucorreo@email.com">
-                </div>
-                <div>
-                    <label class="block text-[11px] font-bold uppercase tracking-widest text-silverMuted mb-1.5">Contraseña Deseada</label>
-                    <input type="password" required class="w-full bg-darkBg border border-cardBorder rounded-xl px-4 py-3 text-silverText text-sm focus:outline-none focus:border-bronzeMain" placeholder="••••••••">
-                </div>
-                <button type="submit" class="w-full bg-gradient-to-r from-bronzeDark via-bronzeMain to-bronzeDark text-darkBg font-black py-3.5 rounded-xl transition tracking-wider text-sm shadow-lg">
-                    ENVIAR SOLICITUD MAESTRA
-                </button>
-            </form>
-
-            <div id="register-success" class="hidden mt-4 p-3 bg-emerald-950/40 border border-emerald-500/30 rounded-xl text-xs text-emerald-300 text-center">
-                ¡Solicitud enviada! Quedará en espera de habilitación manual en el servidor central.
-            </div>
-
-            <div class="mt-6 text-center border-t border-cardBorder pt-4">
-                <button onclick="toggleView('auth-screen')" class="text-xs text-silverMuted hover:text-silverText font-bold uppercase">← Volver al Login</button>
-            </div>
-        </div>
-
     </div>
 
-    <!-- DASHBOARD MULTI-TENANT (ADMINISTRADO) -->
-    <div id="dashboard-screen" class="hidden fixed inset-0 bg-darkBg flex flex-col md:flex-row z-50">
-        <!-- Barra Lateral -->
+    <!-- DASHBOARD PRINCIPAL CON MÓDULOS (OCULTO HASTA LOGIN) -->
+    <div id="dashboard-screen" class="hidden fixed inset-0 bg-darkBg flex flex-col md:flex-row z-50 overflow-hidden">
+        
+        <!-- BARRA LATERAL DE NAVEGACIÓN -->
         <aside class="w-full md:w-72 bg-cardBg border-r border-cardBorder flex flex-col justify-between p-6">
             <div>
                 <div class="mb-8 flex items-center justify-between">
@@ -131,22 +87,24 @@
                     </div>
                     <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
                 </div>
+                
                 <nav class="space-y-2">
-                    <a href="#" class="flex items-center space-x-3 bg-darkBg border border-bronzeMain/50 text-silverText px-4 py-3.5 rounded-xl font-semibold text-sm shadow">
-                      <span>🏢</span> <span>Esquema Multi-Tenant</span>
-                    </a>
-                    <a href="#" class="flex items-center space-x-3 hover:bg-darkBg text-silverMuted hover:text-silverText px-4 py-3.5 rounded-xl transition text-sm font-medium">
-                      <span>👥</span> <span>Gestión de Inquilinos</span>
-                    </a>
-                    <a href="#" class="flex items-center space-x-3 hover:bg-darkBg text-silverMuted hover:text-silverText px-4 py-3.5 rounded-xl transition text-sm font-medium">
-                      <span>📊</span> <span>Cartera de Atletas Global</span>
-                    </a>
+                    <button onclick="switchTab('tab-tenants')" id="btn-tenants" class="w-full text-left flex items-center space-x-3 bg-darkBg border border-bronzeMain/50 text-silverText px-4 py-3.5 rounded-xl font-semibold text-sm shadow transition">
+                      <span>🏢</span> <span>Control Multi-Tenant</span>
+                    </button>
+                    <button onclick="switchTab('tab-clients')" id="btn-clients" class="w-full text-left flex items-center space-x-3 hover:bg-darkBg text-silverMuted hover:text-silverText px-4 py-3.5 rounded-xl transition text-sm font-medium">
+                      <span>👥</span> <span>Gestión de Alumnos</span>
+                    </button>
+                    <button onclick="switchTab('tab-metrics')" id="btn-metrics" class="w-full text-left flex items-center space-x-3 hover:bg-darkBg text-silverMuted hover:text-silverText px-4 py-3.5 rounded-xl transition text-sm font-medium">
+                      <span>📊</span> <span>Métricas Antropométricas</span>
+                    </button>
                 </nav>
             </div>
+
             <div>
                 <div class="bg-darkBg p-4 rounded-xl border border-cardBorder mb-4">
-                    <p class="text-[11px] font-bold text-silverText">Admin del Sistema</p>
-                    <p class="text-xs text-bronzeLight font-semibold mt-0.5">Heber Ciodaro (Maestro)</p>
+                    <p class="text-[11px] font-bold text-silverText">Admin Maestro</p>
+                    <p class="text-xs text-bronzeLight font-semibold mt-0.5">Heber Ciodaro</p>
                 </div>
                 <button onclick="handleLogout()" class="w-full border border-cardBorder hover:border-bronzeMain text-silverMuted hover:text-silverText py-3 rounded-xl text-xs font-bold tracking-wider uppercase transition">
                     Cerrar Sesión
@@ -154,106 +112,137 @@
             </div>
         </aside>
 
-        <!-- Contenido Principal -->
+        <!-- CONTENIDO CENTRAL DINÁMICO -->
         <main class="flex-grow p-6 md:p-10 overflow-y-auto bg-darkBg">
-            <header class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 pb-6 border-b border-cardBorder gap-4">
-                <div>
-                    <h2 class="text-3xl font-black text-silverText tracking-tight">Estructura Multi-Tenant y Licencias</h2>
-                    <p class="text-sm text-silverMuted mt-1">Control jerárquico de base de datos aislada por cada entrenador asociado.</p>
-                </div>
-                <span class="px-3 py-1.5 bg-bronzeDark/30 border border-bronzeMain/40 text-bronzeLight text-xs font-bold uppercase rounded-lg">
-                    Servidor Maestro Activo
-                </span>
-            </header>
+            
+            <!-- SECCIÓN 1: MULTI-TENANT -->
+            <div id="tab-tenants" class="space-y-6">
+                <header class="flex justify-between items-center pb-6 border-b border-cardBorder">
+                    <div>
+                        <h2 class="text-3xl font-black text-silverText tracking-tight">Licencias y Inquilinos</h2>
+                        <p class="text-sm text-silverMuted mt-1">Control jerárquico de entrenadores asociados.</p>
+                    </div>
+                </header>
 
-            <!-- Resumen de Inquilinos (Tenants) -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                <div class="bg-cardBg border border-cardBorder p-5 rounded-2xl shadow">
-                    <p class="text-xs uppercase tracking-widest text-silverMuted font-bold">Inquilinos Activos</p>
-                    <p class="text-3xl font-black text-bronzeLight mt-2">1 / Ilimitados</p>
-                </div>
-                <div class="bg-cardBg border border-cardBorder p-5 rounded-2xl shadow">
-                    <p class="text-xs uppercase tracking-widest text-silverMuted font-bold">Base de Datos</p>
-                    <p class="text-3xl font-black text-emerald-400 mt-2">Aislada (Secure)</p>
-                </div>
-                <div class="bg-cardBg border border-cardBorder p-5 rounded-2xl shadow">
-                    <p class="text-xs uppercase tracking-widest text-silverMuted font-bold">Protección de Marca</p>
-                    <p class="text-3xl font-black text-silverText mt-2">100% Ciodaro</p>
+                <div class="bg-cardBg border border-cardBorder rounded-2xl overflow-hidden shadow-xl">
+                    <div class="p-5 border-b border-cardBorder font-bold text-sm text-silverText">Solicitudes Pendientes de Entrenadores</div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse text-sm">
+                            <thead>
+                                <tr class="bg-darkBg/80 text-silverMuted uppercase text-[10px] font-bold tracking-widest border-b border-cardBorder">
+                                    <th class="p-4">Entrenador</th>
+                                    <th class="p-4">Tenant ID</th>
+                                    <th class="p-4">Estatus</th>
+                                    <th class="p-4 text-right">Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-cardBorder">
+                                <tr>
+                                    <td class="p-4 font-bold text-silverText">Carlos Mendoza</td>
+                                    <td class="p-4 font-mono text-xs text-bronzeLight">tenant_carlos_99</td>
+                                    <td class="p-4"><span id="status-1" class="px-2.5 py-1 bg-amber-500/20 text-amber-300 text-xs rounded-full font-semibold border border-amber-500/30">Pendiente</span></td>
+                                    <td class="p-4 text-right space-x-2">
+                                        <button onclick="authorizeTenant(1, 'Aprobado')" class="bg-emerald-600 hover:bg-emerald-500 text-white px-3 py-1.5 rounded-lg text-xs font-bold uppercase">Autorizar</button>
+                                        <button onclick="authorizeTenant(1, 'Denegado')" class="bg-red-600/50 hover:bg-red-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold uppercase">Denegar</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 
-            <!-- Tabla de Inquilinos y Autorización -->
-            <div class="bg-cardBg border border-cardBorder rounded-2xl overflow-hidden shadow-xl">
-                <div class="p-5 border-b border-cardBorder font-bold text-sm text-silverText flex justify-between items-center">
-                    <span>Control de Acceso Multi-Tenant (Entrenadores)</span>
-                    <span class="text-xs text-silverMuted font-normal">Aprobación exclusiva de Heber Ciodaro</span>
-                </div>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse text-sm">
-                        <thead>
-                            <tr class="bg-darkBg/80 text-silverMuted uppercase text-[10px] font-bold tracking-widest border-b border-cardBorder">
-                                <th class="p-4">Tenant / Entrenador</th>
-                                <th class="p-4">Tenant ID (Base de Datos)</th>
-                                <th class="p-4">Estatus</th>
-                                <th class="p-4 text-right">Autorización Manual</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-cardBorder">
-                            <tr class="hover:bg-darkBg/40 transition">
-                                <td class="p-4 font-bold text-silverText">Carlos Mendoza</td>
-                                <td class="p-4 font-mono text-xs text-bronzeLight">tenant_carlos_99</td>
-                                <td class="p-4"><span id="status-1" class="px-2.5 py-1 bg-amber-500/20 text-amber-300 text-xs rounded-full font-semibold border border-amber-500/30">Pendiente</span></td>
-                                <td class="p-4 text-right space-x-2">
-                                    <button onclick="authorizeTenant(1, 'Aprobado')" class="bg-emerald-600 hover:bg-emerald-500 text-white px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition">Autorizar</button>
-                                    <button onclick="authorizeTenant(1, 'Denegado')" class="bg-red-600/50 hover:bg-red-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition">Denegar</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+            <!-- SECCIÓN 2: GESTIÓN DE ALUMNOS -->
+            <div id="tab-clients" class="hidden space-y-6">
+                <header class="flex justify-between items-center pb-6 border-b border-cardBorder">
+                    <div>
+                        <h2 class="text-3xl font-black text-silverText tracking-tight">Cartera de Alumnos y Atletas</h2>
+                        <p class="text-sm text-silverMuted mt-1">Supervisión de planes y asesorías personalizadas.</p>
+                    </div>
+                </header>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-cardBg border border-cardBorder p-5 rounded-2xl shadow">
+                        <p class="text-xs uppercase tracking-widest text-silverMuted font-bold">Alumna Activa</p>
+                        <p class="text-xl font-black text-silverText mt-2">Lady Cáceres</p>
+                        <p class="text-xs text-bronzeLight mt-1">Plan de Nutrición Especializado</p>
+                    </div>
+                    <div class="bg-cardBg border border-cardBorder p-5 rounded-2xl shadow">
+                        <p class="text-xs uppercase tracking-widest text-silverMuted font-bold">Alumna Activa</p>
+                        <p class="text-xl font-black text-silverText mt-2">Sra. Yanira</p>
+                        <p class="text-xs text-bronzeLight mt-1">Ajuste de Proteínas (Pollo/Atún)</p>
+                    </div>
+                    <div class="bg-cardBg border border-cardBorder p-5 rounded-2xl shadow">
+                        <p class="text-xs uppercase tracking-widest text-silverMuted font-bold">Alumna Activa</p>
+                        <p class="text-xl font-black text-silverText mt-2">Mari Ferrer</p>
+                        <p class="text-xs text-bronzeLight mt-1">Sin Carnes Rojas (Pescado/Huevos)</p>
+                    </div>
                 </div>
             </div>
+
+            <!-- SECCIÓN 3: MÉTRICAS ANTROPOMÉTRICAS -->
+            <div id="tab-metrics" class="hidden space-y-6">
+                <header class="pb-6 border-b border-cardBorder">
+                    <h2 class="text-3xl font-black text-silverText tracking-tight">Calculadora Antropométrica & Biomecánica</h2>
+                    <p class="text-sm text-silverMuted mt-1">Evaluación de composición corporal y requerimientos calóricos.</p>
+                </header>
+
+                <div class="bg-cardBg border border-cardBorder p-6 rounded-2xl shadow-xl max-w-xl">
+                    <h3 class="text-lg font-bold text-silverText mb-4">Simulador de Requerimientos del Atleta</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-xs uppercase text-silverMuted font-bold mb-1">Peso Actual (kg)</label>
+                            <input type="number" id="calc-peso" value="104" class="w-full bg-darkBg border border-cardBorder rounded-xl px-4 py-2.5 text-sm text-silverText">
+                        </div>
+                        <div>
+                            <label class="block text-xs uppercase text-silverMuted font-bold mb-1">Estatura (cm)</label>
+                            <input type="number" id="calc-estatura" value="180" class="w-full bg-darkBg border border-cardBorder rounded-xl px-4 py-2.5 text-sm text-silverText">
+                        </div>
+                        <button onclick="calcularMetricas()" class="w-full bg-gradient-to-r from-bronzeDark via-bronzeMain to-bronzeDark text-darkBg font-black py-3 rounded-xl text-sm uppercase tracking-wider">
+                            Calcular Déficit / Gasto Calórico
+                        </button>
+                        <div id="calc-resultado" class="hidden p-4 bg-darkBg border border-bronzeMain/30 rounded-xl text-xs text-bronzeLight font-medium"></div>
+                    </div>
+                </div>
+            </div>
+
         </main>
     </div>
 
-    <!-- PIE DE PÁGINA CON DERECHOS RESERVADOS -->
-    <footer class="py-4 text-center border-t border-cardBorder bg-darkBg text-xs text-silverMuted">
-        <p>© 2026 Business Center Fit. Todos los derechos reservados. <span class="text-bronzeLight font-bold uppercase">By ciodarofitness</span>.</p>
-    </footer>
-
-    <!-- Script de Control -->
+    <!-- SCRIPT DE NAVEGACIÓN Y FUNCIONALIDAD -->
     <script>
-        function toggleView(screenId) {
-            document.getElementById('auth-screen').classList.add('hidden');
-            document.getElementById('register-screen').classList.add('hidden');
-            document.getElementById(screenId).classList.remove('hidden');
-        }
-
         function handleLogin(event) {
             event.preventDefault();
             const email = document.getElementById('login-email').value;
             const pass = document.getElementById('login-pass').value;
 
             if (email === "heber@ciodarofitness.com" && pass === "123456") {
+                document.getElementById('login-container').classList.add('hidden');
                 document.getElementById('dashboard-screen').classList.remove('hidden');
             } else {
                 document.getElementById('login-error').classList.remove('hidden');
             }
         }
 
-        function handleRegister(event) {
-            event.preventDefault();
-            document.getElementById('register-success').classList.remove('hidden');
-            setTimeout(() => {
-                toggleView('auth-screen');
-                document.getElementById('register-success').classList.add('hidden');
-            }, 3000);
-        }
-
         function handleLogout() {
             document.getElementById('dashboard-screen').classList.add('hidden');
+            document.getElementById('login-container').classList.remove('hidden');
             document.getElementById('login-email').value = '';
             document.getElementById('login-pass').value = '';
             document.getElementById('login-error').classList.add('hidden');
+        }
+
+        function switchTab(tabId) {
+            document.getElementById('tab-tenants').classList.add('hidden');
+            document.getElementById('tab-clients').classList.add('hidden');
+            document.getElementById('tab-metrics').classList.add('hidden');
+            
+            document.getElementById('btn-tenants').className = "w-full text-left flex items-center space-x-3 hover:bg-darkBg text-silverMuted hover:text-silverText px-4 py-3.5 rounded-xl transition text-sm font-medium";
+            document.getElementById('btn-clients').className = "w-full text-left flex items-center space-x-3 hover:bg-darkBg text-silverMuted hover:text-silverText px-4 py-3.5 rounded-xl transition text-sm font-medium";
+            document.getElementById('btn-metrics').className = "w-full text-left flex items-center space-x-3 hover:bg-darkBg text-silverMuted hover:text-silverText px-4 py-3.5 rounded-xl transition text-sm font-medium";
+
+            document.getElementById(tabId).classList.remove('hidden');
+            event.currentTarget.className = "w-full text-left flex items-center space-x-3 bg-darkBg border border-bronzeMain/50 text-silverText px-4 py-3.5 rounded-xl font-semibold text-sm shadow transition";
         }
 
         function authorizeTenant(id, action) {
@@ -265,6 +254,14 @@
                 statusSpan.className = "px-2.5 py-1 bg-red-500/20 text-red-300 text-xs rounded-full font-semibold border border-red-500/30";
                 statusSpan.innerText = "Acceso Denegado";
             }
+        }
+
+        function calcularMetricas() {
+            const peso = parseFloat(document.getElementById('calc-peso').value);
+            const resultadoDiv = document.getElementById('calc-resultado');
+            const estimacionCalorica = peso * 30; // Fórmula base de estimación
+            resultadoDiv.classList.remove('hidden');
+            resultadoDiv.innerHTML = `<strong>Análisis Antropométrico Base:</strong><br>• Gasto Energético Estimado: ~${estimacionCalorica} kcal/día<br>• Protocolo Sugerido: Ajuste inteligente de macronutrientes bajo lineamientos de Ciodarofitness.`;
         }
     </script>
 </body>
