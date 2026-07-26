@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ciodarofitness - Panel de Control</title>
+    <title>Business Center Fit - Panel de Control</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @media print {
@@ -27,7 +27,7 @@
     <!-- PANTALLA DE ACCESO RESTRINGIDO (ADMIN) -->
     <div id="pantalla-login" class="max-w-md mx-auto mt-20 bg-[#131b2e] p-6 rounded-3xl border border-orange-500/40 shadow-2xl space-y-5">
         <div class="text-center space-y-1">
-            <h1 class="text-xl font-black text-white tracking-wide">CIODAROFITNESS <span class="text-xs text-orange-500 font-normal">pro</span></h1>
+            <h1 class="text-xl font-black text-white tracking-wide">BUSINESS CENTER FIT <span class="text-xs text-orange-500 font-normal">pro</span></h1>
             <p class="text-xs text-orange-400 uppercase tracking-widest font-semibold">Acceso Exclusivo de Administrador</p>
         </div>
         <form onsubmit="verificarAccesoAdmin(event)" class="space-y-4">
@@ -45,7 +45,7 @@
         <div id="vista-principal" class="space-y-5">
             <header class="flex justify-between items-center bg-[#131b2e] p-4 rounded-2xl border border-gray-800 shadow-lg">
                 <div>
-                    <h1 class="text-lg font-black text-white tracking-wide">CIODAROFITNESS <span class="text-xs text-orange-500 font-normal">pro</span></h1>
+                    <h1 class="text-lg font-black text-white tracking-wide">BUSINESS CENTER FIT <span class="text-xs text-orange-500 font-normal">pro</span></h1>
                 </div>
                 <div class="flex items-center gap-2">
                     <button onclick="cerrarSesionAdmin()" class="bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 text-xs font-semibold px-2.5 py-1.5 rounded-xl transition" title="Bloquear panel">🚪 Salir</button>
@@ -142,13 +142,13 @@
                 <button onclick="generarPDFExpediente()" class="bg-orange-600 hover:bg-orange-500 text-white text-xs font-bold px-4 py-2 rounded-xl shadow-lg flex items-center gap-1.5 transition">⚡ Descargar Expediente PDF</button>
             </div>
             <div class="bg-gradient-to-r from-orange-600 to-amber-600 p-5 rounded-2xl shadow-xl text-white text-center space-y-1">
-                <h1 class="text-xl font-black tracking-wider">CIODAROFITNESS</h1>
+                <h1 class="text-xl font-black tracking-wider">BUSINESS CENTER FIT</h1>
                 <p class="text-xs font-semibold uppercase tracking-widest text-orange-100">Expediente Antropométrico & Rendimiento</p>
                 <div class="text-[10px] text-orange-200 pt-1" id="fecha-impresion"></div>
             </div>
             <div id="detalle-expediente" class="space-y-4"></div>
             <div class="bg-[#131b2e] p-4 rounded-2xl border border-gray-800 text-center space-y-1 mt-6">
-                <p class="text-xs font-bold text-orange-500">CIODAROFITNESS</p>
+                <p class="text-xs font-bold text-orange-500">BUSINESS CENTER FIT</p>
                 <p class="text-[10px] text-gray-400">Entrenamiento Inteligente</p>
             </div>
         </div>
@@ -157,7 +157,7 @@
         const claveMaestra = "ciodaro2026"; 
 
         document.addEventListener("DOMContentLoaded", () => {
-            if (sessionStorage.getItem('ciodaro_sesion_activa') === 'true') {
+            if (sessionStorage.getItem('bcf_sesion_activa') === 'true') {
                 mostrarPanelAdmin();
             }
         });
@@ -168,7 +168,7 @@
             const errorMsg = document.getElementById('error-login');
 
             if (inputClave === claveMaestra) {
-                sessionStorage.setItem('ciodaro_sesion_activa', 'true');
+                sessionStorage.setItem('bcf_sesion_activa', 'true');
                 errorMsg.classList.add('hidden');
                 mostrarPanelAdmin();
             } else {
@@ -187,15 +187,14 @@
         }
 
         function cerrarSesionAdmin() {
-            sessionStorage.removeItem('ciodaro_sesion_activa');
+            sessionStorage.removeItem('bcf_sesion_activa');
             document.getElementById('app-container').classList.add('hidden');
             document.getElementById('pantalla-login').classList.remove('hidden');
             document.getElementById('input-clave-admin').value = '';
         }
 
-        let clientes = JSON.parse(localStorage.getItem('ciodaro_clientes')) || [];
-        // Simulación de solicitudes de licencias pendientes de validación
-        let solicitudesLicencia = JSON.parse(localStorage.getItem('ciodaro_solicitudes')) || [
+        let clientes = JSON.parse(localStorage.getItem('bcf_clientes')) || [];
+        let solicitudesLicencia = JSON.parse(localStorage.getItem('bcf_solicitudes')) || [
             { id: 101, nombre: "Atleta Externo de Prueba", email: "atleta@correo.com", fecha: "2026-07-26" }
         ];
 
@@ -205,12 +204,12 @@
         let clienteEditandoId = null;
 
         function guardarStorage() {
-            localStorage.setItem('ciodaro_clientes', JSON.stringify(clientes));
+            localStorage.setItem('bcf_clientes', JSON.stringify(clientes));
             renderizarClientes();
         }
 
         function guardarSolicitudesStorage() {
-            localStorage.setItem('ciodaro_solicitudes', JSON.stringify(solicitudesLicencia));
+            localStorage.setItem('bcf_solicitudes', JSON.stringify(solicitudesLicencia));
             renderizarSolicitudesLicencia();
         }
 
@@ -233,7 +232,7 @@
                 div.innerHTML = `
                     <div>
                         <span class="font-bold text-white">${sol.nombre}</span>
-                        <div class="text-[10px] text-gray-400">Correo/Ref: ${sol.email}</div>
+                        <div class="text-[10px] text-gray-400">Ref: ${sol.email}</div>
                     </div>
                     <div class="flex gap-1.5">
                         <button onclick="aprobarLicencia(${idx})" class="bg-emerald-600 hover:bg-emerald-500 text-white px-2.5 py-1 rounded-lg font-bold">Aprobar</button>
@@ -246,7 +245,6 @@
 
         function aprobarLicencia(idx) {
             const sol = solicitudesLicencia[idx];
-            // Al aprobar, lo puedes pasar directamente a tu base de datos de atletas activos
             clientes.push({
                 id: Date.now(),
                 nombre: sol.nombre,
@@ -261,7 +259,7 @@
             solicitudesLicencia.splice(idx, 1);
             guardarStorage();
             guardarSolicitudesStorage();
-            alert(`¡Licencia aprobada para ${sol.nombre}! Añadido a la lista de atletas.`);
+            alert(`¡Licencia aprobada para ${sol.nombre}! Añadido a la lista.`);
         }
 
         function denegarLicencia(idx) {
@@ -275,7 +273,7 @@
             const datosStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(clientes, null, 2));
             const downloadAnchor = document.createElement('a');
             downloadAnchor.setAttribute("href", datosStr);
-            downloadAnchor.setAttribute("download", `respaldo_ciodarofitness_${new Date().toISOString().slice(0,10)}.json`);
+            downloadAnchor.setAttribute("download", `respaldo_businesscenterfit_${new Date().toISOString().slice(0,10)}.json`);
             document.body.appendChild(downloadAnchor);
             downloadAnchor.click();
             downloadAnchor.remove();
@@ -289,7 +287,7 @@
                 try {
                     const datosImportados = JSON.parse(e.target.result);
                     if (Array.isArray(datosImportados)) {
-                        if (confirm(`¿Estás seguro de cargar este respaldo? Se reemplazarán los atletas actuales por los ${datosImportados.length} atletas del archivo.`)) {
+                        if (confirm(`¿Estás seguro de cargar este respaldo? Se reemplazarán los atletas actuales por los ${datosImportados.length} registros del archivo.`)) {
                             clientes = datosImportados;
                             guardarStorage();
                             alert('¡Base de datos importada exitosamente!');
@@ -560,7 +558,7 @@
             }
 
             const numeroLimpio = c.whatsapp ? c.whatsapp.replace(/\D/g, '') : '';
-            const mensajeWp = encodeURIComponent(`¡Hola ${c.nombre}! Te escribo de Ciodarofitness para recordarte tu ciclo actual de pago (${ciclo.inicioCiclo.toLocaleDateString('es-ES', opt)} al ${ciclo.finCiclo.toLocaleDateString('es-ES', opt)}) de tu plan. 💪🔥`);
+            const mensajeWp = encodeURIComponent(`¡Hola ${c.nombre}! Te escribo de Business Center Fit para recordarte tu ciclo actual de pago (${ciclo.inicioCiclo.toLocaleDateString('es-ES', opt)} al ${ciclo.finCiclo.toLocaleDateString('es-ES', opt)}) de tu plan. 💪🔥`);
             const linkWhatsApp = `https://wa.me/${numeroLimpio}?text=${mensajeWp}`;
 
             const tituloFormMetrica = metricaEditandoIdx !== null ? '✏️ Actualizar Medición Antropométrica' : '📊 Nueva Medición Antropométrica';
