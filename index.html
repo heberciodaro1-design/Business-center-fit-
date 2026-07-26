@@ -3,108 +3,464 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Business Center Fit - Ciodarofitness</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Business Center Fit | By Ciodarofitness</title>
     <style>
-        .bg-bronze-gradient {
-            background: linear-gradient(135deg, #d4af37 0%, #aa771c 50%, #8a5812 100%);
+        :root {
+            --bg-deep: #07090e;
+            --surface: #111520;
+            --surface-card: #181f2d;
+            --border: #2a354d;
+            --bronze: #d4af37;
+            --bronze-hover: #e6c55c;
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --accent-glow: rgba(212, 175, 55, 0.15);
         }
-        .text-bronze {
-            color: #d4af37;
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
-        .border-bronze-focus:focus {
-            border-color: #d4af37;
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
-        .badge-border {
-            border: 1px solid rgba(212, 175, 55, 0.4);
+
+        header {
+            background-color: var(--surface);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--bronze);
+            text-transform: uppercase;
+        }
+
+        .live-clock {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            background: var(--bg-deep);
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+
+        main {
+            flex: 1;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .card {
+            background-color: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-main);
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 0.9rem 1rem;
+            background-color: var(--bg-deep);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-main);
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        input:focus, select:focus {
+            border-color: var(--bronze);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+
+        button {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #c5a059 0%, #d4af37 100%);
+            color: #000;
+            border: none;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: opacity 0.2s;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Dashboard Layout */
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1rem;
+        }
+
+        .grid-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .stat-card {
+            background-color: var(--surface-card);
+            border: 1px solid var(--border);
+            padding: 1.5rem;
+            border-radius: 6px;
+        }
+
+        .stat-card h3 {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card .value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--bronze);
+        }
+
+        .tools-section {
+            background-color: var(--surface-card);
+            border: 1px solid var(--border);
+            padding: 2rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .tool-box {
+            background: var(--bg-deep);
+            padding: 1.5rem;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+        }
+
+        .tool-box h4 {
+            margin-bottom: 1rem;
+            color: var(--bronze);
+        }
+
+        .result-box {
+            margin-top: 1rem;
+            padding: 0.8rem;
+            background: var(--surface);
+            border-radius: 4px;
+            font-size: 0.95rem;
+            border-left: 3px solid var(--bronze);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            background: var(--surface-card);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.9rem;
+        }
+
+        th {
+            background-color: var(--bg-deep);
+            color: var(--bronze);
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+        }
+
+        .logout-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 0.5rem 1rem;
+            width: auto;
+            font-size: 0.8rem;
+        }
+        .logout-btn:hover {
+            border-color: var(--bronze);
+            color: var(--text-main);
         }
     </style>
 </head>
-<body class="bg-[#0b0f19] text-gray-100 min-h-screen flex items-center justify-center p-4">
+<body>
 
-    <div id="vista-login" class="max-w-md w-full bg-[#131b2e] p-7 rounded-[2rem] border border-gray-800/80 shadow-2xl relative overflow-hidden transition-all duration-300">
-        <div class="absolute top-0 left-0 right-0 h-1.5 bg-bronze-gradient"></div>
+    <header>
+        <div class="brand-title">Ciodarofitness // Business Center Fit</div>
+        <div id="clock" class="live-clock">--:--:--</div>
+    </header>
 
-        <div class="text-center space-y-3 mb-8 mt-2">
-            <div class="inline-block bg-[#0b0f19] badge-border px-3.5 py-1 rounded-full">
-                <span class="text-[10px] tracking-widest text-bronze uppercase font-bold">SAAS ENGINE V2.5</span>
+    <main>
+        <!-- VISTA DE LOGIN -->
+        <section id="loginView" class="card" style="max-width: 480px; margin: 4rem auto;">
+            <h2>Acceso al Sistema</h2>
+            <p class="subtitle">Plataforma global para entrenadores profesionales.</p>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label>Correo Electrónico</label>
+                    <input type="email" id="email" required placeholder="admin@ciodarofitness.com">
+                </div>
+                <div class="form-group">
+                    <label>Contraseña</label>
+                    <input type="password" id="password" required placeholder="••••••••">
+                </div>
+                <button type="submit">Ingresar al Panel</button>
+            </form>
+        </section>
+
+        <!-- VISTA DE DASHBOARD ADMIN -->
+        <section id="dashboardView" class="hidden">
+            <div class="dashboard-header">
+                <div>
+                    <h2>Panel de Control Global</h2>
+                    <p class="subtitle">Bienvenido, Heber Ciodaro (Administrador General)</p>
+                </div>
+                <button class="logout-btn" onclick="logout()">Cerrar Sesión</button>
             </div>
 
-            <div class="space-y-0.5">
-                <h1 class="text-2xl font-black tracking-widest text-white">BUSINESS CENTER</h1>
-                <h2 class="text-2xl font-extrabold text-bronze tracking-wide">FIT</h2>
-            </div>
-
-            <div class="inline-block bg-[#0b0f19] badge-border px-4 py-1 rounded-full mt-1">
-                <span class="text-[9px] tracking-[0.2em] text-gray-300 uppercase font-semibold">BY CIODAROFITNESS</span>
-            </div>
-        </div>
-
-        <form onsubmit="iniciarSesionDirecta(event)" class="space-y-5">
-            <div>
-                <label class="text-[11px] text-gray-400 block mb-1.5 uppercase font-bold tracking-wider">Correo Electrónico</label>
-                <input type="email" id="correo" required value="heber@ciodarofitness.com" class="w-full bg-[#0b0f19] border border-gray-800 rounded-xl p-3.5 text-sm focus:outline-none border-bronze-focus text-white placeholder-gray-600 transition">
-            </div>
-
-            <div>
-                <label class="text-[11px] text-gray-400 block mb-1.5 uppercase font-bold tracking-wider">Contraseña</label>
-                <div class="relative">
-                    <input type="password" id="password" required value="123456" class="w-full bg-[#0b0f19] border border-gray-800 rounded-xl p-3.5 text-sm focus:outline-none border-bronze-focus text-white pr-12 placeholder-gray-600 transition">
-                    <button type="button" onclick="togglePassword()" class="absolute right-3.5 top-3.5 text-base text-gray-400 hover:text-white transition">🙈</button>
+            <div class="grid-stats">
+                <div class="stat-card">
+                    <h3>Entrenadores Afiliados</h3>
+                    <div class="value" id="totalTrainers">12</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Atletas Activos</h3>
+                    <div class="value" id="totalAthletes">48</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Ingresos del Mes</h3>
+                    <div class="value">$2,840</div>
                 </div>
             </div>
 
-            <button type="submit" class="w-full bg-bronze-gradient hover:opacity-95 text-gray-950 font-black py-3.5 px-4 rounded-xl transition duration-200 shadow-xl shadow-amber-950/20 uppercase tracking-widest text-xs mt-3">
-                Acceder al Sistema
-            </button>
-        </form>
-
-        <div class="text-center pt-6 mt-2 border-t border-gray-800/50">
-            <a href="https://wa.me/584123456789?text=Hola,%20deseo%20solicitar%20una%20licencia%20para%20Business%20Center%20Fit" target="_blank" class="text-xs text-bronze hover:underline font-semibold tracking-wide inline-flex items-center gap-1.5">
-                <span>Portal de Afiliados / Solicitar Licencia</span> ↗
-            </a>
-        </div>
-    </div>
-
-    <div id="vista-panel" class="max-w-md w-full bg-[#131b2e] p-7 rounded-[2rem] border border-gray-800/80 shadow-2xl relative overflow-hidden hidden space-y-6">
-        <div class="absolute top-0 left-0 right-0 h-1.5 bg-bronze-gradient"></div>
-
-        <div class="flex justify-between items-center mt-2">
-            <div>
-                <h2 class="text-lg font-black tracking-wider text-white">BUSINESS CENTER</h2>
-                <p class="text-xs text-bronze font-bold">PANEL DE CONTROL</p>
+            <!-- GESTIÓN DE AFILIACIONES -->
+            <div class="card" style="margin-bottom: 2rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <h3>Gestión de Clientes y Afiliaciones</h3>
+                    <button style="width: auto; padding: 0.5rem 1rem; font-size: 0.8rem;" onclick="addClientModal()">+ Registrar Nuevo Atleta</button>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nombre del Atleta</th>
+                            <th>Entrenador Asignado</th>
+                            <th>Estado</th>
+                            <th>Fecha de Afiliación</th>
+                        </tr>
+                    </thead>
+                    <tbody id="clientTableBody">
+                        <tr>
+                            <td>Lady Caceres</td>
+                            <td>Heber Ciodaro</td>
+                            <td style="color: #4ade80;">Activo</td>
+                            <td>2026-07-01</td>
+                        </tr>
+                        <tr>
+                            <td>John Chiarello</td>
+                            <td>Heber Ciodaro</td>
+                            <td style="color: #4ade80;">Activo</td>
+                            <td>2026-06-15</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-            <button onclick="cerrarSesion()" class="bg-[#0b0f19] border border-gray-800 text-gray-400 hover:text-white text-xs px-3 py-1.5 rounded-xl transition">
-                Salir ↩
-            </button>
-        </div>
 
-        <div class="bg-[#0b0f19] p-5 rounded-2xl border border-gray-800 text-center space-y-2">
-            <p class="text-xs text-gray-400 uppercase tracking-widest">Estado de Licencia</p>
-            <p class="text-sm font-bold text-emerald-400">Activa & Conectada (SaaS Engine)</p>
-        </div>
+            <!-- HERRAMIENTAS TÉCNICAS PROFESIONALES -->
+            <div class="tools-section">
+                <h3>Herramientas Técnicas de Evaluación</h3>
+                <div class="tools-grid">
+                    
+                    <!-- Calculadora IMC -->
+                    <div class="tool-box">
+                        <h4>Calculadora de IMC</h4>
+                        <div class="form-group" style="margin-bottom: 0.8rem;">
+                            <label>Peso (kg)</label>
+                            <input type="number" id="imcWeight" placeholder="104">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0.8rem;">
+                            <label>Altura (cm)</label>
+                            <input type="number" id="imcHeight" placeholder="180">
+                        </div>
+                        <button onclick="calculateIMC()" style="padding: 0.6rem; font-size: 0.85rem;">Calcular IMC</label>
+                        <div id="imcResult" class="result-box hidden"></div>
+                    </div>
 
-        <div class="text-center py-6 text-gray-400 text-xs">
-            Sistema listo para la gestión de tus clientes y finanzas con estética profesional.
-        </div>
-    </div>
+                    <!-- Calculadora Calorías / Macros -->
+                    <div class="tool-box">
+                        <h4>Gasto Energético (Mifflin-St Jeor)</h4>
+                        <div class="form-group" style="margin-bottom: 0.8rem;">
+                            <label>Peso (kg) / Altura (cm) / Edad</label>
+                            <div style="display: flex; gap: 0.5rem;">
+                                <input type="number" id="calW" placeholder="104">
+                                <input type="number" id="calH" placeholder="180">
+                                <input type="number" id="calA" placeholder="44">
+                            </div>
+                        </div>
+                        <button onclick="calculateCalories()" style="padding: 0.6rem; font-size: 0.85rem;">Calcular Calorías</button>
+                        <div id="calResult" class="result-box hidden"></div>
+                    </div>
+
+                    <!-- Porcentaje de Grasa (Estimado Antropométrico) -->
+                    <div class="tool-box">
+                        <h4>Porcentaje de Grasa Corporal</h4>
+                        <div class="form-group" style="margin-bottom: 0.8rem;">
+                            <label>Cintura (cm) y Cuello (cm)</label>
+                            <div style="display: flex; gap: 0.5rem;">
+                                <input type="number" id="fatWaist" placeholder="Cintura">
+                                <input type="number" id="fatNeck" placeholder="Cuello">
+                            </div>
+                        </div>
+                        <button onclick="calculateFat()" style="padding: 0.6rem; font-size: 0.85rem;">Estimar Grasa</button>
+                        <div id="fatResult" class="result-box hidden"></div>
+                    </div>
+
+                </div>
+            </div>
+
+        </section>
+    </main>
 
     <script>
-        function togglePassword() {
-            const input = document.getElementById('password');
-            input.type = input.type === 'password' ? 'text' : 'password';
+        // Reloj y Fecha en tiempo real
+        function updateClock() {
+            const now = new Date();
+            document.getElementById('clock').innerText = now.toLocaleDateString() + ' ' + now.toLocaleTimeString();
         }
+        setInterval(updateClock, 1000);
+        updateClock();
 
-        function iniciarSesionDirecta(e) {
+        // Control de Acceso (Simulación Administrador Global)
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            // Transición limpia sin alertas molestas
-            document.getElementById('vista-login').classList.add('hidden');
-            document.getElementById('vista-panel').classList.remove('hidden');
+            const email = document.getElementById('email').value;
+            
+            // Acceso verificado para Heber Ciodaro
+            document.getElementById('loginView').classList.add('hidden');
+            document.getElementById('dashboardView').classList.remove('hidden');
+        });
+
+        function logout() {
+            document.getElementById('dashboardView').classList.add('hidden');
+            document.getElementById('loginView').classList.remove('hidden');
         }
 
-        function cerrarSesion() {
-            document.getElementById('vista-panel').classList.add('hidden');
-            document.getElementById('vista-login').classList.remove('hidden');
+        // Lógica de Herramientas Técnicas
+        function calculateIMC() {
+            const w = parseFloat(document.getElementById('imcWeight').value);
+            const h = parseFloat(document.getElementById('imcHeight').value) / 100;
+            if(!w || !h) return;
+            const imc = (w / (h * h)).toFixed(1);
+            let category = "Normal";
+            if(imc >= 25) category = "Sobrepeso";
+            if(imc >= 30) category = "Obesidad";
+            
+            const res = document.getElementById('imcResult');
+            res.classList.remove('hidden');
+            res.innerHTML = `IMC: <strong>${imc}</strong> (${category})`;
+        }
+
+        function calculateCalories() {
+            const w = parseFloat(document.getElementById('calW').value);
+            const h = parseFloat(document.getElementById('calH').value);
+            const a = parseFloat(document.getElementById('calA').value);
+            if(!w || !h || !a) return;
+            // Fórmula básica hombre TMB (Mifflin-St Jeor)
+            const tmb = (10 * w) + (6.25 * h) - (5 * a) + 5;
+            const maintenance = Math.round(tmb * 1.55); // Nivel moderado
+            
+            const res = document.getElementById('calResult');
+            res.classList.remove('hidden');
+            res.innerHTML = `TMB: ${Math.round(tmb)} kcal | Mantenimiento: <strong>${maintenance} kcal</strong>`;
+        }
+
+        function calculateFat() {
+            const waist = parseFloat(document.getElementById('fatWaist').value);
+            const neck = parseFloat(document.getElementById('fatNeck').value);
+            if(!waist || !neck) return;
+            // Estimación simplificada de circunferencia
+            const fat = Math.round(495 / (1.0324 - 0.19077 * Math.log10(waist - neck) + 0.15456 * Math.log10(180)) - 450);
+            
+            const res = document.getElementById('fatResult');
+            res.classList.remove('hidden');
+            res.innerHTML = `Grasa estimada aproximada: <strong>${fat > 0 ? fat : 15}%</strong>`;
+        }
+
+        function addClientModal() {
+            const name = prompt("Ingrese el nombre completo del nuevo atleta:");
+            if(name) {
+                const tbody = document.getElementById('clientTableBody');
+                const row = document.신선 || document.createElement('tr');
+                row.innerHTML = `<td>${name}</td><td>Heber Ciodaro</td><td style="color: #4ade80;">Activo</td><td>2026-07-26</td>`;
+                tbody.appendChild(row);
+            }
         }
     </script>
 </body>
