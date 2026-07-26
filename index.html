@@ -3,304 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Business Center Fit - Panel de Control</title>
+    <title>Ciodarofitness - Panel de Control</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @media print {
-            body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            body { background: white !important; color: black !important; }
             .no-print { display: none !important; }
             .print-only { display: block !important; }
-            .bg-\[\#131b2e\] { background-color: #131b2e !important; border: 1px solid rgba(249, 115, 22, 0.4) !important; }
-            .bg-\[\#0b0f19\] { background-color: #0b0f19 !important; }
-            .text-white { color: #ffffff !important; font-weight: 800 !important; }
-            .text-gray-200, .text-gray-300, .text-gray-400 { color: #e2e8f0 !important; font-weight: 700 !important; }
-            .text-orange-400, .text-orange-500 { color: #f97316 !important; font-weight: 900 !important; }
-            .text-emerald-400 { color: #34d399 !important; font-weight: 800 !important; }
-            .ocultar-en-pdf { display: none !important; }
-            .mostrar-en-pdf { display: inline !important; }
+            div { border-color: #ccc !important; }
         }
-        .mostrar-en-pdf { display: none; }
     </style>
 </head>
 <body class="bg-[#0b0f19] text-gray-100 min-h-screen p-4 pb-20">
 
-    <!-- PANTALLA DE ACCESO RESTRINGIDO (ADMIN) -->
-    <div id="pantalla-login" class="max-w-md mx-auto mt-20 bg-[#131b2e] p-6 rounded-3xl border border-orange-500/40 shadow-2xl space-y-5">
-        <div class="text-center space-y-1">
-            <h1 class="text-xl font-black text-white tracking-wide">BUSINESS CENTER FIT <span class="text-xs text-orange-500 font-normal">pro</span></h1>
-            <p class="text-xs text-orange-400 uppercase tracking-widest font-semibold">Acceso Exclusivo de Administrador</p>
-        </div>
-        <form onsubmit="verificarAccesoAdmin(event)" class="space-y-4">
-            <div>
-                <label class="text-xs text-gray-400 block mb-1">Clave Maestra de Seguridad</label>
-                <input type="password" id="input-clave-admin" required placeholder="Ingresa tu clave maestra" class="w-full bg-[#0b0f19] border border-gray-800 rounded-xl p-3 text-sm focus:outline-none focus:border-orange-500 text-white placeholder-gray-600">
-            </div>
-            <button type="submit" class="w-full bg-orange-600 hover:bg-orange-500 text-white font-bold py-3 px-4 rounded-xl transition duration-200 shadow-lg shadow-orange-600/20">🔒 Ingresar al Sistema</button>
-            <p id="error-login" class="text-red-400 text-xs text-center hidden">Clave incorrecta. Acceso denegado.</p>
-        </form>
-    </div>
-
-    <!-- CONTENEDOR PRINCIPAL -->
-    <div class="max-w-md mx-auto space-y-5 hidden" id="app-container">
-        <div id="vista-principal" class="space-y-5">
-            <header class="flex justify-between items-center bg-[#131b2e] p-4 rounded-2xl border border-gray-800 shadow-lg">
+    <div class="max-w-md mx-auto space-y-6" id="app-container">
+        <div id="vista-principal" class="space-y-6">
+            <header class="flex justify-between items-center bg-[#131b2e] p-4 rounded-2xl border border-gray-800">
                 <div>
-                    <h1 class="text-lg font-black text-white tracking-wide">BUSINESS CENTER FIT <span class="text-xs text-orange-500 font-normal">pro</span></h1>
+                    <h1 class="text-xl font-black tracking-wider text-orange-500">CIODAROFITNESS <span class="text-xs text-gray-400 font-normal">page</span></h1>
                 </div>
                 <div class="flex items-center gap-2">
-                    <button onclick="cerrarSesionAdmin()" class="bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 text-xs font-semibold px-2.5 py-1.5 rounded-xl transition" title="Bloquear panel">🚪 Salir</button>
-                    <button onclick="alternarVisibilidadMontos()" id="btn-ojo" class="bg-gray-800 hover:bg-gray-700 text-gray-300 p-2 rounded-xl border border-gray-700 text-xs transition" title="Ocultar/Mostrar montos">👁️</button>
+                    <button onclick="alternarVisibilidadMontos()" id="btn-ojo" class="bg-gray-800 text-gray-300 p-2 rounded-xl border border-gray-700 text-xs">👁️</button>
+                    <span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-semibold px-3 py-1.5 rounded-full">Panel Activo</span>
                 </div>
             </header>
 
-            <!-- Sección de Solicitudes de Licencia / Validación -->
-            <div class="bg-[#131b2e] p-4 rounded-2xl border border-orange-500/30 space-y-3 no-print">
-                <div class="flex justify-between items-center">
-                    <h3 class="text-xs font-bold text-orange-400 uppercase tracking-wider flex items-center gap-1.5">🔑 Solicitudes de Licencia</h3>
-                    <span id="badge-solicitudes" class="bg-orange-500/20 text-orange-400 text-[10px] font-bold px-2 py-0.5 rounded-full">0 pendientes</span>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="bg-[#131b2e] p-4 rounded-2xl border border-gray-800">
+                    <div class="text-xs text-gray-400 uppercase font-semibold">Clientes Activos</div>
+                    <div id="total-clientes" class="text-3xl font-bold mt-2">0</div>
                 </div>
-                <div id="lista-solicitudes" class="space-y-2">
-                    <!-- Se llena dinámicamente -->
+                <div class="bg-[#131b2e] p-4 rounded-2xl border border-gray-800">
+                    <div class="text-xs text-gray-400 uppercase font-semibold">Ingresos Mensuales</div>
+                    <div id="total-meta" class="text-2xl font-bold mt-2 text-orange-400">$0.00</div>
                 </div>
-            </div>
-
-            <!-- Botones de Respaldo JSON -->
-            <div class="bg-[#131b2e] p-3 rounded-2xl border border-gray-800 flex justify-between items-center gap-2 no-print">
-                <span class="text-[11px] text-gray-400 font-medium pl-1">💾 Respaldo BD:</span>
-                <div class="flex gap-2">
-                    <button onclick="exportarDatosJSON()" class="bg-gray-800 hover:bg-gray-700 text-orange-400 text-xs font-semibold px-3 py-1.5 rounded-xl border border-gray-700 transition">📤 Exportar</button>
-                    <label class="bg-gray-800 hover:bg-gray-700 text-emerald-400 text-xs font-semibold px-3 py-1.5 rounded-xl border border-gray-700 transition cursor-pointer">
-                        📥 Importar
-                        <input type="file" id="input-json" accept=".json" onchange="importarDatosJSON(event)" class="hidden">
-                    </label>
+                <div class="bg-[#131b2e] p-4 rounded-2xl border border-gray-800">
+                    <div class="text-xs text-gray-400 uppercase font-semibold">Recaudado</div>
+                    <div id="total-recaudado" class="text-2xl font-bold mt-2 text-emerald-400">$0.00</div>
+                </div>
+                <div class="bg-[#131b2e] p-4 rounded-2xl border border-gray-800">
+                    <div class="text-xs text-gray-400 uppercase font-semibold">Por Cobrar</div>
+                    <div id="total-por-cobrar" class="text-2xl font-bold mt-2 text-red-400">$0.00</div>
                 </div>
             </div>
 
-            <div class="grid grid-cols-2 gap-3">
-                <div class="bg-[#131b2e] p-3.5 rounded-2xl border border-gray-800">
-                    <div class="text-[10px] text-gray-400 uppercase font-semibold">Atletas Activos</div>
-                    <div id="total-clientes" class="text-2xl font-black mt-1 text-white">0</div>
-                </div>
-                <div class="bg-[#131b2e] p-3.5 rounded-2xl border border-gray-800">
-                    <div class="text-[10px] text-gray-400 uppercase font-semibold">Meta Mensual</div>
-                    <div id="total-meta" class="text-xl font-black mt-1 text-orange-400">$0.00</div>
-                </div>
-                <div class="bg-[#131b2e] p-3.5 rounded-2xl border border-gray-800">
-                    <div class="text-[10px] text-gray-400 uppercase font-semibold">Recaudado</div>
-                    <div id="total-recaudado" class="text-xl font-black mt-1 text-emerald-400">$0.00</div>
-                </div>
-                <div class="bg-[#131b2e] p-3.5 rounded-2xl border border-gray-800">
-                    <div class="text-[10px] text-gray-400 uppercase font-semibold">Por Cobrar</div>
-                    <div id="total-por-cobrar" class="text-xl font-black mt-1 text-amber-400">$0.00</div>
-                </div>
-            </div>
-
-            <div class="bg-[#131b2e] p-5 rounded-3xl border border-gray-800 space-y-3 shadow-xl no-print">
-                <h2 id="titulo-form-cliente" class="text-xs font-bold text-orange-500 uppercase tracking-wider flex items-center gap-1.5">⚡ Registrar Nuevo Atleta</h2>
+            <div class="bg-[#131b2e] p-5 rounded-2xl border border-gray-800 space-y-4 no-print">
+                <h2 class="text-sm font-bold text-orange-500 uppercase tracking-wide flex items-center gap-2">
+                    👤 Registrar Nuevo Cliente
+                </h2>
+                
                 <form id="form-cliente" class="space-y-3">
                     <div>
                         <label class="text-xs text-gray-400 block mb-1">Nombre Completo</label>
-                        <input type="text" id="nombre" required placeholder="Ej. Juan Pérez" class="w-full bg-[#0b0f19] border border-gray-800 rounded-xl p-3 text-sm focus:outline-none focus:border-orange-500 text-white placeholder-gray-600">
+                        <input type="text" id="nombre" required placeholder="Ej. Juan Pérez" class="w-full bg-[#0b0f19] border border-gray-800 rounded-xl p-3 text-sm focus:outline-none focus:border-orange-500 text-white">
                     </div>
-                    <div class="grid grid-cols-2 gap-2">
+                    <div class="grid grid-cols-2 gap-3">
                         <div>
                             <label class="text-xs text-gray-400 block mb-1">Edad</label>
-                            <input type="number" id="edad" placeholder="Ej. 30" class="w-full bg-[#0b0f19] border border-gray-800 rounded-xl p-3 text-sm focus:outline-none focus:border-orange-500 text-white placeholder-gray-600">
+                            <input type="number" id="edad" placeholder="Ej. 30" class="w-full bg-[#0b0f19] border border-gray-800 rounded-xl p-3 text-sm focus:outline-none focus:border-orange-500 text-white">
                         </div>
                         <div>
                             <label class="text-xs text-gray-400 block mb-1">WhatsApp</label>
-                            <input type="text" id="whatsapp" required placeholder="Ej. 5841234" class="w-full bg-[#0b0f19] border border-gray-800 rounded-xl p-3 text-sm focus:outline-none focus:border-orange-500 text-white placeholder-gray-600">
+                            <input type="text" id="whatsapp" required placeholder="Ej. 5841234" class="w-full bg-[#0b0f19] border border-gray-800 rounded-xl p-3 text-sm focus:outline-none focus:border-orange-500 text-white">
                         </div>
                     </div>
-                    <div class="grid grid-cols-2 gap-2">
+                    <div class="grid grid-cols-2 gap-3">
                         <div>
                             <label class="text-xs text-gray-400 block mb-1">Costo Paquete ($)</label>
-                            <input type="number" id="costo" required placeholder="Ej. 50" class="w-full bg-[#0b0f19] border border-gray-800 rounded-xl p-3 text-sm focus:outline-none focus:border-orange-500 text-white placeholder-gray-600">
+                            <input type="number" id="costo" required placeholder="Ej. 50" class="w-full bg-[#0b0f19] border border-gray-800 rounded-xl p-3 text-sm focus:outline-none focus:border-orange-500 text-white">
                         </div>
                         <div>
-                            <label class="text-xs text-gray-400 block mb-1">Fecha de Inicio Original</label>
+                            <label class="text-xs text-gray-400 block mb-1">Fecha de Inicio</label>
                             <input type="date" id="fecha" required class="w-full bg-[#0b0f19] border border-gray-800 rounded-xl p-3 text-sm focus:outline-none focus:border-orange-500 text-white">
                         </div>
                     </div>
-                    <div class="flex gap-2">
-                        <button type="submit" id="btn-submit-cliente" class="w-full bg-orange-600 hover:bg-orange-500 text-white font-bold py-3 px-4 rounded-xl transition duration-200 flex items-center justify-center gap-2 shadow-lg shadow-orange-600/20">📂 Agregar a la Base de Datos</button>
-                        <button type="button" id="btn-cancelar-edicion-cliente" onclick="cancelarEdicionCliente()" class="hidden bg-gray-700 hover:bg-gray-600 text-white font-bold px-4 py-3 rounded-xl transition">Cancelar</button>
-                    </div>
+                    <button type="submit" class="w-full bg-orange-600 hover:bg-orange-500 text-white font-bold py-3.5 px-4 rounded-xl transition duration-200 flex items-center justify-center gap-2 shadow-lg shadow-orange-600/20">
+                        📂 Agregar a la Base de Datos
+                    </button>
                 </form>
             </div>
 
             <div class="space-y-3 no-print">
-                <h3 class="text-xs font-bold text-gray-400 uppercase tracking-wider flex items-center gap-1.5">📋 Control de Atletas</h3>
-                <input type="text" id="buscador-clientes" oninput="renderizarClientes()" placeholder="🔍 Buscar atleta por nombre..." class="w-full bg-[#131b2e] border border-gray-800 rounded-xl p-3 text-sm focus:outline-none focus:border-orange-500 text-white placeholder-gray-600 shadow-md">
+                <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wide flex items-center gap-2">
+                    📋 Control de Clientes y Vencimientos
+                </h3>
                 <div id="lista-clientes" class="space-y-3"></div>
             </div>
         </div>
 
         <div id="vista-expediente" class="hidden space-y-4">
             <div class="flex justify-between items-center no-print">
-                <button onclick="volverAlInicio()" class="bg-gray-800 hover:bg-gray-700 text-white text-xs font-semibold px-3.5 py-2 rounded-xl border border-gray-700 transition">← Volver al Panel</button>
-                <button onclick="generarPDFExpediente()" class="bg-orange-600 hover:bg-orange-500 text-white text-xs font-bold px-4 py-2 rounded-xl shadow-lg flex items-center gap-1.5 transition">⚡ Descargar Expediente PDF</button>
-            </div>
-            <div class="bg-gradient-to-r from-orange-600 to-amber-600 p-5 rounded-2xl shadow-xl text-white text-center space-y-1">
-                <h1 class="text-xl font-black tracking-wider">BUSINESS CENTER FIT</h1>
-                <p class="text-xs font-semibold uppercase tracking-widest text-orange-100">Expediente Antropométrico & Rendimiento</p>
-                <div class="text-[10px] text-orange-200 pt-1" id="fecha-impresion"></div>
+                <button onclick="volverAlInicio()" class="bg-gray-800 hover:bg-gray-700 text-white text-xs font-semibold px-4 py-2 rounded-xl border border-gray-700">
+                    ← Volver al Panel
+                </button>
+                <button onclick="generarPDFExpediente()" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold px-4 py-2 rounded-xl shadow-lg flex items-center gap-1.5">
+                    📄 Descargar Expediente PDF
+                </button>
             </div>
             <div id="detalle-expediente" class="space-y-4"></div>
-            <div class="bg-[#131b2e] p-4 rounded-2xl border border-gray-800 text-center space-y-1 mt-6">
-                <p class="text-xs font-bold text-orange-500">BUSINESS CENTER FIT</p>
-                <p class="text-[10px] text-gray-400">Entrenamiento Inteligente</p>
-            </div>
         </div>
     </div>
-        <script>
-        const claveMaestra = "ciodaro2026"; 
 
-        document.addEventListener("DOMContentLoaded", () => {
-            if (sessionStorage.getItem('bcf_sesion_activa') === 'true') {
-                mostrarPanelAdmin();
-            }
-        });
-
-        function verificarAccesoAdmin(e) {
-            e.preventDefault();
-            const inputClave = document.getElementById('input-clave-admin').value;
-            const errorMsg = document.getElementById('error-login');
-
-            if (inputClave === claveMaestra) {
-                sessionStorage.setItem('bcf_sesion_activa', 'true');
-                errorMsg.classList.add('hidden');
-                mostrarPanelAdmin();
-            } else {
-                errorMsg.classList.remove('hidden');
-                document.getElementById('input-clave-admin').value = '';
-            }
+    <script>
+        const inputFecha = document.getElementById('fecha');
+        if (inputFecha) {
+            inputFecha.valueAsDate = new Date();
         }
 
-        function mostrarPanelAdmin() {
-            document.getElementById('pantalla-login').classList.add('hidden');
-            document.getElementById('app-container').classList.remove('hidden');
-            const inputFecha = document.getElementById('fecha');
-            if (inputFecha) inputFecha.valueAsDate = new Date();
-            renderizarSolicitudesLicencia();
-            renderizarClientes();
-        }
-
-        function cerrarSesionAdmin() {
-            sessionStorage.removeItem('bcf_sesion_activa');
-            document.getElementById('app-container').classList.add('hidden');
-            document.getElementById('pantalla-login').classList.remove('hidden');
-            document.getElementById('input-clave-admin').value = '';
-        }
-
-        let clientes = JSON.parse(localStorage.getItem('bcf_clientes')) || [];
-        let solicitudesLicencia = JSON.parse(localStorage.getItem('bcf_solicitudes')) || [
-            { id: 101, nombre: "Atleta Externo de Prueba", email: "atleta@correo.com", fecha: "2026-07-26" }
-        ];
-
+        let clientes = JSON.parse(localStorage.getItem('ciodaro_clientes')) || [];
         let montosOcultos = false;
-        let metricaEditandoIdx = null;
-        let clienteActualId = null;
-        let clienteEditandoId = null;
 
         function guardarStorage() {
-            localStorage.setItem('bcf_clientes', JSON.stringify(clientes));
+            localStorage.setItem('ciodaro_clientes', JSON.stringify(clientes));
             renderizarClientes();
-        }
-
-        function guardarSolicitudesStorage() {
-            localStorage.setItem('bcf_solicitudes', JSON.stringify(solicitudesLicencia));
-            renderizarSolicitudesLicencia();
-        }
-
-        function renderizarSolicitudesLicencia() {
-            const contenedor = document.getElementById('lista-solicitudes');
-            const badge = document.getElementById('badge-solicitudes');
-            if (!contenedor || !badge) return;
-
-            badge.textContent = `${solicitudesLicencia.length} pendientes`;
-            contenedor.innerHTML = '';
-
-            if (solicitudesLicencia.length === 0) {
-                contenedor.innerHTML = `<p class="text-gray-500 text-xs text-center py-2">No hay solicitudes de licencia pendientes.</p>`;
-                return;
-            }
-
-            solicitudesLicencia.forEach((sol, idx) => {
-                const div = document.createElement('div');
-                div.className = "flex justify-between items-center bg-[#0b0f19] p-2.5 rounded-xl border border-gray-800 text-xs";
-                div.innerHTML = `
-                    <div>
-                        <span class="font-bold text-white">${sol.nombre}</span>
-                        <div class="text-[10px] text-gray-400">Ref: ${sol.email}</div>
-                    </div>
-                    <div class="flex gap-1.5">
-                        <button onclick="aprobarLicencia(${idx})" class="bg-emerald-600 hover:bg-emerald-500 text-white px-2.5 py-1 rounded-lg font-bold">Aprobar</button>
-                        <button onclick="denegarLicencia(${idx})" class="bg-red-950/60 hover:bg-red-900 text-red-400 px-2 py-1 rounded-lg">Borrar</button>
-                    </div>
-                `;
-                contenedor.appendChild(div);
-            });
-        }
-
-        function aprobarLicencia(idx) {
-            const sol = solicitudesLicencia[idx];
-            clientes.push({
-                id: Date.now(),
-                nombre: sol.nombre,
-                edad: 'N/A',
-                whatsapp: '0000000',
-                costo: 0,
-                fecha: new Date().toISOString().slice(0, 10),
-                pagado: true,
-                abonos: [],
-                metricas: []
-            });
-            solicitudesLicencia.splice(idx, 1);
-            guardarStorage();
-            guardarSolicitudesStorage();
-            alert(`¡Licencia aprobada para ${sol.nombre}! Añadido a la lista.`);
-        }
-
-        function denegarLicencia(idx) {
-            if (confirm('¿Deseas rechazar y borrar esta solicitud de licencia no deseada?')) {
-                solicitudesLicencia.splice(idx, 1);
-                guardarSolicitudesStorage();
-            }
-        }
-
-        function exportarDatosJSON() {
-            const datosStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(clientes, null, 2));
-            const downloadAnchor = document.createElement('a');
-            downloadAnchor.setAttribute("href", datosStr);
-            downloadAnchor.setAttribute("download", `respaldo_businesscenterfit_${new Date().toISOString().slice(0,10)}.json`);
-            document.body.appendChild(downloadAnchor);
-            downloadAnchor.click();
-            downloadAnchor.remove();
-        }
-
-        function importarDatosJSON(event) {
-            const archivo = event.target.files[0];
-            if (!archivo) return;
-            const lector = new FileReader();
-            lector.onload = function(e) {
-                try {
-                    const datosImportados = JSON.parse(e.target.result);
-                    if (Array.isArray(datosImportados)) {
-                        if (confirm(`¿Estás seguro de cargar este respaldo? Se reemplazarán los atletas actuales por los ${datosImportados.length} registros del archivo.`)) {
-                            clientes = datosImportados;
-                            guardarStorage();
-                            alert('¡Base de datos importada exitosamente!');
-                        }
-                    } else {
-                        alert('El archivo no tiene el formato correcto.');
-                    }
-                } catch (error) {
-                    alert('Error al leer el archivo JSON.');
-                }
-                event.target.value = '';
-            };
-            lector.readAsText(archivo);
         }
 
         function alternarVisibilidadMontos() {
@@ -309,99 +124,29 @@
             renderizarClientes();
         }
 
-        function calcularCicloActual(fechaInicioStr) {
-            if (!fechaInicioStr) return { inicioCiclo: new Date(), finCiclo: new Date() };
+        document.getElementById('form-cliente').addEventListener('submit', function(e) {
+            e.preventDefault();
             
-            const partes = fechaInicioStr.split('-');
-            const diaInicioOriginal = parseInt(partes[2], 10);
+            const nuevoCliente = {
+                id: Date.now(),
+                nombre: document.getElementById('nombre').value,
+                edad: document.getElementById('edad').value || 'N/A',
+                whatsapp: document.getElementById('whatsapp').value,
+                costo: parseFloat(document.getElementById('costo').value) || 0,
+                fecha: document.getElementById('fecha').value,
+                pagado: true,
+                metricas: []
+            };
+
+            clientes.push(nuevoCliente);
+            guardarStorage();
             
-            const hoy = new Date();
-            const anioActual = hoy.getFullYear();
-            const mesActual = hoy.getMonth();
-
-            let inicioCiclo = new Date(anioActual, mesActual, diaInicioOriginal);
-            
-            if (hoy < inicioCiclo) {
-                inicioCiclo = new Date(anioActual, mesActual - 1, diaInicioOriginal);
-            }
-
-            let finCiclo = new Date(inicioCiclo);
-            finCiclo.setMonth(finCiclo.getMonth() + 1);
-            finCiclo.setDate(finCiclo.getDate() - 1);
-
-            return { inicioCiclo, finCiclo };
-        }
-
-        const formCliente = document.getElementById('form-cliente');
-        if (formCliente) {
-            formCliente.addEventListener('submit', function(e) {
-                e.preventDefault();
-                const nombreVal = document.getElementById('nombre').value;
-                const edadVal = document.getElementById('edad').value || 'N/A';
-                const whatsappVal = document.getElementById('whatsapp').value;
-                const costoVal = parseFloat(document.getElementById('costo').value) || 0;
-                const fechaVal = document.getElementById('fecha').value;
-
-                if (clienteEditandoId !== null) {
-                    const c = clientes.find(item => item.id === clienteEditandoId);
-                    if (c) {
-                        c.nombre = nombreVal;
-                        c.edad = edadVal;
-                        c.whatsapp = whatsappVal;
-                        c.costo = costoVal;
-                        c.fecha = fechaVal;
-                    }
-                    clienteEditandoId = null;
-                    document.getElementById('titulo-form-cliente').textContent = '⚡ Registrar Nuevo Atleta';
-                    document.getElementById('btn-submit-cliente').textContent = '📂 Agregar a la Base de Datos';
-                    document.getElementById('btn-cancelar-edicion-cliente').classList.add('hidden');
-                } else {
-                    const nuevoCliente = {
-                        id: Date.now(),
-                        nombre: nombreVal,
-                        edad: edadVal,
-                        whatsapp: whatsappVal,
-                        costo: costoVal,
-                        fecha: fechaVal,
-                        pagado: true,
-                        abonos: [],
-                        metricas: []
-                    };
-                    clientes.push(nuevoCliente);
-                }
-                guardarStorage();
-                this.reset();
-                document.getElementById('fecha').valueAsDate = new Date();
-            });
-        }
-
-        function prepararEdicionCliente(id) {
-            const c = clientes.find(item => item.id === id);
-            if (!c) return;
-            clienteEditandoId = id;
-            document.getElementById('nombre').value = c.nombre;
-            document.getElementById('edad').value = c.edad !== 'N/A' ? c.edad : '';
-            document.getElementById('whatsapp').value = c.whatsapp;
-            document.getElementById('costo').value = c.costo;
-            document.getElementById('fecha').value = c.fecha;
-
-            document.getElementById('titulo-form-cliente').textContent = '✏️ Editar Atleta: ' + c.nombre;
-            document.getElementById('btn-submit-cliente').textContent = 'Guardar Cambios';
-            document.getElementById('btn-cancelar-edicion-cliente').classList.remove('hidden');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        function cancelarEdicionCliente() {
-            clienteEditandoId = null;
-            document.getElementById('form-cliente').reset();
+            this.reset();
             document.getElementById('fecha').valueAsDate = new Date();
-            document.getElementById('titulo-form-cliente').textContent = '⚡ Registrar Nuevo Atleta';
-            document.getElementById('btn-submit-cliente').textContent = '📂 Agregar a la Base de Datos';
-            document.getElementById('btn-cancelar-edicion-cliente').classList.add('hidden');
-        }
+        });
 
         function eliminarCliente(id) {
-            if(confirm('¿Eliminar y borrar este cliente o usuario no deseado por completo?')) {
+            if(confirm('¿Eliminar este atleta por completo?')) {
                 clientes = clientes.filter(c => c.id !== id);
                 guardarStorage();
             }
@@ -411,47 +156,33 @@
             const contenedor = document.getElementById('lista-clientes');
             if (!contenedor) return;
             contenedor.innerHTML = '';
-
-            const inputBusqueda = document.getElementById('buscador-clientes');
-            const textoFiltro = inputBusqueda ? inputBusqueda.value.toLowerCase() : '';
-            const clientesFiltrados = clientes.filter(c => c.nombre && c.nombre.toLowerCase().includes(textoFiltro));
-
+            
             let totalCli = clientes.length;
             let metaTotal = 0;
             let recaudadoTotal = 0;
             let porCobrarTotal = 0;
 
-            clientes.forEach(c => {
-                let costoC = Number(c.costo) || 0;
-                metaTotal += costoC;
-                let totalAbonado = (c.abonos || []).reduce((sum, a) => sum + (Number(a.monto) || 0), 0);
-                let pagadoReal = c.pagado || (totalAbonado >= costoC);
-                
-                if (pagadoReal) {
-                    recaudadoTotal += costoC;
-                } else {
-                    recaudadoTotal += totalAbonado;
-                    porCobrarTotal += (costoC - totalAbonado);
-                }
-            });
-
-            document.getElementById('total-clientes').textContent = totalCli;
-            document.getElementById('total-meta').textContent = montosOcultos ? '••••' : '$' + metaTotal.toFixed(2);
-            document.getElementById('total-recaudado').textContent = montosOcultos ? '••••' : '$' + recaudadoTotal.toFixed(2);
-            document.getElementById('total-por-cobrar').textContent = montosOcultos ? '••••' : '$' + porCobrarTotal.toFixed(2);
-
-            if (clientesFiltrados.length === 0) {
-                contenedor.innerHTML = `<div class="text-center text-gray-500 text-sm py-6 bg-[#131b2e] rounded-2xl border border-gray-800">No se encontraron atletas.</div>`;
+            if (totalCli === 0) {
+                contenedor.innerHTML = `<div class="text-center text-gray-500 text-sm py-6 bg-[#131b2e] rounded-2xl border border-gray-800">No hay atletas registrados.</div>`;
+                document.getElementById('total-clientes').textContent = '0';
+                document.getElementById('total-meta').textContent = montosOcultos ? '••••' : '$0.00';
+                document.getElementById('total-recaudado').textContent = montosOcultos ? '••••' : '$0.00';
+                document.getElementById('total-por-cobrar').textContent = montosOcultos ? '••••' : '$0.00';
                 return;
             }
 
-            clientesFiltrados.forEach(c => {
-                let fechaInicioOriginal = new Date(c.fecha + 'T00:00:00');
-                let ciclo = calcularCicloActual(c.fecha);
-                let opt = { day: '2-digit', month: 'short', year: 'numeric' };
-                let costoC = Number(c.costo) || 0;
-                let totalAbonado = (c.abonos || []).reduce((sum, a) => sum + (Number(a.monto) || 0), 0);
-                let pagadoReal = c.pagado || (totalAbonado >= costoC);
+            clientes.forEach(c => {
+                metaTotal += c.costo;
+                if (c.pagado) {
+                    recaudadoTotal += c.costo;
+                } else {
+                    porCobrarTotal += c.costo;
+                }
+
+                let fechaInicio = new Date(c.fecha + 'T00:00:00');
+                let fechaVenc = new Date(fechaInicio);
+                fechaVenc.setDate(fechaVenc.getDate() + 30);
+                let opt = { day: '2-digit', month: 'short' };
 
                 const card = document.createElement('div');
                 card.className = "bg-[#131b2e] p-4 rounded-2xl border border-gray-800 space-y-3";
@@ -459,29 +190,35 @@
                     <div class="flex justify-between items-start">
                         <div>
                             <h4 class="font-bold text-white text-base">${c.nombre}</h4>
-                            <p class="text-xs text-gray-400 mt-0.5">🚀 Inicio: ${fechaInicioOriginal.toLocaleDateString('es-ES', opt)}</p>
-                            <p class="text-xs text-orange-400 font-semibold mt-0.5">⏳ Ciclo actual: ${ciclo.inicioCiclo.toLocaleDateString('es-ES', opt)} al ${ciclo.finCiclo.toLocaleDateString('es-ES', opt)}</p>
+                            <p class="text-xs text-gray-400 mt-0.5">📅 Ciclo: ${fechaInicio.toLocaleDateString('es-ES', opt)} al ${fechaVenc.toLocaleDateString('es-ES', opt)}</p>
                         </div>
-                        <span class="text-emerald-400 font-bold text-sm">${montosOcultos ? '••••' : '$' + costoC.toFixed(2)}</span>
+                        <span class="text-emerald-400 font-bold text-sm">${montosOcultos ? '••••' : '$' + c.costo.toFixed(2)}</span>
                     </div>
                     <div class="flex justify-between items-center pt-2 border-t border-gray-800/60">
-                        <span class="bg-${pagadoReal ? 'emerald' : 'amber'}-500/10 text-${pagadoReal ? 'emerald' : 'amber'}-400 border border-${pagadoReal ? 'emerald' : 'amber'}-500/20 text-[10px] font-semibold px-2.5 py-1 rounded-full">
-                            ${pagadoReal ? 'Al Día (30d)' : `Abonado: $${totalAbonado.toFixed(2)}`}
+                        <span class="bg-${c.pagado ? 'emerald' : 'red'}-500/10 text-${c.pagado ? 'emerald' : 'red'}-400 border border-${c.pagado ? 'emerald' : 'red'}-500/20 text-[10px] font-semibold px-2.5 py-1 rounded-full">
+                            ${c.pagado ? 'Al Día (30d)' : 'Pendiente Pago'}
                         </span>
                         <div class="flex gap-2">
-                            <button onclick="prepararEdicionCliente(${c.id})" class="bg-gray-800 hover:bg-gray-700 text-gray-300 text-[11px] font-semibold px-2.5 py-1.5 rounded-lg border border-gray-700 transition">✏️ Editar</button>
-                            <button onclick="abrirExpediente(${c.id})" class="bg-orange-600 hover:bg-orange-500 text-white text-xs font-semibold px-3 py-2 rounded-xl transition">📂 Expediente</button>
-                            <button onclick="eliminarCliente(${c.id})" class="bg-gray-800 hover:bg-red-600/20 text-gray-400 hover:text-red-400 p-2 rounded-xl border border-gray-700" title="Eliminar cliente no deseado">🗑️</button>
+                            <button onclick="abrirExpediente(${c.id})" class="bg-orange-600 hover:bg-orange-500 text-white text-xs font-semibold px-3 py-2 rounded-xl transition">
+                                📂 Expediente
+                            </button>
+                            <button onclick="eliminarCliente(${c.id})" class="bg-gray-800 hover:bg-red-600/20 text-gray-400 hover:text-red-400 p-2 rounded-xl border border-gray-700">🗑️</button>
                         </div>
                     </div>
                 `;
                 contenedor.appendChild(card);
             });
+
+            document.getElementById('total-clientes').textContent = totalCli;
+            document.getElementById('total-meta').textContent = montosOcultos ? '••••' : '$' + metaTotal.toFixed(2);
+            document.getElementById('total-recaudado').textContent = montosOcultos ? '••••' : '$' + recaudadoTotal.toFixed(2);
+            document.getElementById('total-por-cobrar').textContent = montosOcultos ? '••••' : '$' + porCobrarTotal.toFixed(2);
         }
+
+        let clienteActualId = null;
 
         function abrirExpediente(id) {
             clienteActualId = id;
-            metricaEditandoIdx = null;
             document.getElementById('vista-principal').classList.add('hidden');
             document.getElementById('vista-expediente').classList.remove('hidden');
             renderizarExpediente();
@@ -489,59 +226,33 @@
 
         function volverAlInicio() {
             clienteActualId = null;
-            metricaEditandoIdx = null;
             document.getElementById('vista-expediente').classList.add('hidden');
             document.getElementById('vista-principal').classList.remove('hidden');
             renderizarClientes();
         }
-                    function renderizarExpediente() {
+
+        function renderizarExpediente() {
             const c = clientes.find(item => item.id === clienteActualId);
             if (!c) return;
+
             const contenedor = document.getElementById('detalle-expediente');
-            if (!contenedor) return;
             
-            let costoC = Number(c.costo) || 0;
-            let totalAbonado = (c.abonos || []).reduce((sum, a) => sum + (Number(a.monto) || 0), 0);
-            let saldoPendiente = costoC - totalAbonado;
-            if (saldoPendiente < 0) saldoPendiente = 0;
-
-            let fechaInicioOriginal = new Date(c.fecha + 'T00:00:00');
-            let ciclo = calcularCicloActual(c.fecha);
-            let opt = { day: '2-digit', month: 'long', year: 'numeric' };
-
-            let htmlAbonos = '';
-            if (c.abonos && c.abonos.length > 0) {
-                c.abonos.forEach((abono, idx) => {
-                    htmlAbonos += `
-                        <div class="flex justify-between items-center bg-[#0b0f19] p-2.5 rounded-xl border border-gray-800 text-xs">
-                            <div>
-                                <span class="text-emerald-400 font-bold">$${(Number(abono.monto) || 0).toFixed(2)}</span>
-                                <span class="text-gray-400 ml-2">📅 ${abono.fecha}</span>
-                            </div>
-                            <button onclick="eliminarAbono(${idx})" class="text-red-400 hover:text-red-300 text-[10px] bg-red-950/40 px-2 py-1 rounded no-print">Eliminar</button>
-                        </div>
-                    `;
-                });
-            } else {
-                htmlAbonos = `<p class="text-gray-500 text-xs text-center py-2">No hay abonos registrados aún.</p>`;
-            }
-
             let htmlMetricas = '';
             if (c.metricas && c.metricas.length > 0) {
                 c.metricas.forEach((m, idx) => {
                     htmlMetricas += `
-                        <div class="bg-[#131b2e] p-4 rounded-2xl border border-orange-500/30 space-y-2 text-xs shadow-md">
+                        <div class="bg-[#131b2e] p-4 rounded-xl border border-gray-800 space-y-2 text-xs">
                             <div class="flex justify-between items-center border-b border-gray-800 pb-2">
-                                <span class="font-bold text-orange-400 text-sm">📅 Registro: ${m.fecha}</span>
+                                <span class="font-bold text-orange-400">📅 Registro: ${m.fecha}</span>
                                 <div class="flex gap-1 no-print">
                                     <button onclick="editarMetrica(${idx})" class="bg-gray-800 px-2 py-1 rounded text-gray-300">Editar</button>
                                     <button onclick="eliminarMetrica(${idx})" class="bg-red-900/40 text-red-400 px-2 py-1 rounded">Eliminar</button>
                                 </div>
                             </div>
-                            <div class="grid grid-cols-3 gap-2 pt-1 text-gray-200">
-                                <div><b>Peso:</b> <span class="text-orange-300">${m.peso} kg</span></div>
+                            <div class="grid grid-cols-3 gap-2 pt-1 text-gray-300">
+                                <div><b>Peso:</b> ${m.peso} kg</div>
                                 <div><b>Estatura:</b> ${m.estatura} cm</div>
-                                <div><b>IMC:</b> <span class="text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded">${m.imc}</span></div>
+                                <div><b>IMC:</b> <span class="text-emerald-400 font-bold">${m.imc}</span></div>
                                 <div><b>Cuello:</b> ${m.cuello} cm</div>
                                 <div><b>Tórax:</b> ${m.torax} cm</div>
                                 <div><b>Bíceps:</b> ${m.biceps} cm</div>
@@ -557,60 +268,36 @@
                 htmlMetricas = `<p class="text-gray-500 text-xs text-center py-4">No hay registros antropométricos aún.</p>`;
             }
 
-            const numeroLimpio = c.whatsapp ? c.whatsapp.replace(/\D/g, '') : '';
-            const mensajeWp = encodeURIComponent(`¡Hola ${c.nombre}! Te escribo de Business Center Fit para recordarte tu ciclo actual de pago (${ciclo.inicioCiclo.toLocaleDateString('es-ES', opt)} al ${ciclo.finCiclo.toLocaleDateString('es-ES', opt)}) de tu plan. 💪🔥`);
-            const linkWhatsApp = `https://wa.me/${numeroLimpio}?text=${mensajeWp}`;
-
-            const tituloFormMetrica = metricaEditandoIdx !== null ? '✏️ Actualizar Medición Antropométrica' : '📊 Nueva Medición Antropométrica';
-            const textoBotonMetrica = metricaEditandoIdx !== null ? 'Actualizar Medición' : 'Registrar y Calcular IMC';
-
             contenedor.innerHTML = `
-                <div class="bg-[#131b2e] p-5 rounded-3xl border border-orange-500/40 space-y-3 shadow-xl">
-                    <h2 class="text-lg font-black text-white flex items-center gap-2">🏋️‍♂️ Atleta: <span class="text-orange-400">${c.nombre}</span></h2>
-                    <div class="grid grid-cols-2 gap-2 text-xs text-gray-200 bg-[#0b0f19] p-3.5 rounded-2xl border border-gray-800">
+                <div class="bg-[#131b2e] p-5 rounded-2xl border border-gray-800 space-y-3">
+                    <h2 class="text-lg font-bold text-white">🏋️‍♂️ Expediente de ${c.nombre}</h2>
+                    <div class="grid grid-cols-2 gap-2 text-xs text-gray-300 bg-[#0b0f19] p-3 rounded-xl border border-gray-800">
                         <div><b>Edad:</b> ${c.edad} años</div>
                         <div><b>WhatsApp:</b> ${c.whatsapp}</div>
-                        <div><b>Inicio Original:</b> <span class="text-orange-300">${fechaInicioOriginal.toLocaleDateString('es-ES', opt)}</span></div>
-                        <div><b>Ciclo Actual:</b> <span class="text-amber-400">${ciclo.inicioCiclo.toLocaleDateString('es-ES', opt)} al ${ciclo.finCiclo.toLocaleDateString('es-ES', opt)}</span></div>
-                        <div class="col-span-2"><b>Paquete:</b> <span class="ocultar-en-pdf">$${costoC.toFixed(2)}</span><span class="mostrar-en-pdf">***</span></div>
-                        <div class="col-span-2 pt-1 border-t border-gray-800 flex justify-between items-center ocultar-en-pdf">
-                            <span><b>Estatus:</b> <span class="${c.pagado ? 'text-emerald-400 font-bold' : 'text-amber-400'}">${c.pagado ? 'Pagado Total (Al día)' : `Restante: $${saldoPendiente.toFixed(2)}`}</span></span>
-                        </div>
+                        <div><b>Inicio:</b> ${c.fecha}</div>
+                        <div><b>Pago Paquete:</b> $${c.costo.toFixed(2)} (${c.pagado ? 'Al día' : 'Pendiente'})</div>
                     </div>
-                    <div class="grid grid-cols-2 gap-2 no-print">
-                        <button onclick="toggleEstadoPago(${c.id})" class="bg-emerald-600/20 text-emerald-400 border border-emerald-500/30 font-semibold py-2.5 rounded-xl text-xs">🔄 (${c.pagado ? 'Marcar Pendiente' : 'Marcar Pago Total'})</button>
-                        <a href="${linkWhatsApp}" target="_blank" class="bg-green-600 hover:bg-green-500 text-white font-bold py-2.5 px-3 rounded-xl text-xs text-center flex items-center justify-center gap-1.5 shadow-lg">💬 Enviar WhatsApp</a>
-                    </div>
+                    <button onclick="toggleEstadoPago(${c.id})" class="w-full bg-emerald-600/20 text-emerald-400 border border-emerald-500/30 font-semibold py-2 rounded-xl text-xs no-print">
+                        🔄 Cambiar Estatus de Pago (${c.pagado ? 'Marcar Pendiente' : 'Marcar Pagado'})
+                    </button>
                 </div>
 
-                <div class="bg-[#131b2e] p-5 rounded-3xl border border-gray-800 space-y-3 no-print">
-                    <h3 class="text-sm font-bold text-orange-500 uppercase">💵 Registrar Abono Parcial</h3>
-                    <form onsubmit="agregarAbono(event)" class="space-y-3 text-xs">
-                        <div class="grid grid-cols-2 gap-2">
-                            <div>
-                                <label class="text-gray-400 block mb-1">Monto Abono ($)</label>
-                                <input type="number" step="0.1" id="monto-abono" required placeholder="Ej. 20" class="w-full bg-[#0b0f19] border border-gray-800 rounded-lg p-2.5 text-white">
-                            </div>
-                            <div>
-                                <label class="text-gray-400 block mb-1">📅 Fecha del Abono</label>
-                                <input type="date" id="fecha-abono" required class="w-full bg-[#0b0f19] border border-gray-800 rounded-lg p-2.5 text-white">
-                            </div>
-                        </div>
-                        <button type="submit" class="w-full bg-orange-600 hover:bg-orange-500 text-white font-bold py-2.5 rounded-xl transition">Agregar Abono</button>
-                    </form>
-                    <div class="space-y-2 pt-2 border-t border-gray-800">
-                        <h4 class="text-xs font-semibold text-gray-400 uppercase">Historial de Abonos:</h4>
-                        ${htmlAbonos}
-                    </div>
-                </div>
-
-                <div class="bg-[#131b2e] p-5 rounded-3xl border border-gray-800 space-y-3 no-print">
-                    <h3 class="text-sm font-bold text-orange-500 uppercase">${tituloFormMetrica}</h3>
+                <div class="bg-[#131b2e] p-5 rounded-2xl border border-gray-800 space-y-3 no-print">
+                    <h3 class="text-sm font-bold text-orange-500 uppercase">📊 Nueva Medición Antropométrica</h3>
                     <form id="form-metrica" onsubmit="guardarMetrica(event)" class="space-y-3 text-xs">
                         <div class="grid grid-cols-3 gap-2">
-                            <div><label class="text-gray-400">Peso (kg)</label><input type="number" step="0.1" id="m-peso" required class="w-full bg-[#0b0f19] border border-gray-800 rounded-lg p-2 text-white"></div>
-                            <div><label class="text-gray-400">Estatura (cm)</label><input type="number" step="1" id="m-estatura" required class="w-full bg-[#0b0f19] border border-gray-800 rounded-lg p-2 text-white"></div>
-                            <div><label class="text-gray-400">Fecha de Medición</label><input type="date" id="m-fecha" required class="w-full bg-[#0b0f19] border border-gray-800 rounded-lg p-2 text-white"></div>
+                            <div>
+                                <label class="text-gray-400">Peso (kg)</label>
+                                <input type="number" step="0.1" id="m-peso" required class="w-full bg-[#0b0f19] border border-gray-800 rounded-lg p-2 text-white">
+                            </div>
+                            <div>
+                                <label class="text-gray-400">Estatura (cm)</label>
+                                <input type="number" step="1" id="m-estatura" required class="w-full bg-[#0b0f19] border border-gray-800 rounded-lg p-2 text-white">
+                            </div>
+                            <div>
+                                <label class="text-gray-400">Fecha</label>
+                                <input type="date" id="m-fecha" required class="w-full bg-[#0b0f19] border border-gray-800 rounded-lg p-2 text-white">
+                            </div>
                         </div>
                         <div class="grid grid-cols-4 gap-2">
                             <div><label class="text-gray-400">Cuello</label><input type="number" step="0.1" id="m-cuello" class="w-full bg-[#0b0f19] border border-gray-800 rounded-lg p-2 text-white"></div>
@@ -621,46 +308,22 @@
                             <div><label class="text-gray-400">Cuádriceps</label><input type="number" step="0.1" id="m-cuadriceps" class="w-full bg-[#0b0f19] border border-gray-800 rounded-lg p-2 text-white"></div>
                             <div><label class="text-gray-400">Pantorrilla</label><input type="number" step="0.1" id="m-pantorrilla" class="w-full bg-[#0b0f19] border border-gray-800 rounded-lg p-2 text-white"></div>
                         </div>
-                        <div class="flex gap-2">
-                            <button type="submit" class="w-full bg-orange-600 text-white font-bold py-2 rounded-xl">${textoBotonMetrica}</button>
-                            ${metricaEditandoIdx !== null ? `<button type="button" onclick="cancelarEdicionMetrica()" class="bg-gray-700 text-white font-bold px-3 py-2 rounded-xl">Cancelar</button>` : ''}
-                        </div>
+                        <button type="submit" class="w-full bg-orange-600 text-white font-bold py-2 rounded-xl">Registrar y Calcular IMC</button>
                     </form>
                 </div>
 
-                <div class="space-y-3">
-                    <h3 class="text-sm font-bold text-orange-400 uppercase tracking-wide">📈 Historial y Comparativa Mensual</h3>
+                <div class="space-y-2">
+                    <h3 class="text-sm font-bold text-gray-400 uppercase">📈 Historial y Comparativa Mensual</h3>
                     ${htmlMetricas}
                 </div>
             `;
-
-            if (metricaEditandoIdx !== null && c.metricas && c.metricas[metricaEditandoIdx]) {
-                const m = c.metricas[metricaEditandoIdx];
-                document.getElementById('m-peso').value = m.peso;
-                document.getElementById('m-estatura').value = m.estatura;
-                document.getElementById('m-fecha').value = m.fecha;
-                document.getElementById('m-cuello').value = m.cuello !== '-' ? m.cuello : '';
-                document.getElementById('m-torax').value = m.torax !== '-' ? m.torax : '';
-                document.getElementById('m-biceps').value = m.biceps !== '-' ? m.biceps : '';
-                document.getElementById('m-abdomen').value = m.abdomen !== '-' ? m.abdomen : '';
-                document.getElementById('m-gluteos').value = m.gluteos !== '-' ? m.gluteos : '';
-                document.getElementById('m-cuadriceps').value = m.cuadriceps !== '-' ? m.cuadriceps : '';
-                document.getElementById('m-pantorrilla').value = m.pantorrilla !== '-' ? m.pantorrilla : '';
-            } else {
-                const mFechaInput = document.getElementById('m-fecha');
-                if (mFechaInput) mFechaInput.valueAsDate = new Date();
-            }
-
-            const fechaAbonoInput = document.getElementById('fecha-abono');
-            if (fechaAbonoInput) fechaAbonoInput.valueAsDate = new Date();
-            
-            const lblFecha = document.getElementById('fecha-impresion');
-            if (lblFecha) {
-                lblFecha.textContent = "Fecha de emisión: " + new Date().toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
-            }
+            const mFechaInput = document.getElementById('m-fecha');
+            if (mFechaInput) mFechaInput.valueAsDate = new Date();
         }
 
-        function generarPDFExpediente() { window.print(); }
+        function generarPDFExpediente() {
+            window.print();
+        }
 
         function toggleEstadoPago(id) {
             const c = clientes.find(item => item.id === id);
@@ -671,42 +334,21 @@
             }
         }
 
-        function agregarAbono(e) {
-            e.preventDefault();
-            const c = clientes.find(item => item.id === clienteActualId);
-            if (!c) return;
-            const monto = parseFloat(document.getElementById('monto-abono').value) || 0;
-            const fecha = document.getElementById('fecha-abono').value;
-            if (!c.abonos) c.abonos = [];
-            c.abonos.push({ monto, fecha });
-            guardarStorage();
-            renderizarExpediente();
-        }
-
-        function eliminarAbono(idx) {
-            const c = clientes.find(item => item.id === clienteActualId);
-            if (!c) return;
-            c.abonos.splice(idx, 1);
-            guardarStorage();
-            renderizarExpediente();
-        }
-
         function guardarMetrica(e) {
             e.preventDefault();
             const c = clientes.find(item => item.id === clienteActualId);
             if (!c) return;
-            const peso = parseFloat(document.getElementById('m-peso').value) || 0;
-            const estatura = parseFloat(document.getElementById('m-estatura').value) || 0;
-            let imcVal = "0.0";
-            if (estatura > 0) {
-                const estMetros = estatura / 100;
-                imcVal = (peso / (estMetros * estMetros)).toFixed(1);
-            }
-            const nuevaMetrica = {
+
+            const peso = parseFloat(document.getElementById('m-peso').value);
+            const estaturaCm = parseFloat(document.getElementById('m-estatura').value);
+            const estaturaM = estaturaCm / 100;
+            const imc = (peso / (estaturaM * estaturaM)).toFixed(1);
+
+            const nuevaMedicion = {
                 fecha: document.getElementById('m-fecha').value,
                 peso: peso,
-                estatura: estatura,
-                imc: imcVal,
+                estatura: estaturaCm,
+                imc: imc,
                 cuello: document.getElementById('m-cuello').value || '-',
                 torax: document.getElementById('m-torax').value || '-',
                 biceps: document.getElementById('m-biceps').value || '-',
@@ -715,35 +357,44 @@
                 cuadriceps: document.getElementById('m-cuadriceps').value || '-',
                 pantorrilla: document.getElementById('m-pantorrilla').value || '-'
             };
-            if (!c.metricas) c.metricas = [];
-            if (metricaEditandoIdx !== null) {
-                c.metricas[metricaEditandoIdx] = nuevaMetrica;
-                metricaEditandoIdx = null;
-            } else {
-                c.metricas.push(nuevaMetrica);
-            }
+
+            if(!c.metricas) c.metricas = [];
+            c.metricas.push(nuevaMedicion);
             guardarStorage();
-            renderizarExpediente();
-        }
-
-        function editarMetrica(idx) {
-            metricaEditandoIdx = idx;
-            renderizarExpediente();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        function cancelarEdicionMetrica() {
-            metricaEditandoIdx = null;
             renderizarExpediente();
         }
 
         function eliminarMetrica(idx) {
             const c = clientes.find(item => item.id === clienteActualId);
-            if (!c) return;
-            c.metricas.splice(idx, 1);
-            guardarStorage();
-            renderizarExpediente();
+            if (c && c.metricas) {
+                c.metricas.splice(idx, 1);
+                guardarStorage();
+                renderizarExpediente();
+            }
         }
+
+        function editarMetrica(idx) {
+            const c = clientes.find(item => item.id === clienteActualId);
+            if (c && c.metricas && c.metricas[idx]) {
+                const m = c.metricas[idx];
+                document.getElementById('m-peso').value = m.peso;
+                document.getElementById('m-estatura').value = m.estatura;
+                document.getElementById('m-fecha').value = m.fecha;
+                document.getElementById('m-cuello').value = m.cuello !== '-' ? m.cuello : '';
+                document.getElementById('m-torax').value = m.torax !== '-' ? m.torax : '';
+                document.getElementById('m-biceps').value = m.biceps !== '-' ? m.biceps : '';
+                document.getElementById('m-abdomen').value = m.abdomen !== '-' ? m.abdomen : '';
+                document.getElementById('m-gluteos').value = m.gluteos !== '-' ? m.gluteos : '';
+                document.getElementById('m-cuadriceps').value = m.cuadriceps !== '-' ? m.cuadriceps : '';
+                document.getElementById('m-pantorrilla').value = m.pantorrilla !== '-' ? m.pantorrilla : '';
+                
+                c.metricas.splice(idx, 1);
+                guardarStorage();
+                renderizarExpediente();
+            }
+        }
+
+        renderizarClientes();
     </script>
 </body>
 </html>
