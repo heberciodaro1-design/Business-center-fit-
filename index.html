@@ -22,7 +22,7 @@
 </head>
 <body class="bg-darkBg text-silverText font-sans antialiased min-h-screen flex flex-col justify-between" onload="initSystem()">
 
-    <!-- LOGIN (Sin datos guardados por seguridad) -->
+    <!-- LOGIN ADMINISTRADOR -->
     <div id="login-container" class="flex-grow flex items-center justify-center p-4">
         <div class="bg-cardBg border border-cardBorder rounded-2xl p-8 w-full max-w-md shadow-2xl relative overflow-hidden">
             <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-bronzeDark via-bronzeLight to-bronzeDark"></div>
@@ -33,7 +33,7 @@
             <form onsubmit="handleLogin(event)" class="space-y-4">
                 <div>
                     <label class="block text-[11px] font-bold uppercase tracking-widest text-silverMuted mb-2">Correo</label>
-                    <input type="email" id="login-email" required placeholder="correo@ciodarofitness.com" class="w-full bg-darkBg border border-cardBorder rounded-xl px-4 py-3 text-sm text-silverText focus:border-bronzeMain focus:outline-none" autocomplete="off">
+                    <input type="email" id="login-email" required placeholder="heber@ciodarofitness.com" class="w-full bg-darkBg border border-cardBorder rounded-xl px-4 py-3 text-sm text-silverText focus:border-bronzeMain focus:outline-none" autocomplete="off">
                 </div>
                 <div>
                     <label class="block text-[11px] font-bold uppercase tracking-widest text-silverMuted mb-2">Contraseña</label>
@@ -148,14 +148,14 @@
         </main>
     </div>
 
-    <!-- MODAL ALUMNO (Con Medidas Iniciales vs Actuales reales) -->
+    <!-- MODAL ALUMNO -->
     <div id="client-modal" class="hidden fixed inset-0 bg-darkBg/85 flex items-center justify-center p-4 z-50 overflow-y-auto">
         <div class="bg-cardBg border border-cardBorder rounded-2xl p-6 w-full max-w-xl space-y-4 shadow-2xl my-8">
             <h3 id="modal-title" class="font-bold text-silverText text-lg">Registrar Alumno</h3>
             <input type="hidden" id="edit-idx" value="-1">
             
             <div class="grid grid-cols-2 gap-3">
-                <div><label class="block text-[11px] font-bold text-silverMuted mb-1">Nombre Completo</label><input type="text" id="f-nom" placeholder="Ej. Leidy Cáceres" class="w-full bg-darkBg border border-cardBorder rounded-xl px-4 py-2.5 text-sm text-silverText"></div>
+                <div><label class="block text-[11px] font-bold text-silverMuted mb-1">Nombre Completo</label><input type="text" id="f-nom" placeholder="Ej. Carlos Pérez" class="w-full bg-darkBg border border-cardBorder rounded-xl px-4 py-2.5 text-sm text-silverText"></div>
                 <div><label class="block text-[11px] font-bold text-silverMuted mb-1">WhatsApp (+58...)</label><input type="text" id="f-tel" placeholder="+58..." class="w-full bg-darkBg border border-cardBorder rounded-xl px-4 py-2.5 text-sm text-silverText"></div>
             </div>
 
@@ -165,7 +165,7 @@
                 <div><label class="block text-[10px] font-bold text-bronzeLight mb-1">Paquete ($)</label><input type="number" id="f-costo" class="w-full bg-darkBg border border-bronzeMain rounded-xl px-3 py-2.5 text-sm text-bronzeLight font-bold" value="50"></div>
             </div>
 
-            <!-- Medidas Iniciales (Mes Anterior o Base) -->
+            <!-- Antropometría Inicial -->
             <div class="bg-darkBg/50 border border-cardBorder p-4 rounded-xl space-y-3">
                 <p class="text-[11px] font-black uppercase tracking-wider text-silverMuted">1. Antropometría Inicial (Base):</p>
                 <div class="grid grid-cols-3 gap-3">
@@ -175,7 +175,7 @@
                 </div>
             </div>
 
-            <!-- Medidas Actuales -->
+            <!-- Antropometría Actual -->
             <div class="bg-darkBg/50 border border-cardBorder p-4 rounded-xl space-y-3">
                 <p class="text-[11px] font-black uppercase tracking-wider text-bronzeLight">2. Antropometría Actual:</p>
                 <div class="grid grid-cols-3 gap-3">
@@ -230,7 +230,7 @@
             </div>
         </div>
     </div>
-    <!-- MOTOR JAVASCRIPT CORREGIDO Y ACTUALIZADO -->
+    <!-- MOTOR JAVASCRIPT -->
     <script>
         let clients = [];
         let solicitudes = [];
@@ -254,11 +254,16 @@
 
         function handleLogin(e) {
             e.preventDefault();
-            // Validar credenciales de administrador de forma segura
-            if(document.getElementById('login-email').value.trim() === "heber@ciodarofitness.com" && document.getElementById('login-pass').value.trim() === "123456") {
+            const email = document.getElementById('login-email').value.trim().toLowerCase();
+            const pass = document.getElementById('login-pass').value.trim();
+
+            if((email === "heber@ciodarofitness.com" || email === "admin@ciodarofitness.com") && pass === "123456") {
+                document.getElementById('login-error').classList.add('hidden');
                 document.getElementById('login-container').classList.add('hidden');
                 document.getElementById('dashboard-screen').classList.remove('hidden');
-                renderClients(); renderSolicitudes(); calcFin();
+                renderClients(); 
+                renderSolicitudes(); 
+                calcFin();
             } else { 
                 document.getElementById('login-error').classList.remove('hidden'); 
             }
@@ -267,7 +272,6 @@
         function handleLogout() {
             document.getElementById('dashboard-screen').classList.add('hidden');
             document.getElementById('login-container').classList.remove('hidden');
-            // Limpiar campos de login para evitar autoguardado en dispositivos de terceros
             document.getElementById('login-email').value = "";
             document.getElementById('login-pass').value = "";
         }
@@ -354,7 +358,6 @@
                 if(q && !c.nom.toLowerCase().includes(q)) return;
                 const imc = (c.peso / Math.pow(c.est/100, 2)).toFixed(1);
                 
-                // Cálculo preciso de diferencias entre medidas base (iniciales) y actuales
                 const diffPeso = (c.peso - c.pesoIni).toFixed(1);
                 const diffCintura = (c.cintura - c.cinturaIni).toFixed(1);
                 const diffGluteos = (c.gluteos - c.gluteosIni).toFixed(1);
@@ -378,7 +381,6 @@
                                 <p>📅 <strong>Corte:</strong> ${c.cor}</p>
                             </div>
                             
-                            <!-- Antropometría Actual -->
                             <div class="pt-2 border-t border-cardBorder">
                                 <p class="font-bold text-[11px] text-bronzeLight mb-1.5 uppercase tracking-wider">Antropometría Actual (cm / kg):</p>
                                 <div class="grid grid-cols-3 gap-1.5 bg-cardBg/60 p-2 rounded-lg text-[11px]">
@@ -391,7 +393,6 @@
                                 </div>
                             </div>
 
-                            <!-- Comparativa Evolutiva (Inicial vs Actual) -->
                             <div class="pt-2 border-t border-cardBorder">
                                 <p class="font-bold text-[11px] text-silverMuted mb-1.5 uppercase tracking-wider">Evolución (Base vs Actual):</p>
                                 <div class="grid grid-cols-3 gap-1.5 bg-cardBg/40 p-2 rounded-lg text-[11px]">
@@ -429,11 +430,9 @@
                 tel: document.getElementById('f-tel').value, 
                 est: parseFloat(document.getElementById('f-est').value)||0, 
                 costo: parseFloat(document.getElementById('f-costo').value)||0,
-                // Medidas Iniciales (Base)
                 pesoIni: parseFloat(document.getElementById('f-peso-ini').value)||0, 
                 cinturaIni: parseFloat(document.getElementById('f-cintura-ini').value)||0, 
                 gluteosIni: parseFloat(document.getElementById('f-gluteos-ini').value)||0,
-                // Medidas Actuales
                 peso: parseFloat(document.getElementById('f-peso').value)||0, 
                 cintura: parseFloat(document.getElementById('f-cintura').value)||0, 
                 gluteos: parseFloat(document.getElementById('f-gluteos').value)||0,
