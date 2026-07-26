@@ -183,6 +183,8 @@
             margin-bottom: 2rem;
             border-bottom: 1px solid var(--border);
             padding-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 1rem;
         }
 
         .grid-stats {
@@ -252,6 +254,7 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 1.5rem;
+            gap: 1rem;
         }
 
         .link-box input {
@@ -259,32 +262,6 @@
             border: none;
             color: var(--bronze);
             font-weight: 500;
-        }
-
-        .nav-tabs {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 0.5rem;
-            flex-wrap: wrap;
-        }
-
-        .tab-btn {
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            cursor: pointer;
-            padding: 0.5rem 1rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            width: auto;
-        }
-
-        .tab-btn.active {
-            color: var(--bronze);
-            border-bottom: 2px solid var(--bronze);
         }
 
         footer {
@@ -306,73 +283,89 @@
     </header>
 
     <main>
-        <!-- VISTA DE ACCESO RESTRINGIDO (LOGIN ADMIN / FORMULARIO CLIENTE) -->
+        <!-- VISTA DE ACCESO PRINCIPAL (LOGIN ADMIN / CREAR CUENTA AFILIADO / LOGIN AFILIADO) -->
         <section id="authSection">
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
                 
-                <!-- Login Administrador -->
+                <!-- 1. Login Administrador General -->
                 <div class="card" style="margin-bottom: 0;">
-                    <h1 style="color: #ffffff; font-size: 2.2rem; font-weight: 800; margin-bottom: 0.2rem;">BC Fit</h1>
-                    <p style="color: var(--bronze); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1.5rem;">By Ciodarofitness</p>
-                    <p class="subtitle">Acceso blindado exclusivo para el Administrador General.</p>
+                    <h1 style="color: #ffffff; font-size: 1.8rem; font-weight: 800; margin-bottom: 0.2rem;">Panel Admin</h1>
+                    <p style="color: var(--bronze); font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1.2rem;">Ciodarofitness</p>
                     <form id="loginForm">
                         <div class="form-group">
-                            <label>Identificador de Administrador</label>
+                            <label>Identificador</label>
                             <input type="text" id="adminUser" required placeholder="Ciodarofitness">
                         </div>
                         <div class="form-group">
                             <label>Contraseña Maestra</label>
                             <div class="password-container">
                                 <input type="password" id="adminPassword" required placeholder="••••••••">
-                                <button type="button" class="toggle-password" onclick="togglePassword()">👁️</button>
+                                <button type="button" class="toggle-password" onclick="togglePassword('adminPassword')">👁️</button>
                             </div>
                         </div>
-                        <button type="submit">Desbloquear Panel Admin</button>
+                        <button type="submit">Ingresar como Admin</button>
                     </form>
                 </div>
 
-                <!-- Solicitud de Ingreso Externa para Clientes -->
+                <!-- 2. Crear Cuenta de Afiliado / Entrenador -->
                 <div class="card" style="margin-bottom: 0;">
-                    <h2 style="color: #ffffff; font-size: 1.5rem; font-weight: 700;">Solicitud de Ingreso</h2>
-                    <p class="subtitle">Completa tus datos para enviar la solicitud directamente a Ciodarofitness.</p>
-                    <form id="requestAccessForm">
+                    <h2 style="color: #ffffff; font-size: 1.5rem; font-weight: 700;">Crear Cuenta Afiliado</h2>
+                    <p class="subtitle">Regístrate con tu correo y contraseña tras recibir tu autorización.</p>
+                    <form id="registerClientForm">
                         <div class="form-group">
                             <label>Nombre y Apellido / Marca</label>
-                            <input type="text" id="clientReqName" required placeholder="Ej. Leidy Diana">
+                            <input type="text" id="regName" required placeholder="Ej. Leidy Diana">
                         </div>
                         <div class="form-group">
-                            <label>Teléfono / WhatsApp de Contacto</label>
-                            <input type="text" id="clientReqPhone" required placeholder="+58 414...">
+                            <label>Correo Electrónico</label>
+                            <input type="email" id="regEmail" required placeholder="correo@domain.com">
                         </div>
                         <div class="form-group">
-                            <label>Tipo de Solicitud</label>
-                            <select id="clientReqType">
-                                <option value="Atleta / Plan Personalizado">Atleta / Plan Personalizado</option>
-                                <option value="Entrenador Afiliado">Entrenador Afiliado</option>
-                            </select>
+                            <label>Contraseña de Acceso</label>
+                            <div class="password-container">
+                                <input type="password" id="regPassword" required placeholder="Crea tu contraseña">
+                                <button type="button" class="toggle-password" onclick="togglePassword('regPassword')">👁️</button>
+                            </div>
                         </div>
-                        <button type="submit" style="background: transparent; border: 1px solid var(--bronze); color: var(--bronze);">Enviar Solicitud a Ciodarofitness</button>
+                        <button type="submit" style="background: transparent; border: 1px solid var(--bronze); color: var(--bronze);">Registrarse como Afiliado</button>
                     </form>
-                    <div id="requestStatusNotice" class="hidden" style="margin-top: 1rem; padding: 1rem; background: var(--bg-deep); border: 1px solid var(--success); border-radius: 6px; text-align: center; color: var(--success); font-size: 0.9rem;">
-                        ¡Solicitud generada correctamente! Redirigiendo a WhatsApp...
-                    </div>
+                </div>
+
+                <!-- 3. Acceso de Entrenadores / Afiliados Registrados -->
+                <div class="card" style="margin-bottom: 0;">
+                    <h2 style="color: #ffffff; font-size: 1.5rem; font-weight: 700;">Acceso Afiliados</h2>
+                    <p class="subtitle">Inicia sesión para gestionar tus asesorados y clientes.</p>
+                    <form id="clientLoginForm">
+                        <div class="form-group">
+                            <label>Correo Electrónico</label>
+                            <input type="email" id="clientLoginEmail" required placeholder="correo@domain.com">
+                        </div>
+                        <div class="form-group">
+                            <label>Contraseña</label>
+                            <div class="password-container">
+                                <input type="password" id="clientLoginPass" required placeholder="••••••••">
+                                <button type="button" class="toggle-password" onclick="togglePassword('clientLoginPass')">👁️</button>
+                            </div>
+                        </div>
+                        <button type="submit">Entrar a mi Perfil</button>
+                    </form>
                 </div>
 
             </div>
         </section>
 
-        <!-- PANEL DE CONTROL GLOBAL -->
+        <!-- PANEL DE CONTROL GLOBAL (ADMINISTRADOR GENERAL) -->
         <section id="dashboardView" class="hidden">
             <div class="dashboard-header">
                 <div>
                     <h2>Panel de Control Global</h2>
                     <p class="subtitle">Sistema Protegido — By Ciodarofitness</p>
                 </div>
-                <button class="btn-secondary" onclick="logoutAdmin()">Cerrar Sesión</button>
+                <button class="btn-secondary" onclick="logoutSystem()">Cerrar Sesión</button>
             </div>
 
             <div class="card" style="padding: 1.2rem; margin-bottom: 1.5rem;">
-                <h3 style="font-size: 0.9rem; margin-bottom: 0.3rem; color: var(--bronze);">Enlace Exclusivo para Clientes</h3>
+                <h3 style="font-size: 0.9rem; margin-bottom: 0.3rem; color: var(--bronze);">Enlace Exclusivo para Afiliados</h3>
                 <div class="link-box" style="margin-bottom: 0;">
                     <input type="text" id="shareableLink" readonly>
                     <button class="btn-secondary" onclick="copyInviteLink()" style="font-size: 0.75rem; padding: 0.3rem 0.6rem;">Copiar Enlace</button>
@@ -381,67 +374,67 @@
 
             <div class="grid-stats">
                 <div class="stat-card">
-                    <h3>Atletas Activos Autorizados</h3>
-                    <div class="value" id="statActiveAthletes">0</div>
-                </div>
-                <div class="stat-card">
-                    <h3>Solicitudes Pendientes</h3>
-                    <div class="value" id="statPendingRequests">0</div>
+                    <h3>Cuentas de Afiliados Registradas</h3>
+                    <div class="value" id="statTotalAccounts">0</div>
                 </div>
             </div>
 
-            <div class="nav-tabs">
-                <button class="tab-btn active" onclick="switchTab('tabRequests', this)">1. Control de Solicitudes (<span id="badgePending">0</span>)</button>
-                <button class="tab-btn" onclick="switchTab('tabAthletes', this)">2. Gestión de Atletas</button>
-            </div>
-
-            <!-- 1. SOLICITUDES -->
-            <div id="tabRequests" class="card">
-                <h3>1. Autorización y Control de Solicitudes</h3>
-                <p class="subtitle">Aquí puedes aprobar o registrar manualmente las solicitudes que te lleguen.</p>
-                
-                <div style="margin-bottom: 1.5rem; background: var(--bg-deep); padding: 1rem; border-radius: 6px; border: 1px solid var(--border);">
-                    <h4 style="font-size: 0.85rem; color: var(--bronze); margin-bottom: 0.5rem;">Registrar Solicitud Manualmente</h4>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr auto; gap: 0.8rem;">
-                        <input type="text" id="manualName" placeholder="Nombre del cliente" style="margin-bottom:0;">
-                        <input type="text" id="manualPhone" placeholder="Teléfono" style="margin-bottom:0;">
-                        <button type="button" onclick="addManualRequest()" style="width: auto; padding: 0 1rem; font-size: 0.8rem;">Añadir</button>
-                    </div>
-                </div>
-
+            <div class="card">
+                <h3>Listado de Entrenadores y Afiliados</h3>
+                <p class="subtitle">Cuentas creadas y autorizadas en la plataforma.</p>
                 <table>
                     <thead>
                         <tr>
-                            <th>Nombre / Solicitante</th>
-                            <th>Contacto</th>
-                            <th>Tipo</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody id="requestsTableBody">
-                        <tr><td colspan="4" class="empty-state">No hay solicitudes pendientes de aprobación.</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- 2. GESTIÓN DE ATLETAS -->
-            <div id="tabAthletes" class="card hidden">
-                <h3>2. Atletas Registrados</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Atleta</th>
-                            <th>Contacto</th>
-                            <th>Inicio</th>
+                            <th>Nombre / Marca</th>
+                            <th>Correo Electrónico</th>
+                            <th>Fecha de Registro</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody id="athletesTableBody">
-                        <tr><td colspan="4" class="empty-state">No hay atletas activos.</td></tr>
+                        <tr><td colspan="4" class="empty-state">No hay cuentas registradas.</td></tr>
                     </tbody>
                 </table>
             </div>
+        </section>
 
+        <!-- PANEL DE PERFIL DE AFILIADO / GESTIÓN DE ASESORADOS -->
+        <section id="clientPortalView" class="hidden">
+            <div class="dashboard-header">
+                <div>
+                    <h2 id="welcomeClientTitle">Perfil de Afiliado</h2>
+                    <p class="subtitle">Gestión de Clientes y Asesorados — By Ciodarofitness</p>
+                </div>
+                <button class="btn-secondary" onclick="logoutSystem()">Cerrar Sesión</button>
+            </div>
+
+            <div class="card">
+                <h3>Registrar Nuevo Asesorado / Cliente</h3>
+                <p class="subtitle">Añade los datos de tus clientes para llevar tu propio control de entrenamiento inteligente.</p>
+                
+                <div style="background: var(--bg-deep); padding: 1.2rem; border-radius: 6px; border: 1px solid var(--border); margin-bottom: 1.5rem;">
+                    <div style="display: grid; grid-template-columns: 2fr 1fr auto; gap: 0.8rem;">
+                        <input type="text" id="clientNameInput" placeholder="Nombre y Apellido del asesorado" style="margin-bottom:0;">
+                        <input type="text" id="clientPhoneInput" placeholder="Teléfono" style="margin-bottom:0;">
+                        <button type="button" onclick="addClientToAffiliate()" style="width: auto; padding: 0 1.2rem; font-size: 0.8rem;">Agregar Asesorado</button>
+                    </div>
+                </div>
+
+                <h3>Tus Asesorados Registrados</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nombre del Asesorado</th>
+                            <th>Teléfono / Contacto</th>
+                            <th>Fecha de Alta</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="affiliateClientsTableBody">
+                        <tr><td colspan="4" class="empty-state">No tienes asesorados registrados todavía.</td></tr>
+                    </tbody>
+                </table>
+            </div>
         </section>
     </main>
 
@@ -450,7 +443,6 @@
     </footer>
 
     <script>
-        // Configuración de enlace compartido
         document.getElementById('shareableLink').value = window.location.href.split('#')[0];
 
         function copyInviteLink() {
@@ -460,8 +452,8 @@
             alert("¡Enlace copiado al portapapeles!");
         }
 
-        function togglePassword() {
-            const pwd = document.getElementById('adminPassword');
+        function togglePassword(id) {
+            const pwd = document.getElementById(id);
             pwd.type = pwd.type === 'password' ? 'text' : 'password';
         }
 
@@ -472,7 +464,7 @@
         setInterval(updateClock, 1000);
         updateClock();
 
-        // LOGIN DE ADMINISTRADOR
+        // 1. LOGIN DE ADMINISTRADOR GENERAL
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const user = document.getElementById('adminUser').value.trim();
@@ -482,132 +474,150 @@
                 document.getElementById('authSection').classList.add('hidden');
                 document.getElementById('dashboardView').classList.remove('hidden');
                 document.getElementById('clock').classList.remove('hidden');
-                loadDashboardData();
+                loadAdminData();
             } else {
                 alert("Credenciales incorrectas de Ciodarofitness.");
             }
         });
 
-        function logoutAdmin() {
-            document.getElementById('dashboardView').classList.add('hidden');
-            document.getElementById('authSection').classList.remove('hidden');
-            document.getElementById('clock').classList.add('hidden');
-            document.getElementById('loginForm').reset();
-        }
-
-        // ENVÍO DE SOLICITUD DESDE EL CLIENTE (Abre WhatsApp con los datos y guarda localmente)
-        document.getElementById('requestAccessForm').addEventListener('submit', function(e) {
+        // 2. REGISTRO DE CUENTA AFILIADO
+        document.getElementById('registerClientForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            const name = document.getElementById('clientReqName').value;
-            const phone = document.getElementById('clientReqPhone').value;
-            const type = document.getElementById('clientReqType').value;
+            const name = document.getElementById('regName').value.trim();
+            const email = document.getElementById('regEmail').value.trim().toLowerCase();
+            const password = document.getElementById('regPassword').value.trim();
 
-            // Guardar localmente también por respaldo
-            let requests = JSON.parse(localStorage.getItem('bc_requests')) || [];
-            requests.push({ id: Date.now(), name, phone, type });
-            localStorage.setItem('bc_requests', JSON.stringify(requests));
-
-            document.getElementById('requestStatusNotice').classList.remove('hidden');
-
-            // Redireccionar al WhatsApp de Ciodarofitness (Coloca tu número exacto con código de país, ej: 58414...)
-            const tuNumeroWhatsApp = "584140000000"; // Reemplaza con tu número de teléfono real
-            const mensaje = encodeURIComponent(`Hola Ciodarofitness, soy *${name}*. Deseo solicitar acceso para: *${type}*. Mi número de contacto es: ${phone}.`);
+            let accounts = JSON.parse(localStorage.getItem('bc_client_accounts')) || [];
             
-            setTimeout(() => {
-                window.location.href = `https://wa.me/${tuNumeroWhatsApp}?text=${mensaje}`;
-            }, 1200);
-        });
-
-        // GESTIÓN DEL PANEL DE CONTROL
-        function loadDashboardData() {
-            let requests = JSON.parse(localStorage.getItem('bc_requests')) || [];
-            let athletes = JSON.parse(localStorage.getItem('bc_athletes')) || [];
-
-            document.getElementById('statPendingRequests').innerText = requests.length;
-            document.getElementById('badgePending').innerText = requests.length;
-            document.getElementById('statActiveAthletes').innerText = athletes.length;
-
-            // Renderizar Solicitudes
-            const reqTbody = document.getElementById('requestsTableBody');
-            reqTbody.innerHTML = requests.length === 0 ? `<tr><td colspan="4" class="empty-state">No hay solicitudes pendientes de aprobación.</td></tr>` :
-                requests.map(r => `
-                    <tr>
-                        <td><strong>${r.name}</strong></td>
-                        <td>📱 ${r.phone}</td>
-                        <td>${r.type || 'Atleta / Plan Personalizado'}</td>
-                        <td>
-                            <button class="btn-approve" onclick="approveRequest(${r.id})">Aprobar</button>
-                            <button class="btn-deny" onclick="deleteRequest(${r.id})">Eliminar</button>
-                        </td>
-                    </tr>
-                `).join('');
-
-            // Renderizar Atletas
-            const athTbody = document.getElementById('athletesTableBody');
-            athTbody.innerHTML = athletes.length === 0 ? `<tr><td colspan="4" class="empty-state">No hay atletas activos.</td></tr>` :
-                athletes.map(a => `
-                    <tr>
-                        <td><strong>${a.name}</strong></td>
-                        <td>📱 ${a.phone}</td>
-                        <td>${a.startDate}</td>
-                        <td>
-                            <button class="btn-deny" onclick="deleteAthlete(${a.id})" style="font-size: 0.7rem; padding: 0.3rem;">Eliminar</button>
-                        </td>
-                    </tr>
-                `).join('');
-        }
-
-        function addManualRequest() {
-            const name = document.getElementById('manualName').value.trim();
-            const phone = document.getElementById('manualPhone').value.trim();
-            if(!name || !phone) {
-                alert("Por favor completa el nombre y teléfono.");
+            if(accounts.some(acc => acc.email === email)) {
+                alert("Este correo ya está registrado. Por favor inicia sesión.");
                 return;
             }
-            let requests = JSON.parse(localStorage.getItem('bc_requests')) || [];
-            requests.push({ id: Date.now(), name, phone, type: 'Atleta / Plan Personalizado' });
-            localStorage.setItem('bc_requests', JSON.stringify(requests));
-            document.getElementById('manualName').value = '';
-            document.getElementById('manualPhone').value = '';
-            loadDashboardData();
-        }
 
-        function approveRequest(id) {
-            let requests = JSON.parse(localStorage.getItem('bc_requests')) || [];
-            let athletes = JSON.parse(localStorage.getItem('bc_athletes')) || [];
-            
-            const index = requests.findIndex(r => r.id === id);
-            if (index !== -1) {
-                const approved = requests.splice(index, 1)[0];
-                athletes.push({ ...approved, startDate: new Date().toLocaleDateString() });
-                
-                localStorage.setItem('bc_requests', JSON.stringify(requests));
-                localStorage.setItem('bc_athletes', JSON.stringify(athletes));
-                loadDashboardData();
+            accounts.push({ id: Date.now(), name, email, password, startDate: new Date().toLocaleDateString() });
+            localStorage.setItem('bc_client_accounts', JSON.stringify(accounts));
+
+            alert("¡Cuenta de afiliado creada con éxito! Ya puedes iniciar sesión.");
+            this.reset();
+        });
+
+        // 3. LOGIN DE AFILIADO / ENTRENADOR
+        document.getElementById('clientLoginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('clientLoginEmail').value.trim().toLowerCase();
+            const password = document.getElementById('clientLoginPass').value.trim();
+
+            let accounts = JSON.parse(localStorage.getItem('bc_client_accounts')) || [];
+            const client = accounts.find(acc => acc.email === email && acc.password === password);
+
+            if(client) {
+                localStorage.setItem('bc_current_client', JSON.stringify(client));
+                openAffiliatePortal(client);
+            } else {
+                alert("Correo o contraseña incorrectos, o la cuenta no existe.");
             }
+        });
+
+        function openAffiliatePortal(client) {
+            document.getElementById('authSection').classList.add('hidden');
+            document.getElementById('clientPortalView').classList.remove('hidden');
+            document.getElementById('clock').classList.remove('hidden');
+            document.getElementById('welcomeClientTitle').innerText = `Perfil de Afiliado: ${client.name}`;
+            loadAffiliateClients();
         }
 
-        function deleteRequest(id) {
-            let requests = JSON.parse(localStorage.getItem('bc_requests')) || [];
-            requests = requests.filter(r => r.id !== id);
-            localStorage.setItem('bc_requests', JSON.stringify(requests));
-            loadDashboardData();
+        function logoutSystem() {
+            document.getElementById('dashboardView').classList.add('hidden');
+            document.getElementById('clientPortalView').classList.add('hidden');
+            document.getElementById('authSection').classList.remove('hidden');
+            document.getElementById('clock').classList.add('hidden');
+            localStorage.removeItem('bc_current_client');
+            document.querySelectorAll('form').forEach(f => f.reset());
         }
 
-        function deleteAthlete(id) {
-            let athletes = JSON.parse(localStorage.getItem('bc_athletes')) || [];
-            athletes = athletes.filter(a => a.id !== id);
-            localStorage.setItem('bc_athletes', JSON.stringify(athletes));
-            loadDashboardData();
+        // CARGAR DATOS DE ADMIN
+        function loadAdminData() {
+            let accounts = JSON.parse(localStorage.getItem('bc_client_accounts')) || [];
+            document.getElementById('statTotalAccounts').innerText = accounts.length;
+
+            const tbody = document.getElementById('athletesTableBody');
+            tbody.innerHTML = accounts.length === 0 ? `<tr><td colspan="4" class="empty-state">No hay cuentas registradas.</td></tr>` :
+                accounts.map(acc => `
+                    <tr>
+                        <td><strong>${acc.name}</strong></td>
+                        <td>✉️ ${acc.email}</td>
+                        <td>${acc.startDate}</td>
+                        <td>
+                            <button class="btn-deny" onclick="deleteAccount(${acc.id})" style="font-size: 0.7rem; padding: 0.3rem;">Eliminar</button>
+                        </td>
+                    </tr>
+                `).join('');
         }
 
-        function switchTab(tabId, btn) {
-            document.querySelectorAll('#dashboardView > .card').forEach(c => {
-                if(c.id && c.id.startsWith('tab')) c.classList.add('hidden');
-            });
-            document.getElementById(tabId).classList.remove('hidden');
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
+        function deleteAccount(id) {
+            let accounts = JSON.parse(localStorage.getItem('bc_client_accounts')) || [];
+            accounts = accounts.filter(acc => acc.id !== id);
+            localStorage.setItem('bc_client_accounts', JSON.stringify(accounts));
+            loadAdminData();
+        }
+
+        // GESTIÓN DE ASESORADOS PROPIOS DEL AFILIADO
+        function addClientToAffiliate() {
+            const name = document.getElementById('clientNameInput').value.trim();
+            const phone = document.getElementById('clientPhoneInput').value.trim();
+            
+            if(!name || !phone) {
+                alert("Por favor completa el nombre y teléfono del asesorado.");
+                return;
+            }
+
+            const currentClient = JSON.parse(localStorage.getItem('bc_current_client'));
+            if(!currentClient) return;
+
+            let allClients = JSON.parse(localStorage.getItem('bc_affiliate_clients')) || {};
+            if(!allClients[currentClient.email]) {
+                allClients[currentClient.email] = [];
+            }
+
+            allClients[currentClient.email].push({ id: Date.now(), name, phone, startDate: new Date().toLocaleDateString() });
+            localStorage.setItem('bc_affiliate_clients', JSON.stringify(allClients));
+
+            document.getElementById('clientNameInput').value = '';
+            document.getElementById('clientPhoneInput').value = '';
+            loadAffiliateClients();
+        }
+
+        function loadAffiliateClients() {
+            const currentClient = JSON.parse(localStorage.getItem('bc_current_client'));
+            if(!currentClient) return;
+
+            let allClients = JSON.parse(localStorage.getItem('bc_affiliate_clients')) || {};
+            let myClients = allClients[currentClient.email] || [];
+
+            const tbody = document.getElementById('affiliateClientsTableBody');
+            tbody.innerHTML = myClients.length === 0 ? `<tr><td colspan="4" class="empty-state">No tienes asesorados registrados todavía.</td></tr>` :
+                myClients.map(c => `
+                    <tr>
+                        <td><strong>${c.name}</strong></td>
+                        <td>📱 ${c.phone}</td>
+                        <td>${c.startDate}</td>
+                        <td>
+                            <button class="btn-deny" onclick="deleteAffiliateClient(${c.id})" style="font-size: 0.7rem; padding: 0.3rem;">Eliminar</button>
+                        </td>
+                    </tr>
+                `).join('');
+        }
+
+        function deleteAffiliateClient(clientId) {
+            const currentClient = JSON.parse(localStorage.getItem('bc_current_client'));
+            if(!currentClient) return;
+
+            let allClients = JSON.parse(localStorage.getItem('bc_affiliate_clients')) || {};
+            if(allClients[currentClient.email]) {
+                allClients[currentClient.email] = allClients[currentClient.email].filter(c => c.id !== clientId);
+                localStorage.setItem('bc_affiliate_clients', JSON.stringify(allClients));
+                loadAffiliateClients();
+            }
         }
     </script>
 </body>
