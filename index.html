@@ -195,7 +195,6 @@
 
         .hidden { display: none !important; }
 
-        /* KPI Grid Estilo Referencia Video */
         .kpi-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -296,7 +295,6 @@
             <section id="authSection" class="no-print">
                 <div style="display: flex; flex-direction: column; gap: 1.2rem;">
                     
-                    <!-- Login Admin Global -->
                     <div class="card" style="margin-bottom: 0;">
                         <h1 style="color: #ffffff; font-size: 1.3rem; font-weight: 800; margin-bottom: 0.2rem;">Panel Admin</h1>
                         <p style="color: var(--bronze); font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1rem;">Ciodarofitness</p>
@@ -316,7 +314,6 @@
                         </form>
                     </div>
 
-                    <!-- Registro Afiliado -->
                     <div class="card" style="margin-bottom: 0;">
                         <h2 style="color: #ffffff; font-size: 1.1rem; font-weight: 700;">Crear Cuenta Afiliado</h2>
                         <p class="subtitle">Regístrate tras recibir autorización.</p>
@@ -340,7 +337,6 @@
                         </form>
                     </div>
 
-                    <!-- Login Afiliados -->
                     <div class="card" style="margin-bottom: 0;">
                         <h2 style="color: #ffffff; font-size: 1.1rem; font-weight: 700;">Acceso Afiliados</h2>
                         <p class="subtitle">Gestiona tus atletas y finanzas.</p>
@@ -375,13 +371,11 @@
 
                 <div class="card">
                     <h3>Listado de Cuentas Afiliadas</h3>
-                    <div id="adminAccountsList" style="display: flex; flex-direction: column; gap: 0.6rem; margin-top: 0.8rem;">
-                        <!-- Inyectado por JS -->
-                    </div>
+                    <div id="adminAccountsList" style="display: flex; flex-direction: column; gap: 0.6rem; margin-top: 0.8rem;"></div>
                 </div>
             </section>
 
-            <!-- PORTAL DE AFILIADO (Estructura exacta inspirada en el video de referencia) -->
+            <!-- PORTAL DE AFILIADO -->
             <section id="clientPortalView" class="hidden">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;" class="no-print">
                     <div>
@@ -391,9 +385,14 @@
                     <button class="btn-secondary" onclick="logoutSystem()">Salir</button>
                 </div>
 
-                <!-- SECCIÓN: RESPALDO DE BASE DE DATOS -->
+                <!-- RESPALDO Y HERRAMIENTAS (LLAVE/ENGRAANAJE) -->
                 <div class="card no-print" style="padding: 0.9rem;">
-                    <span style="font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; display: block; margin-bottom: 0.5rem;">Respaldo de Base de Datos:</span>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                        <span style="font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase;">Respaldo de Base de Datos:</span>
+                        <button class="btn-secondary" onclick="toggleToolsMenu()" style="font-size: 0.75rem; background: var(--surface-card); color: var(--bronze); border-color: var(--bronze);">
+                            🛠️ Herramientas Pro
+                        </button>
+                    </div>
                     <div style="display: flex; gap: 0.6rem;">
                         <button class="btn-secondary" onclick="exportDatabase()" style="flex: 1; background: var(--surface-card);">📤 Exportar</button>
                         <button class="btn-secondary" onclick="triggerImport()" style="flex: 1; background: var(--surface-card);">📥 Importar</button>
@@ -401,7 +400,48 @@
                     </div>
                 </div>
 
-                <!-- SECCIÓN: KPI METRICS (Estilo Grid del Video) -->
+                <!-- PANEL DE HERRAMIENTAS / CALCULADORAS (Desplegable con llave/engranaje) -->
+                <div id="toolsDropdownCard" class="card hidden no-print" style="background: var(--surface-card); border-color: var(--bronze);">
+                    <h3 style="font-size: 0.9rem; color: var(--bronze); margin-bottom: 0.8rem; display: flex; align-items: center; gap: 6px;">
+                        🛠️ Calculadoras Profesionales
+                    </h3>
+                    
+                    <!-- 1. IMC -->
+                    <div style="background: var(--bg-deep); padding: 0.8rem; border-radius: 6px; margin-bottom: 0.6rem;">
+                        <h4 style="font-size: 0.8rem; color: var(--text-main); margin-bottom: 0.4rem;">Calculadora de IMC</h4>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem; margin-bottom: 0.4rem;">
+                            <input type="number" id="toolImcWeight" placeholder="Peso (kg)" style="font-size: 0.8rem; padding: 0.5rem;">
+                            <input type="number" step="0.01" id="toolImcHeight" placeholder="Altura (m)" style="font-size: 0.8rem; padding: 0.5rem;">
+                        </div>
+                        <button type="button" onclick="calcToolIMC()" style="font-size: 0.7rem; padding: 0.4rem;">Calcular IMC</button>
+                        <div id="toolImcResult" style="font-size: 0.75rem; color: var(--bronze); margin-top: 0.4rem; font-weight: bold;"></div>
+                    </div>
+
+                    <!-- 2. Porcentaje de Grasa (Navy Method simple) -->
+                    <div style="background: var(--bg-deep); padding: 0.8rem; border-radius: 6px; margin-bottom: 0.6rem;">
+                        <h4 style="font-size: 0.8rem; color: var(--text-main); margin-bottom: 0.4rem;">Porcentaje de Grasa Corporal (Aprox)</h4>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem; margin-bottom: 0.4rem;">
+                            <input type="number" id="toolFatCintura" placeholder="Cintura (cm)" style="font-size: 0.8rem; padding: 0.5rem;">
+                            <input type="number" id="toolFatCuello" placeholder="Cuello (cm)" style="font-size: 0.8rem; padding: 0.5rem;">
+                        </div>
+                        <button type="button" onclick="calcToolFat()" style="font-size: 0.7rem; padding: 0.4rem;">Calcular Grasa</button>
+                        <div id="toolFatResult" style="font-size: 0.75rem; color: var(--bronze); margin-top: 0.4rem; font-weight: bold;"></div>
+                    </div>
+
+                    <!-- 3. Calorías (Harris-Benedict) -->
+                    <div style="background: var(--bg-deep); padding: 0.8rem; border-radius: 6px;">
+                        <h4 style="font-size: 0.8rem; color: var(--text-main); margin-bottom: 0.4rem;">Gasto Calórico (TDEE)</h4>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.4rem; margin-bottom: 0.4rem;">
+                            <input type="number" id="toolCalWeight" placeholder="Peso kg" style="font-size: 0.8rem; padding: 0.5rem;">
+                            <input type="number" id="toolCalHeight" placeholder="Alt cm" style="font-size: 0.8rem; padding: 0.5rem;">
+                            <input type="number" id="toolCalAge" placeholder="Edad" style="font-size: 0.8rem; padding: 0.5rem;">
+                        </div>
+                        <button type="button" onclick="calcToolCalories()" style="font-size: 0.7rem; padding: 0.4rem;">Calcular Calorías</button>
+                        <div id="toolCalResult" style="font-size: 0.75rem; color: var(--bronze); margin-top: 0.4rem; font-weight: bold;"></div>
+                    </div>
+                </div>
+
+                <!-- KPI METRICS -->
                 <div class="kpi-grid no-print">
                     <div class="kpi-card">
                         <h3>Atletas Activos</h3>
@@ -421,7 +461,7 @@
                     </div>
                 </div>
 
-                <!-- SECCIÓN: REGISTRAR NUEVO ATLETA -->
+                <!-- REGISTRAR NUEVO ATLETA -->
                 <div class="card no-print">
                     <h3 style="font-size: 0.95rem; display: flex; align-items: center; gap: 6px;">⚡ Registrar Nuevo Atleta</h3>
                     <p class="subtitle" style="font-size: 0.75rem;">Añade un nuevo asesorado al sistema.</p>
@@ -441,18 +481,16 @@
                     <button type="button" onclick="addAthlete()" style="margin-top: 0.4rem;">Agregar a la Base de Datos</button>
                 </div>
 
-                <!-- SECCIÓN: CONTROL DE ATLETAS -->
+                <!-- CONTROL DE ATLETAS -->
                 <div class="card no-print">
                     <h3 style="font-size: 0.95rem; margin-bottom: 0.6rem;">📋 Control de Atletas</h3>
                     <div class="form-group" style="margin-bottom: 0.8rem;">
                         <input type="text" id="searchAthleteInput" placeholder="🔍 Buscar atleta por nombre..." oninput="filterAthletes()" style="font-size: 0.8rem; padding: 0.6rem;">
                     </div>
-                    <div id="affiliateClientsList">
-                        <!-- Inyectado dinámicamente -->
-                    </div>
+                    <div id="affiliateClientsList"></div>
                 </div>
 
-                <!-- VISTA DETALLADA DEL EXPEDIENTE DEL ATLETA (Diseño exacto del video) -->
+                <!-- VISTA DETALLADA DEL EXPEDIENTE DEL ATLETA -->
                 <div id="athleteDetailView" class="card hidden">
                     <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; border-bottom: 1px solid var(--border); padding-bottom: 0.8rem;">
                         <div>
@@ -524,6 +562,11 @@
         function togglePassword(id) {
             const pwd = document.getElementById(id);
             pwd.type = pwd.type === 'password' ? 'text' : 'password';
+        }
+
+        function toggleToolsMenu() {
+            const card = document.getElementById('toolsDropdownCard');
+            card.classList.toggle('hidden');
         }
 
         document.getElementById('loginForm').addEventListener('submit', function(e) {
@@ -660,10 +703,9 @@
             let myAthletes = allAthletes[currentClient.email] || [];
 
             let totalActive = myAthletes.length;
-            let monthlyGoal = myAthletes.reduce((acc, a) => acc + (a.cost || 0), 0);
-            let collected = myAthletes.filter(a => a.status === 'Pagado').reduce((acc, a) => acc + (a.cost || 0), 0);
+            let monthlyGoal = myAthletes.reduce((acc, a) => acc + (parseFloat(a.cost) || 0), 0);
+            let collected = myAthletes.filter(a => a.status === 'Pagado').reduce((acc, a) => acc + (parseFloat(a.cost) || 0), 0);
             
-            // Sumar abonos parciales a lo recaudado
             myAthletes.forEach(a => {
                 if(a.abonos && a.abonos.length > 0) {
                     let totalAbonos = a.abonos.reduce((sum, ab) => sum + (parseFloat(ab.monto) || 0), 0);
@@ -673,10 +715,11 @@
 
             let pending = Math.max(0, monthlyGoal - collected);
 
+            // CORRECCIÓN DE FORMATO FINANCIERO (Cifras limpias sin duplicar símbolos)
             document.getElementById('statActiveAthletes').innerText = totalActive;
-            document.getElementById('statMonthlyGoal').innerText = `$${monthlyGoal}`;
-            document.getElementById('statCollected').innerText = `$${collected}`;
-            document.getElementById('statPending').innerText = `$${pending}`;
+            document.getElementById('statMonthlyGoal').innerText = `$${monthlyGoal.toFixed(0)}`;
+            document.getElementById('statCollected').innerText = `$${collected.toFixed(0)}`;
+            document.getElementById('statPending').innerText = `$${pending.toFixed(0)}`;
 
             renderAthletesList(myAthletes);
         }
@@ -862,7 +905,6 @@
 
                 localStorage.setItem('bc_affiliate_athletes', JSON.stringify(allAthletes));
                 
-                // Limpiar inputs
                 document.getElementById('mWeight').value = '';
                 document.getElementById('mHeight').value = '';
                 document.getElementById('mNeck').value = '';
@@ -915,6 +957,34 @@
                 localStorage.setItem('bc_affiliate_athletes', JSON.stringify(allAthletes));
                 openAthleteDetail(athlete.id);
             }
+        }
+
+        // Lógica Herramientas Pro (Calculadoras)
+        function calcToolIMC() {
+            let w = parseFloat(document.getElementById('toolImcWeight').value);
+            let h = parseFloat(document.getElementById('toolImcHeight').value);
+            if(!w || !h) { alert("Completa peso y altura."); return; }
+            let imc = (w / (h * h)).toFixed(1);
+            let estado = imc < 18.5 ? "Bajo peso" : imc < 25 ? "Normal" : imc < 30 ? "Sobrepeso" : "Obesidad";
+            document.getElementById('toolImcResult').innerText = `IMC: ${imc} (${estado})`;
+        }
+
+        function calcToolFat() {
+            let cin = parseFloat(document.getElementById('toolFatCintura').value);
+            let cue = parseFloat(document.getElementById('toolFatCuello').value);
+            if(!cin || !cue) { alert("Ingresa cintura y cuello."); return; }
+            let fat = (495 / (1.0324 - 0.19077 * Math.log10(cin - cue) + 0.15456 * Math.log10(175)) - 450).toFixed(1);
+            document.getElementById('toolFatResult').innerText = `Grasa Aprox: ${fat}%`;
+        }
+
+        function calcToolCalories() {
+            let w = parseFloat(document.getElementById('toolCalWeight').value);
+            let h = parseFloat(document.getElementById('toolCalHeight').value);
+            let a = parseFloat(document.getElementById('toolCalAge').value);
+            if(!w || !h || !a) { alert("Completa peso, altura y edad."); return; }
+            let bmr = (10 * w) + (6.25 * h) - (5 * a) + 5;
+            let tdee = Math.round(bmr * 1.55);
+            document.getElementById('toolCalResult').innerText = `TDEE Moderado: ${tdee} kcal/día`;
         }
 
         function exportDatabase() {
