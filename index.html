@@ -3,181 +3,175 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ciodarofitness - Panel de Control</title>
+    <title>Business Center Fit - Ciodarofitness</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        .bg-gold-gradient {
+            background: linear-gradient(135deg, #d4af37 0%, #aa771c 100%);
+        }
+        .text-gold {
+            color: #d4af37;
+        }
         @media print {
             body { background: white !important; color: black !important; }
             .no-print { display: none !important; }
-            .print-only { display: block !important; }
-            div { border-color: #ccc !important; }
         }
     </style>
 </head>
-<body class="bg-[#0b0f19] text-gray-100 min-h-screen p-4 pb-20">
+<body class="bg-[#0b0f19] text-gray-100 min-h-screen p-4 flex items-center justify-center">
 
-    <div class="max-w-md mx-auto space-y-6" id="app-container">
-        <div id="vista-principal" class="space-y-6">
-            <header class="flex justify-between items-center bg-[#131b2e] p-4 rounded-2xl border border-gray-800">
-                <div>
-                    <h1 class="text-xl font-black tracking-wider text-orange-500">CIODAROFITNESS <span class="text-xs text-gray-400 font-normal">page</span></h1>
-                </div>
-                <div class="flex items-center gap-2">
-                    <button onclick="alternarVisibilidadMontos()" id="btn-ojo" class="bg-gray-800 text-gray-300 p-2 rounded-xl border border-gray-700 text-xs">👁️</button>
-                    <span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-semibold px-3 py-1.5 rounded-full">Panel Activo</span>
-                </div>
-            </header>
+    <div id="vista-login" class="max-w-md w-full bg-[#131b2e] p-6 rounded-3xl border border-gray-800 shadow-2xl relative overflow-hidden">
+        <div class="absolute top-0 left-0 right-0 h-1.5 bg-gold-gradient"></div>
 
-            <div class="grid grid-cols-2 gap-4">
-                <div class="bg-[#131b2e] p-4 rounded-2xl border border-gray-800">
-                    <div class="text-xs text-gray-400 uppercase font-semibold">Clientes Activos</div>
-                    <div id="total-clientes" class="text-3xl font-bold mt-2">0</div>
-                </div>
-                <div class="bg-[#131b2e] p-4 rounded-2xl border border-gray-800">
-                    <div class="text-xs text-gray-400 uppercase font-semibold">Ingresos Mensuales</div>
-                    <div id="total-meta" class="text-2xl font-bold mt-2 text-orange-400">$0.00</div>
-                </div>
-                <div class="bg-[#131b2e] p-4 rounded-2xl border border-gray-800">
-                    <div class="text-xs text-gray-400 uppercase font-semibold">Recaudado</div>
-                    <div id="total-recaudado" class="text-2xl font-bold mt-2 text-emerald-400">$0.00</div>
-                </div>
-                <div class="bg-[#131b2e] p-4 rounded-2xl border border-gray-800">
-                    <div class="text-xs text-gray-400 uppercase font-semibold">Por Cobrar</div>
-                    <div id="total-por-cobrar" class="text-2xl font-bold mt-2 text-red-400">$0.00</div>
-                </div>
+        <div class="text-center space-y-1 mb-6 mt-2">
+            <span class="bg-[#d4af37]/10 text-gold border border-[#d4af37]/20 text-[10px] font-semibold px-3 py-1 rounded-full">SAAS ENGINE V2.5</span>
+            <h1 class="text-2xl font-black tracking-wider text-white mt-2">BUSINESS CENTER</h1>
+            <h2 class="text-xl font-bold text-gold">FIT</h2>
+            <p class="text-[10px] tracking-widest text-gray-400 uppercase font-semibold">BY CIODAROFITNESS</p>
+        </div>
+
+        <form onsubmit="realizarLogin(event)" class="space-y-4">
+            <div>
+                <label class="text-xs text-gray-400 block mb-1 uppercase font-semibold tracking-wide">Correo Electrónico</label>
+                <input type="email" id="login-correo" required value="heber@ciodarofitness.com" class="w-full bg-[#0b0f19] border border-gray-800 rounded-xl p-3 text-sm focus:outline-none focus:border-[#d4af37] text-white">
             </div>
 
-            <div class="bg-[#131b2e] p-5 rounded-2xl border border-gray-800 space-y-4 no-print">
-                <h2 class="text-sm font-bold text-orange-500 uppercase tracking-wide flex items-center gap-2">
-                    👤 Registrar Nuevo Cliente
-                </h2>
-                
-                <form id="form-cliente" class="space-y-3">
-                    <div>
-                        <label class="text-xs text-gray-400 block mb-1">Nombre Completo</label>
-                        <input type="text" id="nombre" required placeholder="Ej. Juan Pérez" class="w-full bg-[#0b0f19] border border-gray-800 rounded-xl p-3 text-sm focus:outline-none focus:border-orange-500 text-white">
-                    </div>
-                    <div class="grid grid-cols-2 gap-3">
-                        <div>
-                            <label class="text-xs text-gray-400 block mb-1">Edad</label>
-                            <input type="number" id="edad" placeholder="Ej. 30" class="w-full bg-[#0b0f19] border border-gray-800 rounded-xl p-3 text-sm focus:outline-none focus:border-orange-500 text-white">
-                        </div>
-                        <div>
-                            <label class="text-xs text-gray-400 block mb-1">WhatsApp</label>
-                            <input type="text" id="whatsapp" required placeholder="Ej. 5841234" class="w-full bg-[#0b0f19] border border-gray-800 rounded-xl p-3 text-sm focus:outline-none focus:border-orange-500 text-white">
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-2 gap-3">
-                        <div>
-                            <label class="text-xs text-gray-400 block mb-1">Costo Paquete ($)</label>
-                            <input type="number" id="costo" required placeholder="Ej. 50" class="w-full bg-[#0b0f19] border border-gray-800 rounded-xl p-3 text-sm focus:outline-none focus:border-orange-500 text-white">
-                        </div>
-                        <div>
-                            <label class="text-xs text-gray-400 block mb-1">Fecha de Inicio</label>
-                            <input type="date" id="fecha" required class="w-full bg-[#0b0f19] border border-gray-800 rounded-xl p-3 text-sm focus:outline-none focus:border-orange-500 text-white">
-                        </div>
-                    </div>
-                    <button type="submit" class="w-full bg-orange-600 hover:bg-orange-500 text-white font-bold py-3.5 px-4 rounded-xl transition duration-200 flex items-center justify-center gap-2 shadow-lg shadow-orange-600/20">
-                        📂 Agregar a la Base de Datos
-                    </button>
-                </form>
+            <div>
+                <label class="text-xs text-gray-400 block mb-1 uppercase font-semibold tracking-wide">Contraseña</label>
+                <input type="password" id="login-pass" required value="123456" class="w-full bg-[#0b0f19] border border-gray-800 rounded-xl p-3 text-sm focus:outline-none focus:border-[#d4af37] text-white">
             </div>
 
-            <div class="space-y-3 no-print">
-                <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wide flex items-center gap-2">
-                    📋 Control de Clientes y Vencimientos
-                </h3>
-                <div id="lista-clientes" class="space-y-3"></div>
+            <button type="submit" class="w-full bg-gold-gradient hover:opacity-90 text-gray-950 font-black py-3.5 px-4 rounded-xl transition duration-200 shadow-lg uppercase tracking-wider text-sm mt-2">
+                Acceder al Sistema
+            </button>
+        </form>
+    </div>
+
+    <div id="vista-panel" class="max-w-md w-full space-y-6 hidden pb-20">
+        <header class="flex justify-between items-center bg-[#131b2e] p-4 rounded-2xl border border-gray-800">
+            <div>
+                <h1 class="text-lg font-black tracking-wider text-orange-500">CIODAROFITNESS <span class="text-xs text-gray-400 font-normal">page</span></h1>
+            </div>
+            <div class="flex items-center gap-2">
+                <button onclick="cerrarSesion()" class="bg-gray-800 text-gray-300 px-3 py-1.5 rounded-xl border border-gray-700 text-xs">Cerrar Sesión</button>
+                <span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-semibold px-3 py-1.5 rounded-full">Panel Activo</span>
+            </div>
+        </header>
+
+        <div class="grid grid-cols-2 gap-4">
+            <div class="bg-[#131b2e] p-4 rounded-2xl border border-gray-800">
+                <div class="text-xs text-gray-400 uppercase font-semibold">Clientes Activos</div>
+                <div id="total-clientes" class="text-3xl font-bold mt-2">0</div>
+            </div>
+            <div class="bg-[#131b2e] p-4 rounded-2xl border border-gray-800">
+                <div class="text-xs text-gray-400 uppercase font-semibold">Ingresos Mensuales</div>
+                <div id="total-meta" class="text-2xl font-bold mt-2 text-orange-400">$0.00</div>
             </div>
         </div>
 
-        <div id="vista-expediente" class="hidden space-y-4">
-            <div class="flex justify-between items-center no-print">
-                <button onclick="volverAlInicio()" class="bg-gray-800 hover:bg-gray-700 text-white text-xs font-semibold px-4 py-2 rounded-xl border border-gray-700">
-                    ← Volver al Panel
+        <div class="bg-[#131b2e] p-5 rounded-2xl border border-gray-800 space-y-4">
+            <h2 class="text-sm font-bold text-orange-500 uppercase tracking-wide flex items-center gap-2">
+                👤 Registrar Nuevo Cliente
+            </h2>
+            
+            <form id="form-cliente" onsubmit="agregarCliente(event)" class="space-y-3">
+                <div>
+                    <label class="text-xs text-gray-400 block mb-1">Nombre Completo</label>
+                    <input type="text" id="nombre" required placeholder="Ej. Juan Pérez" class="w-full bg-[#0b0f19] border border-gray-800 rounded-xl p-3 text-sm focus:outline-none focus:border-orange-500 text-white">
+                </div>
+                <div>
+                    <label class="text-xs text-gray-400 block mb-1">Número de WhatsApp (con código de país)</label>
+                    <input type="text" id="whatsapp" required placeholder="Ej. 584123456789" class="w-full bg-[#0b0f19] border border-gray-800 rounded-xl p-3 text-sm focus:outline-none focus:border-orange-500 text-white">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="text-xs text-gray-400 block mb-1">Costo del Paquete ($)</label>
+                        <input type="number" id="costo" required placeholder="Ej. 50" class="w-full bg-[#0b0f19] border border-gray-800 rounded-xl p-3 text-sm focus:outline-none focus:border-orange-500 text-white">
+                    </div>
+                    <div>
+                        <label class="text-xs text-gray-400 block mb-1">Fecha de Inicio</label>
+                        <input type="date" id="fecha" required class="w-full bg-[#0b0f19] border border-gray-800 rounded-xl p-3 text-sm focus:outline-none focus:border-orange-500 text-white">
+                    </div>
+                </div>
+                <button type="submit" class="w-full bg-orange-600 hover:bg-orange-500 text-white font-bold py-3.5 px-4 rounded-xl transition duration-200 flex items-center justify-center gap-2 shadow-lg">
+                    📂 Agregar a la Base de Datos
                 </button>
-                <button onclick="generarPDFExpediente()" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold px-4 py-2 rounded-xl shadow-lg flex items-center gap-1.5">
-                    📄 Descargar Expediente PDF
-                </button>
-            </div>
-            <div id="detalle-expediente" class="space-y-4"></div>
+            </form>
+        </div>
+
+        <div class="space-y-3">
+            <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wide flex items-center gap-2">
+                📋 Control de Clientes y Vencimientos
+            </h3>
+            <div id="lista-clientes" class="space-y-3"></div>
         </div>
     </div>
 
     <script>
-        const inputFecha = document.getElementById('fecha');
-        if (inputFecha) {
-            inputFecha.valueAsDate = new Date();
-        }
+        document.getElementById('fecha').valueAsDate = new Date();
+        let clientes = JSON.parse(localStorage.getItem('ciodaro_clientes_original')) || [];
 
-        let clientes = JSON.parse(localStorage.getItem('ciodaro_clientes')) || [];
-        let montosOcultos = false;
-
-        function guardarStorage() {
-            localStorage.setItem('ciodaro_clientes', JSON.stringify(clientes));
+        function realizarLogin(e) {
+            e.preventDefault();
+            document.getElementById('vista-login').classList.add('hidden');
+            document.getElementById('vista-panel').classList.remove('hidden');
+            document.body.classList.remove('flex', 'items-center', 'justify-center');
             renderizarClientes();
         }
 
-        function alternarVisibilidadMontos() {
-            montosOcultos = !montosOcultos;
-            document.getElementById('btn-ojo').textContent = montosOcultos ? '🙈' : '👁️';
-            renderizarClientes();
+        function cerrarSesion() {
+            document.getElementById('vista-panel').classList.add('hidden');
+            document.getElementById('vista-login').classList.remove('hidden');
+            document.body.classList.add('flex', 'items-center', 'justify-center');
         }
 
-        document.getElementById('form-cliente').addEventListener('submit', function(e) {
+        function agregarCliente(e) {
             e.preventDefault();
             
             const nuevoCliente = {
                 id: Date.now(),
                 nombre: document.getElementById('nombre').value,
-                edad: document.getElementById('edad').value || 'N/A',
                 whatsapp: document.getElementById('whatsapp').value,
                 costo: parseFloat(document.getElementById('costo').value) || 0,
-                fecha: document.getElementById('fecha').value,
-                pagado: true,
-                metricas: []
+                fecha: document.getElementById('fecha').value
             };
 
             clientes.push(nuevoCliente);
-            guardarStorage();
+            localStorage.setItem('ciodaro_clientes_original', JSON.stringify(clientes));
             
-            this.reset();
+            document.getElementById('form-cliente').reset();
             document.getElementById('fecha').valueAsDate = new Date();
-        });
+            renderizarClientes();
+        }
 
         function eliminarCliente(id) {
-            if(confirm('¿Eliminar este atleta por completo?')) {
+            if(confirm('¿Eliminar este cliente?')) {
                 clientes = clientes.filter(c => c.id !== id);
-                guardarStorage();
+                localStorage.setItem('ciodaro_clientes_original', JSON.stringify(clientes));
+                renderizarClientes();
             }
+        }
+
+        function notificarCobro(whatsapp, nombre) {
+            const mensaje = encodeURIComponent(`Hola ${nombre}, te escribo de Ciodarofitness para recordarte el vencimiento de tu paquete.`);
+            window.open(`https://wa.me/${whatsapp}?text=${mensaje}`, '_blank');
         }
 
         function renderizarClientes() {
             const contenedor = document.getElementById('lista-clientes');
-            if (!contenedor) return;
             contenedor.innerHTML = '';
             
-            let totalCli = clientes.length;
-            let metaTotal = 0;
-            let recaudadoTotal = 0;
-            let porCobrarTotal = 0;
+            let totalIngresos = 0;
 
-            if (totalCli === 0) {
-                contenedor.innerHTML = `<div class="text-center text-gray-500 text-sm py-6 bg-[#131b2e] rounded-2xl border border-gray-800">No hay atletas registrados.</div>`;
+            if (clientes.length === 0) {
+                contenedor.innerHTML = `<div class="text-center text-gray-500 text-sm py-6 bg-[#131b2e] rounded-2xl border border-gray-800">No hay clientes registrados.</div>`;
                 document.getElementById('total-clientes').textContent = '0';
-                document.getElementById('total-meta').textContent = montosOcultos ? '••••' : '$0.00';
-                document.getElementById('total-recaudado').textContent = montosOcultos ? '••••' : '$0.00';
-                document.getElementById('total-por-cobrar').textContent = montosOcultos ? '••••' : '$0.00';
+                document.getElementById('total-meta').textContent = '$0.00';
                 return;
             }
 
             clientes.forEach(c => {
-                metaTotal += c.costo;
-                if (c.pagado) {
-                    recaudadoTotal += c.costo;
-                } else {
-                    porCobrarTotal += c.costo;
-                }
+                totalIngresos += c.costo;
 
                 let fechaInicio = new Date(c.fecha + 'T00:00:00');
                 let fechaVenc = new Date(fechaInicio);
@@ -192,15 +186,15 @@
                             <h4 class="font-bold text-white text-base">${c.nombre}</h4>
                             <p class="text-xs text-gray-400 mt-0.5">📅 Ciclo: ${fechaInicio.toLocaleDateString('es-ES', opt)} al ${fechaVenc.toLocaleDateString('es-ES', opt)}</p>
                         </div>
-                        <span class="text-emerald-400 font-bold text-sm">${montosOcultos ? '••••' : '$' + c.costo.toFixed(2)}</span>
+                        <span class="text-emerald-400 font-bold text-sm">$${c.costo.toFixed(2)}</span>
                     </div>
                     <div class="flex justify-between items-center pt-2 border-t border-gray-800/60">
-                        <span class="bg-${c.pagado ? 'emerald' : 'red'}-500/10 text-${c.pagado ? 'emerald' : 'red'}-400 border border-${c.pagado ? 'emerald' : 'red'}-500/20 text-[10px] font-semibold px-2.5 py-1 rounded-full">
-                            ${c.pagado ? 'Al Día (30d)' : 'Pendiente Pago'}
+                        <span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[10px] font-semibold px-2.5 py-1 rounded-full">
+                            Activo (30d)
                         </span>
                         <div class="flex gap-2">
-                            <button onclick="abrirExpediente(${c.id})" class="bg-orange-600 hover:bg-orange-500 text-white text-xs font-semibold px-3 py-2 rounded-xl transition">
-                                📂 Expediente
+                            <button onclick="notificarCobro('${c.whatsapp}', '${c.nombre}')" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold px-3 py-2 rounded-xl transition flex items-center gap-1">
+                                💬 Notificar Cobro
                             </button>
                             <button onclick="eliminarCliente(${c.id})" class="bg-gray-800 hover:bg-red-600/20 text-gray-400 hover:text-red-400 p-2 rounded-xl border border-gray-700">🗑️</button>
                         </div>
@@ -209,192 +203,9 @@
                 contenedor.appendChild(card);
             });
 
-            document.getElementById('total-clientes').textContent = totalCli;
-            document.getElementById('total-meta').textContent = montosOcultos ? '••••' : '$' + metaTotal.toFixed(2);
-            document.getElementById('total-recaudado').textContent = montosOcultos ? '••••' : '$' + recaudadoTotal.toFixed(2);
-            document.getElementById('total-por-cobrar').textContent = montosOcultos ? '••••' : '$' + porCobrarTotal.toFixed(2);
+            document.getElementById('total-clientes').textContent = clientes.length;
+            document.getElementById('total-meta').textContent = '$' + totalIngresos.toFixed(2);
         }
-
-        let clienteActualId = null;
-
-        function abrirExpediente(id) {
-            clienteActualId = id;
-            document.getElementById('vista-principal').classList.add('hidden');
-            document.getElementById('vista-expediente').classList.remove('hidden');
-            renderizarExpediente();
-        }
-
-        function volverAlInicio() {
-            clienteActualId = null;
-            document.getElementById('vista-expediente').classList.add('hidden');
-            document.getElementById('vista-principal').classList.remove('hidden');
-            renderizarClientes();
-        }
-
-        function renderizarExpediente() {
-            const c = clientes.find(item => item.id === clienteActualId);
-            if (!c) return;
-
-            const contenedor = document.getElementById('detalle-expediente');
-            
-            let htmlMetricas = '';
-            if (c.metricas && c.metricas.length > 0) {
-                c.metricas.forEach((m, idx) => {
-                    htmlMetricas += `
-                        <div class="bg-[#131b2e] p-4 rounded-xl border border-gray-800 space-y-2 text-xs">
-                            <div class="flex justify-between items-center border-b border-gray-800 pb-2">
-                                <span class="font-bold text-orange-400">📅 Registro: ${m.fecha}</span>
-                                <div class="flex gap-1 no-print">
-                                    <button onclick="editarMetrica(${idx})" class="bg-gray-800 px-2 py-1 rounded text-gray-300">Editar</button>
-                                    <button onclick="eliminarMetrica(${idx})" class="bg-red-900/40 text-red-400 px-2 py-1 rounded">Eliminar</button>
-                                </div>
-                            </div>
-                            <div class="grid grid-cols-3 gap-2 pt-1 text-gray-300">
-                                <div><b>Peso:</b> ${m.peso} kg</div>
-                                <div><b>Estatura:</b> ${m.estatura} cm</div>
-                                <div><b>IMC:</b> <span class="text-emerald-400 font-bold">${m.imc}</span></div>
-                                <div><b>Cuello:</b> ${m.cuello} cm</div>
-                                <div><b>Tórax:</b> ${m.torax} cm</div>
-                                <div><b>Bíceps:</b> ${m.biceps} cm</div>
-                                <div><b>Abdomen:</b> ${m.abdomen} cm</div>
-                                <div><b>Glúteos:</b> ${m.gluteos} cm</div>
-                                <div><b>Cuádriceps:</b> ${m.cuadriceps} cm</div>
-                                <div><b>Pantorrilla:</b> ${m.pantorrilla} cm</div>
-                            </div>
-                        </div>
-                    `;
-                });
-            } else {
-                htmlMetricas = `<p class="text-gray-500 text-xs text-center py-4">No hay registros antropométricos aún.</p>`;
-            }
-
-            contenedor.innerHTML = `
-                <div class="bg-[#131b2e] p-5 rounded-2xl border border-gray-800 space-y-3">
-                    <h2 class="text-lg font-bold text-white">🏋️‍♂️ Expediente de ${c.nombre}</h2>
-                    <div class="grid grid-cols-2 gap-2 text-xs text-gray-300 bg-[#0b0f19] p-3 rounded-xl border border-gray-800">
-                        <div><b>Edad:</b> ${c.edad} años</div>
-                        <div><b>WhatsApp:</b> ${c.whatsapp}</div>
-                        <div><b>Inicio:</b> ${c.fecha}</div>
-                        <div><b>Pago Paquete:</b> $${c.costo.toFixed(2)} (${c.pagado ? 'Al día' : 'Pendiente'})</div>
-                    </div>
-                    <button onclick="toggleEstadoPago(${c.id})" class="w-full bg-emerald-600/20 text-emerald-400 border border-emerald-500/30 font-semibold py-2 rounded-xl text-xs no-print">
-                        🔄 Cambiar Estatus de Pago (${c.pagado ? 'Marcar Pendiente' : 'Marcar Pagado'})
-                    </button>
-                </div>
-
-                <div class="bg-[#131b2e] p-5 rounded-2xl border border-gray-800 space-y-3 no-print">
-                    <h3 class="text-sm font-bold text-orange-500 uppercase">📊 Nueva Medición Antropométrica</h3>
-                    <form id="form-metrica" onsubmit="guardarMetrica(event)" class="space-y-3 text-xs">
-                        <div class="grid grid-cols-3 gap-2">
-                            <div>
-                                <label class="text-gray-400">Peso (kg)</label>
-                                <input type="number" step="0.1" id="m-peso" required class="w-full bg-[#0b0f19] border border-gray-800 rounded-lg p-2 text-white">
-                            </div>
-                            <div>
-                                <label class="text-gray-400">Estatura (cm)</label>
-                                <input type="number" step="1" id="m-estatura" required class="w-full bg-[#0b0f19] border border-gray-800 rounded-lg p-2 text-white">
-                            </div>
-                            <div>
-                                <label class="text-gray-400">Fecha</label>
-                                <input type="date" id="m-fecha" required class="w-full bg-[#0b0f19] border border-gray-800 rounded-lg p-2 text-white">
-                            </div>
-                        </div>
-                        <div class="grid grid-cols-4 gap-2">
-                            <div><label class="text-gray-400">Cuello</label><input type="number" step="0.1" id="m-cuello" class="w-full bg-[#0b0f19] border border-gray-800 rounded-lg p-2 text-white"></div>
-                            <div><label class="text-gray-400">Tórax</label><input type="number" step="0.1" id="m-torax" class="w-full bg-[#0b0f19] border border-gray-800 rounded-lg p-2 text-white"></div>
-                            <div><label class="text-gray-400">Bíceps</label><input type="number" step="0.1" id="m-biceps" class="w-full bg-[#0b0f19] border border-gray-800 rounded-lg p-2 text-white"></div>
-                            <div><label class="text-gray-400">Abdomen</label><input type="number" step="0.1" id="m-abdomen" class="w-full bg-[#0b0f19] border border-gray-800 rounded-lg p-2 text-white"></div>
-                            <div><label class="text-gray-400">Glúteos</label><input type="number" step="0.1" id="m-gluteos" class="w-full bg-[#0b0f19] border border-gray-800 rounded-lg p-2 text-white"></div>
-                            <div><label class="text-gray-400">Cuádriceps</label><input type="number" step="0.1" id="m-cuadriceps" class="w-full bg-[#0b0f19] border border-gray-800 rounded-lg p-2 text-white"></div>
-                            <div><label class="text-gray-400">Pantorrilla</label><input type="number" step="0.1" id="m-pantorrilla" class="w-full bg-[#0b0f19] border border-gray-800 rounded-lg p-2 text-white"></div>
-                        </div>
-                        <button type="submit" class="w-full bg-orange-600 text-white font-bold py-2 rounded-xl">Registrar y Calcular IMC</button>
-                    </form>
-                </div>
-
-                <div class="space-y-2">
-                    <h3 class="text-sm font-bold text-gray-400 uppercase">📈 Historial y Comparativa Mensual</h3>
-                    ${htmlMetricas}
-                </div>
-            `;
-            const mFechaInput = document.getElementById('m-fecha');
-            if (mFechaInput) mFechaInput.valueAsDate = new Date();
-        }
-
-        function generarPDFExpediente() {
-            window.print();
-        }
-
-        function toggleEstadoPago(id) {
-            const c = clientes.find(item => item.id === id);
-            if (c) {
-                c.pagado = !c.pagado;
-                guardarStorage();
-                renderizarExpediente();
-            }
-        }
-
-        function guardarMetrica(e) {
-            e.preventDefault();
-            const c = clientes.find(item => item.id === clienteActualId);
-            if (!c) return;
-
-            const peso = parseFloat(document.getElementById('m-peso').value);
-            const estaturaCm = parseFloat(document.getElementById('m-estatura').value);
-            const estaturaM = estaturaCm / 100;
-            const imc = (peso / (estaturaM * estaturaM)).toFixed(1);
-
-            const nuevaMedicion = {
-                fecha: document.getElementById('m-fecha').value,
-                peso: peso,
-                estatura: estaturaCm,
-                imc: imc,
-                cuello: document.getElementById('m-cuello').value || '-',
-                torax: document.getElementById('m-torax').value || '-',
-                biceps: document.getElementById('m-biceps').value || '-',
-                abdomen: document.getElementById('m-abdomen').value || '-',
-                gluteos: document.getElementById('m-gluteos').value || '-',
-                cuadriceps: document.getElementById('m-cuadriceps').value || '-',
-                pantorrilla: document.getElementById('m-pantorrilla').value || '-'
-            };
-
-            if(!c.metricas) c.metricas = [];
-            c.metricas.push(nuevaMedicion);
-            guardarStorage();
-            renderizarExpediente();
-        }
-
-        function eliminarMetrica(idx) {
-            const c = clientes.find(item => item.id === clienteActualId);
-            if (c && c.metricas) {
-                c.metricas.splice(idx, 1);
-                guardarStorage();
-                renderizarExpediente();
-            }
-        }
-
-        function editarMetrica(idx) {
-            const c = clientes.find(item => item.id === clienteActualId);
-            if (c && c.metricas && c.metricas[idx]) {
-                const m = c.metricas[idx];
-                document.getElementById('m-peso').value = m.peso;
-                document.getElementById('m-estatura').value = m.estatura;
-                document.getElementById('m-fecha').value = m.fecha;
-                document.getElementById('m-cuello').value = m.cuello !== '-' ? m.cuello : '';
-                document.getElementById('m-torax').value = m.torax !== '-' ? m.torax : '';
-                document.getElementById('m-biceps').value = m.biceps !== '-' ? m.biceps : '';
-                document.getElementById('m-abdomen').value = m.abdomen !== '-' ? m.abdomen : '';
-                document.getElementById('m-gluteos').value = m.gluteos !== '-' ? m.gluteos : '';
-                document.getElementById('m-cuadriceps').value = m.cuadriceps !== '-' ? m.cuadriceps : '';
-                document.getElementById('m-pantorrilla').value = m.pantorrilla !== '-' ? m.pantorrilla : '';
-                
-                c.metricas.splice(idx, 1);
-                guardarStorage();
-                renderizarExpediente();
-            }
-        }
-
-        renderizarClientes();
     </script>
 </body>
 </html>
