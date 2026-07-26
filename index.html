@@ -3,208 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BC FIT - Ciodarofitness</title>
+    <title>Business Center Fit - Login</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @media print {
-            body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-            .no-print { display: none !important; }
-            .print-only { display: block !important; }
-            .bg-\[\#131b2e\] { background-color: #131b2e !important; border: 1px solid rgba(217, 119, 6, 0.4) !important; }
-            .bg-\[\#0b0f19\] { background-color: #0b0f19 !important; }
-            .text-white { color: #ffffff !important; font-weight: 800 !important; }
-            .text-gray-300, .text-gray-400 { color: #e2e8f0 !important; font-weight: 700 !important; }
-            .text-amber-400, .text-amber-500 { color: #fbbf24 !important; font-weight: 900 !important; }
-            .text-emerald-400 { color: #34d399 !important; font-weight: 800 !important; }
+        /* Estilos personalizados para los tonos bronce, plateado y negro */
+        .bg-bronze-gradient {
+            background: linear-gradient(135deg, #d4af37 0%, #aa771c 50%, #8a5812 100%);
+        }
+        .text-bronze {
+            color: #d4af37;
+        }
+        .border-bronze {
+            border-color: rgba(212, 175, 55, 0.3);
+        }
+        .border-bronze-focus:focus {
+            border-color: #d4af37;
+        }
+        .badge-border {
+            border: 1px solid rgba(212, 175, 55, 0.4);
         }
     </style>
 </head>
-<body class="bg-[#0b0f19] text-gray-100 min-h-screen flex items-center justify-center p-3">
+<body class="bg-[#0b0f19] text-gray-100 min-h-screen flex items-center justify-center p-4">
 
-    <!-- VISTA LOGIN ADMINISTRADOR -->
-    <div id="vista-login" class="w-full max-w-sm bg-[#0b0f19] border border-gray-800 rounded-3xl p-6 shadow-2xl relative overflow-hidden">
-        <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-600 via-amber-400 to-amber-600"></div>
-        <div class="text-center space-y-1 mb-8 pt-2">
-            <h1 class="text-2xl font-black text-white tracking-wider">BC FIT</h1>
-            <p class="text-[10px] text-amber-500 uppercase tracking-widest mt-1 font-semibold">Administrador ciodarofitness</p>
+    <div class="max-w-md w-full bg-[#131b2e] p-7 rounded-[2rem] border border-gray-800/80 shadow-2xl relative overflow-hidden">
+        <div class="absolute top-0 left-0 right-0 h-1.5 bg-bronze-gradient"></div>
+
+        <div class="text-center space-y-3 mb-8 mt-2">
+            <div class="inline-block bg-[#0b0f19] badge-border px-3.5 py-1 rounded-full">
+                <span class="text-[10px] tracking-widest text-bronze uppercase font-bold">SAAS ENGINE V2.5</span>
+            </div>
+
+            <div class="space-y-0.5">
+                <h1 class="text-2xl font-black tracking-widest text-white">BUSINESS CENTER</h1>
+                <h2 class="text-2xl font-extrabold text-bronze tracking-wide">FIT</h2>
+            </div>
+
+            <div class="inline-block bg-[#0b0f19] badge-border px-4 py-1 rounded-full mt-1">
+                <span class="text-[9px] tracking-[0.2em] text-gray-300 uppercase font-semibold">BY CIODAROFITNESS</span>
+            </div>
         </div>
-        <form onsubmit="realizarLogin(event)" class="space-y-4">
+
+        <form onsubmit="manejarLogin(event)" class="space-y-5">
             <div>
-                <label class="text-[11px] font-bold text-gray-300 uppercase tracking-wider block mb-1.5">CORREO DE ACCESO</label>
-                <input type="email" id="input-correo" required value="heber@ciodarofitness.com" class="w-full bg-[#131b2e] border border-gray-800 rounded-xl p-3.5 text-sm text-white font-medium focus:outline-none focus:border-amber-500">
+                <label class="text-[11px] text-gray-400 block mb-1.5 uppercase font-bold tracking-wider">Correo Electrónico</label>
+                <input type="email" id="correo" required value="heber@ciodarofitness.com" class="w-full bg-[#0b0f19] border border-gray-800 rounded-xl p-3.5 text-sm focus:outline-none border-bronze-focus text-white placeholder-gray-600 transition">
             </div>
+
             <div>
-                <label class="text-[11px] font-bold text-gray-300 uppercase tracking-wider block mb-1.5">CÓDIGO DE SEGURIDAD</label>
-                <input type="password" id="input-password" required placeholder="••••••••" class="w-full bg-[#131b2e] border border-gray-800 rounded-xl p-3.5 text-sm text-white font-medium focus:outline-none focus:border-amber-500">
+                <label class="text-[11px] text-gray-400 block mb-1.5 uppercase font-bold tracking-wider">Contraseña</label>
+                <div class="relative">
+                    <input type="password" id="password" required value="123456" class="w-full bg-[#0b0f19] border border-gray-800 rounded-xl p-3.5 text-sm focus:outline-none border-bronze-focus text-white pr-12 placeholder-gray-600 transition">
+                    <button type="button" onclick="togglePassword()" class="absolute right-3.5 top-3.5 text-base text-gray-400 hover:text-white transition">🙈</button>
+                </div>
             </div>
-            <button type="submit" class="w-full bg-gradient-to-r from-amber-700 to-amber-900 text-white font-bold py-3.5 rounded-xl shadow-lg text-sm mt-2">ACCEDER AL SISTEMA</button>
+
+            <button type="submit" class="w-full bg-bronze-gradient hover:opacity-95 text-gray-950 font-black py-3.5 px-4 rounded-xl transition duration-200 shadow-xl shadow-amber-950/20 uppercase tracking-widest text-xs mt-3">
+                Acceder al Sistema
+            </button>
         </form>
-    </div>
 
-    <!-- VISTA APLICACIÓN PRINCIPAL -->
-    <div id="vista-app" class="hidden w-full max-w-md space-y-4 pb-20">
-        <header class="bg-[#131b2e] p-4 rounded-2xl border border-gray-800 shadow-lg flex justify-between items-center">
-            <div>
-                <h1 class="text-lg font-black text-white tracking-wider">BC <span class="text-amber-500">FIT</span></h1>
-                <p class="text-[10px] text-amber-400 font-semibold">Administrador ciodarofitness</p>
-                <p id="reloj-digital" class="text-[9px] text-gray-400 mt-0.5"></p>
-            </div>
-            <button onclick="cerrarSesion()" class="bg-red-950/40 text-red-400 border border-red-900/50 text-xs font-semibold px-3 py-2 rounded-xl">Salir</button>
-        </header>
-
-        <!-- SECCIONES DE MENÚ RÁPIDO -->
-        <div class="space-y-2">
-            <div class="bg-[#131b2e] p-3.5 rounded-2xl border border-gray-800 text-xs font-bold text-gray-300">1. Validación de Solicitudes</div>
-            <div class="bg-[#131b2e] p-3.5 rounded-2xl border border-amber-500/50 text-xs font-bold text-amber-400 shadow-md">2. Gestión de Alumnos</div>
-            <div class="bg-[#131b2e] p-3.5 rounded-2xl border border-gray-800 text-xs font-bold text-gray-300">3. Calculadora de Calorías</div>
+        <div class="text-center pt-6 mt-2 border-t border-gray-800/50">
+            <a href="https://wa.me/584123456789?text=Hola,%20deseo%20solicitar%20una%20licencia%20para%20Business%20Center%20Fit" target="_blank" class="text-xs text-bronze hover:underline font-semibold tracking-wide inline-flex items-center gap-1.5">
+                <span>Portal de Afiliados / Solicitar Licencia</span> ↗
+            </a>
         </div>
-
-        <!-- LISTADO DE ALUMNOS (INTERFAZ ORIGINAL EXACTA) -->
-        <div id="lista-alumnos" class="space-y-4"></div>
     </div>
-        <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            iniciarReloj();
-            if (localStorage.getItem('bcf_sesion_activa') === 'true') {
-                mostrarApp();
-            }
-        });
 
-        function iniciarReloj() {
-            const actualizar = () => {
-                const ahora = new Date();
-                const opciones = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' };
-                const relojEl = document.getElementById('reloj-digital');
-                if (relojEl) relojEl.textContent = ahora.toLocaleDateString('es-ES', opciones);
-            };
-            actualizar();
-            setInterval(actualizar, 1000);
+    <script>
+        function togglePassword() {
+            const input = document.getElementById('password');
+            input.type = input.type === 'password' ? 'text' : 'password';
         }
 
-        // Datos iniciales de ejemplo o persistencia local
-        let clientes = JSON.parse(localStorage.getItem('bcf_clientes')) || [
-            {
-                id: 1,
-                nombre: "Leidy Cáceres",
-                edad: 43,
-                peso: 65,
-                estatura: 160,
-                costo: 50,
-                pagado: true,
-                corte: "2026-07-26",
-                imc: "25.4",
-                torax: 90,
-                biceps: 35,
-                cintura: 65,
-                gluteos: 98,
-                cuadriceps: 58,
-                pantorrilla: 38,
-                whatsapp: "584120000000"
-            }
-        ];
-
-        function realizarLogin(e) {
+        function manejarLogin(e) {
             e.preventDefault();
-            const pass = document.getElementById('input-password').value;
-            if (pass.length >= 6) {
-                localStorage.setItem('bcf_sesion_activa', 'true');
-                mostrarApp();
-            } else {
-                alert('Ingrese su contraseña de acceso.');
-            }
-        }
-
-        function cerrarSesion() {
-            localStorage.removeItem('bcf_sesion_activa');
-            document.getElementById('vista-app').classList.add('hidden');
-            document.getElementById('vista-login').classList.remove('hidden');
-        }
-
-        function mostrarApp() {
-            document.getElementById('vista-login').classList.add('hidden');
-            document.getElementById('vista-app').classList.remove('hidden');
-            renderizarAlumnos();
-        }
-
-        function renderizarAlumnos() {
-            const contenedor = document.getElementById('lista-alumnos');
-            if (!contenedor) return;
-            contenedor.innerHTML = '';
-
-            clientes.forEach((c, idx) => {
-                const card = document.createElement('div');
-                card.className = "bg-[#131b2e] border border-gray-800 rounded-3xl p-5 space-y-4 shadow-xl";
-                card.innerHTML = `
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <h2 class="text-lg font-black text-white">${c.nombre}</h2>
-                            <p class="text-xs text-gray-400 mt-0.5">Edad: ${c.edad} años | Peso: ${c.peso}kg | Estatura: ${c.estatura}cm</p>
-                        </div>
-                        <span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-bold px-3 py-1 rounded-full">
-                            ${c.pagado ? 'Pagado' : 'Pendiente'}
-                        </span>
-                    </div>
-
-                    <div class="bg-[#0b0f19] border border-gray-800 rounded-2xl p-4 space-y-3">
-                        <div class="flex justify-between items-center text-xs">
-                            <span class="text-gray-300 font-bold">💵 Costo del Paquete:</span>
-                            <span class="text-white font-black text-sm">$${c.costo} USD</span>
-                        </div>
-                        <div class="border-t border-gray-800/80 pt-3 flex justify-between items-center text-xs">
-                            <span class="text-gray-400">📊 IMC: <b class="text-white">${c.imc}</b></span>
-                            <span class="text-gray-400">📅 Corte: <b class="text-white">${c.corte}</b></span>
-                        </div>
-                    </div>
-
-                    <div class="space-y-2">
-                        <p class="text-[11px] font-bold text-amber-400 uppercase tracking-wider">Antropometría Actual (cm):</p>
-                        <div class="grid grid-cols-3 gap-2 text-xs bg-[#0b0f19] p-3.5 rounded-2xl border border-gray-800 text-gray-300">
-                            <div>Tórax: <b class="text-white">${c.torax}</b></div>
-                            <div>Bíceps: <b class="text-white">${c.biceps}</b></div>
-                            <div>Cintura: <b class="text-white">${c.cintura}</b></div>
-                            <div>Glúteos: <b class="text-white">${c.gluteos}</b></div>
-                            <div>Cuádriceps: <b class="text-white">${c.cuadriceps}</b></div>
-                            <div>Pantorrilla: <b class="text-white">${c.pantorrilla}</b></div>
-                        </div>
-                    </div>
-
-                    <div class="space-y-2">
-                        <p class="text-[11px] font-bold text-amber-400 uppercase tracking-wider">Comparativa Mes a Mes:</p>
-                        <div class="bg-[#0b0f19] p-3.5 rounded-2xl border border-gray-800 text-xs text-gray-300 grid grid-cols-3 gap-2">
-                            <div>Peso: <span class="text-emerald-400 font-bold">+${c.peso}kg</span></div>
-                            <div>Cintura: <span class="text-emerald-400 font-bold">+${c.cintura}cm</span></div>
-                            <div>Glúteos: <span class="text-emerald-400 font-bold">+${c.gluteos}cm</span></div>
-                        </div>
-                    </div>
-
-                    <div class="flex items-center gap-2 pt-1">
-                        <a href="https://wa.me/${c.whatsapp}" target="_blank" class="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2.5 px-3 rounded-xl text-xs text-center flex items-center justify-center gap-1.5 shadow-lg">
-                            💬 WhatsApp
-                        </a>
-                        <button onclick="window.print()" class="bg-[#1f293d] hover:bg-gray-700 text-amber-400 border border-gray-700 font-bold py-2.5 px-4 rounded-xl text-xs flex items-center gap-1.5 transition">
-                            📄 PDF
-                        </button>
-                    </div>
-
-                    <div class="flex gap-2 pt-1">
-                        <button onclick="editarAlumno(${idx})" class="flex-1 bg-gray-800 hover:bg-gray-700 text-gray-200 font-bold py-2 rounded-xl text-xs transition">Editar</button>
-                        <button onclick="eliminarAlumno(${idx})" class="flex-1 bg-red-950/40 hover:bg-red-900/40 text-red-400 border border-red-900/50 font-bold py-2 rounded-xl text-xs transition">Eliminar</button>
-                    </div>
-                `;
-                contenedor.appendChild(card);
-            });
-        }
-
-        function editarAlumno(idx) {
-            alert('Modo edición rápido para el alumno ' + clientes[idx].nombre);
-        }
-
-        function eliminarAlumno(idx) {
-            if (confirm('¿Eliminar alumno?')) {
-                clientes.splice(idx, 1);
-                localStorage.setItem('bcf_clientes', JSON.stringify(clientes));
-                renderizarAlumnos();
-            }
+            // Aquí puedes conectar la validación o redirección a tu panel interno
+            alert('¡Acceso concedido al Business Center Fit!');
         }
     </script>
 </body>
