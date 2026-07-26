@@ -20,14 +20,14 @@
         }
     </script>
 </head>
-<body class="bg-darkBg text-silverText font-sans antialiased min-h-screen flex flex-col justify-between">
+<body class="bg-darkBg text-silverText font-sans antialiased min-h-screen flex flex-col justify-between" onload="initClock()">
 
     <div id="login-container" class="flex-grow flex items-center justify-center p-4">
         <div class="bg-cardBg border border-cardBorder rounded-2xl p-8 w-full max-w-md shadow-2xl relative overflow-hidden">
             <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-bronzeDark via-bronzeLight to-bronzeDark"></div>
             <div class="text-center mb-6 pt-2">
                 <h1 class="text-3xl font-black tracking-wider text-silverText">BUSINESS CENTER <span class="text-bronzeMain">FIT</span></h1>
-                <p class="text-[10px] uppercase tracking-widest text-silverMuted mt-1">By ciodarofitness</p>
+                <p class="text-[10px] uppercase tracking-widest text-silverMuted mt-1">Administrador ciodarofitness</p>
             </div>
             <form onsubmit="handleLogin(event)" class="space-y-4">
                 <div>
@@ -50,12 +50,17 @@
     <div id="dashboard-screen" class="hidden fixed inset-0 bg-darkBg flex flex-col md:flex-row z-50 overflow-hidden">
         <aside class="w-full md:w-72 bg-cardBg border-r border-cardBorder flex flex-col justify-between p-6 overflow-y-auto">
             <div>
-                <h2 class="text-xl font-black text-silverText mb-6">BC <span class="text-bronzeMain">FIT</span></h2>
+                <div class="mb-6">
+                    <h2 class="text-xl font-black text-silverText">BC <span class="text-bronzeMain">FIT</span></h2>
+                    <p class="text-[11px] font-bold text-bronzeLight mt-0.5">Administrador ciodarofitness</p>
+                    <div id="live-clock" class="text-[10px] text-silverMuted font-mono mt-1">Cargando fecha y hora...</div>
+                </div>
+                
                 <nav class="space-y-2">
-                    <button onclick="switchTab('tab-tenants')" id="btn-tenants" class="w-full text-left bg-darkBg border border-bronzeMain text-silverText px-4 py-3 rounded-xl text-sm font-semibold shadow">🏢 Afiliados & Red</button>
-                    <button onclick="switchTab('tab-clients')" id="btn-clients" class="w-full text-left hover:bg-darkBg text-silverMuted px-4 py-3 rounded-xl text-sm font-medium transition">👥 Gestión de Alumnos</button>
-                    <button onclick="switchTab('tab-metrics')" id="btn-metrics" class="w-full text-left hover:bg-darkBg text-silverMuted px-4 py-3 rounded-xl text-sm font-medium transition">📊 Antropometría & PDF</button>
-                    <button onclick="switchTab('tab-financial')" id="btn-financial" class="w-full text-left hover:bg-darkBg text-silverMuted px-4 py-3 rounded-xl text-sm font-medium transition">💰 Finanzas & Cierres (1-31)</button>
+                    <button onclick="switchTab('tab-tenants')" id="btn-tenants" class="w-full text-left bg-darkBg border border-bronzeMain text-silverText px-4 py-3 rounded-xl text-sm font-semibold shadow">1. Afiliados & Red</button>
+                    <button onclick="switchTab('tab-clients')" id="btn-clients" class="w-full text-left hover:bg-darkBg text-silverMuted px-4 py-3 rounded-xl text-sm font-medium transition">2. Gestión de Alumnos</button>
+                    <button onclick="switchTab('tab-metrics')" id="btn-metrics" class="w-full text-left hover:bg-darkBg text-silverMuted px-4 py-3 rounded-xl text-sm font-medium transition">3. Antropometría, Calorías & PDF</button>
+                    <button onclick="switchTab('tab-financial')" id="btn-financial" class="w-full text-left hover:bg-darkBg text-silverMuted px-4 py-3 rounded-xl text-sm font-medium transition">4. Finanzas & Cierres (1-31)</button>
                 </nav>
             </div>
             <button onclick="handleLogout()" class="mt-6 border border-cardBorder text-silverMuted py-3 rounded-xl text-xs font-bold uppercase">Cerrar Sesión</button>
@@ -63,7 +68,7 @@
 
         <main class="flex-grow p-6 md:p-10 overflow-y-auto">
             <div id="tab-tenants" class="space-y-6">
-                <h2 class="text-2xl font-black text-silverText">Control de Afiliaciones de Entrenadores</h2>
+                <h2 class="text-2xl font-black text-silverText">1. Control de Afiliaciones de Entrenadores</h2>
                 <div class="bg-cardBg border border-cardBorder p-5 rounded-2xl flex justify-between items-center">
                     <div>
                         <p class="text-sm font-bold text-silverText">Solicitud: Carlos Mendoza</p>
@@ -78,8 +83,8 @@
                         <div id="tab-clients" class="hidden space-y-6">
                 <header class="pb-4 border-b border-cardBorder flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                     <div>
-                        <h2 class="text-2xl font-black text-silverText">Gestión Completa de Alumnos</h2>
-                        <p class="text-xs text-silverMuted mt-1">Buscador, perfiles antropométricos, costos de plan, fechas de corte y pagos con calendario.</p>
+                        <h2 class="text-2xl font-black text-silverText">2. Gestión de Alumnos (Perfiles & Métricas)</h2>
+                        <p class="text-xs text-silverMuted mt-1">Administra fichas, costos, fechas de corte y medidas corporales.</p>
                     </div>
                     <button onclick="openModal()" class="bg-gradient-to-r from-bronzeDark via-bronzeMain to-bronzeDark text-darkBg font-black px-4 py-2.5 rounded-xl text-xs uppercase tracking-wider shadow">
                         + Registrar Nuevo Alumno
@@ -93,15 +98,15 @@
 
                 <div id="clients-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
                         </div>
-                            <div id="tab-metrics" class="hidden space-y-6">
+                              <div id="tab-metrics" class="hidden space-y-6">
                 <header class="pb-4 border-b border-cardBorder">
-                    <h2 class="text-2xl font-black text-silverText">Antropometría & Comparativas Mes a Mes</h2>
-                    <p class="text-xs text-silverMuted mt-1">IMC, porcentaje de grasa, evolución mensual y exportación de planilla a PDF.</p>
+                    <h2 class="text-2xl font-black text-silverText">3. Antropometría, Calorías & PDF</h2>
+                    <p class="text-xs text-silverMuted mt-1">Cálculo de IMC, % de grasa, requerimiento calórico diario por género y exportación a PDF.</p>
                 </header>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div id="pdf-area" class="bg-cardBg border border-cardBorder p-5 rounded-2xl space-y-3">
-                        <h3 class="font-bold text-silverText flex justify-between"><span>Perfil del Atleta</span><span class="text-xs text-bronzeLight">Ciodarofitness</span></h3>
+                        <h3 class="font-bold text-silverText flex justify-between"><span>Evaluación & Calorías</span><span class="text-xs text-bronzeLight">Administrador ciodarofitness</span></h3>
                         <input type="text" id="m-nombre" value="Lady Cáceres" class="w-full bg-darkBg border border-cardBorder rounded-xl px-4 py-2 text-sm text-silverText">
                         <div class="grid grid-cols-2 gap-2">
                             <input type="number" id="m-edad" value="28" class="w-full bg-darkBg border border-cardBorder rounded-xl px-3 py-2 text-sm text-silverText" placeholder="Edad">
@@ -114,7 +119,7 @@
                             <input type="number" id="m-peso" value="70" class="w-full bg-darkBg border border-cardBorder rounded-xl px-3 py-2 text-sm text-silverText" placeholder="Peso kg">
                             <input type="number" id="m-estatura" value="165" class="w-full bg-darkBg border border-cardBorder rounded-xl px-3 py-2 text-sm text-silverText" placeholder="Estatura cm">
                         </div>
-                        <button onclick="calcularAntropometria()" class="w-full bg-bronzeMain text-darkBg font-black py-2.5 rounded-xl text-xs uppercase">Calcular IMC y % Grasa</button>
+                        <button onclick="calcularAntropometriaYCalorias()" class="w-full bg-bronzeMain text-darkBg font-black py-2.5 rounded-xl text-xs uppercase">Calcular IMC, Grasa y Calorías</button>
                         <div id="m-res" class="hidden p-3 bg-darkBg border border-bronzeMain/30 rounded-xl text-xs text-bronzeLight space-y-1"></div>
                     </div>
 
@@ -122,9 +127,9 @@
                         <div>
                             <h3 class="font-bold text-silverText mb-2">Evolución Mes a Mes</h3>
                             <div class="space-y-2 text-xs">
-                                <div class="bg-darkBg p-3 rounded-xl border border-cardBorder flex justify-between"><span>Mayo: 73 kg | Grasa: 25%</span><span class="text-emerald-400">Base</span></div>
-                                <div class="bg-darkBg p-3 rounded-xl border border-cardBorder flex justify-between"><span>Junio: 71.5 kg | Grasa: 24%</span><span class="text-emerald-400">-1.5 kg</span></div>
-                                <div class="bg-darkBg p-3 rounded-xl border border-cardBorder flex justify-between"><span>Julio (Actual): 70 kg | Grasa: 22%</span><span class="text-emerald-400">-1.5 kg</span></div>
+                                <div class="bg-darkBg p-3 rounded-xl border border-cardBorder flex justify-between"><span>Mayo: 73 kg | Cintura: 78cm</span><span class="text-emerald-400">Base</span></div>
+                                <div class="bg-darkBg p-3 rounded-xl border border-cardBorder flex justify-between"><span>Junio: 71.5 kg | Cintura: 75cm</span><span class="text-emerald-400">-3 cm</span></div>
+                                <div class="bg-darkBg p-3 rounded-xl border border-cardBorder flex justify-between"><span>Julio (Actual): 70 kg | Cintura: 72cm</span><span class="text-emerald-400">-3 cm</span></div>
                             </div>
                         </div>
                         <button onclick="exportPDF()" class="w-full border border-bronzeMain text-bronzeLight py-3 rounded-xl text-xs font-bold uppercase transition hover:bg-bronzeMain hover:text-darkBg">📥 Exportar Planilla a PDF</button>
@@ -134,8 +139,8 @@
 
             <div id="tab-financial" class="hidden space-y-6">
                 <header class="pb-4 border-b border-cardBorder">
-                    <h2 class="text-2xl font-black text-silverText">Sistema Financiero & Cierres (Días 1 al 31)</h2>
-                    <p class="text-xs text-silverMuted mt-1">Control de recaudos, pendientes y cierres automáticos codificados en calendario.</p>
+                    <h2 class="text-2xl font-black text-silverText">4. Finanzas & Cierres (Días 1 al 31)</h2>
+                    <p class="text-xs text-silverMuted mt-1">Control de recaudos, saldos pendientes y cierres automáticos codificados en calendario.</p>
                 </header>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div class="bg-cardBg border border-cardBorder p-4 rounded-xl"><p class="text-xs uppercase text-silverMuted font-bold">Total Recaudado</p><p id="fin-rec" class="text-2xl font-black text-emerald-400 mt-1">$0</p></div>
@@ -146,8 +151,8 @@
         </main>
     </div>
 
-    <div id="client-modal" class="hidden fixed inset-0 bg-darkBg/80 flex items-center justify-center p-4 z-50">
-        <div class="bg-cardBg border border-cardBorder rounded-2xl p-6 w-full max-w-md space-y-3 shadow-2xl">
+    <div id="client-modal" class="hidden fixed inset-0 bg-darkBg/80 flex items-center justify-center p-4 z-50 overflow-y-auto">
+        <div class="bg-cardBg border border-cardBorder rounded-2xl p-6 w-full max-w-lg space-y-3 shadow-2xl my-8">
             <h3 id="modal-title" class="font-bold text-silverText">Registrar Alumno</h3>
             <input type="hidden" id="edit-idx" value="-1">
             <input type="text" id="f-nom" placeholder="Nombre Completo" class="w-full bg-darkBg border border-cardBorder rounded-xl px-4 py-2 text-sm text-silverText">
@@ -160,16 +165,27 @@
                 <input type="number" id="f-est" placeholder="Estatura cm" class="w-full bg-darkBg border border-cardBorder rounded-xl px-3 py-2 text-sm text-silverText">
                 <input type="number" id="f-costo" placeholder="Costo $" class="w-full bg-darkBg border border-cardBorder rounded-xl px-3 py-2 text-sm text-silverText" value="50">
             </div>
-            <div class="grid grid-cols-2 gap-2">
+            
+            <p class="text-[11px] font-bold uppercase text-bronzeLight pt-1">Medidas Antropométricas (cm):</p>
+            <div class="grid grid-cols-3 gap-2">
+                <input type="number" id="f-torax" placeholder="Tórax" class="w-full bg-darkBg border border-cardBorder rounded-xl px-3 py-2 text-xs text-silverText">
+                <input type="number" id="f-biceps" placeholder="Bíceps" class="w-full bg-darkBg border border-cardBorder rounded-xl px-3 py-2 text-xs text-silverText">
+                <input type="number" id="f-cintura" placeholder="Cintura" class="w-full bg-darkBg border border-cardBorder rounded-xl px-3 py-2 text-xs text-silverText">
+                <input type="number" id="f-gluteos" placeholder="Glúteos" class="w-full bg-darkBg border border-cardBorder rounded-xl px-3 py-2 text-xs text-silverText">
+                <input type="number" id="f-cuad" placeholder="Cuádriceps" class="w-full bg-darkBg border border-cardBorder rounded-xl px-3 py-2 text-xs text-silverText">
+                <input type="number" id="f-pant" placeholder="Pantorrilla" class="w-full bg-darkBg border border-cardBorder rounded-xl px-3 py-2 text-xs text-silverText">
+            </div>
+
+            <div class="grid grid-cols-2 gap-2 pt-1">
                 <div><label class="text-[10px] uppercase text-silverMuted font-bold">Inicio</label><input type="date" id="f-ini" class="w-full bg-darkBg border border-cardBorder rounded-xl px-3 py-2 text-sm text-silverText"></div>
-                <div><label class="text-[10px] uppercase text-silverMuted font-bold">Corte</label><input type="date" id="f-cor" class="w-full bg-darkBg border border-cardBorder rounded-xl px-3 py-2 text-sm text-silverText"></div>
+                <div><label class="text-[10px] uppercase text-silverMuted font-bold">Corte (1-31)</label><input type="date" id="f-cor" class="w-full bg-darkBg border border-cardBorder rounded-xl px-3 py-2 text-sm text-silverText"></div>
             </div>
             <select id="f-pag" class="w-full bg-darkBg border border-cardBorder rounded-xl px-4 py-2 text-sm text-silverText">
                 <option value="Pagado">Pagado (Recaudado)</option>
                 <option value="Pendiente">Pendiente por Cobrar</option>
             </select>
             <div class="flex space-x-2 pt-2">
-                <button onclick="saveClient()" class="flex-grow bg-bronzeMain text-darkBg font-black py-2.5 rounded-xl text-xs uppercase">Guardar</button>
+                <button onclick="saveClient()" class="flex-grow bg-bronzeMain text-darkBg font-black py-2.5 rounded-xl text-xs uppercase">Guardar Alumno</button>
                 <button onclick="closeModal()" class="border border-cardBorder text-silverMuted px-4 py-2.5 rounded-xl text-xs uppercase">Cancelar</button>
             </div>
         </div>
@@ -177,9 +193,21 @@
 
     <script>
         let clients = [
-            { nom: "Lady Cáceres", edad: 28, tel: "+584121234567", peso: 70, est: 165, costo: 60, ini: "2026-07-01", cor: "2026-07-31", pag: "Pagado" },
-            { nom: "Sra. Yanira", edad: 45, tel: "+584149876543", peso: 68, est: 160, costo: 50, ini: "2026-07-05", cor: "2026-08-05", pag: "Pendiente" }
+            { nom: "Lady Cáceres", edad: 28, tel: "+584121234567", peso: 70, est: 165, costo: 60, torax: 90, biceps: 28, cintura: 72, gluteos: 98, cuad: 54, pant: 35, ini: "2026-07-01", cor: "2026-07-31", pag: "Pagado" },
+            { nom: "Sra. Yanira", edad: 45, tel: "+584149876543", peso: 68, est: 160, costo: 50, torax: 92, biceps: 29, cintura: 76, gluteos: 96, cuad: 52, pant: 34, ini: "2026-07-05", cor: "2026-08-05", pag: "Pendiente" }
         ];
+
+        function initClock() {
+            setInterval(() => {
+                const now = new Date();
+                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                const fechaStr = now.toLocaleDateString('es-ES', options);
+                const horaStr = now.toLocaleTimeString('es-ES');
+                document.getElementById('live-clock').innerText = `${fechaStr} - ${horaStr}`;
+            }, 1000);
+            renderClients();
+            calcFin();
+        }
 
         function togglePassword(id, btn) {
             const i = document.getElementById(id);
@@ -224,10 +252,11 @@
                         </div>
                         <div class="text-xs text-silverMuted bg-darkBg p-2.5 rounded-lg border border-cardBorder space-y-1">
                             <p>💵 Costo: $${c.costo} USD | IMC: ${imc}</p>
+                            <p>📏 <strong>Medidas:</strong> Tórax: ${c.torax}cm | Bíceps: ${c.biceps}cm | Cintura: ${c.cintura}cm | Glúteos: ${c.gluteos}cm | Cuádriceps: ${c.cuad}cm | Pantorrilla: ${c.pant}cm</p>
                             <p>📅 Inicio: ${c.ini} | Corte: ${c.cor}</p>
                         </div>
                         <div class="flex justify-between items-center pt-2">
-                            <button onclick="window.open('https://api.whatsapp.com/send?phone=${c.tel}&text=Hola%20${c.nom},%20te%20escribo%20para%20recordarte%20que%20tu%20plan%20vence%20en%20la%20fecha%20de%20corte:%20${c.cor}')" class="bg-emerald-600/30 text-emerald-300 px-3 py-1.5 rounded-lg text-xs font-bold flex items-center space-x-1"><span>💬</span><span>Recordar WhatsApp</span></button>
+                            <button onclick="window.open('https://api.whatsapp.com/send?phone=${c.tel}&text=Hola%20${c.nom},%20te%20escribo%20de%20Ciodarofitness%20para%20recordarte%20que%20tu%20plan%20vence%20en%20la%20fecha%20de%20corte:%20${c.cor}')" class="bg-emerald-600/30 text-emerald-300 px-3 py-1.5 rounded-lg text-xs font-bold flex items-center space-x-1"><span>💬</span><span>Recordar WhatsApp</span></button>
                             <div class="space-x-1"><button onclick="editClient(${idx})" class="px-2.5 py-1 bg-darkBg border border-cardBorder text-xs rounded-lg text-silverText">Editar</button><button onclick="deleteClient(${idx})" class="px-2.5 py-1 bg-red-950/40 text-red-300 text-xs rounded-lg">Eliminar</button></div>
                         </div>
                     </div>`;
@@ -237,7 +266,7 @@
         function openModal() {
             document.getElementById('edit-idx').value = "-1";
             document.getElementById('modal-title').innerText = "Registrar Nuevo Alumno";
-            ['f-nom','f-edad','f-tel','f-peso','f-est','f-cor'].forEach(id => document.getElementById(id).value = "");
+            ['f-nom','f-edad','f-tel','f-peso','f-est','f-cor','f-torax','f-biceps','f-cintura','f-gluteos','f-cuad','f-pant'].forEach(id => document.getElementById(id).value = "");
             document.getElementById('f-costo').value = "50";
             document.getElementById('f-ini').value = new Date().toISOString().split('T')[0];
             document.getElementById('client-modal').classList.remove('hidden');
@@ -251,6 +280,9 @@
                 nom: document.getElementById('f-nom').value, edad: parseInt(document.getElementById('f-edad').value)||0,
                 tel: document.getElementById('f-tel').value, peso: parseFloat(document.getElementById('f-peso').value)||0,
                 est: parseFloat(document.getElementById('f-est').value)||0, costo: parseFloat(document.getElementById('f-costo').value)||0,
+                torax: parseFloat(document.getElementById('f-torax').value)||0, biceps: parseFloat(document.getElementById('f-biceps').value)||0,
+                cintura: parseFloat(document.getElementById('f-cintura').value)||0, gluteos: parseFloat(document.getElementById('f-gluteos').value)||0,
+                cuad: parseFloat(document.getElementById('f-cuad').value)||0, pant: parseFloat(document.getElementById('f-pant').value)||0,
                 ini: document.getElementById('f-ini').value, cor: document.getElementById('f-cor').value, pag: document.getElementById('f-pag').value
             };
             if(idx === -1) clients.push(data); else clients[idx] = data;
@@ -264,6 +296,9 @@
             document.getElementById('f-nom').value = c.nom; document.getElementById('f-edad').value = c.edad;
             document.getElementById('f-tel').value = c.tel; document.getElementById('f-peso').value = c.peso;
             document.getElementById('f-est').value = c.est; document.getElementById('f-costo').value = c.costo;
+            document.getElementById('f-torax').value = c.torax; document.getElementById('f-biceps').value = c.biceps;
+            document.getElementById('f-cintura').value = c.cintura; document.getElementById('f-gluteos').value = c.gluteos;
+            document.getElementById('f-cuad').value = c.cuad; document.getElementById('f-pant').value = c.pant;
             document.getElementById('f-ini').value = c.ini; document.getElementById('f-cor').value = c.cor;
             document.getElementById('f-pag').value = c.pag;
             document.getElementById('client-modal').classList.remove('hidden');
@@ -273,18 +308,28 @@
             if(confirm("¿Seguro que deseas eliminar este alumno?")) { clients.splice(idx, 1); renderClients(); calcFin(); }
         }
 
-        function calcularAntropometria() {
-            const p = parseFloat(document.getElementById('m-peso').value)||0, e = parseFloat(document.getElementById('m-estatura').value)||0, ed = parseInt(document.getElementById('m-edad').value)||25;
+        function calcularAntropometriaYCalorias() {
+            const p = parseFloat(document.getElementById('m-peso').value)||0;
+            const e = parseFloat(document.getElementById('m-estatura').value)||0;
+            const ed = parseInt(document.getElementById('m-edad').value)||25;
             const gen = document.getElementById('m-genero').value;
+            
             const imc = p / Math.pow(e/100, 2);
             const grasa = (1.20 * imc) + (0.23 * ed) - 5.4 - (gen === 'F' ? 0 : 10.8);
+            
+            // Fórmula de Harris-Benedict para TMB y calorías estimadas diarias (actividad moderada)
+            let tmb = gen === 'F' ? (10 * p) + (6.25 * e) - (5 * ed) - 161 : (10 * p) + (6.25 * e) - (5 * ed) + 5;
+            let caloriasMantenimiento = Math.round(tmb * 1.55);
+
             const res = document.getElementById('m-res');
             res.classList.remove('hidden');
-            res.innerHTML = `• IMC: <strong>${imc.toFixed(1)}</strong><br>• % Grasa Corporal Est.: <strong>${grasa.toFixed(1)}%</strong>`;
+            res.innerHTML = `• IMC: <strong>${imc.toFixed(1)}</strong><br>
+                             • % Grasa Corporal Est.: <strong>${grasa.toFixed(1)}%</strong><br>
+                             • Gasto Calórico Diario (Mantenimiento): <strong>${caloriasMantenimiento} kcal</strong> (${gen === 'F' ? 'Femenino' : 'Masculino'})`;
         }
 
         function exportPDF() {
-            html2pdf().from(document.getElementById('pdf-area')).save('Perfil_Antropometrico.pdf');
+            html2pdf().from(document.getElementById('pdf-area')).save('Perfil_Antropometrico_Ciodarofitness.pdf');
         }
 
         function calcFin() {
