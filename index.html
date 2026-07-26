@@ -19,6 +19,7 @@
             --danger: #ef4444;
             --success: #22c55e;
             --warning: #f59e0b;
+            --whatsapp: #25d366;
         }
 
         * {
@@ -39,7 +40,7 @@
 
         .app-container {
             width: 100%;
-            max-width: 900px;
+            max-width: 600px;
             margin: 0 auto;
             display: flex;
             flex-direction: column;
@@ -52,7 +53,7 @@
         header {
             background-color: var(--surface);
             border-bottom: 1px solid var(--border);
-            padding: 1rem 1.5rem;
+            padding: 1rem 1.2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -66,28 +67,29 @@
             text-transform: uppercase;
         }
 
-        .live-clock {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            background: var(--bg-deep);
-            padding: 0.3rem 0.6rem;
-            border-radius: 4px;
-            border: 1px solid var(--border);
+        .status-badge {
+            font-size: 0.7rem;
+            background: rgba(34, 197, 94, 0.15);
+            color: var(--success);
+            border: 1px solid var(--success);
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            font-weight: bold;
         }
 
         main {
             flex: 1;
-            padding: 1.5rem;
+            padding: 1.2rem;
             width: 100%;
         }
 
         .card {
             background-color: var(--surface);
             border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 1.8rem;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
-            margin-bottom: 1.5rem;
+            border-radius: 10px;
+            padding: 1.2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            margin-bottom: 1.2rem;
         }
 
         h2, h3, h4 {
@@ -97,17 +99,17 @@
 
         .subtitle {
             color: var(--text-muted);
-            margin-bottom: 1.2rem;
-            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
         }
 
         .form-group {
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
         }
 
         label {
             display: block;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             text-transform: uppercase;
             letter-spacing: 1px;
             color: var(--text-muted);
@@ -164,7 +166,7 @@
             border: none;
             border-radius: 6px;
             font-weight: 700;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             cursor: pointer;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -177,124 +179,95 @@
             background: transparent;
             border: 1px solid var(--border);
             color: var(--text-muted);
-            padding: 0.4rem 0.8rem;
+            padding: 0.5rem 0.8rem;
             width: auto;
             font-size: 0.75rem;
+            border-radius: 6px;
         }
         .btn-secondary:hover { border-color: var(--bronze); color: var(--text-main); }
 
-        .btn-action { background: var(--bronze); color: #000; padding: 0.35rem 0.7rem; font-size: 0.7rem; width: auto; margin-right: 0.2rem; }
-        .btn-deny { background: var(--danger); color: #fff; padding: 0.35rem 0.7rem; font-size: 0.7rem; width: auto; }
+        .btn-action { background: var(--bronze); color: #000; padding: 0.35rem 0.7rem; font-size: 0.75rem; width: auto; font-weight: bold; border-radius: 4px; border: none; cursor: pointer; }
+        .btn-deny { background: rgba(239, 68, 68, 0.15); color: var(--danger); border: 1px solid var(--danger); padding: 0.35rem 0.7rem; font-size: 0.75rem; width: auto; border-radius: 4px; cursor: pointer; }
+        .btn-wa { background: rgba(37, 211, 102, 0.15); color: var(--whatsapp); border: 1px solid var(--whatsapp); padding: 0.5rem 0.8rem; font-size: 0.75rem; border-radius: 6px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; text-decoration: none; justify-content: center; }
+
         .badge-paid { background: rgba(34, 197, 94, 0.15); color: var(--success); border: 1px solid var(--success); padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.7rem; font-weight: bold; }
         .badge-pending { background: rgba(245, 158, 11, 0.15); color: var(--warning); border: 1px solid var(--warning); padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.7rem; font-weight: bold; }
 
         .hidden { display: none !important; }
 
-        .dashboard-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 0.8rem;
-            flex-wrap: wrap;
-            gap: 0.8rem;
-        }
-
-        .grid-stats {
+        /* KPI Grid Estilo Referencia Video */
+        .kpi-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 1rem;
-            margin-bottom: 1.5rem;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.8rem;
+            margin-bottom: 1.2rem;
         }
 
-        .stat-card {
+        .kpi-card {
             background-color: var(--surface-card);
             border: 1px solid var(--border);
-            padding: 1.2rem;
-            border-radius: 6px;
+            padding: 1rem;
+            border-radius: 8px;
         }
 
-        .stat-card h3 {
-            font-size: 0.7rem;
+        .kpi-card h3 {
+            font-size: 0.65rem;
             color: var(--text-muted);
             text-transform: uppercase;
-            margin-bottom: 0.3rem;
+            margin-bottom: 0.2rem;
+            letter-spacing: 0.5px;
         }
 
-        .stat-card .value {
-            font-size: 1.4rem;
+        .kpi-card .value {
+            font-size: 1.25rem;
             font-weight: bold;
             color: var(--bronze);
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 0.8rem;
+        .athlete-item-card {
             background: var(--surface-card);
-            border-radius: 6px;
-            overflow: hidden;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 0.8rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
         }
 
-        th, td {
-            padding: 0.8rem;
-            text-align: left;
-            border-bottom: 1px solid var(--border);
-            font-size: 0.8rem;
-        }
-
-        th {
-            background-color: var(--bg-deep);
-            color: var(--bronze);
-            text-transform: uppercase;
-            font-size: 0.65rem;
-            letter-spacing: 1px;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 1.5rem;
-            color: var(--text-muted);
-            font-style: italic;
-        }
-
-        .link-box {
-            background: var(--bg-deep);
-            border: 1px dashed var(--bronze);
-            padding: 0.8rem;
-            border-radius: 6px;
+        .athlete-item-header {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.2rem;
-            gap: 0.8rem;
+            align-items: flex-start;
         }
 
-        .link-box input {
-            background: transparent;
-            border: none;
-            color: var(--bronze);
-            font-weight: 500;
+        .athlete-meta-row {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
         }
 
-        .calc-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 1rem;
+        .athlete-actions-row {
+            display: flex;
+            gap: 0.4rem;
+            margin-top: 0.4rem;
+            flex-wrap: wrap;
         }
 
-        .calc-box {
+        .metric-history-card {
             background: var(--bg-deep);
             border: 1px solid var(--border);
-            padding: 1.2rem;
-            border-radius: 6px;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 0.8rem;
         }
 
         footer {
             text-align: center;
-            padding: 1.2rem;
-            font-size: 0.7rem;
+            padding: 1rem;
+            font-size: 0.65rem;
             color: var(--text-muted);
             border-top: 1px solid var(--border);
             background: var(--surface);
@@ -305,9 +278,8 @@
             body { background: #fff; color: #000; align-items: stretch; }
             .app-container { border: none; max-width: 100%; }
             header, footer, .no-print { display: none !important; }
-            .card { background: #fff; border: 1px solid #ccc; box-shadow: none; color: #000; padding: 1rem; }
+            .card { background: #fff; border: 1px solid #ccc; box-shadow: none; color: #000; }
             input, select { border: 1px solid #ccc; background: #fff; color: #000; }
-            th { background: #eee; color: #000; }
         }
     </style>
 </head>
@@ -315,19 +287,19 @@
 
     <div class="app-container">
         <header class="no-print">
-            <div class="brand-title">BC Fit <span style="font-size: 0.7rem; color: var(--text-muted); font-weight: normal; margin-left: 6px;">By Ciodarofitness</span></div>
-            <div id="clock" class="live-clock hidden">--:--:--</div>
+            <div class="brand-title">BC Fit</div>
+            <div class="status-badge">Activo</div>
         </header>
 
         <main>
             <!-- VISTA DE ACCESO PRINCIPAL -->
             <section id="authSection" class="no-print">
-                <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                <div style="display: flex; flex-direction: column; gap: 1.2rem;">
                     
-                    <!-- 1. Login Admin -->
+                    <!-- Login Admin Global -->
                     <div class="card" style="margin-bottom: 0;">
-                        <h1 style="color: #ffffff; font-size: 1.5rem; font-weight: 800; margin-bottom: 0.2rem;">Panel Admin</h1>
-                        <p style="color: var(--bronze); font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1rem;">Ciodarofitness</p>
+                        <h1 style="color: #ffffff; font-size: 1.3rem; font-weight: 800; margin-bottom: 0.2rem;">Panel Admin</h1>
+                        <p style="color: var(--bronze); font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1rem;">Ciodarofitness</p>
                         <form id="loginForm">
                             <div class="form-group">
                                 <label>Identificador</label>
@@ -344,9 +316,9 @@
                         </form>
                     </div>
 
-                    <!-- 2. Registro Afiliado -->
+                    <!-- Registro Afiliado -->
                     <div class="card" style="margin-bottom: 0;">
-                        <h2 style="color: #ffffff; font-size: 1.3rem; font-weight: 700;">Crear Cuenta Afiliado</h2>
+                        <h2 style="color: #ffffff; font-size: 1.1rem; font-weight: 700;">Crear Cuenta Afiliado</h2>
                         <p class="subtitle">Regístrate tras recibir autorización.</p>
                         <form id="registerClientForm">
                             <div class="form-group">
@@ -360,7 +332,7 @@
                             <div class="form-group">
                                 <label>Contraseña</label>
                                 <div class="password-container">
-                                    <input type="password" id="regPassword" required placeholder="Crea tu contraseña">
+                                    <input type="password" id="regPassword" required placeholder="••••••••">
                                     <button type="button" class="toggle-password" onclick="togglePassword('regPassword')">👁️</button>
                                 </div>
                             </div>
@@ -368,10 +340,10 @@
                         </form>
                     </div>
 
-                    <!-- 3. Login Afiliados -->
+                    <!-- Login Afiliados -->
                     <div class="card" style="margin-bottom: 0;">
-                        <h2 style="color: #ffffff; font-size: 1.3rem; font-weight: 700;">Acceso Afiliados</h2>
-                        <p class="subtitle">Gestiona tus atletas y herramientas.</p>
+                        <h2 style="color: #ffffff; font-size: 1.1rem; font-weight: 700;">Acceso Afiliados</h2>
+                        <p class="subtitle">Gestiona tus atletas y finanzas.</p>
                         <form id="clientLoginForm">
                             <div class="form-group">
                                 <label>Correo Electrónico</label>
@@ -393,192 +365,146 @@
 
             <!-- PANEL ADMIN GENERAL -->
             <section id="dashboardView" class="hidden no-print">
-                <div class="dashboard-header">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
                     <div>
-                        <h2>Panel de Control Global</h2>
-                        <p class="subtitle">Sistema Protegido — By Ciodarofitness</p>
+                        <h2>Panel Global</h2>
+                        <p class="subtitle" style="margin-bottom:0;">By Ciodarofitness</p>
                     </div>
-                    <button class="btn-secondary" onclick="logoutSystem()">Cerrar Sesión</button>
-                </div>
-
-                <div class="card" style="padding: 1rem; margin-bottom: 1.2rem;">
-                    <h3 style="font-size: 0.8rem; margin-bottom: 0.2rem; color: var(--bronze);">Enlace Exclusivo para Afiliados</h3>
-                    <div class="link-box" style="margin-bottom: 0;">
-                        <input type="text" id="shareableLink" readonly>
-                        <button class="btn-secondary" onclick="copyInviteLink()" style="font-size: 0.7rem; padding: 0.25rem 0.5rem;">Copiar</button>
-                    </div>
-                </div>
-
-                <div class="grid-stats">
-                    <div class="stat-card">
-                        <h3>Afiliados Registrados</h3>
-                        <div class="value" id="statTotalAccounts">0</div>
-                    </div>
+                    <button class="btn-secondary" onclick="logoutSystem()">Cerrar</button>
                 </div>
 
                 <div class="card">
-                    <h3>Listado de Afiliados</h3>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Nombre / Marca</th>
-                                <th>Correo</th>
-                                <th>Registro</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody id="athletesTableBody">
-                            <tr><td colspan="4" class="empty-state">No hay cuentas.</td></tr>
-                        </tbody>
-                    </table>
+                    <h3>Listado de Cuentas Afiliadas</h3>
+                    <div id="adminAccountsList" style="display: flex; flex-direction: column; gap: 0.6rem; margin-top: 0.8rem;">
+                        <!-- Inyectado por JS -->
+                    </div>
                 </div>
             </section>
 
-            <!-- PORTAL DE AFILIADO -->
+            <!-- PORTAL DE AFILIADO (Estructura exacta inspirada en el video de referencia) -->
             <section id="clientPortalView" class="hidden">
-                <div class="dashboard-header no-print">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;" class="no-print">
                     <div>
-                        <h2 id="welcomeClientTitle">Perfil de Afiliado</h2>
-                        <p class="subtitle">Entrenamiento Inteligente — By Ciodarofitness</p>
+                        <h2 id="welcomeClientTitle" style="font-size: 1.1rem; color: var(--bronze);">Ciodarofitness</h2>
+                        <p class="subtitle" style="margin-bottom:0; font-size:0.75rem;">Panel de Control y Asesorados</p>
                     </div>
-                    <button class="btn-secondary" onclick="logoutSystem()">Cerrar Sesión</button>
+                    <button class="btn-secondary" onclick="logoutSystem()">Salir</button>
                 </div>
 
-                <!-- REGISTRO DE ATLETA -->
+                <!-- SECCIÓN: RESPALDO DE BASE DE DATOS -->
+                <div class="card no-print" style="padding: 0.9rem;">
+                    <span style="font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; display: block; margin-bottom: 0.5rem;">Respaldo de Base de Datos:</span>
+                    <div style="display: flex; gap: 0.6rem;">
+                        <button class="btn-secondary" onclick="exportDatabase()" style="flex: 1; background: var(--surface-card);">📤 Exportar</button>
+                        <button class="btn-secondary" onclick="triggerImport()" style="flex: 1; background: var(--surface-card);">📥 Importar</button>
+                        <input type="file" id="importFile" class="hidden" accept=".json" onchange="importDatabase(event)">
+                    </div>
+                </div>
+
+                <!-- SECCIÓN: KPI METRICS (Estilo Grid del Video) -->
+                <div class="kpi-grid no-print">
+                    <div class="kpi-card">
+                        <h3>Atletas Activos</h3>
+                        <div class="value" id="statActiveAthletes">0</div>
+                    </div>
+                    <div class="kpi-card">
+                        <h3>Meta Mensual</h3>
+                        <div class="value" id="statMonthlyGoal">$0</div>
+                    </div>
+                    <div class="kpi-card">
+                        <h3>Recaudado</h3>
+                        <div class="value" id="statCollected">$0</div>
+                    </div>
+                    <div class="kpi-card">
+                        <h3>Por Cobrar</h3>
+                        <div class="value" id="statPending">$0</div>
+                    </div>
+                </div>
+
+                <!-- SECCIÓN: REGISTRAR NUEVO ATLETA -->
                 <div class="card no-print">
-                    <h3>Registrar Nuevo Atleta / Asesorado</h3>
-                    <p class="subtitle">Crea el expediente profesional con datos y pagos.</p>
+                    <h3 style="font-size: 0.95rem; display: flex; align-items: center; gap: 6px;">⚡ Registrar Nuevo Atleta</h3>
+                    <p class="subtitle" style="font-size: 0.75rem;">Añade un nuevo asesorado al sistema.</p>
                     
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.8rem; margin-bottom: 1rem;">
-                        <div class="form-group" style="margin-bottom: 0;"><label>Nombre y Apellido</label><input type="text" id="cName" placeholder="Ej. Lady Caceres"></div>
-                        <div class="form-group" style="margin-bottom: 0;"><label>Teléfono</label><input type="text" id="cPhone" placeholder="+58 414..."></div>
-                        <div class="form-group" style="margin-bottom: 0;"><label>Edad</label><input type="number" id="cAge" placeholder="28"></div>
-                        <div class="form-group" style="margin-bottom: 0;"><label>Peso Inicial (kg)</label><input type="number" id="cWeight" placeholder="65"></div>
-                        <div class="form-group" style="margin-bottom: 0;"><label>Estatura (cm)</label><input type="number" id="cHeight" placeholder="168"></div>
-                        <div class="form-group" style="margin-bottom: 0;"><label>Costo Plan ($)</label><input type="number" id="cCost" placeholder="45"></div>
-                        <div class="form-group" style="margin-bottom: 0;">
-                            <label>Estado de Pago</label>
-                            <select id="cStatus">
-                                <option value="Pagado">Pagado</option>
-                                <option value="Pendiente">Pendiente</option>
-                            </select>
-                        </div>
+                    <div class="form-group">
+                        <label>Nombre Completo</label>
+                        <input type="text" id="cName" placeholder="Ej. Juan Pérez">
                     </div>
-                    <button type="button" onclick="addAthlete()">Guardar Atleta en el Sistema</button>
-
-                    <h3 style="margin-top: 1.5rem;">Tus Atletas Registrados</h3>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Atleta</th>
-                                <th>Datos Base</th>
-                                <th>Plan / Pago</th>
-                                <th>Estado</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody id="affiliateClientsTableBody">
-                            <tr><td colspan="5" class="empty-state">No tienes atletas registrados.</td></tr>
-                        </tbody>
-                    </table>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem;">
+                        <div class="form-group"><label>Edad</label><input type="number" id="cAge" placeholder="Ej. 30"></div>
+                        <div class="form-group"><label>WhatsApp</label><input type="text" id="cPhone" placeholder="Ej. 5841234"></div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem;">
+                        <div class="form-group"><label>Costo Paquete ($)</label><input type="number" id="cCost" placeholder="Ej. 50"></div>
+                        <div class="form-group"><label>Fecha de Inicio Original</label><input type="date" id="cStartDate"></div>
+                    </div>
+                    <button type="button" onclick="addAthlete()" style="margin-top: 0.4rem;">Agregar a la Base de Datos</button>
                 </div>
 
-                <!-- VISTA DETALLADA DEL EXPEDIENTE DEL ATLETA -->
-                <div id="athleteDetailView" class="card hidden">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; border-bottom: 1px solid var(--border); padding-bottom: 0.8rem;">
-                        <div>
-                            <h2 id="detAthleteName" style="color: var(--bronze); font-size: 1.2rem;">Expediente del Atleta</h2>
-                            <p id="detAthleteMeta" class="subtitle" style="margin-bottom:0; font-size:0.8rem;">Historial antropométrico.</p>
-                        </div>
-                        <div class="no-print" style="display: flex; gap: 0.4rem;">
-                            <button class="btn-secondary" onclick="window.print()" style="background: var(--bronze); color:#000; font-weight:bold; font-size:0.7rem;">🖨️ PDF</button>
-                            <button class="btn-secondary" onclick="closeAthleteDetail()" style="font-size:0.7rem;">← Volver</button>
-                        </div>
-                    </div>
-
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
-                        <div style="background: var(--bg-deep); padding: 1.2rem; border-radius: 6px; border: 1px solid var(--border);">
-                            <h4 style="color: var(--bronze); font-size: 0.85rem; margin-bottom: 0.8rem;">Control de Pagos</h4>
-                            <p style="font-size: 0.85rem; margin-bottom: 0.4rem;"><strong>Costo del Plan:</strong> <span id="detCost"></span></p>
-                            <p style="font-size: 0.85rem; margin-bottom: 0.8rem;"><strong>Estatus:</strong> <span id="detStatusBadge"></span></p>
-                            <button class="btn-secondary no-print" onclick="togglePaymentStatus()" style="width: 100%; font-size: 0.75rem;">Alternar Pagado / Pendiente</button>
-                        </div>
-
-                        <div style="background: var(--bg-deep); padding: 1.2rem; border-radius: 6px; border: 1px solid var(--border);" class="no-print">
-                            <h4 style="color: var(--bronze); font-size: 0.85rem; margin-bottom: 0.8rem;">Registrar Medición Mensual</h4>
-                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem; margin-bottom: 0.6rem;">
-                                <input type="text" id="mMonth" placeholder="Mes (Ej. Jul 2026)" style="font-size:0.8rem; padding:0.5rem;">
-                                <input type="number" id="mWeight" placeholder="Peso (kg)" style="font-size:0.8rem; padding:0.5rem;">
-                            </div>
-                            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.4rem; margin-bottom: 0.6rem;">
-                                <input type="number" id="mNeck" placeholder="Cuello" style="font-size:0.8rem; padding:0.5rem;">
-                                <input type="number" id="mChest" placeholder="Tórax" style="font-size:0.8rem; padding:0.5rem;">
-                                <input type="number" id="mBiceps" placeholder="Bíceps" style="font-size:0.8rem; padding:0.5rem;">
-                                <input type="number" id="mWaist" placeholder="Cintura" style="font-size:0.8rem; padding:0.5rem;">
-                                <input type="number" id="mGlute" placeholder="Glúteo" style="font-size:0.8rem; padding:0.5rem;">
-                                <input type="number" id="mLeg" placeholder="Cuádricep" style="font-size:0.8rem; padding:0.5rem;">
-                                <input type="number" id="mCalf" placeholder="Pantorrilla" style="font-size:0.8rem; padding:0.5rem;">
-                            </div>
-                            <button type="button" onclick="saveNewMeasurement()" style="font-size: 0.75rem; padding: 0.5rem;">Guardar Medición</button>
-                        </div>
-                    </div>
-
-                    <h3 style="font-size: 0.9rem; margin-bottom: 0.3rem;">Historial Comparativo Mes a Mes</h3>
-                    <p class="subtitle" style="font-size: 0.8rem;">Evolución antropométrica detallada.</p>
-                    <div style="overflow-x: auto;">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Mes</th>
-                                    <th>Peso</th>
-                                    <th>Cuello</th>
-                                    <th>Tórax</th>
-                                    <th>Bíceps</th>
-                                    <th>Cintura</th>
-                                    <th>Glúteo</th>
-                                    <th>Cuádricep</th>
-                                    <th>Pantorrilla</th>
-                                    <th class="no-print">Acción</th>
-                                </tr>
-                            </thead>
-                            <tbody id="metricsTableBody">
-                                <tr><td colspan="10" class="empty-state">No hay mediciones registradas.</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- CALCULADORAS (EXCLUSIVAMENTE EN PANTALLA PRINCIPAL DEL AFILIADO) -->
+                <!-- SECCIÓN: CONTROL DE ATLETAS -->
                 <div class="card no-print">
-                    <h3>Herramientas y Calculadoras Profesionales</h3>
-                    <p class="subtitle">Calcula requerimientos energéticos y corporales.</p>
+                    <h3 style="font-size: 0.95rem; margin-bottom: 0.6rem;">📋 Control de Atletas</h3>
+                    <div class="form-group" style="margin-bottom: 0.8rem;">
+                        <input type="text" id="searchAthleteInput" placeholder="🔍 Buscar atleta por nombre..." oninput="filterAthletes()" style="font-size: 0.8rem; padding: 0.6rem;">
+                    </div>
+                    <div id="affiliateClientsList">
+                        <!-- Inyectado dinámicamente -->
+                    </div>
+                </div>
 
-                    <div class="calc-grid">
-                        <div class="calc-box">
-                            <h4 style="color: var(--bronze); font-size: 0.85rem; margin-bottom: 0.8rem;">Calculadora de Calorías (Harris/Benedict)</h4>
-                            <div class="form-group"><label>Peso (kg)</label><input type="number" id="calcWeight" placeholder="70"></div>
-                            <div class="form-group"><label>Altura (cm)</label><input type="number" id="calcHeight" placeholder="175"></div>
-                            <div class="form-group"><label>Edad</label><input type="number" id="calcAge" placeholder="25"></div>
-                            <div class="form-group">
-                                <label>Actividad</label>
-                                <select id="calcActivity">
-                                    <option value="1.2">Sedentario</option>
-                                    <option value="1.375">Ligero (1-3 días)</option>
-                                    <option value="1.55">Moderado (3-5 días)</option>
-                                    <option value="1.725">Muy Activo (6-7 días)</option>
-                                </select>
-                            </div>
-                            <button type="button" onclick="calculateCalories()" style="font-size: 0.75rem; padding: 0.5rem;">Calcular Calorías</button>
-                            <div id="caloriesResult" style="margin-top: 0.8rem; color: var(--bronze); font-weight: bold; font-size: 0.85rem;"></div>
+                <!-- VISTA DETALLADA DEL EXPEDIENTE DEL ATLETA (Diseño exacto del video) -->
+                <div id="athleteDetailView" class="card hidden">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; border-bottom: 1px solid var(--border); padding-bottom: 0.8rem;">
+                        <div>
+                            <h2 id="detAthleteTitle" style="color: var(--bronze); font-size: 1.1rem; display:flex; align-items:center; gap:6px;">👤 Atleta: </h2>
+                            <div id="detAthleteHeaderInfo" class="athlete-meta-row" style="margin-top: 6px;"></div>
                         </div>
+                        <button class="btn-secondary no-print" onclick="closeAthleteDetail()" style="font-size: 0.7rem; padding: 0.3rem 0.6rem;">← Volver</button>
+                    </div>
 
-                        <div class="calc-box">
-                            <h4 style="color: var(--bronze); font-size: 0.85rem; margin-bottom: 0.8rem;">Calculadora IMC & Composición</h4>
-                            <div class="form-group"><label>Peso (kg)</label><input type="number" id="imcWeight" placeholder="75"></div>
-                            <div class="form-group"><label>Altura (m)</label><input type="number" step="0.01" id="imcHeight" placeholder="1.75"></div>
-                            <button type="button" onclick="calculateIMC()" style="font-size: 0.75rem; padding: 0.5rem; margin-bottom: 0.8rem;">Calcular IMC</button>
-                            <div id="imcResult" style="color: var(--text-main); font-size: 0.85rem; margin-bottom: 0.5rem;"></div>
+                    <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;" class="no-print">
+                        <button class="btn-secondary" onclick="togglePaymentStatus()" id="detTogglePayBtn" style="font-size: 0.75rem; flex: 1;">Marcar Pendiente</button>
+                        <a id="detWhatsAppBtn" href="#" target="_blank" class="btn-wa" style="flex: 1;">💬 Enviar WhatsApp</a>
+                    </div>
+
+                    <!-- REGISTRAR ABONO PARCIAL -->
+                    <div class="card no-print" style="background: var(--surface-card); margin-bottom: 1rem;">
+                        <h4 style="font-size: 0.85rem; color: var(--bronze); margin-bottom: 0.6rem;">💵 Registrar Abono Parcial</h4>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; margin-bottom: 0.6rem;">
+                            <div class="form-group" style="margin-bottom:0;"><label>Monto Abono ($)</label><input type="number" id="abonoMonto" placeholder="Ej. 20"></div>
+                            <div class="form-group" style="margin-bottom:0;"><label>Fecha del Abono</label><input type="date" id="abonoFecha"></div>
                         </div>
+                        <button type="button" onclick="saveAbono()" style="font-size: 0.75rem; padding: 0.6rem;">Agregar Abono</button>
+                        <div id="abonosHistorialContainer" style="margin-top: 0.8rem; font-size: 0.75rem; color: var(--text-muted);">
+                            <p>Historial de abonos: No hay abonos registrados aún.</p>
+                        </div>
+                    </div>
+
+                    <!-- NUEVA MEDICIÓN ANTROPOMÉTRICA -->
+                    <div class="card no-print" style="background: var(--surface-card); margin-bottom: 1rem;">
+                        <h4 style="font-size: 0.85rem; color: var(--bronze); margin-bottom: 0.6rem;">📏 Nueva Medición Antropométrica</h4>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.5rem; margin-bottom: 0.6rem;">
+                            <div class="form-group" style="margin-bottom:0;"><label>Peso (kg)</label><input type="number" id="mWeight" placeholder="0"></div>
+                            <div class="form-group" style="margin-bottom:0;"><label>Estatura (cm)</label><input type="number" id="mHeight" placeholder="0"></div>
+                            <div class="form-group" style="margin-bottom:0;"><label>Fecha</label><input type="date" id="mDate"></div>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.5rem; margin-bottom: 0.8rem;">
+                            <div class="form-group" style="margin-bottom:0;"><label>Cuello</label><input type="number" id="mNeck" placeholder="0"></div>
+                            <div class="form-group" style="margin-bottom:0;"><label>Tórax</label><input type="number" id="mChest" placeholder="0"></div>
+                            <div class="form-group" style="margin-bottom:0;"><label>Bíceps</label><input type="number" id="mBiceps" placeholder="0"></div>
+                            <div class="form-group" style="margin-bottom:0;"><label>Abdomen</label><input type="number" id="mAbdomen" placeholder="0"></div>
+                            <div class="form-group" style="margin-bottom:0;"><label>Glúteos</label><input type="number" id="mGlute" placeholder="0"></div>
+                            <div class="form-group" style="margin-bottom:0;"><label>Cuádriceps</label><input type="number" id="mLeg" placeholder="0"></div>
+                            <div class="form-group" style="margin-bottom:0; grid-column: span 3;"><label>Pantorrilla</label><input type="number" id="mCalf" placeholder="0"></div>
+                        </div>
+                        <button type="button" onclick="saveNewMeasurement()" style="font-size: 0.75rem; padding: 0.6rem;">Registrar y Calcular IMC</button>
+                    </div>
+
+                    <!-- HISTORIAL Y COMPARATIVA MENSUAL -->
+                    <h3 style="font-size: 0.9rem; margin-bottom: 0.4rem; display: flex; align-items: center; gap: 6px;">📈 Historial y Comparativa Mensual</h3>
+                    <p class="subtitle" style="font-size: 0.75rem;">Evolución antropométrica detallada del atleta.</p>
+                    <div id="metricsHistoryList">
+                        <div class="empty-state" style="text-align:center; padding:1rem; color:var(--text-muted); font-style:italic; font-size:0.8rem;">No hay mediciones registradas.</div>
                     </div>
                 </div>
             </section>
@@ -591,27 +517,14 @@
 
     <script>
         let currentSelectedAthleteId = null;
-
-        document.getElementById('shareableLink').value = window.location.href.split('#')[0];
-
-        function copyInviteLink() {
-            const linkInput = document.getElementById('shareableLink');
-            linkInput.select();
-            navigator.clipboard.writeText(linkInput.value);
-            alert("¡Enlace copiado!");
-        }
+        document.getElementById('cStartDate').valueAsDate = new Date();
+        document.getElementById('mDate').valueAsDate = new Date();
+        document.getElementById('abonoFecha').valueAsDate = new Date();
 
         function togglePassword(id) {
             const pwd = document.getElementById(id);
             pwd.type = pwd.type === 'password' ? 'text' : 'password';
         }
-
-        function updateClock() {
-            const now = new Date();
-            document.getElementById('clock').innerText = now.toLocaleDateString() + ' ' + now.toLocaleTimeString();
-        }
-        setInterval(updateClock, 1000);
-        updateClock();
 
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
@@ -621,7 +534,6 @@
             if((user.toLowerCase() === 'ciodarofitness' || user.toLowerCase() === 'admin') && pass === 'Ciodarofitness2026*') {
                 document.getElementById('authSection').classList.add('hidden');
                 document.getElementById('dashboardView').classList.remove('hidden');
-                document.getElementById('clock').classList.remove('hidden');
                 loadAdminData();
             } else {
                 alert("Credenciales incorrectas.");
@@ -642,7 +554,7 @@
 
             accounts.push({ id: Date.now(), name, email, password, startDate: new Date().toLocaleDateString() });
             localStorage.setItem('bc_client_accounts', JSON.stringify(accounts));
-            alert("¡Cuenta creada con éxito!");
+            alert("¡Cuenta de afiliado creada con éxito!");
             this.reset();
         });
 
@@ -665,33 +577,28 @@
         function openAffiliatePortal(client) {
             document.getElementById('authSection').classList.add('hidden');
             document.getElementById('clientPortalView').classList.remove('hidden');
-            document.getElementById('clock').classList.remove('hidden');
-            document.getElementById('welcomeClientTitle').innerText = `Afiliado: ${client.name}`;
-            loadAffiliateClients();
+            document.getElementById('welcomeClientTitle').innerText = client.name;
+            loadAffiliateDashboard();
         }
 
         function logoutSystem() {
             document.getElementById('dashboardView').classList.add('hidden');
             document.getElementById('clientPortalView').classList.add('hidden');
+            document.getElementById('athleteDetailView').classList.add('hidden');
             document.getElementById('authSection').classList.remove('hidden');
-            document.getElementById('clock').classList.add('hidden');
             localStorage.removeItem('bc_current_client');
             document.querySelectorAll('form').forEach(f => f.reset());
         }
 
         function loadAdminData() {
             let accounts = JSON.parse(localStorage.getItem('bc_client_accounts')) || [];
-            document.getElementById('statTotalAccounts').innerText = accounts.length;
-
-            const tbody = document.getElementById('athletesTableBody');
-            tbody.innerHTML = accounts.length === 0 ? `<tr><td colspan="4" class="empty-state">No hay cuentas.</td></tr>` :
+            const container = document.getElementById('adminAccountsList');
+            container.innerHTML = accounts.length === 0 ? `<p style="color:var(--text-muted); font-size:0.8rem;">No hay cuentas.</p>` :
                 accounts.map(acc => `
-                    <tr>
-                        <td><strong>${acc.name}</strong></td>
-                        <td>✉️ ${acc.email}</td>
-                        <td>${acc.startDate}</td>
-                        <td><button class="btn-deny" onclick="deleteAccount(${acc.id})" style="font-size:0.65rem; padding:0.2rem 0.4rem;">Eliminar</button></td>
-                    </tr>
+                    <div style="background:var(--bg-deep); padding:0.8rem; border-radius:6px; border:1px solid var(--border); display:flex; justify-content:space-between; align-items:center;">
+                        <div><strong>${acc.name}</strong><br><span style="font-size:0.7rem; color:var(--text-muted);">${acc.email}</span></div>
+                        <button class="btn-deny" onclick="deleteAccount(${acc.id})" style="font-size:0.65rem; padding:0.2rem 0.4rem;">Borrar</button>
+                    </div>
                 `).join('');
         }
 
@@ -702,17 +609,26 @@
             loadAdminData();
         }
 
+        function getCycleDates(startDateStr) {
+            if(!startDateStr) return { cycleStart: '-', cycleEnd: '-' };
+            let start = new Date(startDateStr);
+            let end = new Date(start);
+            end.setDate(end.getDate() + 30);
+            return {
+                cycleStart: start.toLocaleDateString('es-ES', { day: '2-digit', month: 'short', year: 'numeric' }),
+                cycleEnd: end.toLocaleDateString('es-ES', { day: '2-digit', month: 'short', year: 'numeric' })
+            };
+        }
+
         function addAthlete() {
             const name = document.getElementById('cName').value.trim();
-            const phone = document.getElementById('cPhone').value.trim();
             const age = document.getElementById('cAge').value.trim();
-            const weight = document.getElementById('cWeight').value.trim();
-            const height = document.getElementById('cHeight').value.trim();
-            const cost = document.getElementById('cCost').value.trim();
-            const status = document.getElementById('cStatus').value;
+            const phone = document.getElementById('cPhone').value.trim();
+            const cost = parseFloat(document.getElementById('cCost').value) || 0;
+            const startDate = document.getElementById('cStartDate').value;
             
             if(!name || !phone) {
-                alert("Completa al menos el nombre y teléfono.");
+                alert("Completa al menos el nombre y el WhatsApp.");
                 return;
             }
 
@@ -723,55 +639,97 @@
             if(!allAthletes[currentClient.email]) allAthletes[currentClient.email] = [];
 
             allAthletes[currentClient.email].push({ 
-                id: Date.now(), name, phone, age: age || '-', 
-                weight: weight ? weight + ' kg' : '-', 
-                height: height ? height + ' cm' : '-', 
-                cost: cost ? '$' + cost : '$0', status,
-                startDate: new Date().toLocaleDateString(), metrics: []
+                id: Date.now(), name, age: age || '-', phone, cost, startDate,
+                status: 'Pagado', abonos: [], metrics: []
             });
 
             localStorage.setItem('bc_affiliate_athletes', JSON.stringify(allAthletes));
             document.getElementById('cName').value = '';
-            document.getElementById('cPhone').value = '';
             document.getElementById('cAge').value = '';
-            document.getElementById('cWeight').value = '';
-            document.getElementById('cHeight').value = '';
+            document.getElementById('cPhone').value = '';
             document.getElementById('cCost').value = '';
-            loadAffiliateClients();
+            document.getElementById('cStartDate').valueAsDate = new Date();
+            loadAffiliateDashboard();
         }
 
-        function loadAffiliateClients() {
+        function loadAffiliateDashboard() {
             const currentClient = JSON.parse(localStorage.getItem('bc_current_client'));
             if(!currentClient) return;
 
             let allAthletes = JSON.parse(localStorage.getItem('bc_affiliate_athletes')) || {};
             let myAthletes = allAthletes[currentClient.email] || [];
 
-            const tbody = document.getElementById('affiliateClientsTableBody');
-            tbody.innerHTML = myAthletes.length === 0 ? `<tr><td colspan="5" class="empty-state">No hay atletas registrados.</td></tr>` :
-                myAthletes.map(a => `
-                    <tr>
-                        <td><strong>${a.name}</strong><br><span style="font-size:0.7rem; color:var(--text-muted);">Tel: ${a.phone}</span></td>
-                        <td>P: ${a.weight} | A: ${a.height}</td>
-                        <td style="color: var(--bronze); font-weight: bold;">${a.cost}</td>
-                        <td><span class="${a.status === 'Pagado' ? 'badge-paid' : 'badge-pending'}">${a.status}</span></td>
-                        <td>
-                            <button class="btn-action" onclick="openAthleteDetail(${a.id})">Expediente</button>
-                            <button class="btn-deny" onclick="deleteAthlete(${a.id})">Borrar</button>
-                        </td>
-                    </tr>
-                `).join('');
+            let totalActive = myAthletes.length;
+            let monthlyGoal = myAthletes.reduce((acc, a) => acc + (a.cost || 0), 0);
+            let collected = myAthletes.filter(a => a.status === 'Pagado').reduce((acc, a) => acc + (a.cost || 0), 0);
+            
+            // Sumar abonos parciales a lo recaudado
+            myAthletes.forEach(a => {
+                if(a.abonos && a.abonos.length > 0) {
+                    let totalAbonos = a.abonos.reduce((sum, ab) => sum + (parseFloat(ab.monto) || 0), 0);
+                    collected += totalAbonos;
+                }
+            });
+
+            let pending = Math.max(0, monthlyGoal - collected);
+
+            document.getElementById('statActiveAthletes').innerText = totalActive;
+            document.getElementById('statMonthlyGoal').innerText = `$${monthlyGoal}`;
+            document.getElementById('statCollected').innerText = `$${collected}`;
+            document.getElementById('statPending').innerText = `$${pending}`;
+
+            renderAthletesList(myAthletes);
+        }
+
+        function renderAthletesList(athletes) {
+            const container = document.getElementById('affiliateClientsList');
+            container.innerHTML = athletes.length === 0 ? `<div style="text-align:center; padding:1rem; color:var(--text-muted); font-size:0.8rem; font-style:italic;">No hay atletas registrados.</div>` :
+                athletes.map(a => {
+                    let cycle = getCycleDates(a.startDate);
+                    let abonoSum = (a.abonos || []).reduce((sum, ab) => sum + (parseFloat(ab.monto) || 0), 0);
+                    let badgeText = a.status === 'Pagado' ? 'Al Día (30d)' : (abonoSum > 0 ? `Abonado: $${abonoSum}` : 'Pendiente');
+                    let badgeClass = a.status === 'Pagado' ? 'badge-paid' : 'badge-pending';
+
+                    return `
+                        <div class="athlete-item-card">
+                            <div class="athlete-item-header">
+                                <div>
+                                    <strong style="font-size: 0.95rem;">${a.name}</strong>
+                                    <div class="athlete-meta-row" style="margin-top: 4px;">
+                                        <span>✏️ Inicio: ${a.startDate || '-'}</span>
+                                        <span style="color: var(--bronze);">🔄 Ciclo actual: ${cycle.cycleStart} al ${cycle.cycleEnd}</span>
+                                    </div>
+                                </div>
+                                <div style="text-align: right;">
+                                    <span style="font-weight: bold; color: var(--bronze); font-size:0.9rem;">$${a.cost}</span>
+                                    <div style="margin-top: 4px;"><span class="${badgeClass}" style="font-size:0.65rem;">${badgeText}</span></div>
+                                </div>
+                            </div>
+                            <div class="athlete-actions-row">
+                                <button class="btn-action" onclick="openAthleteDetail(${a.id})">Expediente</button>
+                                <button class="btn-deny" onclick="deleteAthlete(${a.id})">Borrar</button>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+        }
+
+        function filterAthletes() {
+            const query = document.getElementById('searchAthleteInput').value.toLowerCase();
+            const currentClient = JSON.parse(localStorage.getItem('bc_current_client'));
+            let allAthletes = JSON.parse(localStorage.getItem('bc_affiliate_athletes')) || {};
+            let myAthletes = allAthletes[currentClient.email] || [];
+            let filtered = myAthletes.filter(a => a.name.toLowerCase().includes(query));
+            renderAthletesList(filtered);
         }
 
         function deleteAthlete(id) {
             const currentClient = JSON.parse(localStorage.getItem('bc_current_client'));
-            if(!currentClient) return;
-
             let allAthletes = JSON.parse(localStorage.getItem('bc_affiliate_athletes')) || {};
             if(allAthletes[currentClient.email]) {
                 allAthletes[currentClient.email] = allAthletes[currentClient.email].filter(a => a.id !== id);
                 localStorage.setItem('bc_affiliate_athletes', JSON.stringify(allAthletes));
-                loadAffiliateClients();
+                loadAffiliateDashboard();
             }
         }
 
@@ -780,20 +738,31 @@
             const currentClient = JSON.parse(localStorage.getItem('bc_current_client'));
             let allAthletes = JSON.parse(localStorage.getItem('bc_affiliate_athletes')) || {};
             let athlete = (allAthletes[currentClient.email] || []).find(a => a.id === id);
-
             if(!athlete) return;
 
-            document.getElementById('detAthleteName').innerText = `Expediente: ${athlete.name}`;
-            document.getElementById('detAthleteMeta').innerText = `Tel: ${athlete.phone} | Edad: ${athlete.age} | Estatura: ${athlete.height}`;
-            document.getElementById('detCost').innerText = athlete.cost;
-            
-            const badge = document.getElementById('detStatusBadge');
-            badge.innerText = athlete.status;
-            badge.className = athlete.status === 'Pagado' ? 'badge-paid' : 'badge-pending';
+            let cycle = getCycleDates(athlete.startDate);
 
-            loadMetricsTable(athlete);
+            document.getElementById('detAthleteTitle').innerText = `Atleta: ${athlete.name}`;
+            document.getElementById('detAthleteHeaderInfo').innerHTML = `
+                <span>Edad: ${athlete.age} años</span>
+                <span>WhatsApp: +${athlete.phone}</span>
+                <span>Inicio Original: ${athlete.startDate || '-'}</span>
+                <span>Ciclo Actual: ${cycle.cycleStart} al ${cycle.cycleEnd}</span>
+                <span>Paquete: $${athlete.cost}</span>
+                <span>Estatus: <strong style="color:var(--bronze);">${athlete.status}</strong></span>
+            `;
+
+            const toggleBtn = document.getElementById('detTogglePayBtn');
+            toggleBtn.innerText = athlete.status === 'Pagado' ? 'Marcar Pendiente' : 'Marcar Al Día';
+
+            const waBtn = document.getElementById('detWhatsAppBtn');
+            waBtn.href = `https://wa.me/${athlete.phone.replace(/\D/g,'')}`;
+
+            renderAbonosHistorial(athlete);
+            renderMetricsHistory(athlete);
+
             document.getElementById('athleteDetailView').classList.remove('hidden');
-            window.scrollTo({ top: document.getElementById('athleteDetailView').offsetTop - 20, behavior: 'smooth' });
+            window.scrollTo({ top: document.getElementById('athleteDetailView').offsetTop - 10, behavior: 'smooth' });
         }
 
         function closeAthleteDetail() {
@@ -811,23 +780,16 @@
                 athlete.status = athlete.status === 'Pagado' ? 'Pendiente' : 'Pagado';
                 localStorage.setItem('bc_affiliate_athletes', JSON.stringify(allAthletes));
                 openAthleteDetail(athlete.id);
-                loadAffiliateClients();
+                loadAffiliateDashboard();
             }
         }
 
-        function saveNewMeasurement() {
-            const month = document.getElementById('mMonth').value.trim();
-            const weight = document.getElementById('mWeight').value.trim();
-            const neck = document.getElementById('mNeck').value.trim();
-            const chest = document.getElementById('mChest').value.trim();
-            const biceps = document.getElementById('mBiceps').value.trim();
-            const waist = document.getElementById('mWaist').value.trim();
-            const glute = document.getElementById('mGlute').value.trim();
-            const leg = document.getElementById('mLeg').value.trim();
-            const calf = document.getElementById('mCalf').value.trim();
+        function saveAbono() {
+            const monto = parseFloat(document.getElementById('abonoMonto').value);
+            const fecha = document.getElementById('abonoFecha').value;
 
-            if(!month) {
-                alert("Especifica el mes.");
+            if(!monto || !fecha) {
+                alert("Completa el monto y la fecha del abono.");
                 return;
             }
 
@@ -837,25 +799,76 @@
             let athlete = list.find(a => a.id === currentSelectedAthleteId);
 
             if(athlete) {
+                if(!athlete.abonos) athlete.abonos = [];
+                athlete.abonos.push({ monto, fecha });
+                localStorage.setItem('bc_affiliate_athletes', JSON.stringify(allAthletes));
+                document.getElementById('abonoMonto').value = '';
+                openAthleteDetail(athlete.id);
+                loadAffiliateDashboard();
+            }
+        }
+
+        function renderAbonosHistorial(athlete) {
+            const container = document.getElementById('abonosHistorialContainer');
+            const abonos = athlete.abonos || [];
+            container.innerHTML = abonos.length === 0 ? `<p>Historial de abonos: No hay abonos registrados aún.</p>` :
+                `<strong>Historial de abonos:</strong><div style="margin-top:4px; display:flex; flex-direction:column; gap:3px;">` +
+                abonos.map((ab, idx) => `<div>• $${ab.monto} — Fecha: ${ab.fecha}</div>`).join('') + `</div>`;
+        }
+
+        function saveNewMeasurement() {
+            const weight = document.getElementById('mWeight').value;
+            const height = document.getElementById('mHeight').value;
+            const date = document.getElementById('mDate').value;
+            const neck = document.getElementById('mNeck').value;
+            const chest = document.getElementById('mChest').value;
+            const biceps = document.getElementById('mBiceps').value;
+            const abdomen = document.getElementById('mAbdomen').value;
+            const glute = document.getElementById('mGlute').value;
+            const leg = document.getElementById('mLeg').value;
+            const calf = document.getElementById('mCalf').value;
+
+            if(!date) {
+                alert("Selecciona la fecha de la medición.");
+                return;
+            }
+
+            let imc = '-';
+            if(weight && height) {
+                let hM = parseFloat(height) / 100;
+                imc = (parseFloat(weight) / (hM * hM)).toFixed(1);
+            }
+
+            const currentClient = JSON.parse(localStorage.getItem('bc_current_client'));
+            let allAthletes = JSON.parse(localStorage.getItem('bc_affiliate_athletes')) || {};
+            let list = allAthletes[currentClient.email] || [];
+            let athlete = list.find(a => a.id === currentSelectedAthleteId);
+
+            if(athlete) {
+                if(!athlete.metrics) athlete.metrics = [];
                 athlete.metrics.push({
-                    month,
+                    date,
                     weight: weight ? weight + ' kg' : '-',
+                    height: height ? height + ' cm' : '-',
+                    imc,
                     neck: neck ? neck + ' cm' : '-',
                     chest: chest ? chest + ' cm' : '-',
                     biceps: biceps ? biceps + ' cm' : '-',
-                    waist: waist ? waist + ' cm' : '-',
+                    abdomen: abdomen ? abdomen + ' cm' : '-',
                     glute: glute ? glute + ' cm' : '-',
                     leg: leg ? leg + ' cm' : '-',
                     calf: calf ? calf + ' cm' : '-'
                 });
 
                 localStorage.setItem('bc_affiliate_athletes', JSON.stringify(allAthletes));
-                document.getElementById('mMonth').value = '';
+                
+                // Limpiar inputs
                 document.getElementById('mWeight').value = '';
+                document.getElementById('mHeight').value = '';
                 document.getElementById('mNeck').value = '';
                 document.getElementById('mChest').value = '';
                 document.getElementById('mBiceps').value = '';
-                document.getElementById('mWaist').value = '';
+                document.getElementById('mAbdomen').value = '';
                 document.getElementById('mGlute').value = '';
                 document.getElementById('mLeg').value = '';
                 document.getElementById('mCalf').value = '';
@@ -864,24 +877,30 @@
             }
         }
 
-        function loadMetricsTable(athlete) {
-            const tbody = document.getElementById('metricsTableBody');
+        function renderMetricsHistory(athlete) {
+            const container = document.getElementById('metricsHistoryList');
             const metrics = athlete.metrics || [];
 
-            tbody.innerHTML = metrics.length === 0 ? `<tr><td colspan="10" class="empty-state">No hay mediciones registradas.</td></tr>` :
+            container.innerHTML = metrics.length === 0 ? `<div style="text-align:center; padding:1rem; color:var(--text-muted); font-style:italic; font-size:0.8rem;">No hay mediciones registradas.</div>` :
                 metrics.map((m, idx) => `
-                    <tr>
-                        <td><strong>${m.month}</strong></td>
-                        <td>${m.weight}</td>
-                        <td>${m.neck}</td>
-                        <td>${m.chest}</td>
-                        <td>${m.biceps}</td>
-                        <td>${m.waist}</td>
-                        <td>${m.glute}</td>
-                        <td>${m.leg}</td>
-                        <td>${m.calf}</td>
-                        <td class="no-print"><button class="btn-deny" onclick="deleteMetric(${idx})" style="font-size:0.6rem; padding:0.15rem 0.3rem;">X</button></td>
-                    </tr>
+                    <div class="metric-history-card">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem; border-bottom: 1px solid var(--border); padding-bottom: 0.4rem;">
+                            <strong style="color: var(--bronze); font-size: 0.85rem;">📅 Registro: ${m.date}</strong>
+                            <button class="btn-deny" onclick="deleteMetric(${idx})" style="font-size:0.6rem; padding:0.15rem 0.4rem;">Eliminar</button>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem; font-size: 0.75rem;">
+                            <div><strong>Peso:</strong> ${m.weight}</div>
+                            <div><strong>Estatura:</strong> ${m.height}</div>
+                            <div><strong>IMC:</strong> <span style="color: var(--bronze); font-weight:bold;">${m.imc}</span></div>
+                            <div><strong>Cuello:</strong> ${m.neck}</div>
+                            <div><strong>Tórax:</strong> ${m.chest}</div>
+                            <div><strong>Bíceps:</strong> ${m.biceps}</div>
+                            <div><strong>Abdomen:</strong> ${m.abdomen}</div>
+                            <div><strong>Glúteos:</strong> ${m.glute}</div>
+                            <div><strong>Cuádriceps:</strong> ${m.leg}</div>
+                            <div><strong>Pantorrilla:</strong> ${m.calf}</div>
+                        </div>
+                    </div>
                 `).join('');
         }
 
@@ -898,36 +917,39 @@
             }
         }
 
-        function calculateCalories() {
-            const w = parseFloat(document.getElementById('calcWeight').value);
-            const h = parseFloat(document.getElementById('calcHeight').value);
-            const a = parseFloat(document.getElementById('calcAge').value);
-            const act = parseFloat(document.getElementById('calcActivity').value);
-
-            if(!w || !h || !a) {
-                alert("Completa peso, altura y edad.");
-                return;
-            }
-            const bmr = (10 * w) + (6.25 * h) - (5 * a) + 5;
-            const tdee = Math.round(bmr * act);
-            document.getElementById('caloriesResult').innerHTML = `TDEE: ${tdee} kcal/día`;
+        function exportDatabase() {
+            const data = {
+                accounts: localStorage.getItem('bc_client_accounts'),
+                athletes: localStorage.getItem('bc_affiliate_athletes')
+            };
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `bc_fit_backup_${new Date().toISOString().slice(0,10)}.json`;
+            a.click();
         }
 
-        function calculateIMC() {
-            const w = parseFloat(document.getElementById('imcWeight').value);
-            const h = parseFloat(document.getElementById('imcHeight').value);
+        function triggerImport() {
+            document.getElementById('importFile').click();
+        }
 
-            if(!w || !h) {
-                alert("Completa peso y altura.");
-                return;
-            }
-            const imc = (w / (h * h)).toFixed(1);
-            let estado = "Normal";
-            if(imc < 18.5) estado = "Bajo peso";
-            else if(imc >= 25 && imc < 30) estado = "Sobrepeso";
-            else if(imc >= 30) estado = "Obesidad";
-
-            document.getElementById('imcResult').innerHTML = `IMC: <strong>${imc}</strong> (${estado})`;
+        function importDatabase(event) {
+            const file = event.target.files[0];
+            if(!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const parsed = JSON.parse(e.target.result);
+                    if(parsed.accounts) localStorage.setItem('bc_client_accounts', parsed.accounts);
+                    if(parsed.athletes) localStorage.setItem('bc_affiliate_athletes', parsed.athletes);
+                    alert("¡Base de datos importada con éxito!");
+                    loadAffiliateDashboard();
+                } catch(err) {
+                    alert("Error al importar el archivo.");
+                }
+            };
+            reader.readAsText(file);
         }
     </script>
 </body>
