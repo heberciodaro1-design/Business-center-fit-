@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BC Fit | By Ciodarofitness</title>
+    <title>BC Fit | By Ciodarofitness - Todos los Derechos Reservados</title>
     <style>
         :root {
             --bg-deep: #07090e;
@@ -111,6 +111,8 @@
             font-size: 0.95rem;
             outline: none;
             transition: border-color 0.3s;
+            position: relative;
+            z-index: 2;
         }
 
         input:focus, select:focus {
@@ -120,19 +122,32 @@
 
         .password-container {
             position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .password-container input {
+            padding-right: 45px;
         }
 
         .toggle-password {
             position: absolute;
-            right: 15px;
+            right: 12px;
             top: 50%;
             transform: translateY(-50%);
-            background: none;
+            background: transparent;
             border: none;
             color: var(--text-muted);
             cursor: pointer;
             font-size: 1.1rem;
-            padding: 0;
+            padding: 4px;
+            z-index: 5;
+            width: auto;
+        }
+
+        .toggle-password:hover {
+            color: var(--bronze);
+            opacity: 1;
         }
 
         button {
@@ -283,6 +298,16 @@
             color: var(--bronze);
             border-bottom: 2px solid var(--bronze);
         }
+
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border);
+            background: var(--surface);
+            letter-spacing: 1px;
+        }
     </style>
 </head>
 <body>
@@ -297,35 +322,35 @@
         <section id="authSection">
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem;">
                 
-                <!-- Login Admin -->
+                <!-- Login Exclusivo Admin Ciodarofitness -->
                 <div class="card" style="margin-bottom: 0;">
                     <h1 style="color: #ffffff; font-size: 2.2rem; font-weight: 800; letter-spacing: 1px; margin-bottom: 0.2rem;">BC Fit</h1>
                     <p style="color: var(--bronze); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1.5rem;">By Ciodarofitness</p>
-                    <p class="subtitle">Acceso al panel de administración general.</p>
+                    <p class="subtitle">Acceso restringido y blindado exclusivamente para el Administrador.</p>
                     <form id="loginForm">
                         <div class="form-group">
-                            <label>Correo Electrónico</label>
+                            <label>Correo de Administrador</label>
                             <input type="email" id="email" required placeholder="admin@ciodarofitness.com">
                         </div>
                         <div class="form-group">
                             <label>Contraseña</label>
                             <div class="password-container">
                                 <input type="password" id="password" required placeholder="••••••••">
-                                <button type="button" class="toggle-password" onclick="togglePassword()">👁️</button>
+                                <button type="button" class="toggle-password" onclick="togglePassword()" title="Mostrar/Ocultar contraseña">👁️</button>
                             </div>
                         </div>
-                        <button type="submit">Ingresar como Admin</button>
+                        <button type="submit">Ingresar al Sistema</button>
                     </form>
                 </div>
 
-                <!-- Solicitud Pública por Enlace -->
+                <!-- Solicitud por Enlace Autorizado -->
                 <div class="card" style="margin-bottom: 0;">
-                    <h2 style="color: #ffffff; font-size: 1.5rem; font-weight: 700;">Solicitud de Licencia</h2>
-                    <p class="subtitle">Entrenadores o clientes interesados en afiliarse.</p>
+                    <h2 style="color: #ffffff; font-size: 1.5rem; font-weight: 700;">Solicitud de Acceso</h2>
+                    <p class="subtitle">Solo disponible mediante el enlace cifrado proporcionado por Ciodarofitness.</p>
                     <form id="requestLicenseForm">
                         <div class="form-group">
                             <label>Nombre y Apellido / Marca</label>
-                            <input type="text" id="reqName" required placeholder="Ej. Carlos Trainer">
+                            <input type="text" id="reqName" required placeholder="Ej. Atleta o Entrenador">
                         </div>
                         <div class="form-group">
                             <label>Correo Electrónico</label>
@@ -338,31 +363,31 @@
                         <div class="form-group">
                             <label>Tipo de Solicitud</label>
                             <select id="reqType">
-                                <option value="Licencia Entrenador SaaS">Licencia para Entrenador</option>
+                                <option value="Licencia Entrenador SaaS">Acceso Entrenador Afiliado</option>
                                 <option value="Afiliación Cliente Directo">Afiliación Cliente Final</option>
                             </select>
                         </div>
-                        <button type="submit" style="background: transparent; border: 1px solid var(--bronze); color: var(--bronze);">Enviar Solicitud por Enlace</button>
+                        <button type="submit" style="background: transparent; border: 1px solid var(--bronze); color: var(--bronze);">Enviar Solicitud a Ciodarofitness</button>
                     </form>
                 </div>
 
             </div>
         </section>
 
-        <!-- DASHBOARD GENERAL DEL ADMINISTRADOR -->
+        <!-- DASHBOARD GENERAL DEL ADMINISTRADOR (CIODAROFITNESS) -->
         <section id="dashboardView" class="hidden">
             <div class="dashboard-header">
                 <div>
                     <h2>Panel de Control Global</h2>
-                    <p class="subtitle">Gestión Administrativa - By Ciodarofitness</p>
+                    <p class="subtitle">Administración Protegida - By Ciodarofitness</p>
                 </div>
                 <button class="btn-secondary" onclick="logout()">Cerrar Sesión</button>
             </div>
 
-            <!-- ENLACE COMPARTIBLE PARA SOLICITUDES -->
+            <!-- ENLACE COMPARTIBLE PARA WHATSAPP / REDES -->
             <div class="card" style="padding: 1.2rem; margin-bottom: 1.5rem;">
-                <h3 style="font-size: 0.9rem; margin-bottom: 0.3rem; color: var(--bronze);">Enlace de Afiliación Directa</h3>
-                <p class="subtitle" style="margin-bottom: 0.6rem; font-size: 0.8rem;">Comparte este enlace para que nuevos interesados envíen sus solicitudes:</p>
+                <h3 style="font-size: 0.9rem; margin-bottom: 0.3rem; color: var(--bronze);">Enlace Exclusivo de Autorización (WhatsApp / Redes)</h3>
+                <p class="subtitle" style="margin-bottom: 0.6rem; font-size: 0.8rem;">Copia este enlace oficial desde la aplicación y envíalo para captar solicitudes bajo tu supervisión:</p>
                 <div class="link-box" style="margin-bottom: 0;">
                     <input type="text" id="shareableLink" readonly>
                     <button class="btn-secondary" onclick="copyInviteLink()" style="font-size: 0.75rem; padding: 0.3rem 0.6rem;">Copiar Enlace</button>
@@ -371,48 +396,48 @@
 
             <div class="grid-stats">
                 <div class="stat-card">
-                    <h3>Atletas Activos</h3>
+                    <h3>Atletas Activos (Autorizados)</h3>
                     <div class="value" id="statActiveAthletes">0</div>
                 </div>
                 <div class="stat-card">
-                    <h3>Solicitudes Pendientes</h3>
+                    <h3>Solicitudes en Espera</h3>
                     <div class="value" id="statPendingRequests">0</div>
                 </div>
             </div>
 
-            <!-- NAVEGACIÓN PRINCIPAL ENUMERADA -->
+            <!-- NAVEGACIÓN PRINCIPAL -->
             <div class="nav-tabs">
-                <button class="tab-btn active" onclick="switchTab('tabRequests', this)">1. Gestión de Afiliaciones (<span id="badgePending">0</span>)</button>
+                <button class="tab-btn active" onclick="switchTab('tabRequests', this)">1. Control de Solicitudes (<span id="badgePending">0</span>)</button>
                 <button class="tab-btn" onclick="switchTab('tabAthletes', this)">2. Gestión de Atletas</button>
-                <button class="tab-btn" onclick="switchTab('tabTools', this)">3. Herramientas Globales</button>
+                <button class="tab-btn" onclick="switchTab('tabTools', this)">3. Herramientas Profesionales</button>
             </div>
 
-            <!-- 1. GESTIÓN DE AFILIACIONES / SOLICITUDES -->
+            <!-- 1. GESTIÓN DE SOLICITUDES -->
             <div id="tabRequests" class="card">
-                <h3>1. Gestión de Afiliaciones y Solicitudes de Licencia</h3>
-                <p class="subtitle">Aprueba, deniega o elimina definitivamente solicitudes de nuevos interesados.</p>
+                <h3>1. Autorización y Control de Solicitudes</h3>
+                <p class="subtitle">Solo tú puedes aprobar, denegar o eliminar solicitudes de acceso al sistema.</p>
                 <table>
                     <thead>
                         <tr>
                             <th>Nombre / Marca</th>
                             <th>Contacto</th>
                             <th>Tipo</th>
-                            <th>Acciones</th>
+                            <th>Acciones del Admin</th>
                         </tr>
                     </thead>
                     <tbody id="requestsTableBody">
-                        <tr><td colspan="4" class="empty-state">No hay solicitudes pendientes.</td></tr>
+                        <tr><td colspan="4" class="empty-state">No hay solicitudes pendientes de aprobación.</td></tr>
                     </tbody>
                 </table>
             </div>
 
-            <!-- 2. GESTIÓN DE ATLETAS (LISTA Y FORMULARIO DE REGISTRO) -->
+            <!-- 2. GESTIÓN DE ATLETAS -->
             <div id="tabAthletes" class="card hidden">
-                <h3>2. Gestión de Atletas y Registro General</h3>
-                <p class="subtitle">Control de fechas de inicio, cortes mensuales, costos, abonos y acceso al expediente.</p>
+                <h3>2. Gestión de Atletas Autorizados</h3>
+                <p class="subtitle">Control financiero, fechas de inicio y expedientes antropométricos.</p>
                 
                 <form id="athleteForm" style="background: var(--bg-deep); padding: 1.5rem; border-radius: 6px; border: 1px solid var(--border); margin-bottom: 2rem;">
-                    <h4 style="color: var(--bronze); margin-bottom: 1rem; font-size: 0.95rem;">+ Registrar Nuevo Atleta</h4>
+                    <h4 style="color: var(--bronze); margin-bottom: 1rem; font-size: 0.95rem;">+ Registrar Atleta Autorizado</h4>
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
                         <div class="form-group"><label>Nombre del Atleta</label><input type="text" id="athName" required placeholder="Ej. Juan Pérez"></div>
                         <div class="form-group"><label>Teléfono / WhatsApp</label><input type="text" id="athPhone" required placeholder="+58 414..."></div>
@@ -422,7 +447,7 @@
                         <div class="form-group"><label>Costo del Plan ($)</label><input type="number" id="athCost" required placeholder="100"></div>
                         <div class="form-group"><label>Abono Parcial ($)</label><input type="number" id="athPartial" placeholder="50"></div>
                     </div>
-                    <button type="submit" style="margin-top: 1rem; width: auto; padding: 0.6rem 1.5rem; font-size: 0.85rem;">Registrar Atleta en el Sistema</button>
+                    <button type="submit" style="margin-top: 1rem; width: auto; padding: 0.6rem 1.5rem; font-size: 0.85rem;">Registrar en el Sistema</button>
                 </form>
 
                 <table>
@@ -433,7 +458,7 @@
                             <th>Inicio / Cortes</th>
                             <th>Costo / Abono</th>
                             <th>Estado Pago</th>
-                            <th>Acciones del Perfil</th>
+                            <th>Expediente y Acciones</th>
                         </tr>
                     </thead>
                     <tbody id="athletesTableBody">
@@ -442,25 +467,24 @@
                 </table>
             </div>
 
-            <!-- VISTA DE EXPEDIENTE DEL ATLETA (INTERNO) -->
+            <!-- VISTA DE EXPEDIENTE DEL ATLETA -->
             <div id="tabAthleteProfile" class="card hidden">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem;">
                     <div>
                         <h3 id="profileTitle" style="color: var(--bronze);">Expediente de Atleta</h3>
-                        <p class="subtitle" id="profileSubtitle" style="margin-bottom: 0;">Información personal, financiera y medidas antropométricas mensuales.</p>
+                        <p class="subtitle" id="profileSubtitle" style="margin-bottom: 0;">Seguimiento antropométrico mensual.</p>
                     </div>
                     <button class="btn-secondary" onclick="backToAthletesList()">← Volver a la Lista</button>
                 </div>
 
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                    <h4>Historial Antropométrico Mensual</h4>
-                    <button class="btn-info" onclick="exportProfilePDF()">Extraer Expediente para PDF</button>
+                    <h4>Historial Antropométrico</h4>
+                    <button class="btn-info" onclick="exportProfilePDF()">Extraer Expediente PDF</button>
                 </div>
 
-                <!-- Formulario para agregar medidas mensuales al expediente -->
                 <form id="metricForm" style="background: var(--bg-deep); padding: 1.5rem; border-radius: 6px; border: 1px solid var(--border); margin-bottom: 2rem;">
                     <input type="hidden" id="currentProfileAthleteId">
-                    <h4 style="color: var(--bronze); margin-bottom: 1rem; font-size: 0.95rem;">+ Agregar Registro Antropométrico del Mes</h4>
+                    <h4 style="color: var(--bronze); margin-bottom: 1rem; font-size: 0.95rem;">+ Agregar Registro Antropométrico</h4>
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem;">
                         <div class="form-group"><label>Mes / Periodo</label><input type="text" id="mMonth" placeholder="Ej. Julio 2026" required></div>
                         <div class="form-group"><label>Peso Actual (kg)</label><input type="number" id="mWeight" step="0.1" required placeholder="104"></div>
@@ -473,7 +497,7 @@
                         <div class="form-group"><label>Cuádriceps (cm)</label><input type="number" id="mLeg" step="0.1" placeholder="60"></div>
                         <div class="form-group"><label>Pantorrilla (cm)</label><input type="number" id="mCalf" step="0.1" placeholder="38"></div>
                     </div>
-                    <button type="submit" style="margin-top: 1rem; width: auto; padding: 0.6rem 1.5rem; font-size: 0.85rem;">Guardar Medidas del Mes</button>
+                    <button type="submit" style="margin-top: 1rem; width: auto; padding: 0.6rem 1.5rem; font-size: 0.85rem;">Guardar Medidas</button>
                 </form>
 
                 <div id="profileMetricsContainer">
@@ -484,11 +508,10 @@
             <!-- 3. HERRAMIENTAS GLOBALES -->
             <div id="tabTools" class="card hidden">
                 <h3>3. Herramientas y Calculadoras Profesionales</h3>
-                <p class="subtitle">Utilidades de consulta rápida con reloj y hora en vivo.</p>
+                <p class="subtitle">Utilidades de consulta con hora en vivo.</p>
                 
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 1rem;">
                     
-                    <!-- IMC -->
                     <div style="background: var(--bg-deep); padding: 1.5rem; border-radius: 6px; border: 1px solid var(--border);">
                         <h4 style="color: var(--bronze); margin-bottom: 1rem;">Calculadora de IMC</h4>
                         <div class="form-group"><label>Peso (kg)</label><input type="number" id="tImcW" placeholder="104"></div>
@@ -497,7 +520,6 @@
                         <div id="tImcRes" class="hidden" style="margin-top: 1rem; padding: 0.8rem; background: var(--surface); border-left: 3px solid var(--bronze);"></div>
                     </div>
 
-                    <!-- Gasto Calórico -->
                     <div style="background: var(--bg-deep); padding: 1.5rem; border-radius: 6px; border: 1px solid var(--border);">
                         <h4 style="color: var(--bronze); margin-bottom: 1rem;">Gasto Energético (Calorías)</h4>
                         <div class="form-group"><label>Peso (kg) / Altura (cm) / Edad</label>
@@ -511,7 +533,6 @@
                         <div id="tCalRes" class="hidden" style="margin-top: 1rem; padding: 0.8rem; background: var(--surface); border-left: 3px solid var(--bronze);"></div>
                     </div>
 
-                    <!-- Porcentaje de Grasa -->
                     <div style="background: var(--bg-deep); padding: 1.5rem; border-radius: 6px; border: 1px solid var(--border);">
                         <h4 style="color: var(--bronze); margin-bottom: 1rem;">Calculadora de % Grasa</h4>
                         <div class="form-group"><label>Cintura (cm) y Cuello (cm)</label>
@@ -530,6 +551,10 @@
         </section>
     </main>
 
+    <footer>
+        BC Fit — Desarrollado y Operado By Ciodarofitness. Todos los Derechos Reservados.
+    </footer>
+
     <script>
         let pendingRequests = [];
         let athletes = [];
@@ -542,7 +567,7 @@
             const linkInput = document.getElementById('shareableLink');
             linkInput.select();
             navigator.clipboard.writeText(linkInput.value);
-            alert("¡Enlace copiado al portapapeles!");
+            alert("¡Enlace de acceso copiado al portapapeles!");
         }
 
         function togglePassword() {
@@ -561,14 +586,14 @@
             e.preventDefault();
             document.getElementById('authSection').classList.add('hidden');
             document.getElementById('dashboardView').classList.remove('hidden');
-            document.getElementById('clock').classList.remove('hidden'); // Mostrar reloj al entrar al panel
+            document.getElementById('clock').classList.remove('hidden');
             updateDashboard();
         });
 
         function logout() {
             document.getElementById('dashboardView').classList.add('hidden');
             document.getElementById('authSection').classList.remove('hidden');
-            document.getElementById('clock').classList.add('hidden'); // Ocultar reloj en el login
+            document.getElementById('clock').classList.add('hidden');
         }
 
         document.getElementById('requestLicenseForm').addEventListener('submit', function(e) {
@@ -580,12 +605,10 @@
                 phone: document.getElementById('reqPhone').value,
                 type: document.getElementById('reqType').value
             });
-            alert("¡Solicitud enviada con éxito!");
+            alert("¡Solicitud enviada a Ciodarofitness con éxito! Queda a la espera de autorización.");
             this.reset();
-            updateDashboard();
         });
 
-        // Registro de Atletas
         document.getElementById('athleteForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const newAth = {
@@ -601,10 +624,9 @@
             athletes.push(newAth);
             this.reset();
             updateDashboard();
-            alert("Atleta registrado correctamente.");
+            alert("Atleta autorizado y registrado correctamente.");
         });
 
-        // Registro de Antropometría dentro del expediente
         document.getElementById('metricForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const w = parseFloat(document.getElementById('mWeight').value) || 0;
@@ -635,7 +657,7 @@
             anthropometrics.push(record);
             this.reset();
             openAthleteProfile(activeProfileId);
-            alert("Métrica mensual guardada en el expediente.");
+            alert("Métrica guardada en el expediente.");
         });
 
         function updateDashboard() {
@@ -643,7 +665,6 @@
             document.getElementById('statPendingRequests').innerText = pendingRequests.length;
             document.getElementById('badgePending').innerText = pendingRequests.length;
 
-            // Solicitudes
             const reqTbody = document.getElementById('requestsTableBody');
             reqTbody.innerHTML = pendingRequests.length === 0 ? `<tr><td colspan="4" class="empty-state">No hay solicitudes pendientes.</td></tr>` :
                 pendingRequests.map(r => `
@@ -658,7 +679,6 @@
                     </tr>
                 `).join('');
 
-            // Atletas
             const athTbody = document.getElementById('athletesTableBody');
             athTbody.innerHTML = athletes.length === 0 ? `<tr><td colspan="6" class="empty-state">No hay atletas registrados.</td></tr>` :
                 athletes.map(a => {
@@ -705,7 +725,7 @@
             const athMetrics = anthropometrics.filter(m => m.athleteId == athleteId);
 
             if(athMetrics.length === 0) {
-                container.innerHTML = `<p class="empty-state">No hay registros mensuales en el expediente de este atleta aún.</p>`;
+                container.innerHTML = `<p class="empty-state">No hay registros mensuales en el expediente aún.</p>`;
                 return;
             }
 
@@ -794,7 +814,6 @@
             btn.classList.add('active');
         }
 
-        // Calculadoras Globales
         function calcToolIMC() {
             const w = parseFloat(document.getElementById('tImcW').value);
             const h = parseFloat(document.getElementById('tImcH').value) / 100;
