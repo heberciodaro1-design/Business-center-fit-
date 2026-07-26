@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Center Fit | Plataforma para Entrenadores</title>
+    <!-- Tailwind CSS para los estilos -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        darkBg: '#121212',
+                        cardBg: '#1E1E1E',
+                        bronze: '#CD7F32',
+                        bronzeHover: '#B8732D',
+                        silver: '#E0E0E0',
+                        silverMuted: '#A0A0A0',
+                        accentBorder: '#333333'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-darkBg text-silver font-sans antialiased min-h-screen flex flex-col">
+
+    <!-- CONTENEDOR DE AUTENTICACIÓN (LOGIN / REGISTRO) -->
+    <div id="auth-screen" class="flex-grow flex items-center justify-center p-4">
+        <div class="bg-cardBg border border-accentBorder rounded-xl p-8 w-full max-w-md shadow-2xl relative overflow-hidden">
+            <!-- Detalles decorativos en bronce y plateado -->
+            <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-bronze via-silver to-bronze"></div>
+            
+            <div class="text-center mb-8">
+                <h1 class="text-3xl font-extrabold tracking-wider text-silver">BUSINESS CENTER <span class="text-bronze">FIT</span></h1>
+                <p class="text-silverMuted text-sm mt-2">El centro de operaciones para entrenadores profesionales</p>
+            </div>
+
+            <!-- Formulario de Ingreso -->
+            <form id="login-form" onsubmit="handleLogin(event)" class="space-y-5">
+                <div>
+                    <label class="block text-xs uppercase tracking-wider text-silverMuted mb-2">Correo Electrónico</label>
+                    <input type="email" required class="w-full bg-darkBg border border-accentBorder rounded-lg px-4 py-3 text-silver focus:outline-none focus:border-bronze transition" placeholder="entrenador@tuemail.com">
+                </div>
+                <div>
+                    <label class="block text-xs uppercase tracking-wider text-silverMuted mb-2">Contraseña</label>
+                    <input type="password" required class="w-full bg-darkBg border border-accentBorder rounded-lg px-4 py-3 text-silver focus:outline-none focus:border-bronze transition" placeholder="••••••••">
+                </div>
+                <button type="submit" class="w-full bg-bronze hover:bg-bronzeHover text-darkBg font-bold py-3 rounded-lg transition tracking-wide shadow-lg">
+                    INGRESAR AL SISTEMA
+                </button>
+            </form>
+
+            <div class="mt-6 text-center">
+                <p class="text-xs text-silverMuted">¿Eres entrenador y quieres tu cuenta global? <a href="#" class="text-bronze hover:underline font-semibold">Regístrate aquí</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- DASHBOARD PRINCIPAL (OCULTO HASTA INICIAR SESIÓN) -->
+    <div id="dashboard-screen" class="hidden flex-grow flex flex-col md:flex-row">
+        <!-- Barra Lateral -->
+        <aside class="w-full md:w-64 bg-cardBg border-r border-accentBorder flex flex-col justify-between p-6">
+            <div>
+                <div class="mb-8">
+                    <h2 class="text-xl font-black text-silver">BC <span class="text-bronze">FIT</span></h2>
+                    <p class="text-xs text-silverMuted mt-1">Panel de Control Global</p>
+                </div>
+                <nav class="space-y-2">
+                    <a href="#" class="flex items-center space-x-3 bg-darkBg border border-bronze text-silver px-4 py-3 rounded-lg font-medium">
+                        <span>📊</span> <span>Clientes / CRM</span>
+                    </a>
+                    <a href="#" class="flex items-center space-x-3 hover:bg-darkBg text-silverMuted hover:text-silver px-4 py-3 rounded-lg transition">
+                        <span>🥗</span> <span>Planes y Dietas</span>
+                    </a>
+                    <a href="#" class="flex items-center space-x-3 hover:bg-darkBg text-silverMuted hover:text-silver px-4 py-3 rounded-lg transition">
+                        <span>⚙️</span> <span>Configuración</span>
+                    </a>
+                </nav>
+            </div>
+            <div>
+                <button onclick="handleLogout()" class="w-full border border-accentBorder hover:border-bronze text-silverMuted hover:text-silver py-2.5 rounded-lg text-sm transition">
+                    Cerrar Sesión
+                </button>
+            </div>
+        </aside>
+
+        <!-- Contenido Principal -->
+        <main class="flex-grow p-6 md:p-10 overflow-y-auto">
+            <header class="flex justify-between items-center mb-8 pb-4 border-b border-accentBorder">
+                <div>
+                    <h2 class="text-2xl font-bold text-silver">Gestión de Atletas</h2>
+                    <p class="text-sm text-silverMuted">Administra tu cartera de asesorados de forma eficiente.</p>
+                </div>
+                <button class="bg-silver text-darkBg hover:bg-white font-bold px-4 py-2.5 rounded-lg text-sm transition shadow">
+                    + Nuevo Cliente
+                </button>
+            </header>
+
+            <!-- Tarjetas de Estadísticas -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="bg-cardBg border border-accentBorder p-6 rounded-xl relative">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-bronze rounded-t-xl"></div>
+                    <p class="text-xs uppercase tracking-wider text-silverMuted">Atletas Activos</p>
+                    <p class="text-3xl font-black text-silver mt-2">12</p>
+                </div>
+                <div class="bg-cardBg border border-accentBorder p-6 rounded-xl relative">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-silver rounded-t-xl"></div>
+                    <p class="text-xs uppercase tracking-wider text-silverMuted">Planes Actualizados</p>
+                    <p class="text-3xl font-black text-silver mt-2">10</p>
+                </div>
+                <div class="bg-cardBg border border-accentBorder p-6 rounded-xl relative">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-bronze rounded-t-xl"></div>
+                    <p class="text-xs uppercase tracking-wider text-silverMuted">Estado de Suscripción</p>
+                    <p class="text-lg font-bold text-bronze mt-3">PRO ACTIVO</p>
+                </div>
+            </div>
+
+            <!-- Tabla de Clientes de Ejemplo -->
+            <div class="bg-cardBg border border-accentBorder rounded-xl overflow-hidden shadow-lg">
+                <div class="p-4 border-b border-accentBorder font-bold text-sm text-silver">Tus Asesorados Recientes</div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse text-sm">
+                        <thead>
+                            <tr class="bg-darkBg text-silverMuted uppercase text-xs tracking-wider border-b border-accentBorder">
+                                <th class="p-4">Nombre</th>
+                                <th class="p-4">Objetivo</th>
+                                <th class="p-4">Peso Actual</th>
+                                <th class="p-4">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-accentBorder">
+                            <tr class="hover:bg-darkBg/50 transition">
+                                <td class="p-4 font-semibold text-silver">Lady Caceres</td>
+                                <td class="p-4 text-silverMuted">Definición / Tonificación</td>
+                                <td class="p-4 text-silver">-- kg</td>
+                                <td class="p-4"><button class="text-bronze hover:underline font-medium">Ver Plan</button></td>
+                            </tr>
+                            <tr class="hover:bg-darkBg/50 transition">
+                                <td class="p-4 font-semibold text-silver">Mari Ferrer</td>
+                                <td class="p-4 text-silverMuted">Hipertrofia</td>
+                                <td class="p-4 text-silver">-- kg</td>
+                                <td class="p-4"><button class="text-bronze hover:underline font-medium">Ver Plan</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Script simple para simular el acceso -->
+    <script>
+        function handleLogin(event) {
+            event.preventDefault();
+            document.getElementById('auth-screen').classList.add('hidden');
+            document.getElementById('dashboard-screen').classList.remove('hidden');
+        }
+
+        function handleLogout() {
+            document.getElementById('dashboard-screen').classList.add('hidden');
+            document.getElementById('auth-screen').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
