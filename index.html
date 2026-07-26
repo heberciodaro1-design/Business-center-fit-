@@ -34,19 +34,32 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            align-items: center;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background-color: var(--bg-deep);
+            border-left: 1px solid var(--border);
+            border-right: 1px solid var(--border);
         }
 
         header {
             background-color: var(--surface);
             border-bottom: 1px solid var(--border);
-            padding: 1rem 2rem;
+            padding: 1rem 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .brand-title {
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 700;
             letter-spacing: 2px;
             color: var(--bronze);
@@ -54,19 +67,17 @@
         }
 
         .live-clock {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             color: var(--text-muted);
             background: var(--bg-deep);
-            padding: 0.4rem 0.8rem;
+            padding: 0.3rem 0.6rem;
             border-radius: 4px;
             border: 1px solid var(--border);
         }
 
         main {
             flex: 1;
-            padding: 2rem;
-            max-width: 1250px;
-            margin: 0 auto;
+            padding: 1.5rem;
             width: 100%;
         }
 
@@ -74,43 +85,43 @@
             background-color: var(--surface);
             border: 1px solid var(--border);
             border-radius: 8px;
-            padding: 2.5rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            margin-bottom: 2rem;
+            padding: 1.8rem;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+            margin-bottom: 1.5rem;
         }
 
         h2, h3, h4 {
             color: var(--text-main);
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.4rem;
         }
 
         .subtitle {
             color: var(--text-muted);
-            margin-bottom: 1.5rem;
-            font-size: 0.95rem;
+            margin-bottom: 1.2rem;
+            font-size: 0.9rem;
         }
 
         .form-group {
-            margin-bottom: 1.2rem;
+            margin-bottom: 1rem;
         }
 
         label {
             display: block;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             text-transform: uppercase;
             letter-spacing: 1px;
             color: var(--text-muted);
-            margin-bottom: 0.4rem;
+            margin-bottom: 0.3rem;
         }
 
         input, select {
             width: 100%;
-            padding: 0.8rem 1rem;
+            padding: 0.7rem 0.9rem;
             background-color: var(--bg-deep);
             border: 1px solid var(--border);
             border-radius: 6px;
             color: var(--text-main);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             outline: none;
             transition: border-color 0.3s;
         }
@@ -127,19 +138,19 @@
         }
 
         .password-container input {
-            padding-right: 45px;
+            padding-right: 40px;
         }
 
         .toggle-password {
             position: absolute;
-            right: 12px;
+            right: 10px;
             top: 50%;
             transform: translateY(-50%);
             background: transparent;
             border: none;
             color: var(--text-muted);
             cursor: pointer;
-            font-size: 1.1rem;
+            font-size: 1rem;
             padding: 4px;
             z-index: 5;
             width: auto;
@@ -147,13 +158,13 @@
 
         button {
             width: 100%;
-            padding: 0.9rem;
+            padding: 0.8rem;
             background: linear-gradient(135deg, #c5a059 0%, #d4af37 100%);
             color: #000;
             border: none;
             border-radius: 6px;
             font-weight: 700;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             cursor: pointer;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -166,16 +177,16 @@
             background: transparent;
             border: 1px solid var(--border);
             color: var(--text-muted);
-            padding: 0.5rem 1rem;
+            padding: 0.4rem 0.8rem;
             width: auto;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
         }
         .btn-secondary:hover { border-color: var(--bronze); color: var(--text-main); }
 
-        .btn-action { background: var(--bronze); color: #000; padding: 0.4rem 0.8rem; font-size: 0.75rem; width: auto; margin-right: 0.3rem; }
-        .btn-deny { background: var(--danger); color: #fff; padding: 0.4rem 0.8rem; font-size: 0.75rem; width: auto; }
-        .badge-paid { background: rgba(34, 197, 94, 0.15); color: var(--success); border: 1px solid var(--success); padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-weight: bold; }
-        .badge-pending { background: rgba(245, 158, 11, 0.15); color: var(--warning); border: 1px solid var(--warning); padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-weight: bold; }
+        .btn-action { background: var(--bronze); color: #000; padding: 0.35rem 0.7rem; font-size: 0.7rem; width: auto; margin-right: 0.2rem; }
+        .btn-deny { background: var(--danger); color: #fff; padding: 0.35rem 0.7rem; font-size: 0.7rem; width: auto; }
+        .badge-paid { background: rgba(34, 197, 94, 0.15); color: var(--success); border: 1px solid var(--success); padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.7rem; font-weight: bold; }
+        .badge-pending { background: rgba(245, 158, 11, 0.15); color: var(--warning); border: 1px solid var(--warning); padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.7rem; font-weight: bold; }
 
         .hidden { display: none !important; }
 
@@ -183,36 +194,36 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             border-bottom: 1px solid var(--border);
-            padding-bottom: 1rem;
+            padding-bottom: 0.8rem;
             flex-wrap: wrap;
-            gap: 1rem;
+            gap: 0.8rem;
         }
 
         .grid-stats {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
         }
 
         .stat-card {
             background-color: var(--surface-card);
             border: 1px solid var(--border);
-            padding: 1.5rem;
+            padding: 1.2rem;
             border-radius: 6px;
         }
 
         .stat-card h3 {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             color: var(--text-muted);
             text-transform: uppercase;
-            margin-bottom: 0.4rem;
+            margin-bottom: 0.3rem;
         }
 
         .stat-card .value {
-            font-size: 1.6rem;
+            font-size: 1.4rem;
             font-weight: bold;
             color: var(--bronze);
         }
@@ -220,30 +231,30 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 1rem;
+            margin-top: 0.8rem;
             background: var(--surface-card);
             border-radius: 6px;
             overflow: hidden;
         }
 
         th, td {
-            padding: 0.9rem 1rem;
+            padding: 0.8rem;
             text-align: left;
             border-bottom: 1px solid var(--border);
-            font-size: 0.85rem;
+            font-size: 0.8rem;
         }
 
         th {
             background-color: var(--bg-deep);
             color: var(--bronze);
             text-transform: uppercase;
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             letter-spacing: 1px;
         }
 
         .empty-state {
             text-align: center;
-            padding: 2rem;
+            padding: 1.5rem;
             color: var(--text-muted);
             font-style: italic;
         }
@@ -251,13 +262,13 @@
         .link-box {
             background: var(--bg-deep);
             border: 1px dashed var(--bronze);
-            padding: 1rem;
+            padding: 0.8rem;
             border-radius: 6px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1.5rem;
-            gap: 1rem;
+            margin-bottom: 1.2rem;
+            gap: 0.8rem;
         }
 
         .link-box input {
@@ -267,18 +278,23 @@
             font-weight: 500;
         }
 
+        .calc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1rem;
+        }
+
         .calc-box {
             background: var(--bg-deep);
             border: 1px solid var(--border);
-            padding: 1.5rem;
+            padding: 1.2rem;
             border-radius: 6px;
-            margin-bottom: 1.5rem;
         }
 
         footer {
             text-align: center;
-            padding: 1.5rem;
-            font-size: 0.75rem;
+            padding: 1.2rem;
+            font-size: 0.7rem;
             color: var(--text-muted);
             border-top: 1px solid var(--border);
             background: var(--surface);
@@ -286,9 +302,10 @@
         }
 
         @media print {
-            body { background: #fff; color: #000; }
+            body { background: #fff; color: #000; align-items: stretch; }
+            .app-container { border: none; max-width: 100%; }
             header, footer, .no-print { display: none !important; }
-            .card { background: #fff; border: 1px solid #ccc; box-shadow: none; color: #000; }
+            .card { background: #fff; border: 1px solid #ccc; box-shadow: none; color: #000; padding: 1rem; }
             input, select { border: 1px solid #ccc; background: #fff; color: #000; }
             th { background: #eee; color: #000; }
         }
@@ -296,281 +313,281 @@
 </head>
 <body>
 
-    <header class="no-print">
-        <div class="brand-title">BC Fit <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: normal; margin-left: 8px;">By Ciodarofitness</span></div>
-        <div id="clock" class="live-clock hidden">--:--:--</div>
-    </header>
+    <div class="app-container">
+        <header class="no-print">
+            <div class="brand-title">BC Fit <span style="font-size: 0.7rem; color: var(--text-muted); font-weight: normal; margin-left: 6px;">By Ciodarofitness</span></div>
+            <div id="clock" class="live-clock hidden">--:--:--</div>
+        </header>
 
-    <main>
-        <!-- VISTA DE ACCESO PRINCIPAL -->
-        <section id="authSection" class="no-print">
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
-                
-                <!-- 1. Login Admin -->
-                <div class="card" style="margin-bottom: 0;">
-                    <h1 style="color: #ffffff; font-size: 1.8rem; font-weight: 800; margin-bottom: 0.2rem;">Panel Admin</h1>
-                    <p style="color: var(--bronze); font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1.2rem;">Ciodarofitness</p>
-                    <form id="loginForm">
-                        <div class="form-group">
-                            <label>Identificador</label>
-                            <input type="text" id="adminUser" required placeholder="Ciodarofitness">
-                        </div>
-                        <div class="form-group">
-                            <label>Contraseña Maestra</label>
-                            <div class="password-container">
-                                <input type="password" id="adminPassword" required placeholder="••••••••">
-                                <button type="button" class="toggle-password" onclick="togglePassword('adminPassword')">👁️</button>
-                            </div>
-                        </div>
-                        <button type="submit">Ingresar como Admin</button>
-                    </form>
-                </div>
-
-                <!-- 2. Registro Afiliado -->
-                <div class="card" style="margin-bottom: 0;">
-                    <h2 style="color: #ffffff; font-size: 1.5rem; font-weight: 700;">Crear Cuenta Afiliado</h2>
-                    <p class="subtitle">Regístrate con tu correo y contraseña tras recibir tu autorización.</p>
-                    <form id="registerClientForm">
-                        <div class="form-group">
-                            <label>Nombre y Apellido / Marca</label>
-                            <input type="text" id="regName" required placeholder="Ej. Leidy Diana">
-                        </div>
-                        <div class="form-group">
-                            <label>Correo Electrónico</label>
-                            <input type="email" id="regEmail" required placeholder="correo@domain.com">
-                        </div>
-                        <div class="form-group">
-                            <label>Contraseña de Acceso</label>
-                            <div class="password-container">
-                                <input type="password" id="regPassword" required placeholder="Crea tu contraseña">
-                                <button type="button" class="toggle-password" onclick="togglePassword('regPassword')">👁️</button>
-                            </div>
-                        </div>
-                        <button type="submit" style="background: transparent; border: 1px solid var(--bronze); color: var(--bronze);">Registrarse como Afiliado</button>
-                    </form>
-                </div>
-
-                <!-- 3. Login Afiliados -->
-                <div class="card" style="margin-bottom: 0;">
-                    <h2 style="color: #ffffff; font-size: 1.5rem; font-weight: 700;">Acceso Afiliados</h2>
-                    <p class="subtitle">Inicia sesión para gestionar tus asesorados y herramientas.</p>
-                    <form id="clientLoginForm">
-                        <div class="form-group">
-                            <label>Correo Electrónico</label>
-                            <input type="email" id="clientLoginEmail" required placeholder="correo@domain.com">
-                        </div>
-                        <div class="form-group">
-                            <label>Contraseña</label>
-                            <div class="password-container">
-                                <input type="password" id="clientLoginPass" required placeholder="••••••••">
-                                <button type="button" class="toggle-password" onclick="togglePassword('clientLoginPass')">👁️</button>
-                            </div>
-                        </div>
-                        <button type="submit">Entrar a mi Perfil</button>
-                    </form>
-                </div>
-
-            </div>
-        </section>
-
-        <!-- PANEL ADMIN GENERAL -->
-        <section id="dashboardView" class="hidden no-print">
-            <div class="dashboard-header">
-                <div>
-                    <h2>Panel de Control Global</h2>
-                    <p class="subtitle">Sistema Protegido — By Ciodarofitness</p>
-                </div>
-                <button class="btn-secondary" onclick="logoutSystem()">Cerrar Sesión</button>
-            </div>
-
-            <div class="card" style="padding: 1.2rem; margin-bottom: 1.5rem;">
-                <h3 style="font-size: 0.9rem; margin-bottom: 0.3rem; color: var(--bronze);">Enlace Exclusivo para Afiliados</h3>
-                <div class="link-box" style="margin-bottom: 0;">
-                    <input type="text" id="shareableLink" readonly>
-                    <button class="btn-secondary" onclick="copyInviteLink()" style="font-size: 0.75rem; padding: 0.3rem 0.6rem;">Copiar Enlace</button>
-                </div>
-            </div>
-
-            <div class="grid-stats">
-                <div class="stat-card">
-                    <h3>Cuentas de Afiliados Registradas</h3>
-                    <div class="value" id="statTotalAccounts">0</div>
-                </div>
-            </div>
-
-            <div class="card">
-                <h3>Listado de Entrenadores y Afiliados</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Nombre / Marca</th>
-                            <th>Correo Electrónico</th>
-                            <th>Fecha de Registro</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody id="athletesTableBody">
-                        <tr><td colspan="4" class="empty-state">No hay cuentas registradas.</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
-
-        <!-- PORTAL DE AFILIADO (GESTIÓN DE ASESORADOS + EXPEDIENTE + MÉTRICAS) -->
-        <section id="clientPortalView" class="hidden">
-            <div class="dashboard-header no-print">
-                <div>
-                    <h2 id="welcomeClientTitle">Perfil de Afiliado</h2>
-                    <p class="subtitle">Entrenamiento Inteligente — By Ciodarofitness</p>
-                </div>
-                <button class="btn-secondary" onclick="logoutSystem()">Cerrar Sesión</button>
-            </div>
-
-            <!-- REGISTRO AVANZADO DE ATLETA -->
-            <div class="card no-print">
-                <h3>Registrar Nuevo Atleta / Asesorado</h3>
-                <p class="subtitle">Crea el expediente profesional con datos antropométricos y control de pagos.</p>
-                
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1.2rem;">
-                    <div class="form-group" style="margin-bottom: 0;"><label>Nombre y Apellido</label><input type="text" id="cName" placeholder="Ej. Lady Caceres"></div>
-                    <div class="form-group" style="margin-bottom: 0;"><label>Teléfono</label><input type="text" id="cPhone" placeholder="+58 414..."></div>
-                    <div class="form-group" style="margin-bottom: 0;"><label>Edad (Años)</label><input type="number" id="cAge" placeholder="28"></div>
-                    <div class="form-group" style="margin-bottom: 0;"><label>Peso Inicial (kg)</label><input type="number" id="cWeight" placeholder="65"></div>
-                    <div class="form-group" style="margin-bottom: 0;"><label>Estatura (cm)</label><input type="number" id="cHeight" placeholder="168"></div>
-                    <div class="form-group" style="margin-bottom: 0;"><label>Costo del Plan ($)</label><input type="number" id="cCost" placeholder="45"></div>
-                    <div class="form-group" style="margin-bottom: 0;">
-                        <label>Estado de Pago</label>
-                        <select id="cStatus">
-                            <option value="Pagado">Pagado</option>
-                            <option value="Pendiente">Pendiente</option>
-                        </select>
-                    </div>
-                </div>
-                <button type="button" onclick="addAthlete()">Guardar Atleta en el Sistema</button>
-
-                <h3 style="margin-top: 2rem;">Listado de Atletas Afiliados</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Atleta</th>
-                            <th>Métricas Base</th>
-                            <th>Plan / Pago</th>
-                            <th>Estado</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody id="affiliateClientsTableBody">
-                        <tr><td colspan="5" class="empty-state">No tienes atletas registrados todavía.</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- VISTA DETALLADA DEL EXPEDIENTE DEL ATLETA SELECCIONADO (CON MÉTRICAS Y PDF) -->
-            <div id="athleteDetailView" class="card hidden">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem;">
-                    <div>
-                        <h2 id="detAthleteName" style="color: var(--bronze);">Expediente del Atleta</h2>
-                        <p id="detAthleteMeta" class="subtitle" style="margin-bottom:0;">Datos antropométricos e historiales de evolución.</p>
-                    </div>
-                    <div class="no-print" style="display: flex; gap: 0.5rem;">
-                        <button class="btn-secondary" onclick="window.print()" style="background: var(--bronze); color:#000; font-weight:bold;">🖨️ Exportar Perfil a PDF</button>
-                        <button class="btn-secondary" onclick="closeAthleteDetail()">← Volver al Listado</button>
-                    </div>
-                </div>
-
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
-                    <div style="background: var(--bg-deep); padding: 1.5rem; border-radius: 6px; border: 1px solid var(--border);">
-                        <h4 style="color: var(--bronze); margin-bottom: 1rem;">Estado del Plan y Pagos</h4>
-                        <p style="margin-bottom: 0.5rem;"><strong>Costo del Plan:</strong> <span id="detCost"></span></p>
-                        <p style="margin-bottom: 1rem;"><strong>Estatus Actual:</strong> <span id="detStatusBadge"></span></p>
-                        <button class="btn-secondary no-print" onclick="togglePaymentStatus()" style="width: 100%; font-size: 0.8rem;">Alternar Pago Total / Pendiente</button>
-                    </div>
-
-                    <div style="background: var(--bg-deep); padding: 1.5rem; border-radius: 6px; border: 1px solid var(--border);" class="no-print">
-                        <h4 style="color: var(--bronze); margin-bottom: 1rem;">Registrar Nueva Medición Mes Actual</h4>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-bottom: 0.8rem;">
-                            <input type="text" id="mMonth" placeholder="Mes (Ej. Julio 2026)">
-                            <input type="number" id="mWeight" placeholder="Peso actual (kg)">
-                        </div>
-                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; margin-bottom: 0.8rem;">
-                            <input type="number" id="mNeck" placeholder="Cuello (cm)">
-                            <input type="number" id="mChest" placeholder="Tórax (cm)">
-                            <input type="number" id="mBiceps" placeholder="Bíceps (cm)">
-                            <input type="number" id="mWaist" placeholder="Cintura (cm)">
-                            <input type="number" id="mGlute" placeholder="Glúteo (cm)">
-                            <input type="number" id="mLeg" placeholder="Cuádriceps (cm)">
-                            <input type="number" id="mCalf" placeholder="Pantorrilla (cm)">
-                        </div>
-                        <button type="button" onclick="saveNewMeasurement()" style="font-size: 0.8rem; padding: 0.6rem;">Guardar Medición Mensual</button>
-                    </div>
-                </div>
-
-                <h3 style="margin-bottom: 0.5rem;">Historial Comparativo de Métricas (Mes a Mes)</h3>
-                <p class="subtitle">Evolución antropométrica detallada del atleta.</p>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Mes / Fecha</th>
-                            <th>Peso</th>
-                            <th>Cuello</th>
-                            <th>Tórax</th>
-                            <th>Bíceps</th>
-                            <th>Cintura</th>
-                            <th>Glúteo</th>
-                            <th>Cuádriceps</th>
-                            <th>Pantorrilla</th>
-                            <th class="no-print">Acción</th>
-                        </tr>
-                    </thead>
-                    <tbody id="metricsTableBody">
-                        <tr><td colspan="10" class="empty-state">No hay registros de mediciones aún.</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- CALCULADORAS PROFESIONALES -->
-            <div class="card no-print">
-                <h3>Herramientas y Calculadoras Profesionales</h3>
-                <p class="subtitle">Calcula requerimientos energéticos y corporales para tus asesorados.</p>
-
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
+        <main>
+            <!-- VISTA DE ACCESO PRINCIPAL -->
+            <section id="authSection" class="no-print">
+                <div style="display: flex; flex-direction: column; gap: 1.5rem;">
                     
-                    <!-- Calculadora Calorías -->
-                    <div class="calc-box">
-                        <h4 style="color: var(--bronze); margin-bottom: 1rem;">Calculadora de Calorías (Harris/Benedict)</h4>
-                        <div class="form-group"><label>Peso (kg)</label><input type="number" id="calcWeight" placeholder="70"></div>
-                        <div class="form-group"><label>Altura (cm)</label><input type="number" id="calcHeight" placeholder="175"></div>
-                        <div class="form-group"><label>Edad</label><input type="number" id="calcAge" placeholder="25"></div>
-                        <div class="form-group">
-                            <label>Nivel de Actividad</label>
-                            <select id="calcActivity">
-                                <option value="1.2">Sedentario</option>
-                                <option value="1.375">Ligero (1-3 días/sem)</option>
-                                <option value="1.55">Moderado (3-5 días/sem)</option>
-                                <option value="1.725">Muy Activo (6-7 días/sem)</option>
+                    <!-- 1. Login Admin -->
+                    <div class="card" style="margin-bottom: 0;">
+                        <h1 style="color: #ffffff; font-size: 1.5rem; font-weight: 800; margin-bottom: 0.2rem;">Panel Admin</h1>
+                        <p style="color: var(--bronze); font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1rem;">Ciodarofitness</p>
+                        <form id="loginForm">
+                            <div class="form-group">
+                                <label>Identificador</label>
+                                <input type="text" id="adminUser" required placeholder="Ciodarofitness">
+                            </div>
+                            <div class="form-group">
+                                <label>Contraseña Maestra</label>
+                                <div class="password-container">
+                                    <input type="password" id="adminPassword" required placeholder="••••••••">
+                                    <button type="button" class="toggle-password" onclick="togglePassword('adminPassword')">👁️</button>
+                                </div>
+                            </div>
+                            <button type="submit">Ingresar como Admin</button>
+                        </form>
+                    </div>
+
+                    <!-- 2. Registro Afiliado -->
+                    <div class="card" style="margin-bottom: 0;">
+                        <h2 style="color: #ffffff; font-size: 1.3rem; font-weight: 700;">Crear Cuenta Afiliado</h2>
+                        <p class="subtitle">Regístrate tras recibir autorización.</p>
+                        <form id="registerClientForm">
+                            <div class="form-group">
+                                <label>Nombre y Marca</label>
+                                <input type="text" id="regName" required placeholder="Ej. David Silva">
+                            </div>
+                            <div class="form-group">
+                                <label>Correo Electrónico</label>
+                                <input type="email" id="regEmail" required placeholder="correo@domain.com">
+                            </div>
+                            <div class="form-group">
+                                <label>Contraseña</label>
+                                <div class="password-container">
+                                    <input type="password" id="regPassword" required placeholder="Crea tu contraseña">
+                                    <button type="button" class="toggle-password" onclick="togglePassword('regPassword')">👁️</button>
+                                </div>
+                            </div>
+                            <button type="submit" style="background: transparent; border: 1px solid var(--bronze); color: var(--bronze);">Registrarse como Afiliado</button>
+                        </form>
+                    </div>
+
+                    <!-- 3. Login Afiliados -->
+                    <div class="card" style="margin-bottom: 0;">
+                        <h2 style="color: #ffffff; font-size: 1.3rem; font-weight: 700;">Acceso Afiliados</h2>
+                        <p class="subtitle">Gestiona tus atletas y herramientas.</p>
+                        <form id="clientLoginForm">
+                            <div class="form-group">
+                                <label>Correo Electrónico</label>
+                                <input type="email" id="clientLoginEmail" required placeholder="correo@domain.com">
+                            </div>
+                            <div class="form-group">
+                                <label>Contraseña</label>
+                                <div class="password-container">
+                                    <input type="password" id="clientLoginPass" required placeholder="••••••••">
+                                    <button type="button" class="toggle-password" onclick="togglePassword('clientLoginPass')">👁️</button>
+                                </div>
+                            </div>
+                            <button type="submit">Entrar a mi Perfil</button>
+                        </form>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- PANEL ADMIN GENERAL -->
+            <section id="dashboardView" class="hidden no-print">
+                <div class="dashboard-header">
+                    <div>
+                        <h2>Panel de Control Global</h2>
+                        <p class="subtitle">Sistema Protegido — By Ciodarofitness</p>
+                    </div>
+                    <button class="btn-secondary" onclick="logoutSystem()">Cerrar Sesión</button>
+                </div>
+
+                <div class="card" style="padding: 1rem; margin-bottom: 1.2rem;">
+                    <h3 style="font-size: 0.8rem; margin-bottom: 0.2rem; color: var(--bronze);">Enlace Exclusivo para Afiliados</h3>
+                    <div class="link-box" style="margin-bottom: 0;">
+                        <input type="text" id="shareableLink" readonly>
+                        <button class="btn-secondary" onclick="copyInviteLink()" style="font-size: 0.7rem; padding: 0.25rem 0.5rem;">Copiar</button>
+                    </div>
+                </div>
+
+                <div class="grid-stats">
+                    <div class="stat-card">
+                        <h3>Afiliados Registrados</h3>
+                        <div class="value" id="statTotalAccounts">0</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Listado de Afiliados</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nombre / Marca</th>
+                                <th>Correo</th>
+                                <th>Registro</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="athletesTableBody">
+                            <tr><td colspan="4" class="empty-state">No hay cuentas.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- PORTAL DE AFILIADO -->
+            <section id="clientPortalView" class="hidden">
+                <div class="dashboard-header no-print">
+                    <div>
+                        <h2 id="welcomeClientTitle">Perfil de Afiliado</h2>
+                        <p class="subtitle">Entrenamiento Inteligente — By Ciodarofitness</p>
+                    </div>
+                    <button class="btn-secondary" onclick="logoutSystem()">Cerrar Sesión</button>
+                </div>
+
+                <!-- REGISTRO DE ATLETA -->
+                <div class="card no-print">
+                    <h3>Registrar Nuevo Atleta / Asesorado</h3>
+                    <p class="subtitle">Crea el expediente profesional con datos y pagos.</p>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.8rem; margin-bottom: 1rem;">
+                        <div class="form-group" style="margin-bottom: 0;"><label>Nombre y Apellido</label><input type="text" id="cName" placeholder="Ej. Lady Caceres"></div>
+                        <div class="form-group" style="margin-bottom: 0;"><label>Teléfono</label><input type="text" id="cPhone" placeholder="+58 414..."></div>
+                        <div class="form-group" style="margin-bottom: 0;"><label>Edad</label><input type="number" id="cAge" placeholder="28"></div>
+                        <div class="form-group" style="margin-bottom: 0;"><label>Peso Inicial (kg)</label><input type="number" id="cWeight" placeholder="65"></div>
+                        <div class="form-group" style="margin-bottom: 0;"><label>Estatura (cm)</label><input type="number" id="cHeight" placeholder="168"></div>
+                        <div class="form-group" style="margin-bottom: 0;"><label>Costo Plan ($)</label><input type="number" id="cCost" placeholder="45"></div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label>Estado de Pago</label>
+                            <select id="cStatus">
+                                <option value="Pagado">Pagado</option>
+                                <option value="Pendiente">Pendiente</option>
                             </select>
                         </div>
-                        <button type="button" onclick="calculateCalories()" style="font-size: 0.8rem; padding: 0.6rem;">Calcular Gasto Calórico</button>
-                        <div id="caloriesResult" style="margin-top: 1rem; color: var(--bronze); font-weight: bold; font-size: 0.95rem;"></div>
                     </div>
+                    <button type="button" onclick="addAthlete()">Guardar Atleta en el Sistema</button>
 
-                    <!-- Calculadora IMC y Grasa -->
-                    <div class="calc-box">
-                        <h4 style="color: var(--bronze); margin-bottom: 1rem;">Calculadora IMC & Composición</h4>
-                        <div class="form-group"><label>Peso (kg)</label><input type="number" id="imcWeight" placeholder="75"></div>
-                        <div class="form-group"><label>Altura (m)</label><input type="number" step="0.01" id="imcHeight" placeholder="1.75"></div>
-                        <button type="button" onclick="calculateIMC()" style="font-size: 0.8rem; padding: 0.6rem; margin-bottom: 1rem;">Calcular IMC</button>
-                        <div id="imcResult" style="color: var(--text-main); font-size: 0.9rem; margin-bottom: 1rem;"></div>
-                    </div>
-
+                    <h3 style="margin-top: 1.5rem;">Tus Atletas Registrados</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Atleta</th>
+                                <th>Datos Base</th>
+                                <th>Plan / Pago</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="affiliateClientsTableBody">
+                            <tr><td colspan="5" class="empty-state">No tienes atletas registrados.</td></tr>
+                        </tbody>
+                    </table>
                 </div>
-            </div>
-        </section>
-    </main>
 
-    <footer class="no-print">
-        BC Fit — Desarrollado y Operado Exclusivamente By Ciodarofitness. Todos los Derechos Reservados.
-    </footer>
+                <!-- VISTA DETALLADA DEL EXPEDIENTE DEL ATLETA -->
+                <div id="athleteDetailView" class="card hidden">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; border-bottom: 1px solid var(--border); padding-bottom: 0.8rem;">
+                        <div>
+                            <h2 id="detAthleteName" style="color: var(--bronze); font-size: 1.2rem;">Expediente del Atleta</h2>
+                            <p id="detAthleteMeta" class="subtitle" style="margin-bottom:0; font-size:0.8rem;">Historial antropométrico.</p>
+                        </div>
+                        <div class="no-print" style="display: flex; gap: 0.4rem;">
+                            <button class="btn-secondary" onclick="window.print()" style="background: var(--bronze); color:#000; font-weight:bold; font-size:0.7rem;">🖨️ PDF</button>
+                            <button class="btn-secondary" onclick="closeAthleteDetail()" style="font-size:0.7rem;">← Volver</button>
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
+                        <div style="background: var(--bg-deep); padding: 1.2rem; border-radius: 6px; border: 1px solid var(--border);">
+                            <h4 style="color: var(--bronze); font-size: 0.85rem; margin-bottom: 0.8rem;">Control de Pagos</h4>
+                            <p style="font-size: 0.85rem; margin-bottom: 0.4rem;"><strong>Costo del Plan:</strong> <span id="detCost"></span></p>
+                            <p style="font-size: 0.85rem; margin-bottom: 0.8rem;"><strong>Estatus:</strong> <span id="detStatusBadge"></span></p>
+                            <button class="btn-secondary no-print" onclick="togglePaymentStatus()" style="width: 100%; font-size: 0.75rem;">Alternar Pagado / Pendiente</button>
+                        </div>
+
+                        <div style="background: var(--bg-deep); padding: 1.2rem; border-radius: 6px; border: 1px solid var(--border);" class="no-print">
+                            <h4 style="color: var(--bronze); font-size: 0.85rem; margin-bottom: 0.8rem;">Registrar Medición Mensual</h4>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem; margin-bottom: 0.6rem;">
+                                <input type="text" id="mMonth" placeholder="Mes (Ej. Jul 2026)" style="font-size:0.8rem; padding:0.5rem;">
+                                <input type="number" id="mWeight" placeholder="Peso (kg)" style="font-size:0.8rem; padding:0.5rem;">
+                            </div>
+                            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.4rem; margin-bottom: 0.6rem;">
+                                <input type="number" id="mNeck" placeholder="Cuello" style="font-size:0.8rem; padding:0.5rem;">
+                                <input type="number" id="mChest" placeholder="Tórax" style="font-size:0.8rem; padding:0.5rem;">
+                                <input type="number" id="mBiceps" placeholder="Bíceps" style="font-size:0.8rem; padding:0.5rem;">
+                                <input type="number" id="mWaist" placeholder="Cintura" style="font-size:0.8rem; padding:0.5rem;">
+                                <input type="number" id="mGlute" placeholder="Glúteo" style="font-size:0.8rem; padding:0.5rem;">
+                                <input type="number" id="mLeg" placeholder="Cuádricep" style="font-size:0.8rem; padding:0.5rem;">
+                                <input type="number" id="mCalf" placeholder="Pantorrilla" style="font-size:0.8rem; padding:0.5rem;">
+                            </div>
+                            <button type="button" onclick="saveNewMeasurement()" style="font-size: 0.75rem; padding: 0.5rem;">Guardar Medición</button>
+                        </div>
+                    </div>
+
+                    <h3 style="font-size: 0.9rem; margin-bottom: 0.3rem;">Historial Comparativo Mes a Mes</h3>
+                    <p class="subtitle" style="font-size: 0.8rem;">Evolución antropométrica detallada.</p>
+                    <div style="overflow-x: auto;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Mes</th>
+                                    <th>Peso</th>
+                                    <th>Cuello</th>
+                                    <th>Tórax</th>
+                                    <th>Bíceps</th>
+                                    <th>Cintura</th>
+                                    <th>Glúteo</th>
+                                    <th>Cuádricep</th>
+                                    <th>Pantorrilla</th>
+                                    <th class="no-print">Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody id="metricsTableBody">
+                                <tr><td colspan="10" class="empty-state">No hay mediciones registradas.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- CALCULADORAS (EXCLUSIVAMENTE EN PANTALLA PRINCIPAL DEL AFILIADO) -->
+                <div class="card no-print">
+                    <h3>Herramientas y Calculadoras Profesionales</h3>
+                    <p class="subtitle">Calcula requerimientos energéticos y corporales.</p>
+
+                    <div class="calc-grid">
+                        <div class="calc-box">
+                            <h4 style="color: var(--bronze); font-size: 0.85rem; margin-bottom: 0.8rem;">Calculadora de Calorías (Harris/Benedict)</h4>
+                            <div class="form-group"><label>Peso (kg)</label><input type="number" id="calcWeight" placeholder="70"></div>
+                            <div class="form-group"><label>Altura (cm)</label><input type="number" id="calcHeight" placeholder="175"></div>
+                            <div class="form-group"><label>Edad</label><input type="number" id="calcAge" placeholder="25"></div>
+                            <div class="form-group">
+                                <label>Actividad</label>
+                                <select id="calcActivity">
+                                    <option value="1.2">Sedentario</option>
+                                    <option value="1.375">Ligero (1-3 días)</option>
+                                    <option value="1.55">Moderado (3-5 días)</option>
+                                    <option value="1.725">Muy Activo (6-7 días)</option>
+                                </select>
+                            </div>
+                            <button type="button" onclick="calculateCalories()" style="font-size: 0.75rem; padding: 0.5rem;">Calcular Calorías</button>
+                            <div id="caloriesResult" style="margin-top: 0.8rem; color: var(--bronze); font-weight: bold; font-size: 0.85rem;"></div>
+                        </div>
+
+                        <div class="calc-box">
+                            <h4 style="color: var(--bronze); font-size: 0.85rem; margin-bottom: 0.8rem;">Calculadora IMC & Composición</h4>
+                            <div class="form-group"><label>Peso (kg)</label><input type="number" id="imcWeight" placeholder="75"></div>
+                            <div class="form-group"><label>Altura (m)</label><input type="number" step="0.01" id="imcHeight" placeholder="1.75"></div>
+                            <button type="button" onclick="calculateIMC()" style="font-size: 0.75rem; padding: 0.5rem; margin-bottom: 0.8rem;">Calcular IMC</button>
+                            <div id="imcResult" style="color: var(--text-main); font-size: 0.85rem; margin-bottom: 0.5rem;"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="no-print">
+            BC Fit — Desarrollado y Operado Exclusivamente By Ciodarofitness. Todos los Derechos Reservados.
+        </footer>
+    </div>
 
     <script>
         let currentSelectedAthleteId = null;
@@ -581,7 +598,7 @@
             const linkInput = document.getElementById('shareableLink');
             linkInput.select();
             navigator.clipboard.writeText(linkInput.value);
-            alert("¡Enlace copiado al portapapeles!");
+            alert("¡Enlace copiado!");
         }
 
         function togglePassword(id) {
@@ -596,7 +613,6 @@
         setInterval(updateClock, 1000);
         updateClock();
 
-        // 1. LOGIN ADMIN GENERAL
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const user = document.getElementById('adminUser').value.trim();
@@ -608,11 +624,10 @@
                 document.getElementById('clock').classList.remove('hidden');
                 loadAdminData();
             } else {
-                alert("Credenciales incorrectas de Ciodarofitness.");
+                alert("Credenciales incorrectas.");
             }
         });
 
-        // 2. REGISTRO AFILIADO
         document.getElementById('registerClientForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const name = document.getElementById('regName').value.trim();
@@ -621,18 +636,16 @@
 
             let accounts = JSON.parse(localStorage.getItem('bc_client_accounts')) || [];
             if(accounts.some(acc => acc.email === email)) {
-                alert("Este correo ya está registrado. Por favor inicia sesión.");
+                alert("Este correo ya está registrado.");
                 return;
             }
 
             accounts.push({ id: Date.now(), name, email, password, startDate: new Date().toLocaleDateString() });
             localStorage.setItem('bc_client_accounts', JSON.stringify(accounts));
-
-            alert("¡Cuenta de afiliado creada con éxito! Ya puedes iniciar sesión.");
+            alert("¡Cuenta creada con éxito!");
             this.reset();
         });
 
-        // 3. LOGIN AFILIADOS
         document.getElementById('clientLoginForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const email = document.getElementById('clientLoginEmail').value.trim().toLowerCase();
@@ -645,7 +658,7 @@
                 localStorage.setItem('bc_current_client', JSON.stringify(client));
                 openAffiliatePortal(client);
             } else {
-                alert("Correo o contraseña incorrectos, o la cuenta no existe.");
+                alert("Datos incorrectos.");
             }
         });
 
@@ -653,7 +666,7 @@
             document.getElementById('authSection').classList.add('hidden');
             document.getElementById('clientPortalView').classList.remove('hidden');
             document.getElementById('clock').classList.remove('hidden');
-            document.getElementById('welcomeClientTitle').innerText = `Perfil de Afiliado: ${client.name}`;
+            document.getElementById('welcomeClientTitle').innerText = `Afiliado: ${client.name}`;
             loadAffiliateClients();
         }
 
@@ -671,15 +684,13 @@
             document.getElementById('statTotalAccounts').innerText = accounts.length;
 
             const tbody = document.getElementById('athletesTableBody');
-            tbody.innerHTML = accounts.length === 0 ? `<tr><td colspan="4" class="empty-state">No hay cuentas registradas.</td></tr>` :
+            tbody.innerHTML = accounts.length === 0 ? `<tr><td colspan="4" class="empty-state">No hay cuentas.</td></tr>` :
                 accounts.map(acc => `
                     <tr>
                         <td><strong>${acc.name}</strong></td>
                         <td>✉️ ${acc.email}</td>
                         <td>${acc.startDate}</td>
-                        <td>
-                            <button class="btn-deny" onclick="deleteAccount(${acc.id})" style="font-size: 0.7rem; padding: 0.3rem;">Eliminar</button>
-                        </td>
+                        <td><button class="btn-deny" onclick="deleteAccount(${acc.id})" style="font-size:0.65rem; padding:0.2rem 0.4rem;">Eliminar</button></td>
                     </tr>
                 `).join('');
         }
@@ -691,7 +702,6 @@
             loadAdminData();
         }
 
-        // GESTIÓN DE ATLETAS DEL AFILIADO
         function addAthlete() {
             const name = document.getElementById('cName').value.trim();
             const phone = document.getElementById('cPhone').value.trim();
@@ -702,7 +712,7 @@
             const status = document.getElementById('cStatus').value;
             
             if(!name || !phone) {
-                alert("Por favor completa el nombre y teléfono del atleta.");
+                alert("Completa al menos el nombre y teléfono.");
                 return;
             }
 
@@ -710,24 +720,17 @@
             if(!currentClient) return;
 
             let allAthletes = JSON.parse(localStorage.getItem('bc_affiliate_athletes')) || {};
-            if(!allAthletes[currentClient.email]) {
-                allAthletes[currentClient.email] = [];
-            }
+            if(!allAthletes[currentClient.email]) allAthletes[currentClient.email] = [];
 
             allAthletes[currentClient.email].push({ 
-                id: Date.now(), 
-                name, phone, 
-                age: age || '-', 
+                id: Date.now(), name, phone, age: age || '-', 
                 weight: weight ? weight + ' kg' : '-', 
                 height: height ? height + ' cm' : '-', 
-                cost: cost ? '$' + cost : '$0', 
-                status: status,
-                startDate: new Date().toLocaleDateString(),
-                metrics: []
+                cost: cost ? '$' + cost : '$0', status,
+                startDate: new Date().toLocaleDateString(), metrics: []
             });
 
             localStorage.setItem('bc_affiliate_athletes', JSON.stringify(allAthletes));
-
             document.getElementById('cName').value = '';
             document.getElementById('cPhone').value = '';
             document.getElementById('cAge').value = '';
@@ -745,44 +748,43 @@
             let myAthletes = allAthletes[currentClient.email] || [];
 
             const tbody = document.getElementById('affiliateClientsTableBody');
-            tbody.innerHTML = myAthletes.length === 0 ? `<tr><td colspan="5" class="empty-state">No tienes atletas registrados todavía.</td></tr>` :
+            tbody.innerHTML = myAthletes.length === 0 ? `<tr><td colspan="5" class="empty-state">No hay atletas registrados.</td></tr>` :
                 myAthletes.map(a => `
                     <tr>
-                        <td><strong>${a.name}</strong><br><span style="font-size:0.75rem; color:var(--text-muted);">Tel: ${a.phone} | Edad: ${a.age}</span></td>
-                        <td>Peso: ${a.weight} | Altura: ${a.height}</td>
+                        <td><strong>${a.name}</strong><br><span style="font-size:0.7rem; color:var(--text-muted);">Tel: ${a.phone}</span></td>
+                        <td>P: ${a.weight} | A: ${a.height}</td>
                         <td style="color: var(--bronze); font-weight: bold;">${a.cost}</td>
                         <td><span class="${a.status === 'Pagado' ? 'badge-paid' : 'badge-pending'}">${a.status}</span></td>
                         <td>
-                            <button class="btn-action" onclick="openAthleteDetail(${a.id})" style="font-size: 0.7rem; padding: 0.3rem;">Expediente</button>
-                            <button class="btn-deny" onclick="deleteAthlete(${a.id})" style="font-size: 0.7rem; padding: 0.3rem;">Eliminar</button>
+                            <button class="btn-action" onclick="openAthleteDetail(${a.id})">Expediente</button>
+                            <button class="btn-deny" onclick="deleteAthlete(${a.id})">Borrar</button>
                         </td>
                     </tr>
                 `).join('');
         }
 
-        function deleteAthlete(athleteId) {
+        function deleteAthlete(id) {
             const currentClient = JSON.parse(localStorage.getItem('bc_current_client'));
             if(!currentClient) return;
 
             let allAthletes = JSON.parse(localStorage.getItem('bc_affiliate_athletes')) || {};
             if(allAthletes[currentClient.email]) {
-                allAthletes[currentClient.email] = allAthletes[currentClient.email].filter(a => a.id !== athleteId);
+                allAthletes[currentClient.email] = allAthletes[currentClient.email].filter(a => a.id !== id);
                 localStorage.setItem('bc_affiliate_athletes', JSON.stringify(allAthletes));
                 loadAffiliateClients();
             }
         }
 
-        // EXPEDIENTE Y MÉTRICAS MENSUALES
-        function openAthleteDetail(athleteId) {
-            currentSelectedAthleteId = athleteId;
+        function openAthleteDetail(id) {
+            currentSelectedAthleteId = id;
             const currentClient = JSON.parse(localStorage.getItem('bc_current_client'));
             let allAthletes = JSON.parse(localStorage.getItem('bc_affiliate_athletes')) || {};
-            let athlete = (allAthletes[currentClient.email] || []).find(a => a.id === athleteId);
+            let athlete = (allAthletes[currentClient.email] || []).find(a => a.id === id);
 
             if(!athlete) return;
 
             document.getElementById('detAthleteName').innerText = `Expediente: ${athlete.name}`;
-            document.getElementById('detAthleteMeta').innerText = `Tel: ${athlete.phone} | Edad: ${athlete.age} | Estatura: ${athlete.height} | Alta: ${athlete.startDate}`;
+            document.getElementById('detAthleteMeta').innerText = `Tel: ${athlete.phone} | Edad: ${athlete.age} | Estatura: ${athlete.height}`;
             document.getElementById('detCost').innerText = athlete.cost;
             
             const badge = document.getElementById('detStatusBadge');
@@ -790,7 +792,6 @@
             badge.className = athlete.status === 'Pagado' ? 'badge-paid' : 'badge-pending';
 
             loadMetricsTable(athlete);
-
             document.getElementById('athleteDetailView').classList.remove('hidden');
             window.scrollTo({ top: document.getElementById('athleteDetailView').offsetTop - 20, behavior: 'smooth' });
         }
@@ -826,7 +827,7 @@
             const calf = document.getElementById('mCalf').value.trim();
 
             if(!month) {
-                alert("Por favor especifica el mes o fecha de la medición.");
+                alert("Especifica el mes.");
                 return;
             }
 
@@ -849,8 +850,6 @@
                 });
 
                 localStorage.setItem('bc_affiliate_athletes', JSON.stringify(allAthletes));
-                
-                // Limpiar campos
                 document.getElementById('mMonth').value = '';
                 document.getElementById('mWeight').value = '';
                 document.getElementById('mNeck').value = '';
@@ -862,7 +861,6 @@
                 document.getElementById('mCalf').value = '';
 
                 openAthleteDetail(athlete.id);
-                alert("¡Medición guardada con éxito en el historial mensual!");
             }
         }
 
@@ -870,7 +868,7 @@
             const tbody = document.getElementById('metricsTableBody');
             const metrics = athlete.metrics || [];
 
-            tbody.innerHTML = metrics.length === 0 ? `<tr><td colspan="10" class="empty-state">No hay registros de mediciones aún.</td></tr>` :
+            tbody.innerHTML = metrics.length === 0 ? `<tr><td colspan="10" class="empty-state">No hay mediciones registradas.</td></tr>` :
                 metrics.map((m, idx) => `
                     <tr>
                         <td><strong>${m.month}</strong></td>
@@ -882,7 +880,7 @@
                         <td>${m.glute}</td>
                         <td>${m.leg}</td>
                         <td>${m.calf}</td>
-                        <td class="no-print"><button class="btn-deny" onclick="deleteMetric(${idx})" style="font-size: 0.65rem; padding: 0.2rem 0.4rem;">Borrar</button></td>
+                        <td class="no-print"><button class="btn-deny" onclick="deleteMetric(${idx})" style="font-size:0.6rem; padding:0.15rem 0.3rem;">X</button></td>
                     </tr>
                 `).join('');
         }
@@ -900,7 +898,6 @@
             }
         }
 
-        // CALCULADORAS
         function calculateCalories() {
             const w = parseFloat(document.getElementById('calcWeight').value);
             const h = parseFloat(document.getElementById('calcHeight').value);
@@ -908,12 +905,12 @@
             const act = parseFloat(document.getElementById('calcActivity').value);
 
             if(!w || !h || !a) {
-                alert("Completa peso, altura y edad para calcular.");
+                alert("Completa peso, altura y edad.");
                 return;
             }
             const bmr = (10 * w) + (6.25 * h) - (5 * a) + 5;
             const tdee = Math.round(bmr * act);
-            document.getElementById('caloriesResult').innerHTML = `Gasto Energético Total (TDEE): ${tdee} kcal/día`;
+            document.getElementById('caloriesResult').innerHTML = `TDEE: ${tdee} kcal/día`;
         }
 
         function calculateIMC() {
@@ -921,7 +918,7 @@
             const h = parseFloat(document.getElementById('imcHeight').value);
 
             if(!w || !h) {
-                alert("Completa peso y altura en metros.");
+                alert("Completa peso y altura.");
                 return;
             }
             const imc = (w / (h * h)).toFixed(1);
