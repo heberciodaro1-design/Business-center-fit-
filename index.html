@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BUSINESS CENTER FIT</title>
+    <title>BC FIT - Ciodarofitness</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @media print {
@@ -16,403 +16,195 @@
             .text-gray-300, .text-gray-400 { color: #e2e8f0 !important; font-weight: 700 !important; }
             .text-amber-400, .text-amber-500 { color: #fbbf24 !important; font-weight: 900 !important; }
             .text-emerald-400 { color: #34d399 !important; font-weight: 800 !important; }
-            .ocultar-en-pdf { display: none !important; }
-            .mostrar-en-pdf { display: inline !important; }
         }
-        .mostrar-en-pdf { display: none; }
     </style>
 </head>
-<body class="bg-[#0b0f19] text-gray-100 min-h-screen flex items-center justify-center p-4">
+<body class="bg-[#0b0f19] text-gray-100 min-h-screen flex items-center justify-center p-3">
 
     <!-- VISTA LOGIN ADMINISTRADOR -->
     <div id="vista-login" class="w-full max-w-sm bg-[#0b0f19] border border-gray-800 rounded-3xl p-6 shadow-2xl relative overflow-hidden">
         <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-600 via-amber-400 to-amber-600"></div>
-        
         <div class="text-center space-y-1 mb-8 pt-2">
-            <h1 class="text-2xl font-black text-white tracking-wider">BUSINESS CENTER</h1>
-            <h2 class="text-xl font-bold text-amber-500 tracking-widest">FIT</h2>
-            <p class="text-[10px] text-gray-400 uppercase tracking-widest mt-2 font-semibold">ADMINISTRADOR: HEBER CIODARO (CIODAROFITNESS)</p>
+            <h1 class="text-2xl font-black text-white tracking-wider">BC FIT</h1>
+            <p class="text-[10px] text-amber-500 uppercase tracking-widest mt-1 font-semibold">Administrador ciodarofitness</p>
         </div>
-
-        <form id="form-login" onsubmit="realizarLogin(event)" class="space-y-4">
+        <form onsubmit="realizarLogin(event)" class="space-y-4">
             <div>
                 <label class="text-[11px] font-bold text-gray-300 uppercase tracking-wider block mb-1.5">CORREO DE ACCESO</label>
-                <input type="email" id="input-correo" required value="heber@ciodarofitness.com" class="w-full bg-[#131b2e] border border-gray-800 rounded-xl p-3.5 text-sm focus:outline-none focus:border-amber-500 text-white font-medium">
+                <input type="email" id="input-correo" required value="heber@ciodarofitness.com" class="w-full bg-[#131b2e] border border-gray-800 rounded-xl p-3.5 text-sm text-white font-medium focus:outline-none focus:border-amber-500">
             </div>
-
             <div>
                 <label class="text-[11px] font-bold text-gray-300 uppercase tracking-wider block mb-1.5">CÓDIGO DE SEGURIDAD</label>
-                <div class="relative">
-                    <input type="password" id="input-password" required placeholder="••••••••" class="w-full bg-[#131b2e] border border-gray-800 rounded-xl p-3.5 text-sm focus:outline-none focus:border-amber-500 text-white font-medium pr-10">
-                    <button type="button" onclick="alternarPassword()" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white text-base">👁️</button>
-                </div>
+                <input type="password" id="input-password" required placeholder="••••••••" class="w-full bg-[#131b2e] border border-gray-800 rounded-xl p-3.5 text-sm text-white font-medium focus:outline-none focus:border-amber-500">
             </div>
-
-            <button type="submit" class="w-full bg-gradient-to-r from-amber-900 via-amber-800 to-amber-900 hover:from-amber-800 hover:to-amber-700 text-white font-bold py-3.5 px-4 rounded-xl transition duration-200 shadow-lg tracking-wide text-sm border border-amber-700/50 mt-2">
-                ACCEDER AL SISTEMA
-            </button>
+            <button type="submit" class="w-full bg-gradient-to-r from-amber-700 to-amber-900 text-white font-bold py-3.5 rounded-xl shadow-lg text-sm mt-2">ACCEDER AL SISTEMA</button>
         </form>
-
-        <div class="text-center mt-6 space-y-2">
-            <a href="#" onclick="abrirModalSolicitudExterna()" class="text-[11px] text-amber-400 hover:text-amber-300 underline font-medium block">Portal de Afiliados / Solicitar Licencia</a>
-            <p class="text-[9px] text-gray-500 uppercase tracking-wider">© 2026 Heber Ciodaro - Todos los derechos reservados</p>
-        </div>
     </div>
-        <!-- VISTA PRINCIPAL (DASHBOARD) -->
-    <div id="vista-dashboard" class="w-full max-w-6xl mx-auto hidden space-y-6">
-        
-        <!-- HEADER / MENU SUPERIOR -->
-        <header class="bg-[#131b2e] border border-gray-800 rounded-2xl p-4 flex flex-col md:flex-row justify-between items-center gap-4 shadow-xl">
-            <div class="flex items-center space-x-3">
-                <div class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-500 font-black text-lg">CF</div>
-                <div>
-                    <h2 class="text-sm font-black text-white tracking-wide">BUSINESS CENTER FIT</h2>
-                    <p class="text-[10px] text-amber-500 font-semibold tracking-wider">CIODAROFITNESS • ADMIN: HEBER CIODARO</p>
-                </div>
-            </div>
 
-            <div class="flex items-center gap-2 flex-wrap justify-center">
-                <button onclick="cambiarSeccion('clientes')" id="btn-sec-clientes" class="bg-amber-600 text-white px-4 py-2 rounded-xl text-xs font-bold transition shadow-md">👥 Clientes</button>
-                <button onclick="cambiarSeccion('asistencia')" id="btn-sec-asistencia" class="bg-[#0b0f19] text-gray-400 hover:text-white px-4 py-2 rounded-xl text-xs font-bold transition border border-gray-800">📅 Asistencia</button>
-                <button onclick="cambiarSeccion('finanzas')" id="btn-sec-finanzas" class="bg-[#0b0f19] text-gray-400 hover:text-white px-4 py-2 rounded-xl text-xs font-bold transition border border-gray-800">💰 Finanzas</button>
-                <button onclick="cambiarSeccion('configuracion')" id="btn-sec-configuracion" class="bg-[#0b0f19] text-gray-400 hover:text-white px-4 py-2 rounded-xl text-xs font-bold transition border border-gray-800">⚙️ Config</button>
-                <button onclick="cerrarSesion()" class="bg-red-950/40 text-red-400 border border-red-900/50 px-3 py-2 rounded-xl text-xs font-bold hover:bg-red-900/40 transition">Salir</button>
+    <!-- VISTA APLICACIÓN PRINCIPAL -->
+    <div id="vista-app" class="hidden w-full max-w-md space-y-4 pb-20">
+        <header class="bg-[#131b2e] p-4 rounded-2xl border border-gray-800 shadow-lg flex justify-between items-center">
+            <div>
+                <h1 class="text-lg font-black text-white tracking-wider">BC <span class="text-amber-500">FIT</span></h1>
+                <p class="text-[10px] text-amber-400 font-semibold">Administrador ciodarofitness</p>
+                <p id="reloj-digital" class="text-[9px] text-gray-400 mt-0.5"></p>
             </div>
+            <button onclick="cerrarSesion()" class="bg-red-950/40 text-red-400 border border-red-900/50 text-xs font-semibold px-3 py-2 rounded-xl">Salir</button>
         </header>
 
-        <!-- SECCIÓN CLIENTES -->
-        <div id="sec-clientes" class="space-y-6">
-            <div class="flex flex-col sm:flex-row justify-between items-center gap-4 bg-[#131b2e] border border-gray-800 rounded-2xl p-4 shadow-lg">
-                <div class="w-full sm:w-72">
-                    <input type="text" id="buscador-clientes" oninput="filtrarClientes()" placeholder="Buscar cliente por nombre..." class="w-full bg-[#0b0f19] border border-gray-800 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-amber-500">
-                </div>
-                <div class="flex items-center gap-2 w-full sm:w-auto justify-end">
-                    <button onclick="abrirModalCliente()" class="bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-white px-4 py-2.5 rounded-xl text-xs font-bold shadow-lg transition flex items-center gap-2">
-                        <span>➕</span> Nuevo Cliente
-                    </button>
-                </div>
-            </div>
-
-            <!-- TABLA / LISTA DE CLIENTES -->
-            <div class="bg-[#131b2e] border border-gray-800 rounded-2xl overflow-hidden shadow-xl">
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse">
-                        <thead>
-                            <tr class="border-b border-gray-800 text-[10px] text-gray-400 uppercase tracking-wider bg-[#0b0f19]/50">
-                                <th class="p-4 font-bold">Cliente</th>
-                                <th class="p-4 font-bold">Estado / Plan</th>
-                                <th class="p-4 font-bold">Contacto</th>
-                                <th class="p-4 font-bold">Vencimiento</th>
-                                <th class="p-4 font-bold text-center">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tabla-clientes-body" class="divide-y divide-gray-800 text-xs">
-                            <!-- Inyectado dinámicamente -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-                <!-- SECCIÓN ASISTENCIA -->
-        <div id="sec-asistencia" class="space-y-6 hidden">
-            <div class="bg-[#131b2e] border border-gray-800 rounded-2xl p-6 shadow-xl space-y-4">
-                <div class="flex justify-between items-center">
-                    <h3 class="text-sm font-black text-white tracking-wide">CONTROL DE ASISTENCIA Y ACCESOS</h3>
-                    <input type="date" id="filtro-fecha-asistencia" onchange="renderizarAsistencia()" class="bg-[#0b0f19] border border-gray-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-500">
-                </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4" id="grid-asistencia-clientes">
-                    <!-- Inyectado dinámicamente -->
-                </div>
-            </div>
+        <!-- SECCIONES DE MENÚ RÁPIDO -->
+        <div class="space-y-2">
+            <div class="bg-[#131b2e] p-3.5 rounded-2xl border border-gray-800 text-xs font-bold text-gray-300">1. Validación de Solicitudes</div>
+            <div class="bg-[#131b2e] p-3.5 rounded-2xl border border-amber-500/50 text-xs font-bold text-amber-400 shadow-md">2. Gestión de Alumnos</div>
+            <div class="bg-[#131b2e] p-3.5 rounded-2xl border border-gray-800 text-xs font-bold text-gray-300">3. Calculadora de Calorías</div>
         </div>
 
-        <!-- SECCIÓN FINANZAS -->
-        <div id="sec-finanzas" class="space-y-6 hidden">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div class="bg-[#131b2e] border border-gray-800 rounded-2xl p-5 shadow-lg">
-                    <p class="text-[10px] text-gray-400 uppercase tracking-wider font-semibold">Ingresos del Mes</p>
-                    <h3 class="text-2xl font-black text-emerald-400 mt-1" id="finanza-ingresos">$0.00</h3>
-                </div>
-                <div class="bg-[#131b2e] border border-gray-800 rounded-2xl p-5 shadow-lg">
-                    <p class="text-[10px] text-gray-400 uppercase tracking-wider font-semibold">Pagos Pendientes</p>
-                    <h3 class="text-2xl font-black text-amber-500 mt-1" id="finanza-pendientes">$0.00</h3>
-                </div>
-                <div class="bg-[#131b2e] border border-gray-800 rounded-2xl p-5 shadow-lg">
-                    <p class="text-[10px] text-gray-400 uppercase tracking-wider font-semibold">Clientes Activos</p>
-                    <h3 class="text-2xl font-black text-white mt-1" id="finanza-activos">0</h3>
-                </div>
-            </div>
-            
-            <div class="bg-[#131b2e] border border-gray-800 rounded-2xl p-6 shadow-xl">
-                <h3 class="text-sm font-black text-white tracking-wide mb-4">REGISTRO DE ABONOS Y TRANSACCIONES</h3>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse text-xs">
-                        <thead>
-                            <tr class="border-b border-gray-800 text-[10px] text-gray-400 uppercase tracking-wider bg-[#0b0f19]/50">
-                                <th class="p-3 font-bold">Fecha</th>
-                                <th class="p-3 font-bold">Cliente</th>
-                                <th class="p-3 font-bold">Monto</th>
-                                <th class="p-3 font-bold">Concepto</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tabla-finanzas-body" class="divide-y divide-gray-800">
-                            <!-- Inyectado dinámicamente -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- SECCIÓN CONFIGURACIÓN -->
-        <div id="sec-configuracion" class="space-y-6 hidden">
-            <div class="bg-[#131b2e] border border-gray-800 rounded-2xl p-6 shadow-xl space-y-4 max-w-xl">
-                <h3 class="text-sm font-black text-white tracking-wide">CONFIGURACIÓN GENERAL</h3>
-                <div>
-                    <label class="text-[11px] font-bold text-gray-300 uppercase tracking-wider block mb-1">Nombre del Administrador / Marca</label>
-                    <input type="text" id="cfg-nombre" value="Heber Ciodaro (Ciodarofitness)" class="w-full bg-[#0b0f19] border border-gray-800 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-amber-500">
-                </div>
-                <div>
-                    <label class="text-[11px] font-bold text-gray-300 uppercase tracking-wider block mb-1">Moneda Principal</label>
-                    <select id="cfg-moneda" class="w-full bg-[#0b0f19] border border-gray-800 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-amber-500">
-                        <option value="USD">USD ($)</option>
-                        <option value="EUR">EUR (€)</option>
-                    </select>
-                </div>
-                <button onclick="guardarConfiguracion()" class="bg-amber-600 hover:bg-amber-500 text-white font-bold py-2.5 px-5 rounded-xl text-xs transition shadow-md">Guardar Cambios</button>
-            </div>
-        </div>
+        <!-- LISTADO DE ALUMNOS (INTERFAZ ORIGINAL EXACTA) -->
+        <div id="lista-alumnos" class="space-y-4"></div>
     </div>
-        <!-- MODAL CLIENTE (CREAR / EDITAR) -->
-    <div id="modal-cliente" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
-        <div class="bg-[#131b2e] border border-gray-800 rounded-3xl w-full max-w-lg p-6 space-y-4 shadow-2xl max-h-[90vh] overflow-y-auto">
-            <div class="flex justify-between items-center border-b border-gray-800 pb-3">
-                <h3 id="modal-cliente-titulo" class="text-sm font-black text-white tracking-wide">NUEVO CLIENTE</h3>
-                <button onclick="cerrarModalCliente()" class="text-gray-400 hover:text-white text-lg font-bold">✕</button>
-            </div>
-            
-            <form id="form-cliente" onsubmit="guardarCliente(event)" class="space-y-3 text-xs">
-                <input type="hidden" id="cliente-id-edit">
-                <div>
-                    <label class="font-bold text-gray-300 uppercase tracking-wider block mb-1">Nombre Completo</label>
-                    <input type="text" id="cl-nombre" required class="w-full bg-[#0b0f19] border border-gray-800 rounded-xl p-3 text-white focus:outline-none focus:border-amber-500 font-medium">
-                </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <div>
-                        <label class="font-bold text-gray-300 uppercase tracking-wider block mb-1">Teléfono / WhatsApp</label>
-                        <input type="text" id="cl-telefono" class="w-full bg-[#0b0f19] border border-gray-800 rounded-xl p-3 text-white focus:outline-none focus:border-amber-500 font-medium">
-                    </div>
-                    <div>
-                        <label class="font-bold text-gray-300 uppercase tracking-wider block mb-1">Plan Asignado</label>
-                        <select id="cl-plan" class="w-full bg-[#0b0f19] border border-gray-800 rounded-xl p-3 text-white focus:outline-none focus:border-amber-500 font-medium">
-                            <option value="Entrenamiento Inteligente">Entrenamiento Inteligente</option>
-                            <option value="Asesoría Nutricional">Asesoría Nutricional</option>
-                            <option value="Plan VIP Ciodarofitness">Plan VIP Ciodarofitness</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <div>
-                        <label class="font-bold text-gray-300 uppercase tracking-wider block mb-1">Fecha de Vencimiento</label>
-                        <input type="date" id="cl-vencimiento" required class="w-full bg-[#0b0f19] border border-gray-800 rounded-xl p-3 text-white focus:outline-none focus:border-amber-500 font-medium">
-                    </div>
-                    <div>
-                        <label class="font-bold text-gray-300 uppercase tracking-wider block mb-1">Monto del Plan ($)</label>
-                        <input type="number" step="0.01" id="cl-monto" required class="w-full bg-[#0b0f19] border border-gray-800 rounded-xl p-3 text-white focus:outline-none focus:border-amber-500 font-medium">
-                    </div>
-                </div>
-                <div class="pt-3 flex justify-end gap-2">
-                    <button type="button" onclick="cerrarModalCliente()" class="bg-gray-800 hover:bg-gray-700 text-gray-300 px-4 py-2.5 rounded-xl font-bold transition">Cancelar</button>
-                    <button type="submit" class="bg-amber-600 hover:bg-amber-500 text-white px-5 py-2.5 rounded-xl font-bold transition shadow-md">Guardar Cliente</button>
-                </div>
-            </form>
-        </div>
-    </div>
+        <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            iniciarReloj();
+            if (localStorage.getItem('bcf_sesion_activa') === 'true') {
+                mostrarApp();
+            }
+        });
 
-    <!-- SCRIPT PRINCIPAL PARTE 1 -->
-    <script>
-        let clientes = JSON.parse(localStorage.getItem('ciodarofitness_clientes')) || [];
-        let finanzas = JSON.parse(localStorage.getItem('ciodarofitness_finanzas')) || [];
-        let asistencias = JSON.parse(localStorage.getItem('ciodarofitness_asistencias')) || {};
+        function iniciarReloj() {
+            const actualizar = () => {
+                const ahora = new Date();
+                const opciones = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' };
+                const relojEl = document.getElementById('reloj-digital');
+                if (relojEl) relojEl.textContent = ahora.toLocaleDateString('es-ES', opciones);
+            };
+            actualizar();
+            setInterval(actualizar, 1000);
+        }
+
+        // Datos iniciales de ejemplo o persistencia local
+        let clientes = JSON.parse(localStorage.getItem('bcf_clientes')) || [
+            {
+                id: 1,
+                nombre: "Leidy Cáceres",
+                edad: 43,
+                peso: 65,
+                estatura: 160,
+                costo: 50,
+                pagado: true,
+                corte: "2026-07-26",
+                imc: "25.4",
+                torax: 90,
+                biceps: 35,
+                cintura: 65,
+                gluteos: 98,
+                cuadriceps: 58,
+                pantorrilla: 38,
+                whatsapp: "584120000000"
+            }
+        ];
 
         function realizarLogin(e) {
             e.preventDefault();
-            const correo = document.getElementById('input-correo').value;
             const pass = document.getElementById('input-password').value;
-            if(correo === 'heber@ciodarofitness.com' && pass === '123456') {
-                document.getElementById('vista-login').classList.add('hidden');
-                document.getElementById('vista-dashboard').classList.remove('hidden');
-                renderizarTodo();
+            if (pass.length >= 6) {
+                localStorage.setItem('bcf_sesion_activa', 'true');
+                mostrarApp();
             } else {
-                alert('Credenciales incorrectas. Verifique correo o clave.');
+                alert('Ingrese su contraseña de acceso.');
             }
-        }
-
-        function alternarPassword() {
-            const input = document.getElementById('input-password');
-            input.type = input.type === 'password' ? 'text' : 'password';
         }
 
         function cerrarSesion() {
-            document.getElementById('vista-dashboard').classList.add('hidden');
+            localStorage.removeItem('bcf_sesion_activa');
+            document.getElementById('vista-app').classList.add('hidden');
             document.getElementById('vista-login').classList.remove('hidden');
         }
 
-        function cambiarSeccion(sec) {
-            ['clientes', 'asistencia', 'finanzas', 'configuracion'].forEach(s => {
-                document.getElementById(`sec-${s}`).classList.add('hidden');
-                document.getElementById(`btn-sec-${s}`).className = "bg-[#0b0f19] text-gray-400 hover:text-white px-4 py-2 rounded-xl text-xs font-bold transition border border-gray-800";
-            });
-            document.getElementById(`sec-${sec}`).classList.remove('hidden');
-            document.getElementById(`btn-sec-${sec}`).className = "bg-amber-600 text-white px-4 py-2 rounded-xl text-xs font-bold transition shadow-md";
-        }
-                function renderizarTodo() {
-            renderizarClientes();
-            renderizarAsistencia();
-            renderizarFinanzas();
+        function mostrarApp() {
+            document.getElementById('vista-login').classList.add('hidden');
+            document.getElementById('vista-app').classList.remove('hidden');
+            renderizarAlumnos();
         }
 
-        function renderizarClientes() {
-            const filtro = document.getElementById('buscador-clientes').value.toLowerCase();
-            const tbody = document.getElementById('tabla-clientes-body');
-            tbody.innerHTML = '';
-            
-            const filtrados = clientes.filter(c => c.nombre.toLowerCase().includes(filtro));
-            
-            if(filtrados.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="5" class="p-6 text-center text-gray-500 font-semibold">No se encontraron clientes registrados.</td></tr>`;
-                return;
-            }
+        function renderizarAlumnos() {
+            const contenedor = document.getElementById('lista-alumnos');
+            if (!contenedor) return;
+            contenedor.innerHTML = '';
 
-            filtrados.forEach((c, idx) => {
-                tbody.innerHTML += `
-                    <tr class="border-b border-gray-800 hover:bg-[#0b0f19]/30 transition">
-                        <td class="p-4 font-bold text-white">${c.nombre}</td>
-                        <td class="p-4">
-                            <span class="bg-amber-500/10 text-amber-400 border border-amber-500/30 px-2.5 py-1 rounded-lg text-[10px] font-bold">${c.plan}</span>
-                        </td>
-                        <td class="p-4 text-gray-300">${c.telefono || 'Sin número'}</td>
-                        <td class="p-4 text-gray-300">${c.vencimiento}</td>
-                        <td class="p-4 text-center space-x-2">
-                            <button onclick="editarCliente(${idx})" class="bg-gray-800 hover:bg-gray-700 text-amber-400 px-2.5 py-1.5 rounded-lg font-bold text-[10px] transition">Editar</button>
-                            <button onclick="eliminarCliente(${idx})" class="bg-red-950/40 hover:bg-red-900/40 text-red-400 border border-red-900/50 px-2.5 py-1.5 rounded-lg font-bold text-[10px] transition">Eliminar</button>
-                        </td>
-                    </tr>
-                `;
-            });
-            document.getElementById('finanza-activos').innerText = clientes.length;
-        }
-
-        function abrirModalCliente() {
-            document.getElementById('modal-cliente-titulo').innerText = 'NUEVO CLIENTE';
-            document.getElementById('cliente-id-edit').value = '';
-            document.getElementById('form-cliente').reset();
-            document.getElementById('modal-cliente').classList.remove('hidden');
-            document.getElementById('modal-cliente').classList.add('flex');
-        }
-
-        function cerrarModalCliente() {
-            document.getElementById('modal-cliente').classList.add('hidden');
-            document.getElementById('modal-cliente').classList.remove('flex');
-        }
-
-        function guardarCliente(e) {
-            e.preventDefault();
-            const idEdit = document.getElementById('cliente-id-edit').value;
-            const nuevoCliente = {
-                nombre: document.getElementById('cl-nombre').value,
-                telefono: document.getElementById('cl-telefono').value,
-                plan: document.getElementById('cl-plan').value,
-                vencimiento: document.getElementById('cl-vencimiento').value,
-                monto: parseFloat(document.getElementById('cl-monto').value) || 0
-            };
-
-            if(idEdit === '') {
-                clientes.push(nuevoCliente);
-                finanzas.unshift({
-                    fecha: new Date().toISOString().split('T')[0],
-                    cliente: nuevoCliente.nombre,
-                    monto: nuevoCliente.monto,
-                    concepto: `Inscripción - ${nuevoCliente.plan}`
-                });
-            } else {
-                clientes[idEdit] = nuevoCliente;
-            }
-
-            localStorage.setItem('ciodarofitness_clientes', JSON.stringify(clientes));
-            localStorage.setItem('ciodarofitness_finanzas', JSON.stringify(finanzas));
-            cerrarModalCliente();
-            renderizarTodo();
-        }
-
-        function editarCliente(idx) {
-            const c = clientes[idx];
-            document.getElementById('modal-cliente-titulo').innerText = 'EDITAR CLIENTE';
-            document.getElementById('cliente-id-edit').value = idx;
-            document.getElementById('cl-nombre').value = c.nombre;
-            document.getElementById('cl-telefono').value = c.telefono;
-            document.getElementById('cl-plan').value = c.plan;
-            document.getElementById('cl-vencimiento').value = c.vencimiento;
-            document.getElementById('cl-monto').value = c.monto;
-            
-            document.getElementById('modal-cliente').classList.remove('hidden');
-            document.getElementById('modal-cliente').classList.add('flex');
-        }
-
-        function eliminarCliente(idx) {
-            if(confirm('¿Estás seguro de eliminar este cliente?')) {
-                clientes.splice(idx, 1);
-                localStorage.setItem('ciodarofitness_clientes', JSON.stringify(clientes));
-                renderizarTodo();
-            }
-        }
-
-        function renderizarAsistencia() {
-            const grid = document.getElementById('grid-asistencia-clientes');
-            grid.innerHTML = '';
-            if(clientes.length === 0) {
-                grid.innerHTML = '<p class="text-xs text-gray-500 col-span-full">No hay clientes para registrar asistencia.</p>';
-                return;
-            }
             clientes.forEach((c, idx) => {
-                grid.innerHTML += `
-                    <div class="bg-[#0b0f19] border border-gray-800 rounded-xl p-4 flex justify-between items-center">
+                const card = document.createElement('div');
+                card.className = "bg-[#131b2e] border border-gray-800 rounded-3xl p-5 space-y-4 shadow-xl";
+                card.innerHTML = `
+                    <div class="flex justify-between items-start">
                         <div>
-                            <p class="text-xs font-bold text-white">${c.nombre}</p>
-                            <p class="text-[10px] text-gray-400">${c.plan}</p>
+                            <h2 class="text-lg font-black text-white">${c.nombre}</h2>
+                            <p class="text-xs text-gray-400 mt-0.5">Edad: ${c.edad} años | Peso: ${c.peso}kg | Estatura: ${c.estatura}cm</p>
                         </div>
-                        <span class="text-xs font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-3 py-1.5 rounded-lg">Activo</span>
+                        <span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-bold px-3 py-1 rounded-full">
+                            ${c.pagado ? 'Pagado' : 'Pendiente'}
+                        </span>
+                    </div>
+
+                    <div class="bg-[#0b0f19] border border-gray-800 rounded-2xl p-4 space-y-3">
+                        <div class="flex justify-between items-center text-xs">
+                            <span class="text-gray-300 font-bold">💵 Costo del Paquete:</span>
+                            <span class="text-white font-black text-sm">$${c.costo} USD</span>
+                        </div>
+                        <div class="border-t border-gray-800/80 pt-3 flex justify-between items-center text-xs">
+                            <span class="text-gray-400">📊 IMC: <b class="text-white">${c.imc}</b></span>
+                            <span class="text-gray-400">📅 Corte: <b class="text-white">${c.corte}</b></span>
+                        </div>
+                    </div>
+
+                    <div class="space-y-2">
+                        <p class="text-[11px] font-bold text-amber-400 uppercase tracking-wider">Antropometría Actual (cm):</p>
+                        <div class="grid grid-cols-3 gap-2 text-xs bg-[#0b0f19] p-3.5 rounded-2xl border border-gray-800 text-gray-300">
+                            <div>Tórax: <b class="text-white">${c.torax}</b></div>
+                            <div>Bíceps: <b class="text-white">${c.biceps}</b></div>
+                            <div>Cintura: <b class="text-white">${c.cintura}</b></div>
+                            <div>Glúteos: <b class="text-white">${c.gluteos}</b></div>
+                            <div>Cuádriceps: <b class="text-white">${c.cuadriceps}</b></div>
+                            <div>Pantorrilla: <b class="text-white">${c.pantorrilla}</b></div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-2">
+                        <p class="text-[11px] font-bold text-amber-400 uppercase tracking-wider">Comparativa Mes a Mes:</p>
+                        <div class="bg-[#0b0f19] p-3.5 rounded-2xl border border-gray-800 text-xs text-gray-300 grid grid-cols-3 gap-2">
+                            <div>Peso: <span class="text-emerald-400 font-bold">+${c.peso}kg</span></div>
+                            <div>Cintura: <span class="text-emerald-400 font-bold">+${c.cintura}cm</span></div>
+                            <div>Glúteos: <span class="text-emerald-400 font-bold">+${c.gluteos}cm</span></div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-2 pt-1">
+                        <a href="https://wa.me/${c.whatsapp}" target="_blank" class="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2.5 px-3 rounded-xl text-xs text-center flex items-center justify-center gap-1.5 shadow-lg">
+                            💬 WhatsApp
+                        </a>
+                        <button onclick="window.print()" class="bg-[#1f293d] hover:bg-gray-700 text-amber-400 border border-gray-700 font-bold py-2.5 px-4 rounded-xl text-xs flex items-center gap-1.5 transition">
+                            📄 PDF
+                        </button>
+                    </div>
+
+                    <div class="flex gap-2 pt-1">
+                        <button onclick="editarAlumno(${idx})" class="flex-1 bg-gray-800 hover:bg-gray-700 text-gray-200 font-bold py-2 rounded-xl text-xs transition">Editar</button>
+                        <button onclick="eliminarAlumno(${idx})" class="flex-1 bg-red-950/40 hover:bg-red-900/40 text-red-400 border border-red-900/50 font-bold py-2 rounded-xl text-xs transition">Eliminar</button>
                     </div>
                 `;
+                contenedor.appendChild(card);
             });
         }
 
-        function renderizarFinanzas() {
-            const tbody = document.getElementById('tabla-finanzas-body');
-            tbody.innerHTML = '';
-            let totalIngresos = 0;
+        function editarAlumno(idx) {
+            alert('Modo edición rápido para el alumno ' + clientes[idx].nombre);
+        }
 
-            if(finanzas.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-gray-500">Sin transacciones registradas.</td></tr>`;
+        function eliminarAlumno(idx) {
+            if (confirm('¿Eliminar alumno?')) {
+                clientes.splice(idx, 1);
+                localStorage.setItem('bcf_clientes', JSON.stringify(clientes));
+                renderizarAlumnos();
             }
-
-            finanzas.forEach(f => {
-                totalIngresos += f.monto;
-                tbody.innerHTML += `
-                    <tr class="border-b border-gray-800">
-                        <td class="p-3 text-gray-300">${f.fecha}</td>
-                        <td class="p-3 font-bold text-white">${f.cliente}</td>
-                        <td class="p-3 font-bold text-emerald-400">$${f.monto.toFixed(2)}</td>
-                        <td class="p-3 text-gray-300">${f.concepto}</td>
-                    </tr>
-                `;
-            });
-
-            document.getElementById('finanza-ingresos').innerText = `$${totalIngresos.toFixed(2)}`;
-            document.getElementById('finanza-pendientes').innerText = `$0.00`;
-        }
-
-        function guardarConfiguracion() {
-            alert('Configuración guardada correctamente.');
         }
     </script>
 </body>
