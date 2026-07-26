@@ -3,16 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Business Center Fit | Plataforma Completa By ciodarofitness</title>
-    
-    <!-- Configuración PWA para Móviles -->
-    <link rel="manifest" href="manifest.json">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="theme-color" content="#0A0A0C">
-
-    <!-- Tailwind CSS -->
+    <title>Business Center Fit | By ciodarofitness</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -33,12 +24,10 @@
         }
     </script>
 </head>
-<body class="bg-darkBg text-silverText font-sans antialiased min-h-screen flex flex-col justify-between selection:bg-bronzeMain selection:text-darkBg">
+<body class="bg-darkBg text-silverText font-sans antialiased min-h-screen flex flex-col justify-between">
 
-    <!-- CONTENEDOR DE ACCESO -->
     <div id="login-container" class="flex-grow flex items-center justify-center p-4">
         
-        <!-- PANTALLA DE LOGIN -->
         <div id="auth-screen" class="bg-cardBg border border-cardBorder rounded-2xl p-8 w-full max-w-md shadow-2xl relative overflow-hidden backdrop-blur-md">
             <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-bronzeDark via-bronzeLight to-bronzeDark"></div>
             
@@ -47,7 +36,6 @@
                     SaaS Engine v2.5
                 </span>
                 <h1 class="text-3xl font-black tracking-wider text-silverText">BUSINESS CENTER <span class="text-transparent bg-clip-text bg-gradient-to-r from-bronzeLight to-bronzeMain">FIT</span></h1>
-                
                 <div class="mt-2 inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-darkBg border border-bronzeMain/40 shadow-inner">
                     <span class="text-[10px] font-bold uppercase tracking-widest text-silverMuted">By</span>
                     <span class="text-xs font-black tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-bronzeLight via-bronzeMain to-bronzeLight uppercase">ciodarofitness</span>
@@ -57,16 +45,16 @@
             <form onsubmit="handleLogin(event)" class="space-y-4">
                 <div>
                     <label class="block text-[11px] font-bold uppercase tracking-widest text-silverMuted mb-2">Correo Electrónico</label>
-                    <input type="email" id="login-email" required class="w-full bg-darkBg border border-cardBorder rounded-xl px-4 py-3 text-silverText text-sm focus:outline-none focus:border-bronzeMain transition shadow-inner" placeholder="heber@ciodarofitness.com">
+                    <input type="email" id="login-email" required class="w-full bg-darkBg border border-cardBorder rounded-xl px-4 py-3 text-silverText text-sm focus:outline-none focus:border-bronzeMain" placeholder="heber@ciodarofitness.com">
                 </div>
                 <div>
                     <label class="block text-[11px] font-bold uppercase tracking-widest text-silverMuted mb-2">Contraseña</label>
                     <div class="relative">
-                        <input type="password" id="login-pass" required class="w-full bg-darkBg border border-cardBorder rounded-xl px-4 py-3 pr-12 text-silverText text-sm focus:outline-none focus:border-bronzeMain transition shadow-inner" placeholder="••••••">
-                        <button type="button" onclick="togglePassword('login-pass', this)" class="absolute right-3 top-1/2 -translate-y-1/2 text-silverMuted hover:text-bronzeLight text-lg focus:outline-none">👁️</button>
+                        <input type="password" id="login-pass" required class="w-full bg-darkBg border border-cardBorder rounded-xl px-4 py-3 pr-12 text-silverText text-sm focus:outline-none focus:border-bronzeMain" placeholder="••••••">
+                        <button type="button" onclick="togglePassword('login-pass', this)" class="absolute right-3 top-1/2 -translate-y-1/2 text-xl focus:outline-none">👁️</button>
                     </div>
                 </div>
-                <button type="submit" class="w-full bg-gradient-to-r from-bronzeDark via-bronzeMain to-bronzeDark text-darkBg font-black py-3.5 rounded-xl transition transform hover:scale-[1.01] tracking-wider text-sm shadow-lg shadow-bronzeMain/10">
+                <button type="submit" class="w-full bg-gradient-to-r from-bronzeDark via-bronzeMain to-bronzeDark text-darkBg font-black py-3.5 rounded-xl transition tracking-wider text-sm shadow-lg">
                     ACCEDER AL SISTEMA
                 </button>
             </form>
@@ -80,7 +68,6 @@
             </div>
         </div>
 
-        <!-- PANTALLA DE SOLICITUD DE LICENCIA -->
         <div id="register-screen" class="hidden bg-cardBg border border-cardBorder rounded-2xl p-8 w-full max-w-md shadow-2xl relative overflow-hidden backdrop-blur-md">
             <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-bronzeDark via-bronzeLight to-bronzeDark"></div>
             
@@ -102,7 +89,7 @@
                     <label class="block text-[11px] font-bold uppercase tracking-widest text-silverMuted mb-1.5">Contraseña Deseada</label>
                     <div class="relative">
                         <input type="password" id="reg-pass" required class="w-full bg-darkBg border border-cardBorder rounded-xl px-4 py-3 pr-12 text-silverText text-sm focus:outline-none focus:border-bronzeMain" placeholder="••••••••">
-                        <button type="button" onclick="togglePassword('reg-pass', this)" class="absolute right-3 top-1/2 -translate-y-1/2 text-silverMuted hover:text-bronzeLight text-lg focus:outline-none">👁️</button>
+                        <button type="button" onclick="togglePassword('reg-pass', this)" class="absolute right-3 top-1/2 -translate-y-1/2 text-xl focus:outline-none">👁️</button>
                     </div>
                 </div>
                 <button type="submit" class="w-full bg-gradient-to-r from-bronzeDark via-bronzeMain to-bronzeDark text-darkBg font-black py-3.5 rounded-xl transition tracking-wider text-sm shadow-lg">
@@ -121,10 +108,8 @@
 
     </div>
 
-    <!-- DASHBOARD PRINCIPAL CON MÓDULOS (OCULTO HASTA LOGIN) -->
     <div id="dashboard-screen" class="hidden fixed inset-0 bg-darkBg flex flex-col md:flex-row z-50 overflow-hidden">
         
-        <!-- BARRA LATERAL DE NAVEGACIÓN -->
         <aside class="w-full md:w-72 bg-cardBg border-r border-cardBorder flex flex-col justify-between p-6">
             <div>
                 <div class="mb-8 flex items-center justify-between">
@@ -159,10 +144,8 @@
             </div>
         </aside>
 
-        <!-- CONTENIDO CENTRAL DINÁMICO -->
         <main class="flex-grow p-6 md:p-10 overflow-y-auto bg-darkBg">
             
-            <!-- SECCIÓN 1: MULTI-TENANT -->
             <div id="tab-tenants" class="space-y-6">
                 <header class="flex justify-between items-center pb-6 border-b border-cardBorder">
                     <div>
@@ -199,7 +182,6 @@
                 </div>
             </div>
 
-            <!-- SECCIÓN 2: GESTIÓN DE ALUMNOS -->
             <div id="tab-clients" class="hidden space-y-6">
                 <header class="flex justify-between items-center pb-6 border-b border-cardBorder">
                     <div>
@@ -227,7 +209,6 @@
                 </div>
             </div>
 
-            <!-- SECCIÓN 3: MÉTRICAS ANTROPOMÉTRICAS -->
             <div id="tab-metrics" class="hidden space-y-6">
                 <header class="pb-6 border-b border-cardBorder">
                     <h2 class="text-3xl font-black text-silverText tracking-tight">Calculadora Antropométrica & Biomecánica</h2>
@@ -255,8 +236,6 @@
 
         </main>
     </div>
-
-    <!-- SCRIPT DE NAVEGACIÓN Y FUNCIONALIDAD -->
     <script>
         function togglePassword(fieldId, btn) {
             const input = document.getElementById(fieldId);
@@ -311,11 +290,6 @@
         }
 
         function switchTab(tabId) {
-            document.getElementById('tab-tenants').classList.add('hidden');
-            document.getElementById('tab-clients').classList.add('hidden');
-            document.getElementById('tab-metrics').classList.add('hidden');
-            
-               function switchTab(tabId) {
             document.getElementById('tab-tenants').classList.add('hidden');
             document.getElementById('tab-clients').classList.add('hidden');
             document.getElementById('tab-metrics').classList.add('hidden');
