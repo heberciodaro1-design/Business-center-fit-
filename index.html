@@ -3,57 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Business Center Fit | Plataforma para Entrenadores</title>
-    <!-- Tailwind CSS para los estilos -->
+    <title>Business Center Fit | Plataforma Global para Entrenadores</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        darkBg: '#121212',
-                        cardBg: '#1E1E1E',
-                        bronze: '#CD7F32',
-                        bronzeHover: '#B8732D',
-                        silver: '#E0E0E0',
-                        silverMuted: '#A0A0A0',
-                        accentBorder: '#333333'
+                        darkBg: '#0A0A0C',
+                        cardBg: '#141417',
+                        cardBorder: '#2A2A30',
+                        bronzeMain: '#D4AF37',
+                        bronzeLight: '#F3E5AB',
+                        bronzeDark: '#996515',
+                        silverText: '#F5F5F7',
+                        silverMuted: '#8E8E93'
                     }
                 }
             }
         }
     </script>
 </head>
-<body class="bg-darkBg text-silver font-sans antialiased min-h-screen flex flex-col">
+<body class="bg-darkBg text-silverText font-sans antialiased min-h-screen flex flex-col selection:bg-bronzeMain selection:text-darkBg">
 
-    <!-- CONTENEDOR DE AUTENTICACIÓN (LOGIN / REGISTRO) -->
+    <!-- PANTALLA DE ACCESO (LOGIN) -->
     <div id="auth-screen" class="flex-grow flex items-center justify-center p-4">
-        <div class="bg-cardBg border border-accentBorder rounded-xl p-8 w-full max-w-md shadow-2xl relative overflow-hidden">
-            <!-- Detalles decorativos en bronce y plateado -->
-            <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-bronze via-silver to-bronze"></div>
+        <div class="bg-cardBg border border-cardBorder rounded-2xl p-8 w-full max-w-md shadow-2xl relative overflow-hidden backdrop-blur-md">
+            <!-- Barra superior metálica brillante -->
+            <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-bronzeDark via-bronzeLight to-bronzeDark"></div>
             
-            <div class="text-center mb-8">
-                <h1 class="text-3xl font-extrabold tracking-wider text-silver">BUSINESS CENTER <span class="text-bronze">FIT</span></h1>
-                <p class="text-silverMuted text-sm mt-2">El centro de operaciones para entrenadores profesionales</p>
+            <div class="text-center mb-8 pt-2">
+                <span class="inline-block px-3 py-1 mb-3 text-[10px] font-bold tracking-widest uppercase bg-bronzeDark/30 text-bronzeLight rounded-full border border-bronzeMain/30">
+                    SaaS Edition v1.0
+                </span>
+                <h1 class="text-3xl font-black tracking-wider text-silverText">BUSINESS CENTER <span class="text-transparent bg-clip-text bg-gradient-to-r from-bronzeLight to-bronzeMain">FIT</span></h1>
+                
+                <!-- Tu Marca Integrada -->
+                <div class="mt-2 inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-darkBg border border-bronzeMain/40 shadow-inner">
+                    <span class="text-[10px] font-bold uppercase tracking-widest text-silverMuted">By</span>
+                    <span class="text-xs font-black tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-bronzeLight via-bronzeMain to-bronzeLight uppercase">ciodarofitness</span>
+                </div>
+
+                <p class="text-silverMuted text-[11px] mt-3 font-medium tracking-wide uppercase">El centro de operaciones para entrenadores de élite</p>
             </div>
 
             <!-- Formulario de Ingreso -->
             <form id="login-form" onsubmit="handleLogin(event)" class="space-y-5">
                 <div>
-                    <label class="block text-xs uppercase tracking-wider text-silverMuted mb-2">Correo Electrónico</label>
-                    <input type="email" required class="w-full bg-darkBg border border-accentBorder rounded-lg px-4 py-3 text-silver focus:outline-none focus:border-bronze transition" placeholder="entrenador@tuemail.com">
+                    <label class="block text-[11px] font-bold uppercase tracking-widest text-silverMuted mb-2">Correo Electrónico</label>
+                    <input type="email" required class="w-full bg-darkBg border border-cardBorder rounded-xl px-4 py-3.5 text-silverText text-sm focus:outline-none focus:border-bronzeMain transition shadow-inner" placeholder="entrenador@tuemail.com">
                 </div>
                 <div>
-                    <label class="block text-xs uppercase tracking-wider text-silverMuted mb-2">Contraseña</label>
-                    <input type="password" required class="w-full bg-darkBg border border-accentBorder rounded-lg px-4 py-3 text-silver focus:outline-none focus:border-bronze transition" placeholder="••••••••">
+                    <label class="block text-[11px] font-bold uppercase tracking-widest text-silverMuted mb-2">Contraseña</label>
+                    <input type="password" required class="w-full bg-darkBg border border-cardBorder rounded-xl px-4 py-3.5 text-silverText text-sm focus:outline-none focus:border-bronzeMain transition shadow-inner" placeholder="••••••••">
                 </div>
-                <button type="submit" class="w-full bg-bronze hover:bg-bronzeHover text-darkBg font-bold py-3 rounded-lg transition tracking-wide shadow-lg">
-                    INGRESAR AL SISTEMA
+                <button type="submit" class="w-full bg-gradient-to-r from-bronzeDark via-bronzeMain to-bronzeDark text-darkBg font-black py-4 rounded-xl transition transform hover:scale-[1.01] tracking-wider text-sm shadow-lg shadow-bronzeMain/10">
+                    ACCEDER AL PANEL GLOBAL
                 </button>
             </form>
 
-            <div class="mt-6 text-center">
-                <p class="text-xs text-silverMuted">¿Eres entrenador y quieres tu cuenta global? <a href="#" class="text-bronze hover:underline font-semibold">Regístrate aquí</a></p>
+            <div class="mt-6 text-center border-t border-cardBorder pt-5">
+                <p class="text-xs text-silverMuted">¿Eres entrenador profesional? <a href="#" class="text-bronzeLight hover:underline font-bold">Obtén tu cuenta global</a></p>
             </div>
         </div>
     </div>
@@ -61,87 +72,100 @@
     <!-- DASHBOARD PRINCIPAL (OCULTO HASTA INICIAR SESIÓN) -->
     <div id="dashboard-screen" class="hidden flex-grow flex flex-col md:flex-row">
         <!-- Barra Lateral -->
-        <aside class="w-full md:w-64 bg-cardBg border-r border-accentBorder flex flex-col justify-between p-6">
+        <aside class="w-full md:w-72 bg-cardBg border-r border-cardBorder flex flex-col justify-between p-6">
             <div>
-                <div class="mb-8">
-                    <h2 class="text-xl font-black text-silver">BC <span class="text-bronze">FIT</span></h2>
-                    <p class="text-xs text-silverMuted mt-1">Panel de Control Global</p>
+                <div class="mb-8 flex items-center justify-between">
+                    <div>
+                        <h2 class="text-xl font-black text-silverText">BC <span class="text-bronzeMain">FIT</span></h2>
+                        <p class="text-[10px] uppercase tracking-widest text-silverMuted">By ciodarofitness</p>
+                    </div>
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
                 </div>
                 <nav class="space-y-2">
-                    <a href="#" class="flex items-center space-x-3 bg-darkBg border border-bronze text-silver px-4 py-3 rounded-lg font-medium">
-                        <span>📊</span> <span>Clientes / CRM</span>
+                    <a href="#" class="flex items-center space-x-3 bg-darkBg border border-bronzeMain/50 text-silverText px-4 py-3.5 rounded-xl font-semibold text-sm shadow">
+                      <span>📊</span> <span>Cartera de Atletas</span>
                     </a>
-                    <a href="#" class="flex items-center space-x-3 hover:bg-darkBg text-silverMuted hover:text-silver px-4 py-3 rounded-lg transition">
-                        <span>🥗</span> <span>Planes y Dietas</span>
+                    <a href="#" class="flex items-center space-x-3 hover:bg-darkBg text-silverMuted hover:text-silverText px-4 py-3.5 rounded-xl transition text-sm font-medium">
+                      <span>🥗</span> <span>Constructor de Planes</span>
                     </a>
-                    <a href="#" class="flex items-center space-x-3 hover:bg-darkBg text-silverMuted hover:text-silver px-4 py-3 rounded-lg transition">
-                        <span>⚙️</span> <span>Configuración</span>
+                    <a href="#" class="flex items-center space-x-3 hover:bg-darkBg text-silverMuted hover:text-silverText px-4 py-3.5 rounded-xl transition text-sm font-medium">
+                      <span>⚙️</span> <span>Ajustes de Marca</span>
                     </a>
                 </nav>
             </div>
             <div>
-                <button onclick="handleLogout()" class="w-full border border-accentBorder hover:border-bronze text-silverMuted hover:text-silver py-2.5 rounded-lg text-sm transition">
+                <div class="bg-darkBg p-4 rounded-xl border border-cardBorder mb-4">
+                    <p class="text-[11px] font-bold text-silverText">Licencia Global</p>
+                    <p class="text-xs text-bronzeLight font-semibold mt-0.5">Nivel PRO Activo</p>
+                </div>
+                <button onclick="handleLogout()" class="w-full border border-cardBorder hover:border-bronzeMain text-silverMuted hover:text-silverText py-3 rounded-xl text-xs font-bold tracking-wider uppercase transition">
                     Cerrar Sesión
                 </button>
             </div>
         </aside>
 
         <!-- Contenido Principal -->
-        <main class="flex-grow p-6 md:p-10 overflow-y-auto">
-            <header class="flex justify-between items-center mb-8 pb-4 border-b border-accentBorder">
+        <main class="flex-grow p-6 md:p-10 overflow-y-auto bg-darkBg">
+            <header class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 pb-6 border-b border-cardBorder gap-4">
                 <div>
-                    <h2 class="text-2xl font-bold text-silver">Gestión de Atletas</h2>
-                    <p class="text-sm text-silverMuted">Administra tu cartera de asesorados de forma eficiente.</p>
+                    <h2 class="text-3xl font-black text-silverText tracking-tight">Panel de Control</h2>
+                    <p class="text-sm text-silverMuted mt-1">Gestión avanzada de atletas y rendimiento de negocio.</p>
                 </div>
-                <button class="bg-silver text-darkBg hover:bg-white font-bold px-4 py-2.5 rounded-lg text-sm transition shadow">
-                    + Nuevo Cliente
+                <button class="bg-gradient-to-r from-bronzeLight to-bronzeMain text-darkBg font-black px-5 py-3 rounded-xl text-xs uppercase tracking-wider transition shadow-lg hover:opacity-90">
+                    + Registrar Nuevo Atleta
                 </button>
             </header>
 
-            <!-- Tarjetas de Estadísticas -->
+            <!-- Tarjetas de Métricas -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                <div class="bg-cardBg border border-accentBorder p-6 rounded-xl relative">
-                    <div class="absolute top-0 left-0 w-full h-1 bg-bronze rounded-t-xl"></div>
-                    <p class="text-xs uppercase tracking-wider text-silverMuted">Atletas Activos</p>
-                    <p class="text-3xl font-black text-silver mt-2">12</p>
+                <div class="bg-cardBg border border-cardBorder p-6 rounded-2xl relative overflow-hidden shadow-xl">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-bronzeMain"></div>
+                    <p class="text-xs uppercase font-bold tracking-widest text-silverMuted">Atletas Activos</p>
+                    <p class="text-4xl font-black text-silverText mt-2">12</p>
+                    <p class="text-xs text-emerald-400 font-semibold mt-2">↑ 100% capacidad óptima</p>
                 </div>
-                <div class="bg-cardBg border border-accentBorder p-6 rounded-xl relative">
-                    <div class="absolute top-0 left-0 w-full h-1 bg-silver rounded-t-xl"></div>
-                    <p class="text-xs uppercase tracking-wider text-silverMuted">Planes Actualizados</p>
-                    <p class="text-3xl font-black text-silver mt-2">10</p>
+                <div class="bg-cardBg border border-cardBorder p-6 rounded-2xl relative overflow-hidden shadow-xl">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-silverText"></div>
+                    <p class="text-xs uppercase font-bold tracking-widest text-silverMuted">Planes Actualizados</p>
+                    <p class="text-4xl font-black text-silverText mt-2">10</p>
+                    <p class="text-xs text-silverMuted mt-2">Sincronizados en la nube</p>
                 </div>
-                <div class="bg-cardBg border border-accentBorder p-6 rounded-xl relative">
-                    <div class="absolute top-0 left-0 w-full h-1 bg-bronze rounded-t-xl"></div>
-                    <p class="text-xs uppercase tracking-wider text-silverMuted">Estado de Suscripción</p>
-                    <p class="text-lg font-bold text-bronze mt-3">PRO ACTIVO</p>
+                <div class="bg-cardBg border border-cardBorder p-6 rounded-2xl relative overflow-hidden shadow-xl">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-bronzeDark"></div>
+                    <p class="text-xs uppercase font-bold tracking-widest text-silverMuted">Estatus del Sistema</p>
+                    <p class="text-xl font-black text-bronzeLight mt-3 uppercase tracking-wider">SaaS PRO GLOBAL</p>
+                    <p class="text-xs text-silverMuted mt-1">Conexión Segura</p>
                 </div>
             </div>
 
-            <!-- Tabla de Clientes de Ejemplo -->
-            <div class="bg-cardBg border border-accentBorder rounded-xl overflow-hidden shadow-lg">
-                <div class="p-4 border-b border-accentBorder font-bold text-sm text-silver">Tus Asesorados Recientes</div>
+            <!-- Tabla de Clientes -->
+            <div class="bg-cardBg border border-cardBorder rounded-2xl overflow-hidden shadow-xl">
+                <div class="p-5 border-b border-cardBorder font-bold text-sm text-silverText flex justify-between items-center">
+                    <span>Atletas Asesorados Recientemente</span>
+                    <span class="text-xs text-silverMuted font-normal">Mostrando registros activos</span>
+                </div>
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse text-sm">
                         <thead>
-                            <tr class="bg-darkBg text-silverMuted uppercase text-xs tracking-wider border-b border-accentBorder">
-                                <th class="p-4">Nombre</th>
-                                <th class="p-4">Objetivo</th>
-                                <th class="p-4">Peso Actual</th>
-                                <th class="p-4">Acciones</th>
+                            <tr class="bg-darkBg/80 text-silverMuted uppercase text-[10px] font-bold tracking-widest border-b border-cardBorder">
+                                <th class="p-4">Atleta</th>
+                                <th class="p-4">Objetivo Principal</th>
+                                <th class="p-4">Estatus Nutricional</th>
+                                <th class="p-4 text-right">Acciones</th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-accentBorder">
-                            <tr class="hover:bg-darkBg/50 transition">
-                                <td class="p-4 font-semibold text-silver">Lady Caceres</td>
+                        <tbody class="divide-y divide-cardBorder">
+                            <tr class="hover:bg-darkBg/40 transition">
+                                <td class="p-4 font-bold text-silverText">Lady Caceres</td>
                                 <td class="p-4 text-silverMuted">Definición / Tonificación</td>
-                                <td class="p-4 text-silver">-- kg</td>
-                                <td class="p-4"><button class="text-bronze hover:underline font-medium">Ver Plan</button></td>
+                                <td class="p-4"><span class="px-2.5 py-1 bg-bronzeDark/20 text-bronzeLight text-xs rounded-full font-semibold border border-bronzeMain/20">Plan Activo</span></td>
+                                <td class="p-4 text-right"><button class="text-bronzeLight hover:underline font-bold text-xs uppercase tracking-wider">Gestionar Plan</button></td>
                             </tr>
-                            <tr class="hover:bg-darkBg/50 transition">
-                                <td class="p-4 font-semibold text-silver">Mari Ferrer</td>
-                                <td class="p-4 text-silverMuted">Hipertrofia</td>
-                                <td class="p-4 text-silver">-- kg</td>
-                                <td class="p-4"><button class="text-bronze hover:underline font-medium">Ver Plan</button></td>
+                            <tr class="hover:bg-darkBg/40 transition">
+                                <td class="p-4 font-bold text-silverText">Mari Ferrer</td>
+                                <td class="p-4 text-silverMuted">Hipertrofia Muscular</td>
+                                <td class="p-4"><span class="px-2.5 py-1 bg-bronzeDark/20 text-bronzeLight text-xs rounded-full font-semibold border border-bronzeMain/20">Plan Activo</span></td>
+                                <td class="p-4 text-right"><button class="text-bronzeLight hover:underline font-bold text-xs uppercase tracking-wider">Gestionar Plan</button></td>
                             </tr>
                         </tbody>
                     </table>
@@ -150,7 +174,7 @@
         </main>
     </div>
 
-    <!-- Script simple para simular el acceso -->
+    <!-- Script de Control -->
     <script>
         function handleLogin(event) {
             event.preventDefault();
