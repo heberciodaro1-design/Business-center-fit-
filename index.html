@@ -2,506 +2,749 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Business Center Fit | By ciodarofitness</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ciodarofitness - Panel de Control</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        darkBg: '#0A0A0C', cardBg: '#141417', cardBorder: '#2A2A30',
-                        bronzeMain: '#D4AF37', bronzeLight: '#F3E5AB', bronzeDark: '#996515',
-                        silverText: '#F5F5F7', silverMuted: '#8E8E93'
-                    }
-                }
-            }
+    <style>
+        @media print {
+            body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .no-print { display: none !important; }
+            .print-only { display: block !important; }
+            .bg-\[\#131b2e\] { background-color: #131b2e !important; border: 1px solid rgba(249, 115, 22, 0.4) !important; }
+            .bg-\[\#0b0f19\] { background-color: #0b0f19 !important; }
+            .text-white { color: #ffffff !important; font-weight: 800 !important; }
+            .text-gray-200, .text-gray-300, .text-gray-400 { color: #e2e8f0 !important; font-weight: 700 !important; }
+            .text-orange-400, .text-orange-500 { color: #f97316 !important; font-weight: 900 !important; }
+            .text-emerald-400 { color: #34d399 !important; font-weight: 800 !important; }
+            .ocultar-en-pdf { display: none !important; }
+            .mostrar-en-pdf { display: inline !important; }
         }
-    </script>
+        .mostrar-en-pdf { display: none; }
+    </style>
 </head>
-<body class="bg-darkBg text-silverText font-sans antialiased min-h-screen flex flex-col justify-between" onload="initSystem()">
+<body class="bg-[#0b0f19] text-gray-100 min-h-screen p-4 pb-20">
 
-    <!-- LOGIN ADMINISTRADOR -->
-    <div id="login-container" class="flex-grow flex items-center justify-center p-4">
-        <div class="bg-cardBg border border-cardBorder rounded-2xl p-8 w-full max-w-md shadow-2xl relative overflow-hidden">
-            <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-bronzeDark via-bronzeLight to-bronzeDark"></div>
-            <div class="text-center mb-6 pt-2">
-                <h1 class="text-3xl font-black tracking-wider text-silverText">BUSINESS CENTER <span class="text-bronzeMain">FIT</span></h1>
-                <p class="text-[10px] uppercase tracking-widest text-silverMuted mt-1">Administrador ciodarofitness</p>
-            </div>
-            <form onsubmit="handleLogin(event)" class="space-y-4">
-                <div>
-                    <label class="block text-[11px] font-bold uppercase tracking-widest text-silverMuted mb-2">Correo</label>
-                    <input type="email" id="login-email" required placeholder="heber@ciodarofitness.com" class="w-full bg-darkBg border border-cardBorder rounded-xl px-4 py-3 text-sm text-silverText focus:border-bronzeMain focus:outline-none" autocomplete="off">
-                </div>
-                <div>
-                    <label class="block text-[11px] font-bold uppercase tracking-widest text-silverMuted mb-2">Contraseña</label>
-                    <div class="relative">
-                        <input type="password" id="login-pass" required placeholder="••••••••" class="w-full bg-darkBg border border-cardBorder rounded-xl px-4 py-3 pr-12 text-sm text-silverText focus:border-bronzeMain focus:outline-none" autocomplete="new-password">
-                        <button type="button" onclick="togglePassword('login-pass', this)" class="absolute right-3 top-1/2 -translate-y-1/2 text-xl focus:outline-none">👁️</button>
-                    </div>
-                </div>
-                <button type="submit" class="w-full bg-gradient-to-r from-bronzeDark via-bronzeMain to-bronzeDark text-darkBg font-black py-3.5 rounded-xl text-sm shadow-lg tracking-wider">ACCEDER AL SISTEMA</button>
-            </form>
-            <div class="mt-4 text-center">
-                <button onclick="openClientRegisterModal()" class="text-xs text-bronzeLight underline font-bold">Portal de Afiliados / Solicitar Licencia</button>
-            </div>
-            <div id="login-error" class="hidden mt-4 p-3 bg-red-950/45 border border-red-500/30 rounded-xl text-xs text-red-300 text-center">Correo o contraseña incorrectos</div>
+    <!-- PANTALLA DE ACCESO RESTRINGIDO (ADMIN) -->
+    <div id="pantalla-login" class="max-w-md mx-auto mt-20 bg-[#131b2e] p-6 rounded-3xl border border-orange-500/40 shadow-2xl space-y-5">
+        <div class="text-center space-y-1">
+            <h1 class="text-xl font-black text-white tracking-wide">CIODAROFITNESS <span class="text-xs text-orange-500 font-normal">pro</span></h1>
+            <p class="text-xs text-orange-400 uppercase tracking-widest font-semibold">Acceso Exclusivo de Administrador</p>
         </div>
+        <form onsubmit="verificarAccesoAdmin(event)" class="space-y-4">
+            <div>
+                <label class="text-xs text-gray-400 block mb-1">Clave Maestra de Seguridad</label>
+                <input type="password" id="input-clave-admin" required placeholder="Ingresa tu clave maestra" class="w-full bg-[#0b0f19] border border-gray-800 rounded-xl p-3 text-sm focus:outline-none focus:border-orange-500 text-white placeholder-gray-600">
+            </div>
+            <button type="submit" class="w-full bg-orange-600 hover:bg-orange-500 text-white font-bold py-3 px-4 rounded-xl transition duration-200 shadow-lg shadow-orange-600/20">🔒 Ingresar al Sistema</button>
+            <p id="error-login" class="text-red-400 text-xs text-center hidden">Clave incorrecta. Acceso denegado.</p>
+        </form>
     </div>
 
-    <!-- DASHBOARD PRINCIPAL -->
-    <div id="dashboard-screen" class="hidden fixed inset-0 bg-darkBg flex flex-col md:flex-row z-50 overflow-hidden">
-        <aside class="w-full md:w-72 bg-cardBg border-r border-cardBorder flex flex-col justify-between p-6 overflow-y-auto">
-            <div>
-                <div class="mb-6">
-                    <h2 class="text-xl font-black text-silverText">BC <span class="text-bronzeMain">FIT</span></h2>
-                    <p class="text-[11px] font-bold text-bronzeLight mt-0.5">Admin: ciodarofitness</p>
-                    <div id="live-clock" class="text-[10px] text-silverMuted font-mono mt-1">Cargando...</div>
+    <!-- CONTENEDOR PRINCIPAL -->
+    <div class="max-w-md mx-auto space-y-5 hidden" id="app-container">
+        <div id="vista-principal" class="space-y-5">
+            <header class="flex justify-between items-center bg-[#131b2e] p-4 rounded-2xl border border-gray-800 shadow-lg">
+                <div>
+                    <h1 class="text-lg font-black text-white tracking-wide">CIODAROFITNESS <span class="text-xs text-orange-500 font-normal">pro</span></h1>
                 </div>
-                
-                <nav class="space-y-2">
-                    <button onclick="switchTab('tab-tenants')" id="btn-tenants" class="w-full text-left bg-darkBg border border-bronzeMain text-silverText px-4 py-3 rounded-xl text-sm font-semibold shadow">1. Validación de Solicitudes</button>
-                    <button onclick="switchTab('tab-clients')" id="btn-clients" class="w-full text-left hover:bg-darkBg text-silverMuted px-4 py-3 rounded-xl text-sm font-medium transition">2. Gestión de Alumnos</button>
-                    <button onclick="switchTab('tab-calories')" id="btn-calories" class="w-full text-left hover:bg-darkBg text-silverMuted px-4 py-3 rounded-xl text-sm font-medium transition">3. Calculadora de Calorías</button>
-                    <button onclick="switchTab('tab-financial')" id="btn-financial" class="w-full text-left hover:bg-darkBg text-silverMuted px-4 py-3 rounded-xl text-sm font-medium transition">4. Finanzas & Cierres (1-31)</button>
-                </nav>
-            </div>
-            <button onclick="handleLogout()" class="mt-6 border border-cardBorder text-silverMuted py-3 rounded-xl text-xs font-bold uppercase">Cerrar Sesión</button>
-        </aside>
-
-        <main class="flex-grow p-6 md:p-10 overflow-y-auto">
-            
-            <!-- TAB 1: VALIDACIÓN DE SOLICITUDES -->
-            <div id="tab-tenants" class="space-y-6">
-                <header class="pb-4 border-b border-cardBorder flex justify-between items-center">
-                    <div>
-                        <h2 class="text-2xl font-black text-silverText">1. Validación de Solicitudes de Licencia</h2>
-                        <p class="text-xs text-silverMuted mt-1">Solicitudes enviadas por clientes o afiliados externos.</p>
-                    </div>
-                </header>
-                <div id="solicitudes-container" class="space-y-4"></div>
-            </div>
-
-            <!-- TAB 2: GESTIÓN DE ALUMNOS -->
-            <div id="tab-clients" class="hidden space-y-6">
-                <header class="pb-4 border-b border-cardBorder flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                    <div>
-                        <h2 class="text-2xl font-black text-silverText">2. Gestión de Alumnos & Historial</h2>
-                        <p class="text-xs text-silverMuted mt-1">Control antropométrico con comparativa precisa e historial.</p>
-                    </div>
-                    <button onclick="openModal()" class="bg-gradient-to-r from-bronzeDark via-bronzeMain to-bronzeDark text-darkBg font-black px-4 py-2.5 rounded-xl text-xs uppercase tracking-wider shadow">
-                        + Registrar Nuevo Alumno
-                    </button>
-                </header>
-
-                <div class="bg-cardBg border border-cardBorder p-3 rounded-2xl flex items-center gap-3">
-                    <span class="text-sm">🔍</span>
-                    <input type="text" id="search-input" oninput="renderClients()" placeholder="Buscar alumno por nombre..." class="w-full bg-darkBg border border-cardBorder rounded-xl px-4 py-2 text-sm text-silverText focus:border-bronzeMain focus:outline-none">
+                <div class="flex items-center gap-2">
+                    <button onclick="cerrarSesionAdmin()" class="bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 text-xs font-semibold px-2.5 py-1.5 rounded-xl transition" title="Bloquear panel">🚪 Salir</button>
+                    <button onclick="alternarVisibilidadMontos()" id="btn-ojo" class="bg-gray-800 hover:bg-gray-700 text-gray-300 p-2 rounded-xl border border-gray-700 text-xs transition" title="Ocultar/Mostrar montos">👁️</button>
                 </div>
+            </header>
 
-                <div id="clients-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+            <!-- Sección de Solicitudes de Licencia / Validación -->
+            <div class="bg-[#131b2e] p-4 rounded-2xl border border-orange-500/30 space-y-3 no-print">
+                <div class="flex justify-between items-center">
+                    <h3 class="text-xs font-bold text-orange-400 uppercase tracking-wider flex items-center gap-1.5">🔑 Solicitudes de Licencia</h3>
+                    <span id="badge-solicitudes" class="bg-orange-500/20 text-orange-400 text-[10px] font-bold px-2 py-0.5 rounded-full">0 pendientes</span>
+                </div>
+                <div id="lista-solicitudes" class="space-y-2">
+                    <!-- Se llena dinámicamente -->
+                </div>
             </div>
 
-            <!-- TAB 3: CALCULADORA -->
-            <div id="tab-calories" class="hidden space-y-6">
-                <header class="pb-4 border-b border-cardBorder">
-                    <h2 class="text-2xl font-black text-silverText">3. Calculadora de Calorías por Género</h2>
-                    <p class="text-xs text-silverMuted mt-1">Estimación de TMB y requerimiento calórico diario.</p>
-                </header>
-                <div class="bg-cardBg border border-cardBorder p-6 rounded-2xl max-w-xl space-y-4 shadow-xl">
-                    <div class="grid grid-cols-2 gap-4">
-                        <div><label class="block text-xs font-bold text-silverMuted mb-1">Peso (kg)</label><input type="number" id="cal-peso" value="70" class="w-full bg-darkBg border border-cardBorder rounded-xl px-4 py-2.5 text-sm text-silverText"></div>
-                        <div><label class="block text-xs font-bold text-silverMuted mb-1">Estatura (cm)</label><input type="number" id="cal-est" value="165" class="w-full bg-darkBg border border-cardBorder rounded-xl px-4 py-2.5 text-sm text-silverText"></div>
+            <!-- Botones de Respaldo JSON -->
+            <div class="bg-[#131b2e] p-3 rounded-2xl border border-gray-800 flex justify-between items-center gap-2 no-print">
+                <span class="text-[11px] text-gray-400 font-medium pl-1">💾 Respaldo BD:</span>
+                <div class="flex gap-2">
+                    <button onclick="exportarDatosJSON()" class="bg-gray-800 hover:bg-gray-700 text-orange-400 text-xs font-semibold px-3 py-1.5 rounded-xl border border-gray-700 transition">📤 Exportar</button>
+                    <label class="bg-gray-800 hover:bg-gray-700 text-emerald-400 text-xs font-semibold px-3 py-1.5 rounded-xl border border-gray-700 transition cursor-pointer">
+                        📥 Importar
+                        <input type="file" id="input-json" accept=".json" onchange="importarDatosJSON(event)" class="hidden">
+                    </label>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+                <div class="bg-[#131b2e] p-3.5 rounded-2xl border border-gray-800">
+                    <div class="text-[10px] text-gray-400 uppercase font-semibold">Atletas Activos</div>
+                    <div id="total-clientes" class="text-2xl font-black mt-1 text-white">0</div>
+                </div>
+                <div class="bg-[#131b2e] p-3.5 rounded-2xl border border-gray-800">
+                    <div class="text-[10px] text-gray-400 uppercase font-semibold">Meta Mensual</div>
+                    <div id="total-meta" class="text-xl font-black mt-1 text-orange-400">$0.00</div>
+                </div>
+                <div class="bg-[#131b2e] p-3.5 rounded-2xl border border-gray-800">
+                    <div class="text-[10px] text-gray-400 uppercase font-semibold">Recaudado</div>
+                    <div id="total-recaudado" class="text-xl font-black mt-1 text-emerald-400">$0.00</div>
+                </div>
+                <div class="bg-[#131b2e] p-3.5 rounded-2xl border border-gray-800">
+                    <div class="text-[10px] text-gray-400 uppercase font-semibold">Por Cobrar</div>
+                    <div id="total-por-cobrar" class="text-xl font-black mt-1 text-amber-400">$0.00</div>
+                </div>
+            </div>
+
+            <div class="bg-[#131b2e] p-5 rounded-3xl border border-gray-800 space-y-3 shadow-xl no-print">
+                <h2 id="titulo-form-cliente" class="text-xs font-bold text-orange-500 uppercase tracking-wider flex items-center gap-1.5">⚡ Registrar Nuevo Atleta</h2>
+                <form id="form-cliente" class="space-y-3">
+                    <div>
+                        <label class="text-xs text-gray-400 block mb-1">Nombre Completo</label>
+                        <input type="text" id="nombre" required placeholder="Ej. Juan Pérez" class="w-full bg-[#0b0f19] border border-gray-800 rounded-xl p-3 text-sm focus:outline-none focus:border-orange-500 text-white placeholder-gray-600">
                     </div>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div><label class="block text-xs font-bold text-silverMuted mb-1">Edad</label><input type="number" id="cal-edad" value="28" class="w-full bg-darkBg border border-cardBorder rounded-xl px-4 py-2.5 text-sm text-silverText"></div>
+                    <div class="grid grid-cols-2 gap-2">
                         <div>
-                            <label class="block text-xs font-bold text-silverMuted mb-1">Género</label>
-                            <select id="cal-gen" class="w-full bg-darkBg border border-cardBorder rounded-xl px-4 py-2.5 text-sm text-silverText"><option value="F">Femenino</option><option value="M">Masculino</option></select>
+                            <label class="text-xs text-gray-400 block mb-1">Edad</label>
+                            <input type="number" id="edad" placeholder="Ej. 30" class="w-full bg-[#0b0f19] border border-gray-800 rounded-xl p-3 text-sm focus:outline-none focus:border-orange-500 text-white placeholder-gray-600">
+                        </div>
+                        <div>
+                            <label class="text-xs text-gray-400 block mb-1">WhatsApp</label>
+                            <input type="text" id="whatsapp" required placeholder="Ej. 5841234" class="w-full bg-[#0b0f19] border border-gray-800 rounded-xl p-3 text-sm focus:outline-none focus:border-orange-500 text-white placeholder-gray-600">
                         </div>
                     </div>
-                    <div>
-                        <label class="block text-xs font-bold text-silverMuted mb-1">Actividad</label>
-                        <select id="cal-act" class="w-full bg-darkBg border border-cardBorder rounded-xl px-4 py-2.5 text-sm text-silverText">
-                            <option value="1.2">Sedentario</option><option value="1.375">Ligero (1-3 días)</option><option value="1.55" selected>Moderado (3-5 días)</option><option value="1.725">Fuerte (6-7 días)</option>
-                        </select>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="text-xs text-gray-400 block mb-1">Costo Paquete ($)</label>
+                            <input type="number" id="costo" required placeholder="Ej. 50" class="w-full bg-[#0b0f19] border border-gray-800 rounded-xl p-3 text-sm focus:outline-none focus:border-orange-500 text-white placeholder-gray-600">
+                        </div>
+                        <div>
+                            <label class="text-xs text-gray-400 block mb-1">Fecha de Inicio Original</label>
+                            <input type="date" id="fecha" required class="w-full bg-[#0b0f19] border border-gray-800 rounded-xl p-3 text-sm focus:outline-none focus:border-orange-500 text-white">
+                        </div>
                     </div>
-                    <button onclick="calcularCaloriasIndependiente()" class="w-full bg-bronzeMain text-darkBg font-black py-3 rounded-xl text-xs uppercase tracking-wider shadow">Calcular Calorías</button>
-                    <div id="cal-resultado" class="hidden p-4 bg-darkBg border border-bronzeMain/40 rounded-xl text-xs text-bronzeLight space-y-2"></div>
-                </div>
+                    <div class="flex gap-2">
+                        <button type="submit" id="btn-submit-cliente" class="w-full bg-orange-600 hover:bg-orange-500 text-white font-bold py-3 px-4 rounded-xl transition duration-200 flex items-center justify-center gap-2 shadow-lg shadow-orange-600/20">📂 Agregar a la Base de Datos</button>
+                        <button type="button" id="btn-cancelar-edicion-cliente" onclick="cancelarEdicionCliente()" class="hidden bg-gray-700 hover:bg-gray-600 text-white font-bold px-4 py-3 rounded-xl transition">Cancelar</button>
+                    </div>
+                </form>
             </div>
 
-            <!-- TAB 4: FINANZAS -->
-            <div id="tab-financial" class="hidden space-y-6">
-                <header class="pb-4 border-b border-cardBorder">
-                    <h2 class="text-2xl font-black text-silverText">4. Finanzas & Cierres (1 al 31)</h2>
-                    <p class="text-xs text-silverMuted mt-1">Control de recaudos y saldos pendientes.</p>
-                </header>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div class="bg-cardBg border border-cardBorder p-5 rounded-2xl"><p class="text-xs uppercase text-silverMuted font-bold">Recaudado</p><p id="fin-rec" class="text-3xl font-black text-emerald-400 mt-1">$0</p></div>
-                    <div class="bg-cardBg border border-cardBorder p-5 rounded-2xl"><p class="text-xs uppercase text-silverMuted font-bold">Pendiente</p><p id="fin-pen" class="text-3xl font-black text-amber-400 mt-1">$0</p></div>
-                    <div class="bg-cardBg border border-cardBorder p-5 rounded-2xl"><p class="text-xs uppercase text-silverMuted font-bold">Cierre de Mes</p><p class="text-xl font-black text-bronzeLight mt-1">Activo (1-31)</p></div>
-                </div>
+            <div class="space-y-3 no-print">
+                <h3 class="text-xs font-bold text-gray-400 uppercase tracking-wider flex items-center gap-1.5">📋 Control de Atletas</h3>
+                <input type="text" id="buscador-clientes" oninput="renderizarClientes()" placeholder="🔍 Buscar atleta por nombre..." class="w-full bg-[#131b2e] border border-gray-800 rounded-xl p-3 text-sm focus:outline-none focus:border-orange-500 text-white placeholder-gray-600 shadow-md">
+                <div id="lista-clientes" class="space-y-3"></div>
             </div>
-        </main>
-    </div>
+        </div>
 
-    <!-- MODAL ALUMNO -->
-    <div id="client-modal" class="hidden fixed inset-0 bg-darkBg/85 flex items-center justify-center p-4 z-50 overflow-y-auto">
-        <div class="bg-cardBg border border-cardBorder rounded-2xl p-6 w-full max-w-xl space-y-4 shadow-2xl my-8">
-            <h3 id="modal-title" class="font-bold text-silverText text-lg">Registrar Alumno</h3>
-            <input type="hidden" id="edit-idx" value="-1">
-            
-            <div class="grid grid-cols-2 gap-3">
-                <div><label class="block text-[11px] font-bold text-silverMuted mb-1">Nombre Completo</label><input type="text" id="f-nom" placeholder="Ej. Carlos Pérez" class="w-full bg-darkBg border border-cardBorder rounded-xl px-4 py-2.5 text-sm text-silverText"></div>
-                <div><label class="block text-[11px] font-bold text-silverMuted mb-1">WhatsApp (+58...)</label><input type="text" id="f-tel" placeholder="+58..." class="w-full bg-darkBg border border-cardBorder rounded-xl px-4 py-2.5 text-sm text-silverText"></div>
+        <div id="vista-expediente" class="hidden space-y-4">
+            <div class="flex justify-between items-center no-print">
+                <button onclick="volverAlInicio()" class="bg-gray-800 hover:bg-gray-700 text-white text-xs font-semibold px-3.5 py-2 rounded-xl border border-gray-700 transition">← Volver al Panel</button>
+                <button onclick="generarPDFExpediente()" class="bg-orange-600 hover:bg-orange-500 text-white text-xs font-bold px-4 py-2 rounded-xl shadow-lg flex items-center gap-1.5 transition">⚡ Descargar Expediente PDF</button>
             </div>
-
-            <div class="grid grid-cols-3 gap-3">
-                <div><label class="block text-[10px] font-bold text-silverMuted mb-1">Edad</label><input type="number" id="f-edad" class="w-full bg-darkBg border border-cardBorder rounded-xl px-3 py-2.5 text-sm text-silverText"></div>
-                <div><label class="block text-[10px] font-bold text-silverMuted mb-1">Estatura (cm)</label><input type="number" id="f-est" class="w-full bg-darkBg border border-cardBorder rounded-xl px-3 py-2.5 text-sm text-silverText"></div>
-                <div><label class="block text-[10px] font-bold text-bronzeLight mb-1">Paquete ($)</label><input type="number" id="f-costo" class="w-full bg-darkBg border border-bronzeMain rounded-xl px-3 py-2.5 text-sm text-bronzeLight font-bold" value="50"></div>
+            <div class="bg-gradient-to-r from-orange-600 to-amber-600 p-5 rounded-2xl shadow-xl text-white text-center space-y-1">
+                <h1 class="text-xl font-black tracking-wider">CIODAROFITNESS</h1>
+                <p class="text-xs font-semibold uppercase tracking-widest text-orange-100">Expediente Antropométrico & Rendimiento</p>
+                <div class="text-[10px] text-orange-200 pt-1" id="fecha-impresion"></div>
             </div>
-
-            <!-- Antropometría Inicial -->
-            <div class="bg-darkBg/50 border border-cardBorder p-4 rounded-xl space-y-3">
-                <p class="text-[11px] font-black uppercase tracking-wider text-silverMuted">1. Antropometría Inicial (Base):</p>
-                <div class="grid grid-cols-3 gap-3">
-                    <div><label class="block text-[10px] text-silverMuted font-bold mb-1">Peso Inicial (kg)</label><input type="number" id="f-peso-ini" step="0.1" class="w-full bg-darkBg border border-cardBorder rounded-xl px-3 py-2 text-xs text-silverText"></div>
-                    <div><label class="block text-[10px] text-silverMuted font-bold mb-1">Cintura Ini. (cm)</label><input type="number" id="f-cintura-ini" step="0.1" class="w-full bg-darkBg border border-cardBorder rounded-xl px-3 py-2 text-xs text-silverText"></div>
-                    <div><label class="block text-[10px] text-silverMuted font-bold mb-1">Glúteos Ini. (cm)</label><input type="number" id="f-gluteos-ini" step="0.1" class="w-full bg-darkBg border border-cardBorder rounded-xl px-3 py-2 text-xs text-silverText"></div>
-                </div>
-            </div>
-
-            <!-- Antropometría Actual -->
-            <div class="bg-darkBg/50 border border-cardBorder p-4 rounded-xl space-y-3">
-                <p class="text-[11px] font-black uppercase tracking-wider text-bronzeLight">2. Antropometría Actual:</p>
-                <div class="grid grid-cols-3 gap-3">
-                    <div><label class="block text-[10px] text-silverMuted font-bold mb-1">Peso Actual (kg)</label><input type="number" id="f-peso" step="0.1" class="w-full bg-darkBg border border-cardBorder rounded-xl px-3 py-2 text-xs text-silverText"></div>
-                    <div><label class="block text-[10px] text-silverMuted font-bold mb-1">Cintura Act. (cm)</label><input type="number" id="f-cintura" step="0.1" class="w-full bg-darkBg border border-cardBorder rounded-xl px-3 py-2 text-xs text-silverText"></div>
-                    <div><label class="block text-[10px] text-silverMuted font-bold mb-1">Glúteos Act. (cm)</label><input type="number" id="f-gluteos" step="0.1" class="w-full bg-darkBg border border-cardBorder rounded-xl px-3 py-2 text-xs text-silverText"></div>
-                </div>
-                <div class="grid grid-cols-3 gap-3 pt-2">
-                    <div><label class="block text-[10px] text-silverMuted font-bold mb-1">Tórax</label><input type="number" id="f-torax" step="0.1" class="w-full bg-darkBg border border-cardBorder rounded-xl px-3 py-2 text-xs text-silverText"></div>
-                    <div><label class="block text-[10px] text-silverMuted font-bold mb-1">Bíceps</label><input type="number" id="f-biceps" step="0.1" class="w-full bg-darkBg border border-cardBorder rounded-xl px-3 py-2 text-xs text-silverText"></div>
-                    <div><label class="block text-[10px] text-silverMuted font-bold mb-1">Cuádriceps</label><input type="number" id="f-cuad" step="0.1" class="w-full bg-darkBg border border-cardBorder rounded-xl px-3 py-2 text-xs text-silverText"></div>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-2 gap-3">
-                <div><label class="block text-[10px] uppercase text-silverMuted font-bold mb-1">Fecha Inicio</label><input type="date" id="f-ini" class="w-full bg-darkBg border border-cardBorder rounded-xl px-3 py-2.5 text-sm text-silverText"></div>
-                <div><label class="block text-[10px] uppercase text-silverMuted font-bold mb-1">Fecha Corte (1-31)</label><input type="date" id="f-cor" class="w-full bg-darkBg border border-cardBorder rounded-xl px-3 py-2.5 text-sm text-silverText"></div>
-            </div>
-
-            <div>
-                <label class="block text-[10px] uppercase text-silverMuted font-bold mb-1">Estado de Pago</label>
-                <select id="f-pag" class="w-full bg-darkBg border border-cardBorder rounded-xl px-4 py-2.5 text-sm text-silverText">
-                    <option value="Pagado">Pagado</option>
-                    <option value="Pendiente">Pendiente</option>
-                </select>
-            </div>
-
-            <div class="flex space-x-3 pt-2">
-                <button onclick="saveClient()" class="flex-grow bg-bronzeMain text-darkBg font-black py-3 rounded-xl text-xs uppercase tracking-wider shadow">Guardar Alumno</button>
-                <button onclick="closeModal()" class="border border-cardBorder text-silverMuted px-5 py-3 rounded-xl text-xs uppercase font-bold">Cancelar</button>
+            <div id="detalle-expediente" class="space-y-4"></div>
+            <div class="bg-[#131b2e] p-4 rounded-2xl border border-gray-800 text-center space-y-1 mt-6">
+                <p class="text-xs font-bold text-orange-500">CIODAROFITNESS</p>
+                <p class="text-[10px] text-gray-400">Entrenamiento Inteligente</p>
             </div>
         </div>
     </div>
+        <script>
+        const claveMaestra = "ciodaro2026"; 
 
-    <!-- MODAL REGISTRO PÚBLICO AFILIADOS -->
-    <div id="client-register-modal" class="hidden fixed inset-0 bg-darkBg/85 flex items-center justify-center p-4 z-50 overflow-y-auto">
-        <div class="bg-cardBg border border-cardBorder rounded-2xl p-6 w-full max-w-md space-y-4 shadow-2xl">
-            <h3 class="font-bold text-silverText text-lg">Solicitud de Licencia / Afiliación</h3>
-            <p class="text-xs text-silverMuted">Envía tus datos para solicitar tu licencia directamente a Ciodarofitness.</p>
-            <div><label class="block text-xs font-bold text-silverMuted mb-1">Nombre Completo</label><input type="text" id="reg-nombre" placeholder="Tu nombre" class="w-full bg-darkBg border border-cardBorder rounded-xl px-4 py-2.5 text-sm text-silverText"></div>
-            <div><label class="block text-xs font-bold text-silverMuted mb-1">Correo Electrónico</label><input type="email" id="reg-email" placeholder="tucorreo@email.com" class="w-full bg-darkBg border border-cardBorder rounded-xl px-4 py-2.5 text-sm text-silverText"></div>
-            <div>
-                <label class="block text-xs font-bold text-silverMuted mb-1">Tipo de Licencia</label>
-                <select id="reg-tipo" class="w-full bg-darkBg border border-cardBorder rounded-xl px-4 py-2.5 text-sm text-silverText">
-                    <option value="Standard">Licencia Standard - Ciodarofitness</option>
-                    <option value="Pro">Licencia Pro Biomecánica & Nutrición</option>
-                </select>
-            </div>
-            <div class="flex space-x-3 pt-2">
-                <button onclick="enviarSolicitudExterna()" class="flex-grow bg-bronzeMain text-darkBg font-black py-3 rounded-xl text-xs uppercase tracking-wider shadow">Enviar Solicitud</button>
-                <button onclick="closeClientRegisterModal()" class="border border-cardBorder text-silverMuted px-5 py-3 rounded-xl text-xs uppercase font-bold">Cerrar</button>
-            </div>
-        </div>
-    </div>
-    <!-- MOTOR JAVASCRIPT -->
-    <script>
-        let clients = [];
-        let solicitudes = [];
+        document.addEventListener("DOMContentLoaded", () => {
+            if (sessionStorage.getItem('ciodaro_sesion_activa') === 'true') {
+                mostrarPanelAdmin();
+            }
+        });
 
-        function initSystem() {
-            setInterval(() => {
-                const now = new Date();
-                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-                document.getElementById('live-clock').innerText = `${now.toLocaleDateString('es-ES', options)} - ${now.toLocaleTimeString('es-ES')}`;
-            }, 1000);
-            renderClients();
-            renderSolicitudes();
-            calcFin();
-        }
-
-        function togglePassword(id, btn) {
-            const i = document.getElementById(id);
-            i.type = i.type === "password" ? "text" : "password";
-            btn.innerText = i.type === "password" ? "👁️" : "🙈";
-        }
-
-        function handleLogin(e) {
+        function verificarAccesoAdmin(e) {
             e.preventDefault();
-            const email = document.getElementById('login-email').value.trim().toLowerCase();
-            const pass = document.getElementById('login-pass').value.trim();
+            const inputClave = document.getElementById('input-clave-admin').value;
+            const errorMsg = document.getElementById('error-login');
 
-            if((email === "heber@ciodarofitness.com" || email === "admin@ciodarofitness.com") && pass === "123456") {
-                document.getElementById('login-error').classList.add('hidden');
-                document.getElementById('login-container').classList.add('hidden');
-                document.getElementById('dashboard-screen').classList.remove('hidden');
-                renderClients(); 
-                renderSolicitudes(); 
-                calcFin();
-            } else { 
-                document.getElementById('login-error').classList.remove('hidden'); 
+            if (inputClave === claveMaestra) {
+                sessionStorage.setItem('ciodaro_sesion_activa', 'true');
+                errorMsg.classList.add('hidden');
+                mostrarPanelAdmin();
+            } else {
+                errorMsg.classList.remove('hidden');
+                document.getElementById('input-clave-admin').value = '';
             }
         }
 
-        function handleLogout() {
-            document.getElementById('dashboard-screen').classList.add('hidden');
-            document.getElementById('login-container').classList.remove('hidden');
-            document.getElementById('login-email').value = "";
-            document.getElementById('login-pass').value = "";
+        function mostrarPanelAdmin() {
+            document.getElementById('pantalla-login').classList.add('hidden');
+            document.getElementById('app-container').classList.remove('hidden');
+            const inputFecha = document.getElementById('fecha');
+            if (inputFecha) inputFecha.valueAsDate = new Date();
+            renderizarSolicitudesLicencia();
+            renderizarClientes();
         }
 
-        function switchTab(id) {
-            ['tab-tenants', 'tab-clients', 'tab-calories', 'tab-financial'].forEach(t => document.getElementById(t).classList.add('hidden'));
-            ['btn-tenants', 'btn-clients', 'btn-calories', 'btn-financial'].forEach(b => {
-                const el = document.getElementById(b);
-                if(el) el.className = "w-full text-left hover:bg-darkBg text-silverMuted px-4 py-3 rounded-xl text-sm font-medium transition";
-            });
-            document.getElementById(id).classList.remove('hidden');
-            event.currentTarget.className = "w-full text-left bg-darkBg border border-bronzeMain text-silverText px-4 py-3 rounded-xl text-sm font-semibold shadow";
-            if(id === 'tab-financial') calcFin();
+        function cerrarSesionAdmin() {
+            sessionStorage.removeItem('ciodaro_sesion_activa');
+            document.getElementById('app-container').classList.add('hidden');
+            document.getElementById('pantalla-login').classList.remove('hidden');
+            document.getElementById('input-clave-admin').value = '';
         }
 
-        function openClientRegisterModal() {
-            document.getElementById('reg-nombre').value = "";
-            document.getElementById('reg-email').value = "";
-            document.getElementById('client-register-modal').classList.remove('hidden');
+        let clientes = JSON.parse(localStorage.getItem('ciodaro_clientes')) || [];
+        // Simulación de solicitudes de licencias pendientes de validación
+        let solicitudesLicencia = JSON.parse(localStorage.getItem('ciodaro_solicitudes')) || [
+            { id: 101, nombre: "Atleta Externo de Prueba", email: "atleta@correo.com", fecha: "2026-07-26" }
+        ];
+
+        let montosOcultos = false;
+        let metricaEditandoIdx = null;
+        let clienteActualId = null;
+        let clienteEditandoId = null;
+
+        function guardarStorage() {
+            localStorage.setItem('ciodaro_clientes', JSON.stringify(clientes));
+            renderizarClientes();
         }
 
-        function closeClientRegisterModal() {
-            document.getElementById('client-register-modal').classList.add('hidden');
+        function guardarSolicitudesStorage() {
+            localStorage.setItem('ciodaro_solicitudes', JSON.stringify(solicitudesLicencia));
+            renderizarSolicitudesLicencia();
         }
 
-        function enviarSolicitudExterna() {
-            const nombre = document.getElementById('reg-nombre').value.trim();
-            const email = document.getElementById('reg-email').value.trim();
-            const tipo = document.getElementById('reg-tipo').value;
-            if(!nombre || !email) {
-                alert("Por favor completa todos los campos.");
+        function renderizarSolicitudesLicencia() {
+            const contenedor = document.getElementById('lista-solicitudes');
+            const badge = document.getElementById('badge-solicitudes');
+            if (!contenedor || !badge) return;
+
+            badge.textContent = `${solicitudesLicencia.length} pendientes`;
+            contenedor.innerHTML = '';
+
+            if (solicitudesLicencia.length === 0) {
+                contenedor.innerHTML = `<p class="text-gray-500 text-xs text-center py-2">No hay solicitudes de licencia pendientes.</p>`;
                 return;
             }
-            solicitudes.push({ nom: nombre, email: email, tipo: tipo, estado: "Pendiente" });
-            alert("¡Solicitud enviada con éxito! El administrador de Ciodarofitness la validará pronto.");
-            closeClientRegisterModal();
-        }
 
-        function renderSolicitudes() {
-            const container = document.getElementById('solicitudes-container');
-            container.innerHTML = "";
-            if(solicitudes.length === 0) {
-                container.innerHTML = `<div class="bg-cardBg border border-cardBorder p-6 rounded-2xl text-center text-xs text-silverMuted">No hay solicitudes de licencia pendientes por validar.</div>`;
-                return;
-            }
-            solicitudes.forEach((s, idx) => {
-                container.innerHTML += `
-                    <div class="bg-cardBg border border-cardBorder p-5 rounded-2xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                        <div>
-                            <h4 class="font-bold text-base text-silverText">${s.nom}</h4>
-                            <p class="text-xs text-silverMuted mt-0.5">Correo: ${s.email} | Tipo: <span class="text-bronzeLight font-semibold">${s.tipo}</span></p>
-                            <span class="inline-block mt-2 text-[10px] px-2.5 py-1 rounded-full font-semibold ${s.estado==='Aprobado'?'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30':'bg-amber-500/20 text-amber-300 border border-amber-500/30'}">Estado: ${s.estado}</span>
-                        </div>
-                        <div class="flex space-x-2">
-                            <button onclick="aprobarSolicitud(${idx})" class="bg-emerald-600/30 text-emerald-300 px-3.5 py-2 rounded-xl text-xs font-bold">Aprobar</button>
-                            <button onclick="eliminarSolicitud(${idx})" class="bg-red-950/40 text-red-300 px-3.5 py-2 rounded-xl text-xs font-bold">Eliminar</button>
-                        </div>
-                    </div>`;
-            });
-        }
-
-        function aprobarSolicitud(idx) {
-            solicitudes[idx].estado = "Aprobado";
-            renderSolicitudes();
-            alert("Solicitud aprobada correctamente.");
-        }
-
-        function eliminarSolicitud(idx) {
-            if(confirm("¿Deseas eliminar esta solicitud?")) {
-                solicitudes.splice(idx, 1);
-                renderSolicitudes();
-            }
-        }
-
-        function renderClients() {
-            const q = document.getElementById('search-input').value.toLowerCase();
-            const grid = document.getElementById('clients-grid');
-            grid.innerHTML = "";
-            if(clients.length === 0) {
-                grid.innerHTML = `<div class="col-span-full bg-cardBg border border-cardBorder p-8 rounded-2xl text-center text-xs text-silverMuted">No hay alumnos registrados actualmente. Haz clic en "+ Registrar Nuevo Alumno".</div>`;
-                return;
-            }
-            clients.forEach((c, idx) => {
-                if(q && !c.nom.toLowerCase().includes(q)) return;
-                const imc = (c.peso / Math.pow(c.est/100, 2)).toFixed(1);
-                
-                const diffPeso = (c.peso - c.pesoIni).toFixed(1);
-                const diffCintura = (c.cintura - c.cinturaIni).toFixed(1);
-                const diffGluteos = (c.gluteos - c.gluteosIni).toFixed(1);
-
-                grid.innerHTML += `
-                    <div id="client-card-${idx}" class="bg-cardBg border border-cardBorder p-5 rounded-2xl space-y-3 shadow-lg">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <h4 class="font-black text-base text-silverText">${c.nom}</h4>
-                                <p class="text-xs text-silverMuted mt-0.5">Edad: ${c.edad} años | Estatura: ${c.est}cm</p>
-                            </div>
-                            <span class="text-xs px-3 py-1 rounded-full font-semibold ${c.pag==='Pagado'?'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30':'bg-amber-500/20 text-amber-300 border border-amber-500/30'}">${c.pag}</span>
-                        </div>
-                        <div class="text-xs text-silverText bg-darkBg p-3.5 rounded-xl border border-cardBorder space-y-2">
-                            <div class="flex justify-between font-bold text-bronzeLight pb-1.5 border-b border-cardBorder">
-                                <span>💵 Costo del Paquete:</span>
-                                <span class="text-sm">$${c.costo} USD</span>
-                            </div>
-                            <div class="grid grid-cols-2 gap-2 pt-1">
-                                <p>📊 <strong>IMC:</strong> ${imc}</p>
-                                <p>📅 <strong>Corte:</strong> ${c.cor}</p>
-                            </div>
-                            
-                            <div class="pt-2 border-t border-cardBorder">
-                                <p class="font-bold text-[11px] text-bronzeLight mb-1.5 uppercase tracking-wider">Antropometría Actual (cm / kg):</p>
-                                <div class="grid grid-cols-3 gap-1.5 bg-cardBg/60 p-2 rounded-lg text-[11px]">
-                                    <div>Peso: <span class="text-silverText font-semibold">${c.peso}kg</span></div>
-                                    <div>Cintura: <span class="text-silverText font-semibold">${c.cintura}cm</span></div>
-                                    <div>Glúteos: <span class="text-silverText font-semibold">${c.gluteos}cm</span></div>
-                                    <div>Tórax: <span class="text-silverText font-semibold">${c.torax}cm</span></div>
-                                    <div>Bíceps: <span class="text-silverText font-semibold">${c.biceps}cm</span></div>
-                                    <div>Cuádriceps: <span class="text-silverText font-semibold">${c.cuad}cm</span></div>
-                                </div>
-                            </div>
-
-                            <div class="pt-2 border-t border-cardBorder">
-                                <p class="font-bold text-[11px] text-silverMuted mb-1.5 uppercase tracking-wider">Evolución (Base vs Actual):</p>
-                                <div class="grid grid-cols-3 gap-1.5 bg-cardBg/40 p-2 rounded-lg text-[11px]">
-                                    <div>Peso: <span class="font-semibold ${diffPeso <= 0 ? 'text-emerald-400':'text-amber-400'}">${diffPeso > 0 ? '+' : ''}${diffPeso}kg</span></div>
-                                    <div>Cintura: <span class="font-semibold ${diffCintura <= 0 ? 'text-emerald-400':'text-amber-400'}">${diffCintura > 0 ? '+' : ''}${diffCintura}cm</span></div>
-                                    <div>Glúteos: <span class="font-semibold text-bronzeLight">${diffGluteos > 0 ? '+' : ''}${diffGluteos}cm</span></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex flex-wrap justify-between items-center pt-2 gap-2">
-                            <button onclick="window.open('https://api.whatsapp.com/send?phone=${c.tel}&text=Hola%20${c.nom},%20te%20escribo%20de%20Ciodarofitness%20para%20recordarte%20que%20tu%20plan%20vence%20en%20la%20fecha%20de%20corte:%20${c.cor}')" class="bg-emerald-600/30 text-emerald-300 px-3 py-2 rounded-xl text-xs font-bold flex items-center space-x-1"><span>💬</span><span>WhatsApp</span></button>
-                            <button onclick="exportClientPDF(${idx})" class="bg-bronzeMain/20 border border-bronzeMain/50 text-bronzeLight px-3 py-2 rounded-xl text-xs font-bold">📥 PDF</button>
-                            <div class="space-x-1"><button onclick="editClient(${idx})" class="px-2.5 py-2 bg-darkBg border border-cardBorder text-xs rounded-xl font-bold text-silverText">Editar</button><button onclick="deleteClient(${idx})" class="px-2.5 py-2 bg-red-950/40 text-red-300 text-xs rounded-xl font-bold">Eliminar</button></div>
-                        </div>
-                    </div>`;
+            solicitudesLicencia.forEach((sol, idx) => {
+                const div = document.createElement('div');
+                div.className = "flex justify-between items-center bg-[#0b0f19] p-2.5 rounded-xl border border-gray-800 text-xs";
+                div.innerHTML = `
+                    <div>
+                        <span class="font-bold text-white">${sol.nombre}</span>
+                        <div class="text-[10px] text-gray-400">Correo/Ref: ${sol.email}</div>
+                    </div>
+                    <div class="flex gap-1.5">
+                        <button onclick="aprobarLicencia(${idx})" class="bg-emerald-600 hover:bg-emerald-500 text-white px-2.5 py-1 rounded-lg font-bold">Aprobar</button>
+                        <button onclick="denegarLicencia(${idx})" class="bg-red-950/60 hover:bg-red-900 text-red-400 px-2 py-1 rounded-lg">Borrar</button>
+                    </div>
+                `;
+                contenedor.appendChild(div);
             });
         }
 
-        function openModal() {
-            document.getElementById('edit-idx').value = "-1";
-            document.getElementById('modal-title').innerText = "Registrar Nuevo Alumno";
-            ['f-nom','f-edad','f-tel','f-est','f-cor','f-torax','f-biceps','f-cuad','f-peso-ini','f-cintura-ini','f-gluteos-ini','f-peso','f-cintura','f-gluteos'].forEach(id => document.getElementById(id).value = "");
-            document.getElementById('f-costo').value = "50";
-            document.getElementById('f-ini').value = new Date().toISOString().split('T')[0];
-            document.getElementById('client-modal').classList.remove('hidden');
+        function aprobarLicencia(idx) {
+            const sol = solicitudesLicencia[idx];
+            // Al aprobar, lo puedes pasar directamente a tu base de datos de atletas activos
+            clientes.push({
+                id: Date.now(),
+                nombre: sol.nombre,
+                edad: 'N/A',
+                whatsapp: '0000000',
+                costo: 0,
+                fecha: new Date().toISOString().slice(0, 10),
+                pagado: true,
+                abonos: [],
+                metricas: []
+            });
+            solicitudesLicencia.splice(idx, 1);
+            guardarStorage();
+            guardarSolicitudesStorage();
+            alert(`¡Licencia aprobada para ${sol.nombre}! Añadido a la lista de atletas.`);
         }
 
-        function closeModal() { document.getElementById('client-modal').classList.add('hidden'); }
+        function denegarLicencia(idx) {
+            if (confirm('¿Deseas rechazar y borrar esta solicitud de licencia no deseada?')) {
+                solicitudesLicencia.splice(idx, 1);
+                guardarSolicitudesStorage();
+            }
+        }
 
-        function saveClient() {
-            const idx = parseInt(document.getElementById('edit-idx').value);
-            const data = {
-                nom: document.getElementById('f-nom').value, 
-                edad: parseInt(document.getElementById('f-edad').value)||0,
-                tel: document.getElementById('f-tel').value, 
-                est: parseFloat(document.getElementById('f-est').value)||0, 
-                costo: parseFloat(document.getElementById('f-costo').value)||0,
-                pesoIni: parseFloat(document.getElementById('f-peso-ini').value)||0, 
-                cinturaIni: parseFloat(document.getElementById('f-cintura-ini').value)||0, 
-                gluteosIni: parseFloat(document.getElementById('f-gluteos-ini').value)||0,
-                peso: parseFloat(document.getElementById('f-peso').value)||0, 
-                cintura: parseFloat(document.getElementById('f-cintura').value)||0, 
-                gluteos: parseFloat(document.getElementById('f-gluteos').value)||0,
-                torax: parseFloat(document.getElementById('f-torax').value)||0, 
-                biceps: parseFloat(document.getElementById('f-biceps').value)||0, 
-                cuad: parseFloat(document.getElementById('f-cuad').value)||0,
-                ini: document.getElementById('f-ini').value, 
-                cor: document.getElementById('f-cor').value, 
-                pag: document.getElementById('f-pag').value
+        function exportarDatosJSON() {
+            const datosStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(clientes, null, 2));
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", datosStr);
+            downloadAnchor.setAttribute("download", `respaldo_ciodarofitness_${new Date().toISOString().slice(0,10)}.json`);
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+        }
+
+        function importarDatosJSON(event) {
+            const archivo = event.target.files[0];
+            if (!archivo) return;
+            const lector = new FileReader();
+            lector.onload = function(e) {
+                try {
+                    const datosImportados = JSON.parse(e.target.result);
+                    if (Array.isArray(datosImportados)) {
+                        if (confirm(`¿Estás seguro de cargar este respaldo? Se reemplazarán los atletas actuales por los ${datosImportados.length} atletas del archivo.`)) {
+                            clientes = datosImportados;
+                            guardarStorage();
+                            alert('¡Base de datos importada exitosamente!');
+                        }
+                    } else {
+                        alert('El archivo no tiene el formato correcto.');
+                    }
+                } catch (error) {
+                    alert('Error al leer el archivo JSON.');
+                }
+                event.target.value = '';
             };
-            if(idx === -1) clients.push(data); else clients[idx] = data;
-            closeModal(); renderClients(); calcFin();
+            lector.readAsText(archivo);
         }
 
-        function editClient(idx) {
-            const c = clients[idx];
-            document.getElementById('edit-idx').value = idx;
-            document.getElementById('modal-title').innerText = "Editar Alumno";
-            document.getElementById('f-nom').value = c.nom; 
-            document.getElementById('f-edad').value = c.edad;
-            document.getElementById('f-tel').value = c.tel; 
-            document.getElementById('f-est').value = c.est; 
-            document.getElementById('f-costo').value = c.costo;
-            document.getElementById('f-peso-ini').value = c.pesoIni; 
-            document.getElementById('f-cintura-ini').value = c.cinturaIni; 
-            document.getElementById('f-gluteos-ini').value = c.gluteosIni;
-            document.getElementById('f-peso').value = c.peso; 
-            document.getElementById('f-cintura').value = c.cintura; 
-            document.getElementById('f-gluteos').value = c.gluteos;
-            document.getElementById('f-torax').value = c.torax; 
-            document.getElementById('f-biceps').value = c.biceps; 
-            document.getElementById('f-cuad').value = c.cuad;
-            document.getElementById('f-ini').value = c.ini; 
-            document.getElementById('f-cor').value = c.cor;
-            document.getElementById('f-pag').value = c.pag;
-            document.getElementById('client-modal').classList.remove('hidden');
+        function alternarVisibilidadMontos() {
+            montosOcultos = !montosOcultos;
+            document.getElementById('btn-ojo').textContent = montosOcultos ? '🙈' : '👁️';
+            renderizarClientes();
         }
 
-        function deleteClient(idx) {
-            if(confirm("¿Seguro que deseas eliminar este alumno?")) { clients.splice(idx, 1); renderClients(); calcFin(); }
+        function calcularCicloActual(fechaInicioStr) {
+            if (!fechaInicioStr) return { inicioCiclo: new Date(), finCiclo: new Date() };
+            
+            const partes = fechaInicioStr.split('-');
+            const diaInicioOriginal = parseInt(partes[2], 10);
+            
+            const hoy = new Date();
+            const anioActual = hoy.getFullYear();
+            const mesActual = hoy.getMonth();
+
+            let inicioCiclo = new Date(anioActual, mesActual, diaInicioOriginal);
+            
+            if (hoy < inicioCiclo) {
+                inicioCiclo = new Date(anioActual, mesActual - 1, diaInicioOriginal);
+            }
+
+            let finCiclo = new Date(inicioCiclo);
+            finCiclo.setMonth(finCiclo.getMonth() + 1);
+            finCiclo.setDate(finCiclo.getDate() - 1);
+
+            return { inicioCiclo, finCiclo };
         }
 
-        function calcularCaloriasIndependiente() {
-            const p = parseFloat(document.getElementById('cal-peso').value)||0;
-            const e = parseFloat(document.getElementById('cal-est').value)||0;
-            const ed = parseInt(document.getElementById('cal-edad').value)||25;
-            const gen = document.getElementById('cal-gen').value;
-            const act = parseFloat(document.getElementById('cal-act').value)||1.2;
+        const formCliente = document.getElementById('form-cliente');
+        if (formCliente) {
+            formCliente.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const nombreVal = document.getElementById('nombre').value;
+                const edadVal = document.getElementById('edad').value || 'N/A';
+                const whatsappVal = document.getElementById('whatsapp').value;
+                const costoVal = parseFloat(document.getElementById('costo').value) || 0;
+                const fechaVal = document.getElementById('fecha').value;
 
-            let tmb = gen === 'F' ? (10 * p) + (6.25 * e) - (5 * ed) - 161 : (10 * p) + (6.25 * e) - (5 * ed) + 5;
-            let totalKcal = Math.round(tmb * act);
-
-            const res = document.getElementById('cal-resultado');
-            res.classList.remove('hidden');
-            res.innerHTML = `• Tasa Metabólica Basal (TMB): <strong>${Math.round(tmb)} kcal</strong><br>
-                             • Requerimiento Calórico Total Diario: <strong>${totalKcal} kcal</strong> (${gen === 'F' ? 'Femenino' : 'Masculino'})`;
+                if (clienteEditandoId !== null) {
+                    const c = clientes.find(item => item.id === clienteEditandoId);
+                    if (c) {
+                        c.nombre = nombreVal;
+                        c.edad = edadVal;
+                        c.whatsapp = whatsappVal;
+                        c.costo = costoVal;
+                        c.fecha = fechaVal;
+                    }
+                    clienteEditandoId = null;
+                    document.getElementById('titulo-form-cliente').textContent = '⚡ Registrar Nuevo Atleta';
+                    document.getElementById('btn-submit-cliente').textContent = '📂 Agregar a la Base de Datos';
+                    document.getElementById('btn-cancelar-edicion-cliente').classList.add('hidden');
+                } else {
+                    const nuevoCliente = {
+                        id: Date.now(),
+                        nombre: nombreVal,
+                        edad: edadVal,
+                        whatsapp: whatsappVal,
+                        costo: costoVal,
+                        fecha: fechaVal,
+                        pagado: true,
+                        abonos: [],
+                        metricas: []
+                    };
+                    clientes.push(nuevoCliente);
+                }
+                guardarStorage();
+                this.reset();
+                document.getElementById('fecha').valueAsDate = new Date();
+            });
         }
 
-        function exportClientPDF(idx) {
-            const c = clients[idx];
-            const element = document.getElementById(`client-card-${idx}`);
-            html2pdf().from(element).save(`Expediente_${c.nom.replace(/\s+/g, '_')}_Ciodarofitness.pdf`);
+        function prepararEdicionCliente(id) {
+            const c = clientes.find(item => item.id === id);
+            if (!c) return;
+            clienteEditandoId = id;
+            document.getElementById('nombre').value = c.nombre;
+            document.getElementById('edad').value = c.edad !== 'N/A' ? c.edad : '';
+            document.getElementById('whatsapp').value = c.whatsapp;
+            document.getElementById('costo').value = c.costo;
+            document.getElementById('fecha').value = c.fecha;
+
+            document.getElementById('titulo-form-cliente').textContent = '✏️ Editar Atleta: ' + c.nombre;
+            document.getElementById('btn-submit-cliente').textContent = 'Guardar Cambios';
+            document.getElementById('btn-cancelar-edicion-cliente').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        function calcFin() {
-            let rec = 0, pen = 0;
-            clients.forEach(c => { if(c.pag === 'Pagado') rec += c.costo; else pen += c.costo; });
-            document.getElementById('fin-rec').innerText = `$${rec.toFixed(2)}`;
-            document.getElementById('fin-pen').innerText = `$${pen.toFixed(2)}`;
+        function cancelarEdicionCliente() {
+            clienteEditandoId = null;
+            document.getElementById('form-cliente').reset();
+            document.getElementById('fecha').valueAsDate = new Date();
+            document.getElementById('titulo-form-cliente').textContent = '⚡ Registrar Nuevo Atleta';
+            document.getElementById('btn-submit-cliente').textContent = '📂 Agregar a la Base de Datos';
+            document.getElementById('btn-cancelar-edicion-cliente').classList.add('hidden');
+        }
+
+        function eliminarCliente(id) {
+            if(confirm('¿Eliminar y borrar este cliente o usuario no deseado por completo?')) {
+                clientes = clientes.filter(c => c.id !== id);
+                guardarStorage();
+            }
+        }
+
+        function renderizarClientes() {
+            const contenedor = document.getElementById('lista-clientes');
+            if (!contenedor) return;
+            contenedor.innerHTML = '';
+
+            const inputBusqueda = document.getElementById('buscador-clientes');
+            const textoFiltro = inputBusqueda ? inputBusqueda.value.toLowerCase() : '';
+            const clientesFiltrados = clientes.filter(c => c.nombre && c.nombre.toLowerCase().includes(textoFiltro));
+
+            let totalCli = clientes.length;
+            let metaTotal = 0;
+            let recaudadoTotal = 0;
+            let porCobrarTotal = 0;
+
+            clientes.forEach(c => {
+                let costoC = Number(c.costo) || 0;
+                metaTotal += costoC;
+                let totalAbonado = (c.abonos || []).reduce((sum, a) => sum + (Number(a.monto) || 0), 0);
+                let pagadoReal = c.pagado || (totalAbonado >= costoC);
+                
+                if (pagadoReal) {
+                    recaudadoTotal += costoC;
+                } else {
+                    recaudadoTotal += totalAbonado;
+                    porCobrarTotal += (costoC - totalAbonado);
+                }
+            });
+
+            document.getElementById('total-clientes').textContent = totalCli;
+            document.getElementById('total-meta').textContent = montosOcultos ? '••••' : '$' + metaTotal.toFixed(2);
+            document.getElementById('total-recaudado').textContent = montosOcultos ? '••••' : '$' + recaudadoTotal.toFixed(2);
+            document.getElementById('total-por-cobrar').textContent = montosOcultos ? '••••' : '$' + porCobrarTotal.toFixed(2);
+
+            if (clientesFiltrados.length === 0) {
+                contenedor.innerHTML = `<div class="text-center text-gray-500 text-sm py-6 bg-[#131b2e] rounded-2xl border border-gray-800">No se encontraron atletas.</div>`;
+                return;
+            }
+
+            clientesFiltrados.forEach(c => {
+                let fechaInicioOriginal = new Date(c.fecha + 'T00:00:00');
+                let ciclo = calcularCicloActual(c.fecha);
+                let opt = { day: '2-digit', month: 'short', year: 'numeric' };
+                let costoC = Number(c.costo) || 0;
+                let totalAbonado = (c.abonos || []).reduce((sum, a) => sum + (Number(a.monto) || 0), 0);
+                let pagadoReal = c.pagado || (totalAbonado >= costoC);
+
+                const card = document.createElement('div');
+                card.className = "bg-[#131b2e] p-4 rounded-2xl border border-gray-800 space-y-3";
+                card.innerHTML = `
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h4 class="font-bold text-white text-base">${c.nombre}</h4>
+                            <p class="text-xs text-gray-400 mt-0.5">🚀 Inicio: ${fechaInicioOriginal.toLocaleDateString('es-ES', opt)}</p>
+                            <p class="text-xs text-orange-400 font-semibold mt-0.5">⏳ Ciclo actual: ${ciclo.inicioCiclo.toLocaleDateString('es-ES', opt)} al ${ciclo.finCiclo.toLocaleDateString('es-ES', opt)}</p>
+                        </div>
+                        <span class="text-emerald-400 font-bold text-sm">${montosOcultos ? '••••' : '$' + costoC.toFixed(2)}</span>
+                    </div>
+                    <div class="flex justify-between items-center pt-2 border-t border-gray-800/60">
+                        <span class="bg-${pagadoReal ? 'emerald' : 'amber'}-500/10 text-${pagadoReal ? 'emerald' : 'amber'}-400 border border-${pagadoReal ? 'emerald' : 'amber'}-500/20 text-[10px] font-semibold px-2.5 py-1 rounded-full">
+                            ${pagadoReal ? 'Al Día (30d)' : `Abonado: $${totalAbonado.toFixed(2)}`}
+                        </span>
+                        <div class="flex gap-2">
+                            <button onclick="prepararEdicionCliente(${c.id})" class="bg-gray-800 hover:bg-gray-700 text-gray-300 text-[11px] font-semibold px-2.5 py-1.5 rounded-lg border border-gray-700 transition">✏️ Editar</button>
+                            <button onclick="abrirExpediente(${c.id})" class="bg-orange-600 hover:bg-orange-500 text-white text-xs font-semibold px-3 py-2 rounded-xl transition">📂 Expediente</button>
+                            <button onclick="eliminarCliente(${c.id})" class="bg-gray-800 hover:bg-red-600/20 text-gray-400 hover:text-red-400 p-2 rounded-xl border border-gray-700" title="Eliminar cliente no deseado">🗑️</button>
+                        </div>
+                    </div>
+                `;
+                contenedor.appendChild(card);
+            });
+        }
+
+        function abrirExpediente(id) {
+            clienteActualId = id;
+            metricaEditandoIdx = null;
+            document.getElementById('vista-principal').classList.add('hidden');
+            document.getElementById('vista-expediente').classList.remove('hidden');
+            renderizarExpediente();
+        }
+
+        function volverAlInicio() {
+            clienteActualId = null;
+            metricaEditandoIdx = null;
+            document.getElementById('vista-expediente').classList.add('hidden');
+            document.getElementById('vista-principal').classList.remove('hidden');
+            renderizarClientes();
+        }
+                    function renderizarExpediente() {
+            const c = clientes.find(item => item.id === clienteActualId);
+            if (!c) return;
+            const contenedor = document.getElementById('detalle-expediente');
+            if (!contenedor) return;
+            
+            let costoC = Number(c.costo) || 0;
+            let totalAbonado = (c.abonos || []).reduce((sum, a) => sum + (Number(a.monto) || 0), 0);
+            let saldoPendiente = costoC - totalAbonado;
+            if (saldoPendiente < 0) saldoPendiente = 0;
+
+            let fechaInicioOriginal = new Date(c.fecha + 'T00:00:00');
+            let ciclo = calcularCicloActual(c.fecha);
+            let opt = { day: '2-digit', month: 'long', year: 'numeric' };
+
+            let htmlAbonos = '';
+            if (c.abonos && c.abonos.length > 0) {
+                c.abonos.forEach((abono, idx) => {
+                    htmlAbonos += `
+                        <div class="flex justify-between items-center bg-[#0b0f19] p-2.5 rounded-xl border border-gray-800 text-xs">
+                            <div>
+                                <span class="text-emerald-400 font-bold">$${(Number(abono.monto) || 0).toFixed(2)}</span>
+                                <span class="text-gray-400 ml-2">📅 ${abono.fecha}</span>
+                            </div>
+                            <button onclick="eliminarAbono(${idx})" class="text-red-400 hover:text-red-300 text-[10px] bg-red-950/40 px-2 py-1 rounded no-print">Eliminar</button>
+                        </div>
+                    `;
+                });
+            } else {
+                htmlAbonos = `<p class="text-gray-500 text-xs text-center py-2">No hay abonos registrados aún.</p>`;
+            }
+
+            let htmlMetricas = '';
+            if (c.metricas && c.metricas.length > 0) {
+                c.metricas.forEach((m, idx) => {
+                    htmlMetricas += `
+                        <div class="bg-[#131b2e] p-4 rounded-2xl border border-orange-500/30 space-y-2 text-xs shadow-md">
+                            <div class="flex justify-between items-center border-b border-gray-800 pb-2">
+                                <span class="font-bold text-orange-400 text-sm">📅 Registro: ${m.fecha}</span>
+                                <div class="flex gap-1 no-print">
+                                    <button onclick="editarMetrica(${idx})" class="bg-gray-800 px-2 py-1 rounded text-gray-300">Editar</button>
+                                    <button onclick="eliminarMetrica(${idx})" class="bg-red-900/40 text-red-400 px-2 py-1 rounded">Eliminar</button>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-3 gap-2 pt-1 text-gray-200">
+                                <div><b>Peso:</b> <span class="text-orange-300">${m.peso} kg</span></div>
+                                <div><b>Estatura:</b> ${m.estatura} cm</div>
+                                <div><b>IMC:</b> <span class="text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded">${m.imc}</span></div>
+                                <div><b>Cuello:</b> ${m.cuello} cm</div>
+                                <div><b>Tórax:</b> ${m.torax} cm</div>
+                                <div><b>Bíceps:</b> ${m.biceps} cm</div>
+                                <div><b>Abdomen:</b> ${m.abdomen} cm</div>
+                                <div><b>Glúteos:</b> ${m.gluteos} cm</div>
+                                <div><b>Cuádriceps:</b> ${m.cuadriceps} cm</div>
+                                <div><b>Pantorrilla:</b> ${m.pantorrilla} cm</div>
+                            </div>
+                        </div>
+                    `;
+                });
+            } else {
+                htmlMetricas = `<p class="text-gray-500 text-xs text-center py-4">No hay registros antropométricos aún.</p>`;
+            }
+
+            const numeroLimpio = c.whatsapp ? c.whatsapp.replace(/\D/g, '') : '';
+            const mensajeWp = encodeURIComponent(`¡Hola ${c.nombre}! Te escribo de Ciodarofitness para recordarte tu ciclo actual de pago (${ciclo.inicioCiclo.toLocaleDateString('es-ES', opt)} al ${ciclo.finCiclo.toLocaleDateString('es-ES', opt)}) de tu plan. 💪🔥`);
+            const linkWhatsApp = `https://wa.me/${numeroLimpio}?text=${mensajeWp}`;
+
+            const tituloFormMetrica = metricaEditandoIdx !== null ? '✏️ Actualizar Medición Antropométrica' : '📊 Nueva Medición Antropométrica';
+            const textoBotonMetrica = metricaEditandoIdx !== null ? 'Actualizar Medición' : 'Registrar y Calcular IMC';
+
+            contenedor.innerHTML = `
+                <div class="bg-[#131b2e] p-5 rounded-3xl border border-orange-500/40 space-y-3 shadow-xl">
+                    <h2 class="text-lg font-black text-white flex items-center gap-2">🏋️‍♂️ Atleta: <span class="text-orange-400">${c.nombre}</span></h2>
+                    <div class="grid grid-cols-2 gap-2 text-xs text-gray-200 bg-[#0b0f19] p-3.5 rounded-2xl border border-gray-800">
+                        <div><b>Edad:</b> ${c.edad} años</div>
+                        <div><b>WhatsApp:</b> ${c.whatsapp}</div>
+                        <div><b>Inicio Original:</b> <span class="text-orange-300">${fechaInicioOriginal.toLocaleDateString('es-ES', opt)}</span></div>
+                        <div><b>Ciclo Actual:</b> <span class="text-amber-400">${ciclo.inicioCiclo.toLocaleDateString('es-ES', opt)} al ${ciclo.finCiclo.toLocaleDateString('es-ES', opt)}</span></div>
+                        <div class="col-span-2"><b>Paquete:</b> <span class="ocultar-en-pdf">$${costoC.toFixed(2)}</span><span class="mostrar-en-pdf">***</span></div>
+                        <div class="col-span-2 pt-1 border-t border-gray-800 flex justify-between items-center ocultar-en-pdf">
+                            <span><b>Estatus:</b> <span class="${c.pagado ? 'text-emerald-400 font-bold' : 'text-amber-400'}">${c.pagado ? 'Pagado Total (Al día)' : `Restante: $${saldoPendiente.toFixed(2)}`}</span></span>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2 no-print">
+                        <button onclick="toggleEstadoPago(${c.id})" class="bg-emerald-600/20 text-emerald-400 border border-emerald-500/30 font-semibold py-2.5 rounded-xl text-xs">🔄 (${c.pagado ? 'Marcar Pendiente' : 'Marcar Pago Total'})</button>
+                        <a href="${linkWhatsApp}" target="_blank" class="bg-green-600 hover:bg-green-500 text-white font-bold py-2.5 px-3 rounded-xl text-xs text-center flex items-center justify-center gap-1.5 shadow-lg">💬 Enviar WhatsApp</a>
+                    </div>
+                </div>
+
+                <div class="bg-[#131b2e] p-5 rounded-3xl border border-gray-800 space-y-3 no-print">
+                    <h3 class="text-sm font-bold text-orange-500 uppercase">💵 Registrar Abono Parcial</h3>
+                    <form onsubmit="agregarAbono(event)" class="space-y-3 text-xs">
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label class="text-gray-400 block mb-1">Monto Abono ($)</label>
+                                <input type="number" step="0.1" id="monto-abono" required placeholder="Ej. 20" class="w-full bg-[#0b0f19] border border-gray-800 rounded-lg p-2.5 text-white">
+                            </div>
+                            <div>
+                                <label class="text-gray-400 block mb-1">📅 Fecha del Abono</label>
+                                <input type="date" id="fecha-abono" required class="w-full bg-[#0b0f19] border border-gray-800 rounded-lg p-2.5 text-white">
+                            </div>
+                        </div>
+                        <button type="submit" class="w-full bg-orange-600 hover:bg-orange-500 text-white font-bold py-2.5 rounded-xl transition">Agregar Abono</button>
+                    </form>
+                    <div class="space-y-2 pt-2 border-t border-gray-800">
+                        <h4 class="text-xs font-semibold text-gray-400 uppercase">Historial de Abonos:</h4>
+                        ${htmlAbonos}
+                    </div>
+                </div>
+
+                <div class="bg-[#131b2e] p-5 rounded-3xl border border-gray-800 space-y-3 no-print">
+                    <h3 class="text-sm font-bold text-orange-500 uppercase">${tituloFormMetrica}</h3>
+                    <form id="form-metrica" onsubmit="guardarMetrica(event)" class="space-y-3 text-xs">
+                        <div class="grid grid-cols-3 gap-2">
+                            <div><label class="text-gray-400">Peso (kg)</label><input type="number" step="0.1" id="m-peso" required class="w-full bg-[#0b0f19] border border-gray-800 rounded-lg p-2 text-white"></div>
+                            <div><label class="text-gray-400">Estatura (cm)</label><input type="number" step="1" id="m-estatura" required class="w-full bg-[#0b0f19] border border-gray-800 rounded-lg p-2 text-white"></div>
+                            <div><label class="text-gray-400">Fecha de Medición</label><input type="date" id="m-fecha" required class="w-full bg-[#0b0f19] border border-gray-800 rounded-lg p-2 text-white"></div>
+                        </div>
+                        <div class="grid grid-cols-4 gap-2">
+                            <div><label class="text-gray-400">Cuello</label><input type="number" step="0.1" id="m-cuello" class="w-full bg-[#0b0f19] border border-gray-800 rounded-lg p-2 text-white"></div>
+                            <div><label class="text-gray-400">Tórax</label><input type="number" step="0.1" id="m-torax" class="w-full bg-[#0b0f19] border border-gray-800 rounded-lg p-2 text-white"></div>
+                            <div><label class="text-gray-400">Bíceps</label><input type="number" step="0.1" id="m-biceps" class="w-full bg-[#0b0f19] border border-gray-800 rounded-lg p-2 text-white"></div>
+                            <div><label class="text-gray-400">Abdomen</label><input type="number" step="0.1" id="m-abdomen" class="w-full bg-[#0b0f19] border border-gray-800 rounded-lg p-2 text-white"></div>
+                            <div><label class="text-gray-400">Glúteos</label><input type="number" step="0.1" id="m-gluteos" class="w-full bg-[#0b0f19] border border-gray-800 rounded-lg p-2 text-white"></div>
+                            <div><label class="text-gray-400">Cuádriceps</label><input type="number" step="0.1" id="m-cuadriceps" class="w-full bg-[#0b0f19] border border-gray-800 rounded-lg p-2 text-white"></div>
+                            <div><label class="text-gray-400">Pantorrilla</label><input type="number" step="0.1" id="m-pantorrilla" class="w-full bg-[#0b0f19] border border-gray-800 rounded-lg p-2 text-white"></div>
+                        </div>
+                        <div class="flex gap-2">
+                            <button type="submit" class="w-full bg-orange-600 text-white font-bold py-2 rounded-xl">${textoBotonMetrica}</button>
+                            ${metricaEditandoIdx !== null ? `<button type="button" onclick="cancelarEdicionMetrica()" class="bg-gray-700 text-white font-bold px-3 py-2 rounded-xl">Cancelar</button>` : ''}
+                        </div>
+                    </form>
+                </div>
+
+                <div class="space-y-3">
+                    <h3 class="text-sm font-bold text-orange-400 uppercase tracking-wide">📈 Historial y Comparativa Mensual</h3>
+                    ${htmlMetricas}
+                </div>
+            `;
+
+            if (metricaEditandoIdx !== null && c.metricas && c.metricas[metricaEditandoIdx]) {
+                const m = c.metricas[metricaEditandoIdx];
+                document.getElementById('m-peso').value = m.peso;
+                document.getElementById('m-estatura').value = m.estatura;
+                document.getElementById('m-fecha').value = m.fecha;
+                document.getElementById('m-cuello').value = m.cuello !== '-' ? m.cuello : '';
+                document.getElementById('m-torax').value = m.torax !== '-' ? m.torax : '';
+                document.getElementById('m-biceps').value = m.biceps !== '-' ? m.biceps : '';
+                document.getElementById('m-abdomen').value = m.abdomen !== '-' ? m.abdomen : '';
+                document.getElementById('m-gluteos').value = m.gluteos !== '-' ? m.gluteos : '';
+                document.getElementById('m-cuadriceps').value = m.cuadriceps !== '-' ? m.cuadriceps : '';
+                document.getElementById('m-pantorrilla').value = m.pantorrilla !== '-' ? m.pantorrilla : '';
+            } else {
+                const mFechaInput = document.getElementById('m-fecha');
+                if (mFechaInput) mFechaInput.valueAsDate = new Date();
+            }
+
+            const fechaAbonoInput = document.getElementById('fecha-abono');
+            if (fechaAbonoInput) fechaAbonoInput.valueAsDate = new Date();
+            
+            const lblFecha = document.getElementById('fecha-impresion');
+            if (lblFecha) {
+                lblFecha.textContent = "Fecha de emisión: " + new Date().toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
+            }
+        }
+
+        function generarPDFExpediente() { window.print(); }
+
+        function toggleEstadoPago(id) {
+            const c = clientes.find(item => item.id === id);
+            if (c) {
+                c.pagado = !c.pagado;
+                guardarStorage();
+                renderizarExpediente();
+            }
+        }
+
+        function agregarAbono(e) {
+            e.preventDefault();
+            const c = clientes.find(item => item.id === clienteActualId);
+            if (!c) return;
+            const monto = parseFloat(document.getElementById('monto-abono').value) || 0;
+            const fecha = document.getElementById('fecha-abono').value;
+            if (!c.abonos) c.abonos = [];
+            c.abonos.push({ monto, fecha });
+            guardarStorage();
+            renderizarExpediente();
+        }
+
+        function eliminarAbono(idx) {
+            const c = clientes.find(item => item.id === clienteActualId);
+            if (!c) return;
+            c.abonos.splice(idx, 1);
+            guardarStorage();
+            renderizarExpediente();
+        }
+
+        function guardarMetrica(e) {
+            e.preventDefault();
+            const c = clientes.find(item => item.id === clienteActualId);
+            if (!c) return;
+            const peso = parseFloat(document.getElementById('m-peso').value) || 0;
+            const estatura = parseFloat(document.getElementById('m-estatura').value) || 0;
+            let imcVal = "0.0";
+            if (estatura > 0) {
+                const estMetros = estatura / 100;
+                imcVal = (peso / (estMetros * estMetros)).toFixed(1);
+            }
+            const nuevaMetrica = {
+                fecha: document.getElementById('m-fecha').value,
+                peso: peso,
+                estatura: estatura,
+                imc: imcVal,
+                cuello: document.getElementById('m-cuello').value || '-',
+                torax: document.getElementById('m-torax').value || '-',
+                biceps: document.getElementById('m-biceps').value || '-',
+                abdomen: document.getElementById('m-abdomen').value || '-',
+                gluteos: document.getElementById('m-gluteos').value || '-',
+                cuadriceps: document.getElementById('m-cuadriceps').value || '-',
+                pantorrilla: document.getElementById('m-pantorrilla').value || '-'
+            };
+            if (!c.metricas) c.metricas = [];
+            if (metricaEditandoIdx !== null) {
+                c.metricas[metricaEditandoIdx] = nuevaMetrica;
+                metricaEditandoIdx = null;
+            } else {
+                c.metricas.push(nuevaMetrica);
+            }
+            guardarStorage();
+            renderizarExpediente();
+        }
+
+        function editarMetrica(idx) {
+            metricaEditandoIdx = idx;
+            renderizarExpediente();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function cancelarEdicionMetrica() {
+            metricaEditandoIdx = null;
+            renderizarExpediente();
+        }
+
+        function eliminarMetrica(idx) {
+            const c = clientes.find(item => item.id === clienteActualId);
+            if (!c) return;
+            c.metricas.splice(idx, 1);
+            guardarStorage();
+            renderizarExpediente();
         }
     </script>
 </body>
