@@ -186,7 +186,6 @@
         }
         .btn-secondary:hover { border-color: var(--bronze); color: var(--text-main); }
 
-        /* Botones de acción específicos solicitados */
         .btn-expediente { 
             background: var(--bronze); 
             color: #000; 
@@ -298,6 +297,38 @@
             border-radius: 8px;
             padding: 1rem;
             margin-bottom: 0.8rem;
+        }
+
+        /* DISEÑO PROFESIONAL DE LA TARJETA DE PERFIL DEL ATLETA */
+        .profile-info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.8rem;
+            background: var(--surface-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 0.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .profile-info-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .profile-info-item span:first-child {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 2px;
+        }
+
+        .profile-info-item span:last-child {
+            font-size: 0.85rem;
+            color: var(--text-main);
+            font-weight: 600;
         }
 
         footer {
@@ -422,7 +453,7 @@
                     <button class="btn-secondary" onclick="logoutSystem()">Salir</button>
                 </div>
 
-                <!-- RESPALDO Y HERRAMIENTAS (LLAVE/ENGRAANAJE) -->
+                <!-- RESPALDO Y HERRAMIENTAS -->
                 <div class="card no-print" style="padding: 0.9rem;">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
                         <span style="font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase;">Respaldo de Base de Datos:</span>
@@ -531,11 +562,15 @@
                 </div>
 
                 <div class="card">
-                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; border-bottom: 1px solid var(--border); padding-bottom: 0.8rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem; border-bottom: 1px solid var(--border); padding-bottom: 0.8rem;">
                         <div>
                             <h2 id="detAthleteTitle" style="color: var(--bronze); font-size: 1.2rem;">👤 Atleta: </h2>
-                            <div id="detAthleteHeaderInfo" class="athlete-meta-row" style="margin-top: 6px;"></div>
                         </div>
+                    </div>
+
+                    <!-- BLOQUE DE INFORMACIÓN LIMPIO, PROFESIONAL Y ESPACIADO -->
+                    <div class="profile-info-grid" id="detAthleteHeaderInfo">
+                        <!-- Generado dinámicamente -->
                     </div>
 
                     <div style="display: flex; gap: 0.6rem; margin-bottom: 1rem;" class="no-print">
@@ -558,7 +593,8 @@
 
                     <!-- NUEVA MEDICIÓN ANTROPOMÉTRICA -->
                     <div class="card no-print" style="background: var(--surface-card); margin-bottom: 1rem;">
-                        <h4 style="font-size: 0.85rem; color: var(--bronze); margin-bottom: 0.6rem;">📏 Nueva Medición Antropométrica</h4>
+                        <h4 style="font-size: 0.85rem; color: var(--bronze); margin-bottom: 0.6rem;" id="formMeasurementTitle">📏 Nueva Medición Antropométrica</h4>
+                        <input type="hidden" id="editMeasurementIndex" value="-1">
                         <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.5rem; margin-bottom: 0.6rem;">
                             <div class="form-group" style="margin-bottom:0;"><label>Peso (kg)</label><input type="number" id="mWeight" placeholder="0"></div>
                             <div class="form-group" style="margin-bottom:0;"><label>Estatura (cm)</label><input type="number" id="mHeight" placeholder="0"></div>
@@ -573,7 +609,10 @@
                             <div class="form-group" style="margin-bottom:0;"><label>Cuádriceps</label><input type="number" id="mLeg" placeholder="0"></div>
                             <div class="form-group" style="margin-bottom:0; grid-column: span 3;"><label>Pantorrilla</label><input type="number" id="mCalf" placeholder="0"></div>
                         </div>
-                        <button type="button" onclick="saveNewMeasurement()" style="font-size: 0.75rem; padding: 0.6rem;">Registrar y Calcular IMC</button>
+                        <div style="display: flex; gap: 0.6rem;">
+                            <button type="button" id="btnSaveMeasurement" onclick="saveNewMeasurement()" style="font-size: 0.75rem; padding: 0.6rem; flex: 1;">Registrar y Calcular IMC</button>
+                            <button type="button" id="btnCancelEditMeasurement" onclick="cancelEditMeasurement()" class="btn-secondary hidden" style="font-size: 0.75rem; padding: 0.6rem;">Cancelar</button>
+                        </div>
                     </div>
 
                     <!-- HISTORIAL Y COMPARATIVA MENSUAL -->
@@ -831,13 +870,33 @@
             let cycle = getCycleDates(athlete.startDate);
 
             document.getElementById('detAthleteTitle').innerText = `👤 Atleta: ${athlete.name}`;
+            
+            // Perfil estructurado y profesional en cuadrícula
             document.getElementById('detAthleteHeaderInfo').innerHTML = `
-                <span>Edad: ${athlete.age} años</span>
-                <span>WhatsApp: +${athlete.phone}</span>
-                <span>Inicio Original: ${athlete.startDate || '-'}</span>
-                <span>Ciclo Actual: ${cycle.cycleStart} al ${cycle.cycleEnd}</span>
-                <span>Paquete: $${athlete.cost}</span>
-                <span>Estatus: <strong style="color:var(--bronze);">${athlete.status}</strong></span>
+                <div class="profile-info-item">
+                    <span>Edad</span>
+                    <span>${athlete.age} años</span>
+                </div>
+                <div class="profile-info-item">
+                    <span>WhatsApp</span>
+                    <span>+${athlete.phone}</span>
+                </div>
+                <div class="profile-info-item">
+                    <span>Inicio Original</span>
+                    <span>${athlete.startDate || '-'}</span>
+                </div>
+                <div class="profile-info-item">
+                    <span>Paquete</span>
+                    <span style="color:var(--bronze);">$${athlete.cost}</span>
+                </div>
+                <div class="profile-info-item" style="grid-column: span 2;">
+                    <span>Ciclo Actual</span>
+                    <span>${cycle.cycleStart} al ${cycle.cycleEnd}</span>
+                </div>
+                <div class="profile-info-item" style="grid-column: span 2;">
+                    <span>Estatus Financiero</span>
+                    <span style="color:var(--success); font-weight:bold;">${athlete.status}</span>
+                </div>
             `;
 
             const toggleBtn = document.getElementById('detTogglePayBtn');
@@ -848,6 +907,7 @@
 
             renderAbonosHistorial(athlete);
             renderMetricsHistory(athlete);
+            cancelEditMeasurement();
 
             document.getElementById('clientPortalView').classList.add('hidden');
             document.getElementById('athleteDetailView').classList.remove('hidden');
@@ -909,6 +969,7 @@
         }
 
         function saveNewMeasurement() {
+            const editIndex = parseInt(document.getElementById('editMeasurementIndex').value);
             const weight = document.getElementById('mWeight').value;
             const height = document.getElementById('mHeight').value;
             const date = document.getElementById('mDate').value;
@@ -938,10 +999,20 @@
 
             if(athlete) {
                 if(!athlete.metrics) athlete.metrics = [];
-                athlete.metrics.push({
+                
+                const measurementData = {
                     date,
                     weight: weight ? weight + ' kg' : '-',
                     height: height ? height + ' cm' : '-',
+                    rawWeight: weight,
+                    rawHeight: height,
+                    rawNeck: neck,
+                    rawChest: chest,
+                    rawBiceps: biceps,
+                    rawAbdomen: abdomen,
+                    rawGlute: glute,
+                    rawLeg: leg,
+                    rawCalf: calf,
                     imc,
                     neck: neck ? neck + ' cm' : '-',
                     chest: chest ? chest + ' cm' : '-',
@@ -950,22 +1021,61 @@
                     glute: glute ? glute + ' cm' : '-',
                     leg: leg ? leg + ' cm' : '-',
                     calf: calf ? calf + ' cm' : '-'
-                });
+                };
+
+                if(editIndex >= 0) {
+                    athlete.metrics[editIndex] = measurementData;
+                } else {
+                    athlete.metrics.push(measurementData);
+                }
 
                 localStorage.setItem('bc_affiliate_athletes', JSON.stringify(allAthletes));
-                
-                document.getElementById('mWeight').value = '';
-                document.getElementById('mHeight').value = '';
-                document.getElementById('mNeck').value = '';
-                document.getElementById('mChest').value = '';
-                document.getElementById('mBiceps').value = '';
-                document.getElementById('mAbdomen').value = '';
-                document.getElementById('mGlute').value = '';
-                document.getElementById('mLeg').value = '';
-                document.getElementById('mCalf').value = '';
-
                 openAthleteDetail(athlete.id);
             }
+        }
+
+        function editMeasurement(index) {
+            const currentClient = JSON.parse(localStorage.getItem('bc_current_client'));
+            let allAthletes = JSON.parse(localStorage.getItem('bc_affiliate_athletes')) || {};
+            let athlete = (allAthletes[currentClient.email] || []).find(a => a.id === currentSelectedAthleteId);
+            if(!athlete || !athlete.metrics[index]) return;
+
+            let m = athlete.metrics[index];
+            document.getElementById('editMeasurementIndex').value = index;
+            document.getElementById('formMeasurementTitle').innerText = '✏️ Editar Medición Antropométrica';
+            document.getElementById('btnSaveMeasurement').innerText = 'Actualizar Medición';
+            document.getElementById('btnCancelEditMeasurement').classList.remove('hidden');
+
+            document.getElementById('mWeight').value = m.rawWeight || '';
+            document.getElementById('mHeight').value = m.rawHeight || '';
+            document.getElementById('mDate').value = m.date || '';
+            document.getElementById('mNeck').value = m.rawNeck || '';
+            document.getElementById('mChest').value = m.rawChest || '';
+            document.getElementById('mBiceps').value = m.rawBiceps || '';
+            document.getElementById('mAbdomen').value = m.rawAbdomen || '';
+            document.getElementById('mGlute').value = m.rawGlute || '';
+            document.getElementById('mLeg').value = m.rawLeg || '';
+            document.getElementById('mCalf').value = m.rawCalf || '';
+
+            window.scrollTo({ top: 400, behavior: 'smooth' });
+        }
+
+        function cancelEditMeasurement() {
+            document.getElementById('editMeasurementIndex').value = '-1';
+            document.getElementById('formMeasurementTitle').innerText = '📏 Nueva Medición Antropométrica';
+            document.getElementById('btnSaveMeasurement').innerText = 'Registrar y Calcular IMC';
+            document.getElementById('btnCancelEditMeasurement').classList.add('hidden');
+
+            document.getElementById('mWeight').value = '';
+            document.getElementById('mHeight').value = '';
+            document.getElementById('mDate').valueAsDate = new Date();
+            document.getElementById('mNeck').value = '';
+            document.getElementById('mChest').value = '';
+            document.getElementById('mBiceps').value = '';
+            document.getElementById('mAbdomen').value = '';
+            document.getElementById('mGlute').value = '';
+            document.getElementById('mLeg').value = '';
+            document.getElementById('mCalf').value = '';
         }
 
         function renderMetricsHistory(athlete) {
@@ -977,7 +1087,10 @@
                     <div class="metric-history-card">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem; border-bottom: 1px solid var(--border); padding-bottom: 0.4rem;">
                             <strong style="color: var(--bronze); font-size: 0.85rem;">📅 Registro: ${m.date}</strong>
-                            <button class="btn-danger" onclick="deleteMetric(${idx})" style="font-size:0.6rem; padding:0.15rem 0.4rem;">Eliminar</button>
+                            <div style="display: flex; gap: 0.4rem;">
+                                <button class="btn-secondary" onclick="editMeasurement(${idx})" style="font-size:0.6rem; padding:0.15rem 0.5rem; color:var(--bronze); border-color:var(--bronze);">Editar</button>
+                                <button class="btn-danger" onclick="deleteMetric(${idx})" style="font-size:0.6rem; padding:0.15rem 0.4rem;">Eliminar</button>
+                            </div>
                         </div>
                         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem; font-size: 0.75rem;">
                             <div><strong>Peso:</strong> ${m.weight}</div>
