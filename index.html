@@ -15,6 +15,8 @@
             --text-main: #f3f4f6;
             --text-muted: #9ca3af;
             --accent-glow: rgba(212, 175, 55, 0.15);
+            --danger: #ef4444;
+            --success: #22c55e;
         }
 
         * {
@@ -72,17 +74,17 @@
             border-radius: 8px;
             padding: 2.5rem;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            margin-bottom: 2rem;
         }
 
-        h2 {
-            font-size: 1.8rem;
-            margin-bottom: 0.5rem;
+        h2, h3 {
             color: var(--text-main);
+            margin-bottom: 0.5rem;
         }
 
         .subtitle {
             color: var(--text-muted);
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             font-size: 0.95rem;
         }
 
@@ -116,6 +118,24 @@
             box-shadow: 0 0 0 3px var(--accent-glow);
         }
 
+        .password-container {
+            position: relative;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 1.1rem;
+            width: auto;
+            padding: 0;
+        }
+
         button {
             width: 100%;
             padding: 1rem;
@@ -135,11 +155,40 @@
             opacity: 0.9;
         }
 
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 0.5rem 1rem;
+            width: auto;
+            font-size: 0.8rem;
+        }
+        .btn-secondary:hover {
+            border-color: var(--bronze);
+            color: var(--text-main);
+        }
+
+        .btn-approve {
+            background: var(--success);
+            color: #fff;
+            padding: 0.4rem 0.8rem;
+            font-size: 0.75rem;
+            width: auto;
+            margin-right: 0.5rem;
+        }
+
+        .btn-deny {
+            background: var(--danger);
+            color: #fff;
+            padding: 0.4rem 0.8rem;
+            font-size: 0.75rem;
+            width: auto;
+        }
+
         .hidden {
             display: none !important;
         }
 
-        /* Dashboard Layout */
         .dashboard-header {
             display: flex;
             justify-content: space-between;
@@ -176,42 +225,6 @@
             color: var(--bronze);
         }
 
-        .tools-section {
-            background-color: var(--surface-card);
-            border: 1px solid var(--border);
-            padding: 2rem;
-            border-radius: 8px;
-            margin-top: 2rem;
-        }
-
-        .tools-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1rem;
-        }
-
-        .tool-box {
-            background: var(--bg-deep);
-            padding: 1.5rem;
-            border-radius: 6px;
-            border: 1px solid var(--border);
-        }
-
-        .tool-box h4 {
-            margin-bottom: 1rem;
-            color: var(--bronze);
-        }
-
-        .result-box {
-            margin-top: 1rem;
-            padding: 0.8rem;
-            background: var(--surface);
-            border-radius: 4px;
-            font-size: 0.95rem;
-            border-left: 3px solid var(--bronze);
-        }
-
         table {
             width: 100%;
             border-collapse: collapse;
@@ -236,17 +249,54 @@
             letter-spacing: 1px;
         }
 
-        .logout-btn {
-            background: transparent;
-            border: 1px solid var(--border);
+        .empty-state {
+            text-align: center;
+            padding: 2rem;
             color: var(--text-muted);
-            padding: 0.5rem 1rem;
-            width: auto;
-            font-size: 0.8rem;
+            font-style: italic;
         }
-        .logout-btn:hover {
-            border-color: var(--bronze);
-            color: var(--text-main);
+
+        .link-box {
+            background: var(--bg-deep);
+            border: 1px dashed var(--bronze);
+            padding: 1rem;
+            border-radius: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .link-box input {
+            background: transparent;
+            border: none;
+            color: var(--bronze);
+            font-weight: 500;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.5rem;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            width: auto;
+        }
+
+        .tab-btn.active {
+            color: var(--bronze);
+            border-bottom: 2px solid var(--bronze);
         }
     </style>
 </head>
@@ -258,138 +308,166 @@
     </header>
 
     <main>
-        <!-- VISTA DE LOGIN -->
-        <section id="loginView" class="card" style="max-width: 480px; margin: 4rem auto;">
-            <h2>Acceso al Sistema</h2>
-            <p class="subtitle">Plataforma global para entrenadores profesionales.</p>
-            
-            <form id="loginForm">
-                <div class="form-group">
-                    <label>Correo Electrónico</label>
-                    <input type="email" id="email" required placeholder="admin@ciodarofitness.com">
+        <!-- VISTA DE LOGIN Y ACCESO PÚBLICO A LICENCIAS -->
+        <section id="authSection">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem;">
+                
+                <!-- Acceso Administrador -->
+                <div class="card" style="margin-bottom: 0;">
+                    <h2>Acceso Administrador</h2>
+                    <p class="subtitle">Panel de control exclusivo para Heber Ciodaro.</p>
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <label>Correo Electrónico</label>
+                            <input type="email" id="email" required placeholder="admin@ciodarofitness.com">
+                        </div>
+                        <div class="form-group">
+                            <label>Contraseña</label>
+                            <div class="password-container">
+                                <input type="password" id="password" required placeholder="••••••••">
+                                <button type="button" class="toggle-password" onclick="togglePassword()">👁️</button>
+                            </div>
+                        </div>
+                        <button type="submit">Ingresar como Admin</button>
+                    </form>
                 </div>
-                <div class="form-group">
-                    <label>Contraseña</label>
-                    <input type="password" id="password" required placeholder="••••••••">
+
+                <!-- Solicitud Pública de Licencia para Nuevos Clientes/Entrenadores -->
+                <div class="card" style="margin-bottom: 0;" id="requestSection">
+                    <h2>Solicitar Licencia / Afiliación</h2>
+                    <p class="subtitle">¿Deseas unirte a Business Center Fit? Envía tu solicitud.</p>
+                    <form id="requestLicenseForm">
+                        <div class="form-group">
+                            <label>Nombre y Apellido / Marca</label>
+                            <input type="text" id="reqName" required placeholder="Ej. Carlos Trainer">
+                        </div>
+                        <div class="form-group">
+                            <label>Correo Electrónico</label>
+                            <input type="email" id="reqEmail" required placeholder="correo@ejemplo.com">
+                        </div>
+                        <div class="form-group">
+                            <label>Tipo de Solicitud</label>
+                            <select id="reqType">
+                                <option value="Entrenador Afiliado">Entrenador (Licencia SaaS)</option>
+                                <option value="Atleta / Alumno">Atleta / Alumno directo</option>
+                            </select>
+                        </div>
+                        <button type="submit" style="background: transparent; border: 1px solid var(--bronze); color: var(--bronze);">Enviar Solicitud de Acceso</button>
+                    </form>
                 </div>
-                <button type="submit">Ingresar al Panel</button>
-            </form>
+
+            </div>
         </section>
 
-        <!-- VISTA DE DASHBOARD ADMIN -->
+        <!-- VISTA DE DASHBOARD ADMIN (LIMPIO) -->
         <section id="dashboardView" class="hidden">
             <div class="dashboard-header">
                 <div>
                     <h2>Panel de Control Global</h2>
-                    <p class="subtitle">Bienvenido, Heber Ciodaro (Administrador General)</p>
+                    <p class="subtitle">Administración General - Ciodarofitness</p>
                 </div>
-                <button class="logout-btn" onclick="logout()">Cerrar Sesión</button>
+                <button class="btn-secondary" onclick="logout()">Cerrar Sesión</button>
+            </div>
+
+            <!-- ENLACE DIRECTO PARA COMPARTIR A CLIENTES/ENTRENADORES -->
+            <div class="card" style="padding: 1.5rem; margin-bottom: 1.5rem;">
+                <h3 style="font-size: 0.95rem; margin-bottom: 0.5rem; color: var(--bronze);">Enlace de Solicitud para Clientes o Entrenadores</h3>
+                <p class="subtitle" style="margin-bottom: 0.8rem; font-size: 0.85rem;">Comparte este enlace por WhatsApp para que nuevos usuarios soliciten su acceso:</p>
+                <div class="link-box">
+                    <input type="text" id="shareableLink" readonly value="">
+                    <button class="btn-secondary" onclick="copyInviteLink()" style="font-size: 0.75rem; padding: 0.4rem 0.8rem;">Copiar Enlace</button>
+                </div>
             </div>
 
             <div class="grid-stats">
                 <div class="stat-card">
-                    <h3>Entrenadores Afiliados</h3>
-                    <div class="value" id="totalTrainers">12</div>
+                    <h3>Alumnos / Afiliados Activos</h3>
+                    <div class="value" id="statActiveAthletes">0</div>
                 </div>
                 <div class="stat-card">
-                    <h3>Atletas Activos</h3>
-                    <div class="value" id="totalAthletes">48</div>
-                </div>
-                <div class="stat-card">
-                    <h3>Ingresos del Mes</h3>
-                    <div class="value">$2,840</div>
+                    <h3>Solicitudes Pendientes</h3>
+                    <div class="value" id="statPendingRequests">0</div>
                 </div>
             </div>
 
-            <!-- GESTIÓN DE AFILIACIONES -->
-            <div class="card" style="margin-bottom: 2rem;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                    <h3>Gestión de Clientes y Afiliaciones</h3>
-                    <button style="width: auto; padding: 0.5rem 1rem; font-size: 0.8rem;" onclick="addClientModal()">+ Registrar Nuevo Atleta</button>
-                </div>
+            <!-- NAVEGACIÓN ENTRE PESTAÑAS DEL ADMIN -->
+            <div class="nav-tabs">
+                <button class="tab-btn active" onclick="switchTab('tabRequests', this)">Solicitudes Pendientes (<span id="badgePending">0</span>)</button>
+                <button class="tab-btn" onclick="switchTab('tabAthletes', this)">Alumnos y Afiliados Activos</button>
+            </div>
+
+            <!-- SECCIÓN 1: SOLICITUDES PENDIENTES -->
+            <div id="tabRequests" class="card">
+                <h3>Solicitudes de Afiliación y Licencias</h3>
+                <p class="subtitle">Aprueba o deniega el acceso a nuevos usuarios en tiempo real.</p>
                 <table>
                     <thead>
                         <tr>
-                            <th>Nombre del Atleta</th>
-                            <th>Entrenador Asignado</th>
-                            <th>Estado</th>
-                            <th>Fecha de Afiliación</th>
+                            <th>Nombre / Marca</th>
+                            <th>Correo</th>
+                            <th>Tipo</th>
+                            <th>Acciones</th>
                         </tr>
                     </thead>
-                    <tbody id="clientTableBody">
+                    <tbody id="requestsTableBody">
                         <tr>
-                            <td>Lady Caceres</td>
-                            <td>Heber Ciodaro</td>
-                            <td style="color: #4ade80;">Activo</td>
-                            <td>2026-07-01</td>
-                        </tr>
-                        <tr>
-                            <td>John Chiarello</td>
-                            <td>Heber Ciodaro</td>
-                            <td style="color: #4ade80;">Activo</td>
-                            <td>2026-06-15</td>
+                            <td colspan="4" class="empty-state">No hay solicitudes pendientes en este momento.</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
 
-            <!-- HERRAMIENTAS TÉCNICAS PROFESIONALES -->
-            <div class="tools-section">
-                <h3>Herramientas Técnicas de Evaluación</h3>
-                <div class="tools-grid">
-                    
-                    <!-- Calculadora IMC -->
-                    <div class="tool-box">
-                        <h4>Calculadora de IMC</h4>
-                        <div class="form-group" style="margin-bottom: 0.8rem;">
-                            <label>Peso (kg)</label>
-                            <input type="number" id="imcWeight" placeholder="104">
-                        </div>
-                        <div class="form-group" style="margin-bottom: 0.8rem;">
-                            <label>Altura (cm)</label>
-                            <input type="number" id="imcHeight" placeholder="180">
-                        </div>
-                        <button onclick="calculateIMC()" style="padding: 0.6rem; font-size: 0.85rem;">Calcular IMC</label>
-                        <div id="imcResult" class="result-box hidden"></div>
-                    </div>
-
-                    <!-- Calculadora Calorías / Macros -->
-                    <div class="tool-box">
-                        <h4>Gasto Energético (Mifflin-St Jeor)</h4>
-                        <div class="form-group" style="margin-bottom: 0.8rem;">
-                            <label>Peso (kg) / Altura (cm) / Edad</label>
-                            <div style="display: flex; gap: 0.5rem;">
-                                <input type="number" id="calW" placeholder="104">
-                                <input type="number" id="calH" placeholder="180">
-                                <input type="number" id="calA" placeholder="44">
-                            </div>
-                        </div>
-                        <button onclick="calculateCalories()" style="padding: 0.6rem; font-size: 0.85rem;">Calcular Calorías</button>
-                        <div id="calResult" class="result-box hidden"></div>
-                    </div>
-
-                    <!-- Porcentaje de Grasa (Estimado Antropométrico) -->
-                    <div class="tool-box">
-                        <h4>Porcentaje de Grasa Corporal</h4>
-                        <div class="form-group" style="margin-bottom: 0.8rem;">
-                            <label>Cintura (cm) y Cuello (cm)</label>
-                            <div style="display: flex; gap: 0.5rem;">
-                                <input type="number" id="fatWaist" placeholder="Cintura">
-                                <input type="number" id="fatNeck" placeholder="Cuello">
-                            </div>
-                        </div>
-                        <button onclick="calculateFat()" style="padding: 0.6rem; font-size: 0.85rem;">Estimar Grasa</button>
-                        <div id="fatResult" class="result-box hidden"></div>
-                    </div>
-
-                </div>
+            <!-- SECCIÓN 2: ALUMNOS ACTIVOS -->
+            <div id="tabAthletes" class="card hidden">
+                <h3>Base de Datos de Alumnos y Afiliados Activos</h3>
+                <p class="subtitle">Usuarios con licencia aprobada en la plataforma.</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Correo</th>
+                            <th>Tipo de Membresía</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="athletesTableBody">
+                        <tr>
+                            <td colspan="5" class="empty-state">No hay alumnos activos registrados aún.</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
 
         </section>
     </main>
 
     <script>
-        // Reloj y Fecha en tiempo real
+        // Memoria local de datos
+        let pendingRequests = [];
+        let activeAthletes = [];
+
+        // Generar enlace automático basado en la ubicación actual
+        document.getElementById('shareableLink').value = window.location.href.split('#')[0];
+
+        function copyInviteLink() {
+            const linkInput = document.getElementById('shareableLink');
+            linkInput.select();
+            navigator.clipboard.writeText(linkInput.value);
+            alert("¡Enlace copiado al portapapeles! Compártelo con tus entrenadores o clientes.");
+        }
+
+        // Mostrar / Ocultar Contraseña
+        function togglePassword() {
+            const pwdInput = document.getElementById('password');
+            if (pwdInput.type === 'password') {
+                pwdInput.type = 'text';
+            } else {
+                pwdInput.type = 'password';
+            }
+        }
+
+        // Reloj en tiempo real
         function updateClock() {
             const now = new Date();
             document.getElementById('clock').innerText = now.toLocaleDateString() + ' ' + now.toLocaleTimeString();
@@ -397,70 +475,102 @@
         setInterval(updateClock, 1000);
         updateClock();
 
-        // Control de Acceso (Simulación Administrador Global)
+        // Login Admin
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            const email = document.getElementById('email').value;
-            
-            // Acceso verificado para Heber Ciodaro
-            document.getElementById('loginView').classList.add('hidden');
+            document.getElementById('authSection').classList.add('hidden');
             document.getElementById('dashboardView').classList.remove('hidden');
+            updateDashboard();
         });
 
         function logout() {
             document.getElementById('dashboardView').classList.add('hidden');
-            document.getElementById('loginView').classList.remove('hidden');
+            document.getElementById('authSection').classList.remove('hidden');
         }
 
-        // Lógica de Herramientas Técnicas
-        function calculateIMC() {
-            const w = parseFloat(document.getElementById('imcWeight').value);
-            const h = parseFloat(document.getElementById('imcHeight').value) / 100;
-            if(!w || !h) return;
-            const imc = (w / (h * h)).toFixed(1);
-            let category = "Normal";
-            if(imc >= 25) category = "Sobrepeso";
-            if(imc >= 30) category = "Obesidad";
-            
-            const res = document.getElementById('imcResult');
-            res.classList.remove('hidden');
-            res.innerHTML = `IMC: <strong>${imc}</strong> (${category})`;
-        }
+        // Envío de Solicitud Pública
+        document.getElementById('requestLicenseForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('reqName').value;
+            const email = document.getElementById('reqEmail').value;
+            const type = document.getElementById('reqType').value;
 
-        function calculateCalories() {
-            const w = parseFloat(document.getElementById('calW').value);
-            const h = parseFloat(document.getElementById('calH').value);
-            const a = parseFloat(document.getElementById('calA').value);
-            if(!w || !h || !a) return;
-            // Fórmula básica hombre TMB (Mifflin-St Jeor)
-            const tmb = (10 * w) + (6.25 * h) - (5 * a) + 5;
-            const maintenance = Math.round(tmb * 1.55); // Nivel moderado
-            
-            const res = document.getElementById('calResult');
-            res.classList.remove('hidden');
-            res.innerHTML = `TMB: ${Math.round(tmb)} kcal | Mantenimiento: <strong>${maintenance} kcal</strong>`;
-        }
+            pendingRequests.push({ id: Date.now(), name, email, type });
+            alert("¡Solicitud enviada con éxito! Heber Ciodaro evaluará tu acceso pronto.");
+            this.reset();
+            updateDashboard();
+        });
 
-        function calculateFat() {
-            const waist = parseFloat(document.getElementById('fatWaist').value);
-            const neck = parseFloat(document.getElementById('fatNeck').value);
-            if(!waist || !neck) return;
-            // Estimación simplificada de circunferencia
-            const fat = Math.round(495 / (1.0324 - 0.19077 * Math.log10(waist - neck) + 0.15456 * Math.log10(180)) - 450);
-            
-            const res = document.getElementById('fatResult');
-            res.classList.remove('hidden');
-            res.innerHTML = `Grasa estimada aproximada: <strong>${fat > 0 ? fat : 15}%</strong>`;
-        }
+        // Actualizar estadísticas y tablas
+        function updateDashboard() {
+            document.getElementById('statActiveAthletes').innerText = activeAthletes.length;
+            document.getElementById('statPendingRequests').innerText = pendingRequests.length;
+            document.getElementById('badgePending').innerText = pendingRequests.length;
 
-        function addClientModal() {
-            const name = prompt("Ingrese el nombre completo del nuevo atleta:");
-            if(name) {
-                const tbody = document.getElementById('clientTableBody');
-                const row = document.신선 || document.createElement('tr');
-                row.innerHTML = `<td>${name}</td><td>Heber Ciodaro</td><td style="color: #4ade80;">Activo</td><td>2026-07-26</td>`;
-                tbody.appendChild(row);
+            // Renderizar Solicitudes
+            const reqTbody = document.getElementById('requestsTableBody');
+            if (pendingRequests.length === 0) {
+                reqTbody.innerHTML = `<tr><td colspan="4" class="empty-state">No hay solicitudes pendientes en este momento.</td></tr>`;
+            } else {
+                reqTbody.innerHTML = pendingRequests.map(r => `
+                    <tr>
+                        <td>${r.name}</td>
+                        <td>${r.email}</td>
+                        <td>${r.type}</td>
+                        <td>
+                            <button class="btn-approve" onclick="approveRequest(${r.id})">Aprobar</button>
+                            <button class="btn-deny" onclick="deleteRequest(${r.id})">Eliminar</button>
+                        </td>
+                    </tr>
+                `).join('');
             }
+
+            // Renderizar Alumnos Activos
+            const athTbody = document.getElementById('athletesTableBody');
+            if (activeAthletes.length === 0) {
+                athTbody.innerHTML = `<tr><td colspan="5" class="empty-state">No hay alumnos activos registrados aún.</td></tr>`;
+            } else {
+                athTbody.innerHTML = activeAthletes.map(a => `
+                    <tr>
+                        <td>${a.name}</td>
+                        <td>${a.email}</td>
+                        <td>${a.type}</td>
+                        <td style="color: var(--success);">Activo</td>
+                        <td><button class="btn-deny" onclick="removeAthlete(${a.id})" style="padding: 0.3rem 0.6rem; font-size: 0.7rem;">Dar de baja</button></td>
+                    </tr>
+                `).join('');
+            }
+        }
+
+        // Acciones de Aprobación o Eliminación Total
+        function approveRequest(id) {
+            const index = pendingRequests.findIndex(r => r.id === id);
+            if (index !== -1) {
+                const approved = pendingRequests.splice(index, 1)[0];
+                activeAthletes.push(approved);
+                updateDashboard();
+            }
+        }
+
+        function deleteRequest(id) {
+            pendingRequests = pendingRequests.filter(r => r.id !== id);
+            updateDashboard();
+        }
+
+        function removeAthlete(id) {
+            activeAthletes = activeAthletes.filter(a => a.id !== id);
+            updateDashboard();
+        }
+
+        // Pestañas del Dashboard
+        function switchTab(tabId, btn) {
+            document.querySelectorAll('#dashboardView > .card').forEach(card => {
+                if(card.id && card.id.startsWith('tab')) card.classList.add('hidden');
+            });
+            document.getElementById(tabId).classList.remove('hidden');
+            
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
         }
     </script>
 </body>
