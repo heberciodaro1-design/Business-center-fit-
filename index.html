@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Business Center Fit - Ciodarofitness</title>
+    <title>Business Center Fit</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .bg-gold-gradient {
@@ -27,7 +27,7 @@
             <span class="bg-[#d4af37]/10 text-gold border border-[#d4af37]/20 text-[10px] font-semibold px-3 py-1 rounded-full">SAAS ENGINE V2.5</span>
             <h1 class="text-2xl font-black tracking-wider text-white mt-2">BUSINESS CENTER</h1>
             <h2 class="text-xl font-bold text-gold">FIT</h2>
-            <p class="text-[10px] tracking-widest text-gray-400 uppercase font-semibold">BY CIODAROFITNESS</p>
+            <p class="text-[10px] tracking-widest text-gray-400 uppercase font-semibold">ADMINISTRADOR CIODAROFITNESS</p>
         </div>
 
         <form onsubmit="realizarLogin(event)" class="space-y-4">
@@ -50,50 +50,50 @@
     <div id="vista-panel" class="max-w-md w-full space-y-6 hidden pb-20">
         <header class="flex justify-between items-center bg-[#131b2e] p-4 rounded-2xl border border-gray-800">
             <div>
-                <h1 class="text-lg font-black tracking-wider text-orange-500">CIODAROFITNESS <span class="text-xs text-gray-400 font-normal">page</span></h1>
+                <h1 class="text-base font-black tracking-wider text-white">BUSINESS CENTER <span class="text-gold">FIT</span></h1>
             </div>
             <div class="flex items-center gap-2">
-                <button onclick="cerrarSesion()" class="bg-gray-800 text-gray-300 px-3 py-1.5 rounded-xl border border-gray-700 text-xs">Cerrar Sesión</button>
-                <span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-semibold px-3 py-1.5 rounded-full">Panel Activo</span>
+                <button onclick="cerrarSesion()" class="bg-gray-800 text-gray-300 px-3 py-1.5 rounded-xl border border-gray-700 text-xs hover:bg-gray-700">Salir</button>
+                <span class="bg-[#d4af37]/10 text-gold border border-[#d4af37]/20 text-xs font-semibold px-3 py-1.5 rounded-full">Activo</span>
             </div>
         </header>
 
         <div class="grid grid-cols-2 gap-4">
             <div class="bg-[#131b2e] p-4 rounded-2xl border border-gray-800">
                 <div class="text-xs text-gray-400 uppercase font-semibold">Clientes Activos</div>
-                <div id="total-clientes" class="text-3xl font-bold mt-2">0</div>
+                <div id="total-clientes" class="text-3xl font-bold mt-2 text-white">0</div>
             </div>
             <div class="bg-[#131b2e] p-4 rounded-2xl border border-gray-800">
                 <div class="text-xs text-gray-400 uppercase font-semibold">Ingresos Mensuales</div>
-                <div id="total-meta" class="text-2xl font-bold mt-2 text-orange-400">$0.00</div>
+                <div id="total-meta" class="text-2xl font-bold mt-2 text-gold">$0.00</div>
             </div>
         </div>
 
         <div class="bg-[#131b2e] p-5 rounded-2xl border border-gray-800 space-y-4">
-            <h2 class="text-sm font-bold text-orange-500 uppercase tracking-wide flex items-center gap-2">
+            <h2 class="text-sm font-bold text-gold uppercase tracking-wide flex items-center gap-2">
                 👤 Registrar Nuevo Cliente
             </h2>
             
             <form id="form-cliente" onsubmit="agregarCliente(event)" class="space-y-3">
                 <div>
                     <label class="text-xs text-gray-400 block mb-1">Nombre Completo</label>
-                    <input type="text" id="nombre" required placeholder="Ej. Juan Pérez" class="w-full bg-[#0b0f19] border border-gray-800 rounded-xl p-3 text-sm focus:outline-none focus:border-orange-500 text-white">
+                    <input type="text" id="nombre" required placeholder="Ej. Juan Pérez" class="w-full bg-[#0b0f19] border border-gray-800 rounded-xl p-3 text-sm focus:outline-none focus:border-[#d4af37] text-white">
                 </div>
                 <div>
                     <label class="text-xs text-gray-400 block mb-1">Número de WhatsApp (con código de país)</label>
-                    <input type="text" id="whatsapp" required placeholder="Ej. 584123456789" class="w-full bg-[#0b0f19] border border-gray-800 rounded-xl p-3 text-sm focus:outline-none focus:border-orange-500 text-white">
+                    <input type="text" id="whatsapp" required placeholder="Ej. 584123456789" class="w-full bg-[#0b0f19] border border-gray-800 rounded-xl p-3 text-sm focus:outline-none focus:border-[#d4af37] text-white">
                 </div>
                 <div class="grid grid-cols-2 gap-3">
                     <div>
                         <label class="text-xs text-gray-400 block mb-1">Costo del Paquete ($)</label>
-                        <input type="number" id="costo" required placeholder="Ej. 50" class="w-full bg-[#0b0f19] border border-gray-800 rounded-xl p-3 text-sm focus:outline-none focus:border-orange-500 text-white">
+                        <input type="number" id="costo" required placeholder="Ej. 50" class="w-full bg-[#0b0f19] border border-gray-800 rounded-xl p-3 text-sm focus:outline-none focus:border-[#d4af37] text-white">
                     </div>
                     <div>
                         <label class="text-xs text-gray-400 block mb-1">Fecha de Inicio</label>
-                        <input type="date" id="fecha" required class="w-full bg-[#0b0f19] border border-gray-800 rounded-xl p-3 text-sm focus:outline-none focus:border-orange-500 text-white">
+                        <input type="date" id="fecha" required class="w-full bg-[#0b0f19] border border-gray-800 rounded-xl p-3 text-sm focus:outline-none focus:border-[#d4af37] text-white">
                     </div>
                 </div>
-                <button type="submit" class="w-full bg-orange-600 hover:bg-orange-500 text-white font-bold py-3.5 px-4 rounded-xl transition duration-200 flex items-center justify-center gap-2 shadow-lg">
+                <button type="submit" class="w-full bg-gold-gradient hover:opacity-90 text-gray-950 font-bold py-3.5 px-4 rounded-xl transition duration-200 flex items-center justify-center gap-2 shadow-lg uppercase tracking-wider text-sm">
                     📂 Agregar a la Base de Datos
                 </button>
             </form>
@@ -108,8 +108,10 @@
     </div>
 
     <script>
-        document.getElementById('fecha').valueAsDate = new Date();
-        let clientes = JSON.parse(localStorage.getItem('ciodaro_clientes_original')) || [];
+        const inputFecha = document.getElementById('fecha');
+        if (inputFecha) inputFecha.valueAsDate = new Date();
+
+        let clientes = JSON.parse(localStorage.getItem('business_center_clientes')) || [];
 
         function realizarLogin(e) {
             e.preventDefault();
@@ -137,7 +139,7 @@
             };
 
             clientes.push(nuevoCliente);
-            localStorage.setItem('ciodaro_clientes_original', JSON.stringify(clientes));
+            localStorage.setItem('business_center_clientes', JSON.stringify(clientes));
             
             document.getElementById('form-cliente').reset();
             document.getElementById('fecha').valueAsDate = new Date();
@@ -147,18 +149,19 @@
         function eliminarCliente(id) {
             if(confirm('¿Eliminar este cliente?')) {
                 clientes = clientes.filter(c => c.id !== id);
-                localStorage.setItem('ciodaro_clientes_original', JSON.stringify(clientes));
+                localStorage.setItem('business_center_clientes', JSON.stringify(clientes));
                 renderizarClientes();
             }
         }
 
         function notificarCobro(whatsapp, nombre) {
-            const mensaje = encodeURIComponent(`Hola ${nombre}, te escribo de Ciodarofitness para recordarte el vencimiento de tu paquete.`);
+            const mensaje = encodeURIComponent(`Hola ${nombre}, te escribo de Business Center Fit para recordarte el vencimiento de tu paquete.`);
             window.open(`https://wa.me/${whatsapp}?text=${mensaje}`, '_blank');
         }
 
         function renderizarClientes() {
             const contenedor = document.getElementById('lista-clientes');
+            if (!contenedor) return;
             contenedor.innerHTML = '';
             
             let totalIngresos = 0;
@@ -186,10 +189,10 @@
                             <h4 class="font-bold text-white text-base">${c.nombre}</h4>
                             <p class="text-xs text-gray-400 mt-0.5">📅 Ciclo: ${fechaInicio.toLocaleDateString('es-ES', opt)} al ${fechaVenc.toLocaleDateString('es-ES', opt)}</p>
                         </div>
-                        <span class="text-emerald-400 font-bold text-sm">$${c.costo.toFixed(2)}</span>
+                        <span class="text-gold font-bold text-sm">$${c.costo.toFixed(2)}</span>
                     </div>
                     <div class="flex justify-between items-center pt-2 border-t border-gray-800/60">
-                        <span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[10px] font-semibold px-2.5 py-1 rounded-full">
+                        <span class="bg-[#d4af37]/10 text-gold border border-[#d4af37]/20 text-[10px] font-semibold px-2.5 py-1 rounded-full">
                             Activo (30d)
                         </span>
                         <div class="flex gap-2">
