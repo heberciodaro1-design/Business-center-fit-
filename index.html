@@ -20,8 +20,9 @@
         }
     </script>
 </head>
-<body class="bg-darkBg text-silverText font-sans antialiased min-h-screen flex flex-col justify-between" onload="initClock()">
+<body class="bg-darkBg text-silverText font-sans antialiased min-h-screen flex flex-col justify-between" onload="initSystem()">
 
+    <!-- LOGIN -->
     <div id="login-container" class="flex-grow flex items-center justify-center p-4">
         <div class="bg-cardBg border border-cardBorder rounded-2xl p-8 w-full max-w-md shadow-2xl relative overflow-hidden">
             <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-bronzeDark via-bronzeLight to-bronzeDark"></div>
@@ -47,6 +48,7 @@
         </div>
     </div>
 
+    <!-- DASHBOARD PRINCIPAL -->
     <div id="dashboard-screen" class="hidden fixed inset-0 bg-darkBg flex flex-col md:flex-row z-50 overflow-hidden">
         <aside class="w-full md:w-72 bg-cardBg border-r border-cardBorder flex flex-col justify-between p-6 overflow-y-auto">
             <div>
@@ -56,154 +58,243 @@
                     <div id="live-clock" class="text-[10px] text-silverMuted font-mono mt-1">Cargando fecha y hora...</div>
                 </div>
                 
+                <!-- Menú Principal Numerado con la Calculadora de Calorías Independiente -->
                 <nav class="space-y-2">
                     <button onclick="switchTab('tab-tenants')" id="btn-tenants" class="w-full text-left bg-darkBg border border-bronzeMain text-silverText px-4 py-3 rounded-xl text-sm font-semibold shadow">1. Afiliados & Red</button>
                     <button onclick="switchTab('tab-clients')" id="btn-clients" class="w-full text-left hover:bg-darkBg text-silverMuted px-4 py-3 rounded-xl text-sm font-medium transition">2. Gestión de Alumnos</button>
-                    <button onclick="switchTab('tab-metrics')" id="btn-metrics" class="w-full text-left hover:bg-darkBg text-silverMuted px-4 py-3 rounded-xl text-sm font-medium transition">3. Antropometría, Calorías & PDF</button>
-                    <button onclick="switchTab('tab-financial')" id="btn-financial" class="w-full text-left hover:bg-darkBg text-silverMuted px-4 py-3 rounded-xl text-sm font-medium transition">4. Finanzas & Cierres (1-31)</button>
+                    <button onclick="switchTab('tab-calories')" id="btn-calories" class="w-full text-left hover:bg-darkBg text-silverMuted px-4 py-3 rounded-xl text-sm font-medium transition">3. Calculadora de Calorías</button>
+                    <button onclick="switchTab('tab-metrics')" id="btn-metrics" class="w-full text-left hover:bg-darkBg text-silverMuted px-4 py-3 rounded-xl text-sm font-medium transition">4. Antropometría & PDF</button>
+                    <button onclick="switchTab('tab-financial')" id="btn-financial" class="w-full text-left hover:bg-darkBg text-silverMuted px-4 py-3 rounded-xl text-sm font-medium transition">5. Finanzas & Cierres (1-31)</button>
                 </nav>
             </div>
             <button onclick="handleLogout()" class="mt-6 border border-cardBorder text-silverMuted py-3 rounded-xl text-xs font-bold uppercase">Cerrar Sesión</button>
         </aside>
 
         <main class="flex-grow p-6 md:p-10 overflow-y-auto">
+            
+            <!-- TAB 1: AFILIADOS Y SOLICITUD DE LICENCIA -->
             <div id="tab-tenants" class="space-y-6">
-                <h2 class="text-2xl font-black text-silverText">1. Control de Afiliaciones de Entrenadores</h2>
-                <div class="bg-cardBg border border-cardBorder p-5 rounded-2xl flex justify-between items-center">
+                <header class="pb-4 border-b border-cardBorder">
+                    <h2 class="text-2xl font-black text-silverText">1. Control de Afiliaciones de Entrenadores</h2>
+                    <p class="text-xs text-silverMuted mt-1">Gestión y envío de solicitudes de licencia o afiliación a la red.</p>
+                </header>
+                <div class="bg-cardBg border border-cardBorder p-5 rounded-2xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                     <div>
                         <p class="text-sm font-bold text-silverText">Solicitud: Carlos Mendoza</p>
-                        <p class="text-xs text-silverMuted">Estado: Pendiente de validación</p>
+                        <p class="text-xs text-silverMuted">Estado: Pendiente de validación de licencia</p>
                     </div>
-                    <div class="space-x-2">
-                        <button onclick="alert('Afiliación aprobada con éxito')" class="bg-emerald-600 text-white px-3 py-1.5 rounded text-xs font-bold">Aprobar</button>
-                        <button onclick="this.closest('div.bg-cardBg').remove(); alert('Afiliación denegada y eliminada correctamente.');" class="bg-red-600 text-white px-3 py-1.5 rounded text-xs font-bold">Eliminar / Denegar</button>
+                    <div class="flex space-x-2">
+                        <button onclick="enviarSolicitudLicencia()" class="bg-bronzeMain text-darkBg px-3.5 py-2 rounded-xl text-xs font-black uppercase tracking-wider">Enviar Solicitud</button>
+                        <button onclick="alert('Afiliación aprobada con éxito')" class="bg-emerald-600 text-white px-3.5 py-2 rounded-xl text-xs font-bold">Aprobar</button>
+                        <button onclick="this.closest('div.bg-cardBg').remove(); alert('Afiliación denegada y eliminada correctamente.');" class="bg-red-600 text-white px-3.5 py-2 rounded-xl text-xs font-bold">Eliminar</button>
                     </div>
                 </div>
             </div>
-                        <div id="tab-clients" class="hidden space-y-6">
+            <!-- TAB 2: GESTIÓN DE ALUMNOS (Expediente amplio y visible en $) -->
+            <div id="tab-clients" class="hidden space-y-6">
                 <header class="pb-4 border-b border-cardBorder flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                     <div>
-                        <h2 class="text-2xl font-black text-silverText">2. Gestión de Alumnos (Perfiles & Métricas)</h2>
-                        <p class="text-xs text-silverMuted mt-1">Administra fichas, costos, fechas de corte y medidas corporales.</p>
+                        <h2 class="text-2xl font-black text-silverText">2. Gestión de Alumnos (Expediente Amplio)</h2>
+                        <p class="text-xs text-silverMuted mt-1">Control detallado de fichas, costos de paquetes en $, fechas de corte y medidas.</p>
                     </div>
                     <button onclick="openModal()" class="bg-gradient-to-r from-bronzeDark via-bronzeMain to-bronzeDark text-darkBg font-black px-4 py-2.5 rounded-xl text-xs uppercase tracking-wider shadow">
                         + Registrar Nuevo Alumno
                     </button>
                 </header>
 
+                <!-- Buscador -->
                 <div class="bg-cardBg border border-cardBorder p-3 rounded-2xl flex items-center gap-3">
                     <span class="text-sm">🔍</span>
                     <input type="text" id="search-input" oninput="renderClients()" placeholder="Buscar alumno por nombre..." class="w-full bg-darkBg border border-cardBorder rounded-xl px-4 py-2 text-sm text-silverText focus:border-bronzeMain focus:outline-none">
                 </div>
 
-                <div id="clients-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
-                        </div>
-                              <div id="tab-metrics" class="hidden space-y-6">
+                <!-- Tarjetas de Alumnos Expandidas (No compactas) -->
+                <div id="clients-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+            </div>
+
+            <!-- TAB 3: CALCULADORA DE CALORÍAS (Módulo Independiente) -->
+            <div id="tab-calories" class="hidden space-y-6">
                 <header class="pb-4 border-b border-cardBorder">
-                    <h2 class="text-2xl font-black text-silverText">3. Antropometría, Calorías & PDF</h2>
-                    <p class="text-xs text-silverMuted mt-1">Cálculo de IMC, % de grasa, requerimiento calórico diario por género y exportación a PDF.</p>
+                    <h2 class="text-2xl font-black text-silverText">3. Calculadora de Calorías por Género</h2>
+                    <p class="text-xs text-silverMuted mt-1">Estimación de TMB y requerimiento calórico diario según género y nivel de actividad.</p>
                 </header>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div id="pdf-area" class="bg-cardBg border border-cardBorder p-5 rounded-2xl space-y-3">
-                        <h3 class="font-bold text-silverText flex justify-between"><span>Evaluación & Calorías</span><span class="text-xs text-bronzeLight">Administrador ciodarofitness</span></h3>
-                        <input type="text" id="m-nombre" value="Lady Cáceres" class="w-full bg-darkBg border border-cardBorder rounded-xl px-4 py-2 text-sm text-silverText">
-                        <div class="grid grid-cols-2 gap-2">
-                            <input type="number" id="m-edad" value="28" class="w-full bg-darkBg border border-cardBorder rounded-xl px-3 py-2 text-sm text-silverText" placeholder="Edad">
-                            <select id="m-genero" class="w-full bg-darkBg border border-cardBorder rounded-xl px-3 py-2 text-sm text-silverText">
+                <div class="bg-cardBg border border-cardBorder p-6 rounded-2xl max-w-xl space-y-4 shadow-xl">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-silverMuted mb-1">Peso (kg)</label>
+                            <input type="number" id="cal-peso" value="70" class="w-full bg-darkBg border border-cardBorder rounded-xl px-4 py-2.5 text-sm text-silverText">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-silverMuted mb-1">Estatura (cm)</label>
+                            <input type="number" id="cal-est" value="165" class="w-full bg-darkBg border border-cardBorder rounded-xl px-4 py-2.5 text-sm text-silverText">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-silverMuted mb-1">Edad (años)</label>
+                            <input type="number" id="cal-edad" value="28" class="w-full bg-darkBg border border-cardBorder rounded-xl px-4 py-2.5 text-sm text-silverText">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-silverMuted mb-1">Género</label>
+                            <select id="cal-gen" class="w-full bg-darkBg border border-cardBorder rounded-xl px-4 py-2.5 text-sm text-silverText">
                                 <option value="F">Femenino</option>
                                 <option value="M">Masculino</option>
                             </select>
                         </div>
-                        <div class="grid grid-cols-2 gap-2">
-                            <input type="number" id="m-peso" value="70" class="w-full bg-darkBg border border-cardBorder rounded-xl px-3 py-2 text-sm text-silverText" placeholder="Peso kg">
-                            <input type="number" id="m-estatura" value="165" class="w-full bg-darkBg border border-cardBorder rounded-xl px-3 py-2 text-sm text-silverText" placeholder="Estatura cm">
-                        </div>
-                        <button onclick="calcularAntropometriaYCalorias()" class="w-full bg-bronzeMain text-darkBg font-black py-2.5 rounded-xl text-xs uppercase">Calcular IMC, Grasa y Calorías</button>
-                        <div id="m-res" class="hidden p-3 bg-darkBg border border-bronzeMain/30 rounded-xl text-xs text-bronzeLight space-y-1"></div>
                     </div>
+                    <div>
+                        <label class="block text-xs font-bold text-silverMuted mb-1">Nivel de Actividad</label>
+                        <select id="cal-act" class="w-full bg-darkBg border border-cardBorder rounded-xl px-4 py-2.5 text-sm text-silverText">
+                            <option value="1.2">Sedentario (poco o sin ejercicio)</option>
+                            <option value="1.375">Ligero (ejercicio 1-3 días/sem)</option>
+                            <option value="1.55" selected>Moderado (ejercicio 3-5 días/sem)</option>
+                            <option value="1.725">Fuerte (ejercicio 6-7 días/sem)</option>
+                        </select>
+                    </div>
+                    <button onclick="calcularCaloriasIndependiente()" class="w-full bg-bronzeMain text-darkBg font-black py-3 rounded-xl text-xs uppercase tracking-wider shadow">Calcular Requerimiento Calórico</button>
+                    <div id="cal-resultado" class="hidden p-4 bg-darkBg border border-bronzeMain/40 rounded-xl text-xs text-bronzeLight space-y-2"></div>
+                </div>
+            </div>
+                        <!-- TAB 4: ANTROPOMETRÍA & PDF -->
+            <div id="tab-metrics" class="hidden space-y-6">
+                <header class="pb-4 border-b border-cardBorder">
+                    <h2 class="text-2xl font-black text-silverText">4. Antropometría & Reporte PDF</h2>
+                    <p class="text-xs text-silverMuted mt-1">Generación y exportación de fichas antropométricas en formato PDF.</p>
+                </header>
 
-                    <div class="bg-cardBg border border-cardBorder p-5 rounded-2xl space-y-4 flex flex-col justify-between">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div id="pdf-area" class="bg-cardBg border border-cardBorder p-6 rounded-2xl space-y-4">
+                        <h3 class="font-bold text-silverText flex justify-between"><span>Expediente Antropométrico</span><span class="text-xs text-bronzeLight">Administrador ciodarofitness</span></h3>
                         <div>
-                            <h3 class="font-bold text-silverText mb-2">Evolución Mes a Mes</h3>
-                            <div class="space-y-2 text-xs">
-                                <div class="bg-darkBg p-3 rounded-xl border border-cardBorder flex justify-between"><span>Mayo: 73 kg | Cintura: 78cm</span><span class="text-emerald-400">Base</span></div>
-                                <div class="bg-darkBg p-3 rounded-xl border border-cardBorder flex justify-between"><span>Junio: 71.5 kg | Cintura: 75cm</span><span class="text-emerald-400">-3 cm</span></div>
-                                <div class="bg-darkBg p-3 rounded-xl border border-cardBorder flex justify-between"><span>Julio (Actual): 70 kg | Cintura: 72cm</span><span class="text-emerald-400">-3 cm</span></div>
+                            <label class="block text-[11px] font-bold text-silverMuted mb-1">Nombre del Alumno</label>
+                            <input type="text" id="m-nombre" value="Lady Cáceres" class="w-full bg-darkBg border border-cardBorder rounded-xl px-4 py-2.5 text-sm text-silverText">
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-[11px] font-bold text-silverMuted mb-1">Edad</label>
+                                <input type="number" id="m-edad" value="28" class="w-full bg-darkBg border border-cardBorder rounded-xl px-3 py-2.5 text-sm text-silverText">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold text-silverMuted mb-1">Género</label>
+                                <select id="m-genero" class="w-full bg-darkBg border border-cardBorder rounded-xl px-3 py-2.5 text-sm text-silverText">
+                                    <option value="F">Femenino</option>
+                                    <option value="M">Masculino</option>
+                                </select>
                             </div>
                         </div>
-                        <button onclick="exportPDF()" class="w-full border border-bronzeMain text-bronzeLight py-3 rounded-xl text-xs font-bold uppercase transition hover:bg-bronzeMain hover:text-darkBg">📥 Exportar Planilla a PDF</button>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-[11px] font-bold text-silverMuted mb-1">Peso (kg)</label>
+                                <input type="number" id="m-peso" value="70" class="w-full bg-darkBg border border-cardBorder rounded-xl px-3 py-2.5 text-sm text-silverText">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold text-silverMuted mb-1">Estatura (cm)</label>
+                                <input type="number" id="m-estatura" value="165" class="w-full bg-darkBg border border-cardBorder rounded-xl px-3 py-2.5 text-sm text-silverText">
+                            </div>
+                        </div>
+                        <button onclick="calcularAntropometriaPDF()" class="w-full bg-bronzeMain text-darkBg font-black py-3 rounded-xl text-xs uppercase tracking-wider">Calcular IMC y % Grasa</button>
+                        <div id="m-res" class="hidden p-3.5 bg-darkBg border border-bronzeMain/40 rounded-xl text-xs text-bronzeLight space-y-1"></div>
+                    </div>
+
+                    <div class="bg-cardBg border border-cardBorder p-6 rounded-2xl space-y-4 flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bold text-silverText mb-3">Evolución Histórica</h3>
+                            <div class="space-y-3 text-xs">
+                                <div class="bg-darkBg p-3.5 rounded-xl border border-cardBorder flex justify-between"><span>Mayo: 73 kg | Cintura: 78cm</span><span class="text-emerald-400">Base</span></div>
+                                <div class="bg-darkBg p-3.5 rounded-xl border border-cardBorder flex justify-between"><span>Junio: 71.5 kg | Cintura: 75cm</span><span class="text-emerald-400">-3 cm</span></div>
+                                <div class="bg-darkBg p-3.5 rounded-xl border border-cardBorder flex justify-between"><span>Julio (Actual): 70 kg | Cintura: 72cm</span><span class="text-emerald-400">-3 cm</span></div>
+                            </div>
+                        </div>
+                        <button onclick="exportPDF()" class="w-full border border-bronzeMain text-bronzeLight py-3.5 rounded-xl text-xs font-bold uppercase transition hover:bg-bronzeMain hover:text-darkBg">📥 Exportar Reporte a PDF</button>
                     </div>
                 </div>
             </div>
 
+            <!-- TAB 5: FINANZAS Y CIERRES DE MES (1 al 31) -->
             <div id="tab-financial" class="hidden space-y-6">
                 <header class="pb-4 border-b border-cardBorder">
-                    <h2 class="text-2xl font-black text-silverText">4. Finanzas & Cierres (Días 1 al 31)</h2>
-                    <p class="text-xs text-silverMuted mt-1">Control de recaudos, saldos pendientes y cierres automáticos codificados en calendario.</p>
+                    <h2 class="text-2xl font-black text-silverText">5. Finanzas & Cierres (Días 1 al 31)</h2>
+                    <p class="text-xs text-silverMuted mt-1">Control automático de recaudos, saldos pendientes y cierres de caja por calendario.</p>
                 </header>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div class="bg-cardBg border border-cardBorder p-4 rounded-xl"><p class="text-xs uppercase text-silverMuted font-bold">Total Recaudado</p><p id="fin-rec" class="text-2xl font-black text-emerald-400 mt-1">$0</p></div>
-                    <div class="bg-cardBg border border-cardBorder p-4 rounded-xl"><p class="text-xs uppercase text-silverMuted font-bold">Pendientes por Cobrar</p><p id="fin-pen" class="text-2xl font-black text-amber-400 mt-1">$0</p></div>
-                    <div class="bg-cardBg border border-cardBorder p-4 rounded-xl"><p class="text-xs uppercase text-silverMuted font-bold">Cierre de Mes (Calendario)</p><p class="text-xl font-black text-bronzeLight mt-1">Activo (1 al 31)</p></div>
+                    <div class="bg-cardBg border border-cardBorder p-5 rounded-2xl"><p class="text-xs uppercase text-silverMuted font-bold">Total Recaudado</p><p id="fin-rec" class="text-3xl font-black text-emerald-400 mt-1">$0</p></div>
+                    <div class="bg-cardBg border border-cardBorder p-5 rounded-2xl"><p class="text-xs uppercase text-silverMuted font-bold">Pendientes por Cobrar</p><p id="fin-pen" class="text-3xl font-black text-amber-400 mt-1">$0</p></div>
+                    <div class="bg-cardBg border border-cardBorder p-5 rounded-2xl"><p class="text-xs uppercase text-silverMuted font-bold">Cierre de Mes (Calendario)</p><p class="text-xl font-black text-bronzeLight mt-1">Activo (Del 1 al 31)</p></div>
                 </div>
             </div>
         </main>
     </div>
 
-    <div id="client-modal" class="hidden fixed inset-0 bg-darkBg/80 flex items-center justify-center p-4 z-50 overflow-y-auto">
-        <div class="bg-cardBg border border-cardBorder rounded-2xl p-6 w-full max-w-lg space-y-3 shadow-2xl my-8">
-            <h3 id="modal-title" class="font-bold text-silverText">Registrar Alumno</h3>
+    <!-- MODAL NUEVO / EDITAR ALUMNO AMPLIADO -->
+    <div id="client-modal" class="hidden fixed inset-0 bg-darkBg/85 flex items-center justify-center p-4 z-50 overflow-y-auto">
+        <div class="bg-cardBg border border-cardBorder rounded-2xl p-6 w-full max-w-xl space-y-4 shadow-2xl my-8">
+            <h3 id="modal-title" class="font-bold text-silverText text-lg">Registrar Alumno</h3>
             <input type="hidden" id="edit-idx" value="-1">
-            <input type="text" id="f-nom" placeholder="Nombre Completo" class="w-full bg-darkBg border border-cardBorder rounded-xl px-4 py-2 text-sm text-silverText">
-            <div class="grid grid-cols-2 gap-2">
-                <input type="number" id="f-edad" placeholder="Edad" class="w-full bg-darkBg border border-cardBorder rounded-xl px-3 py-2 text-sm text-silverText">
-                <input type="text" id="f-tel" placeholder="WhatsApp (+58...)" class="w-full bg-darkBg border border-cardBorder rounded-xl px-3 py-2 text-sm text-silverText">
-            </div>
-            <div class="grid grid-cols-3 gap-2">
-                <input type="number" id="f-peso" placeholder="Peso kg" class="w-full bg-darkBg border border-cardBorder rounded-xl px-3 py-2 text-sm text-silverText">
-                <input type="number" id="f-est" placeholder="Estatura cm" class="w-full bg-darkBg border border-cardBorder rounded-xl px-3 py-2 text-sm text-silverText">
-                <input type="number" id="f-costo" placeholder="Costo $" class="w-full bg-darkBg border border-cardBorder rounded-xl px-3 py-2 text-sm text-silverText" value="50">
-            </div>
             
-            <p class="text-[11px] font-bold uppercase text-bronzeLight pt-1">Medidas Antropométricas (cm):</p>
-            <div class="grid grid-cols-3 gap-2">
-                <input type="number" id="f-torax" placeholder="Tórax" class="w-full bg-darkBg border border-cardBorder rounded-xl px-3 py-2 text-xs text-silverText">
-                <input type="number" id="f-biceps" placeholder="Bíceps" class="w-full bg-darkBg border border-cardBorder rounded-xl px-3 py-2 text-xs text-silverText">
-                <input type="number" id="f-cintura" placeholder="Cintura" class="w-full bg-darkBg border border-cardBorder rounded-xl px-3 py-2 text-xs text-silverText">
-                <input type="number" id="f-gluteos" placeholder="Glúteos" class="w-full bg-darkBg border border-cardBorder rounded-xl px-3 py-2 text-xs text-silverText">
-                <input type="number" id="f-cuad" placeholder="Cuádriceps" class="w-full bg-darkBg border border-cardBorder rounded-xl px-3 py-2 text-xs text-silverText">
-                <input type="number" id="f-pant" placeholder="Pantorrilla" class="w-full bg-darkBg border border-cardBorder rounded-xl px-3 py-2 text-xs text-silverText">
+            <div>
+                <label class="block text-[11px] font-bold text-silverMuted mb-1">Nombre Completo</label>
+                <input type="text" id="f-nom" placeholder="Ej. Lady Cáceres" class="w-full bg-darkBg border border-cardBorder rounded-xl px-4 py-2.5 text-sm text-silverText">
             </div>
 
-            <div class="grid grid-cols-2 gap-2 pt-1">
-                <div><label class="text-[10px] uppercase text-silverMuted font-bold">Inicio</label><input type="date" id="f-ini" class="w-full bg-darkBg border border-cardBorder rounded-xl px-3 py-2 text-sm text-silverText"></div>
-                <div><label class="text-[10px] uppercase text-silverMuted font-bold">Corte (1-31)</label><input type="date" id="f-cor" class="w-full bg-darkBg border border-cardBorder rounded-xl px-3 py-2 text-sm text-silverText"></div>
+            <div class="grid grid-cols-3 gap-3">
+                <div><label class="block text-[10px] font-bold text-silverMuted mb-1">Edad</label><input type="number" id="f-edad" placeholder="Edad" class="w-full bg-darkBg border border-cardBorder rounded-xl px-3 py-2.5 text-sm text-silverText"></div>
+                <div><label class="block text-[10px] font-bold text-silverMuted mb-1">WhatsApp</label><input type="text" id="f-tel" placeholder="+58..." class="w-full bg-darkBg border border-cardBorder rounded-xl px-3 py-2.5 text-sm text-silverText"></div>
+                <div>
+                    <label class="block text-[10px] font-bold text-bronzeLight mb-1">Paquete ($)</label>
+                    <input type="number" id="f-costo" placeholder="Costo $" class="w-full bg-darkBg border border-bronzeMain rounded-xl px-3 py-2.5 text-sm text-bronzeLight font-bold" value="50">
+                </div>
             </div>
-            <select id="f-pag" class="w-full bg-darkBg border border-cardBorder rounded-xl px-4 py-2 text-sm text-silverText">
-                <option value="Pagado">Pagado (Recaudado)</option>
-                <option value="Pendiente">Pendiente por Cobrar</option>
-            </select>
-            <div class="flex space-x-2 pt-2">
-                <button onclick="saveClient()" class="flex-grow bg-bronzeMain text-darkBg font-black py-2.5 rounded-xl text-xs uppercase">Guardar Alumno</button>
-                <button onclick="closeModal()" class="border border-cardBorder text-silverMuted px-4 py-2.5 rounded-xl text-xs uppercase">Cancelar</button>
+
+            <div class="grid grid-cols-2 gap-3">
+                <div><label class="block text-[10px] font-bold text-silverMuted mb-1">Peso (kg)</label><input type="number" id="f-peso" placeholder="Peso kg" class="w-full bg-darkBg border border-cardBorder rounded-xl px-3 py-2.5 text-sm text-silverText"></div>
+                <div><label class="block text-[10px] font-bold text-silverMuted mb-1">Estatura (cm)</label><input type="number" id="f-est" placeholder="Estatura cm" class="w-full bg-darkBg border border-cardBorder rounded-xl px-3 py-2.5 text-sm text-silverText"></div>
+            </div>
+
+            <!-- Medidas Antropométricas Amplias y No Compactas -->
+            <div class="bg-darkBg/50 border border-cardBorder p-3.5 rounded-xl space-y-3">
+                <p class="text-[11px] font-black uppercase tracking-wider text-bronzeLight">Medidas Antropométricas del Cliente (cm):</p>
+                <div class="grid grid-cols-3 gap-2.5">
+                    <div><label class="block text-[9px] text-silverMuted font-bold">Tórax</label><input type="number" id="f-torax" class="w-full bg-darkBg border border-cardBorder rounded-xl px-3 py-2 text-xs text-silverText"></div>
+                    <div><label class="block text-[9px] text-silverMuted font-bold">Bíceps</label><input type="number" id="f-biceps" class="w-full bg-darkBg border border-cardBorder rounded-xl px-3 py-2 text-xs text-silverText"></div>
+                    <div><label class="block text-[9px] text-silverMuted font-bold">Cintura</label><input type="number" id="f-cintura" class="w-full bg-darkBg border border-cardBorder rounded-xl px-3 py-2 text-xs text-silverText"></div>
+                    <div><label class="block text-[9px] text-silverMuted font-bold">Glúteos</label><input type="number" id="f-gluteos" class="w-full bg-darkBg border border-cardBorder rounded-xl px-3 py-2 text-xs text-silverText"></div>
+                    <div><label class="block text-[9px] text-silverMuted font-bold">Cuádriceps</label><input type="number" id="f-cuad" class="w-full bg-darkBg border border-cardBorder rounded-xl px-3 py-2 text-xs text-silverText"></div>
+                    <div><label class="block text-[9px] text-silverMuted font-bold">Pantorrilla</label><input type="number" id="f-pant" class="w-full bg-darkBg border border-cardBorder rounded-xl px-3 py-2 text-xs text-silverText"></div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+                <div><label class="block text-[10px] uppercase text-silverMuted font-bold mb-1">Fecha Inicio</label><input type="date" id="f-ini" class="w-full bg-darkBg border border-cardBorder rounded-xl px-3 py-2.5 text-sm text-silverText"></div>
+                <div><label class="block text-[10px] uppercase text-silverMuted font-bold mb-1">Fecha Corte (1-31)</label><input type="date" id="f-cor" class="w-full bg-darkBg border border-cardBorder rounded-xl px-3 py-2.5 text-sm text-silverText"></div>
+            </div>
+
+            <div>
+                <label class="block text-[10px] uppercase text-silverMuted font-bold mb-1">Estado de Pago</label>
+                <select id="f-pag" class="w-full bg-darkBg border border-cardBorder rounded-xl px-4 py-2.5 text-sm text-silverText">
+                    <option value="Pagado">Pagado (Recaudado)</option>
+                    <option value="Pendiente">Pendiente por Cobrar</option>
+                </select>
+            </div>
+
+            <div class="flex space-x-3 pt-2">
+                <button onclick="saveClient()" class="flex-grow bg-bronzeMain text-darkBg font-black py-3 rounded-xl text-xs uppercase tracking-wider shadow">Guardar Alumno</button>
+                <button onclick="closeModal()" class="border border-cardBorder text-silverMuted px-5 py-3 rounded-xl text-xs uppercase font-bold">Cancelar</button>
             </div>
         </div>
     </div>
-
+        <!-- MOTOR JAVASCRIPT COMPLETO -->
     <script>
         let clients = [
             { nom: "Lady Cáceres", edad: 28, tel: "+584121234567", peso: 70, est: 165, costo: 60, torax: 90, biceps: 28, cintura: 72, gluteos: 98, cuad: 54, pant: 35, ini: "2026-07-01", cor: "2026-07-31", pag: "Pagado" },
             { nom: "Sra. Yanira", edad: 45, tel: "+584149876543", peso: 68, est: 160, costo: 50, torax: 92, biceps: 29, cintura: 76, gluteos: 96, cuad: 52, pant: 34, ini: "2026-07-05", cor: "2026-08-05", pag: "Pendiente" }
         ];
 
-        function initClock() {
+        function initSystem() {
             setInterval(() => {
                 const now = new Date();
                 const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-                const fechaStr = now.toLocaleDateString('es-ES', options);
-                const horaStr = now.toLocaleTimeString('es-ES');
-                document.getElementById('live-clock').innerText = `${fechaStr} - ${horaStr}`;
+                document.getElementById('live-clock').innerText = `${now.toLocaleDateString('es-ES', options)} - ${now.toLocaleTimeString('es-ES')}`;
             }, 1000);
             renderClients();
             calcFin();
@@ -230,11 +321,18 @@
         }
 
         function switchTab(id) {
-            ['tab-tenants', 'tab-clients', 'tab-metrics', 'tab-financial'].forEach(t => document.getElementById(t).classList.add('hidden'));
-            ['btn-tenants', 'btn-clients', 'btn-metrics', 'btn-financial'].forEach(b => document.getElementById(b).className = "w-full text-left hover:bg-darkBg text-silverMuted px-4 py-3 rounded-xl text-sm font-medium transition");
+            ['tab-tenants', 'tab-clients', 'tab-calories', 'tab-metrics', 'tab-financial'].forEach(t => document.getElementById(t).classList.add('hidden'));
+            ['btn-tenants', 'btn-clients', 'btn-calories', 'btn-metrics', 'btn-financial'].forEach(b => {
+                const el = document.getElementById(b);
+                if(el) el.className = "w-full text-left hover:bg-darkBg text-silverMuted px-4 py-3 rounded-xl text-sm font-medium transition";
+            });
             document.getElementById(id).classList.remove('hidden');
             event.currentTarget.className = "w-full text-left bg-darkBg border border-bronzeMain text-silverText px-4 py-3 rounded-xl text-sm font-semibold shadow";
             if(id === 'tab-financial') calcFin();
+        }
+
+        function enviarSolicitudLicencia() {
+            alert("Solicitud de licencia enviada exitosamente al servidor central de ciodarofitness.");
         }
 
         function renderClients() {
@@ -245,19 +343,26 @@
                 if(q && !c.nom.toLowerCase().includes(q)) return;
                 const imc = (c.peso / Math.pow(c.est/100, 2)).toFixed(1);
                 grid.innerHTML += `
-                    <div class="bg-cardBg border border-cardBorder p-4 rounded-xl space-y-2 shadow">
+                    <div class="bg-cardBg border border-cardBorder p-5 rounded-2xl space-y-3 shadow-lg">
                         <div class="flex justify-between items-start">
-                            <div><h4 class="font-bold text-silverText">${c.nom}</h4><p class="text-xs text-silverMuted">Edad: ${c.edad} | Peso: ${c.peso}kg | Est: ${c.est}cm</p></div>
-                            <span class="text-xs px-2.5 py-0.5 rounded-full font-semibold ${c.pag==='Pagado'?'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30':'bg-amber-500/20 text-amber-300 border border-amber-500/30'}">${c.pag}</span>
+                            <div>
+                                <h4 class="font-black text-base text-silverText">${c.nom}</h4>
+                                <p class="text-xs text-silverMuted mt-0.5">Edad: ${c.edad} años | Peso: ${c.peso}kg | Estatura: ${c.est}cm</p>
+                            </div>
+                            <span class="text-xs px-3 py-1 rounded-full font-semibold ${c.pag==='Pagado'?'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30':'bg-amber-500/20 text-amber-300 border border-amber-500/30'}">${c.pag}</span>
                         </div>
-                        <div class="text-xs text-silverMuted bg-darkBg p-2.5 rounded-lg border border-cardBorder space-y-1">
-                            <p>💵 Costo: $${c.costo} USD | IMC: ${imc}</p>
-                            <p>📏 <strong>Medidas:</strong> Tórax: ${c.torax}cm | Bíceps: ${c.biceps}cm | Cintura: ${c.cintura}cm | Glúteos: ${c.gluteos}cm | Cuádriceps: ${c.cuad}cm | Pantorrilla: ${c.pant}cm</p>
-                            <p>📅 Inicio: ${c.ini} | Corte: ${c.cor}</p>
+                        <div class="text-xs text-silverText bg-darkBg p-3.5 rounded-xl border border-cardBorder space-y-1.5">
+                            <div class="flex justify-between font-bold text-bronzeLight pb-1 border-b border-cardBorder">
+                                <span>💵 Costo del Paquete:</span>
+                                <span class="text-sm">$${c.costo} USD</span>
+                            </div>
+                            <p>📊 <strong>IMC:</strong> ${imc}</p>
+                            <p>📏 <strong>Antropometría (cm):</strong> Tórax: ${c.torax} | Bíceps: ${c.biceps} | Cintura: ${c.cintura} | Glúteos: ${c.gluteos} | Cuádriceps: ${c.cuad} | Pantorrilla: ${c.pant}</p>
+                            <p class="text-silverMuted pt-1">📅 Inicio: ${c.ini} &nbsp;|&nbsp; Corte (1-31): ${c.cor}</p>
                         </div>
                         <div class="flex justify-between items-center pt-2">
-                            <button onclick="window.open('https://api.whatsapp.com/send?phone=${c.tel}&text=Hola%20${c.nom},%20te%20escribo%20de%20Ciodarofitness%20para%20recordarte%20que%20tu%20plan%20vence%20en%20la%20fecha%20de%20corte:%20${c.cor}')" class="bg-emerald-600/30 text-emerald-300 px-3 py-1.5 rounded-lg text-xs font-bold flex items-center space-x-1"><span>💬</span><span>Recordar WhatsApp</span></button>
-                            <div class="space-x-1"><button onclick="editClient(${idx})" class="px-2.5 py-1 bg-darkBg border border-cardBorder text-xs rounded-lg text-silverText">Editar</button><button onclick="deleteClient(${idx})" class="px-2.5 py-1 bg-red-950/40 text-red-300 text-xs rounded-lg">Eliminar</button></div>
+                            <button onclick="window.open('https://api.whatsapp.com/send?phone=${c.tel}&text=Hola%20${c.nom},%20te%20escribo%20de%20Ciodarofitness%20para%20recordarte%20que%20tu%20plan%20vence%20en%20la%20fecha%20de%20corte:%20${c.cor}')" class="bg-emerald-600/30 text-emerald-300 px-3.5 py-2 rounded-xl text-xs font-bold flex items-center space-x-1.5"><span>💬</span><span>WhatsApp</span></button>
+                            <div class="space-x-1.5"><button onclick="editClient(${idx})" class="px-3 py-2 bg-darkBg border border-cardBorder text-xs rounded-xl font-bold text-silverText">Editar</button><button onclick="deleteClient(${idx})" class="px-3 py-2 bg-red-950/40 text-red-300 text-xs rounded-xl font-bold">Eliminar</button></div>
                         </div>
                     </div>`;
             });
@@ -308,7 +413,23 @@
             if(confirm("¿Seguro que deseas eliminar este alumno?")) { clients.splice(idx, 1); renderClients(); calcFin(); }
         }
 
-        function calcularAntropometriaYCalorias() {
+        function calcularCaloriasIndependiente() {
+            const p = parseFloat(document.getElementById('cal-peso').value)||0;
+            const e = parseFloat(document.getElementById('cal-est').value)||0;
+            const ed = parseInt(document.getElementById('cal-edad').value)||25;
+            const gen = document.getElementById('cal-gen').value;
+            const act = parseFloat(document.getElementById('cal-act').value)||1.2;
+
+            let tmb = gen === 'F' ? (10 * p) + (6.25 * e) - (5 * ed) - 161 : (10 * p) + (6.25 * e) - (5 * ed) + 5;
+            let totalKcal = Math.round(tmb * act);
+
+            const res = document.getElementById('cal-resultado');
+            res.classList.remove('hidden');
+            res.innerHTML = `• Tasa Metabólica Basal (TMB): <strong>${Math.round(tmb)} kcal</strong><br>
+                             • Requerimiento Calórico Total Diario: <strong>${totalKcal} kcal</strong> (${gen === 'F' ? 'Femenino' : 'Masculino'})`;
+        }
+
+        function calcularAntropometriaPDF() {
             const p = parseFloat(document.getElementById('m-peso').value)||0;
             const e = parseFloat(document.getElementById('m-estatura').value)||0;
             const ed = parseInt(document.getElementById('m-edad').value)||25;
@@ -316,16 +437,10 @@
             
             const imc = p / Math.pow(e/100, 2);
             const grasa = (1.20 * imc) + (0.23 * ed) - 5.4 - (gen === 'F' ? 0 : 10.8);
-            
-            // Fórmula de Harris-Benedict para TMB y calorías estimadas diarias (actividad moderada)
-            let tmb = gen === 'F' ? (10 * p) + (6.25 * e) - (5 * ed) - 161 : (10 * p) + (6.25 * e) - (5 * ed) + 5;
-            let caloriasMantenimiento = Math.round(tmb * 1.55);
 
             const res = document.getElementById('m-res');
             res.classList.remove('hidden');
-            res.innerHTML = `• IMC: <strong>${imc.toFixed(1)}</strong><br>
-                             • % Grasa Corporal Est.: <strong>${grasa.toFixed(1)}%</strong><br>
-                             • Gasto Calórico Diario (Mantenimiento): <strong>${caloriasMantenimiento} kcal</strong> (${gen === 'F' ? 'Femenino' : 'Masculino'})`;
+            res.innerHTML = `• IMC: <strong>${imc.toFixed(1)}</strong><br>• % Grasa Corporal Est.: <strong>${grasa.toFixed(1)}%</strong>`;
         }
 
         function exportPDF() {
