@@ -61,7 +61,10 @@
                 </div>
                 <div>
                     <label class="block text-[11px] font-bold uppercase tracking-widest text-silverMuted mb-2">Contraseña</label>
-                    <input type="password" id="login-pass" required class="w-full bg-darkBg border border-cardBorder rounded-xl px-4 py-3 text-silverText text-sm focus:outline-none focus:border-bronzeMain transition shadow-inner" placeholder="••••••">
+                    <div class="relative">
+                        <input type="password" id="login-pass" required class="w-full bg-darkBg border border-cardBorder rounded-xl px-4 py-3 pr-12 text-silverText text-sm focus:outline-none focus:border-bronzeMain transition shadow-inner" placeholder="••••••">
+                        <button type="button" onclick="togglePassword('login-pass', this)" class="absolute right-3 top-1/2 -translate-y-1/2 text-silverMuted hover:text-bronzeLight text-lg focus:outline-none">👁️</button>
+                    </div>
                 </div>
                 <button type="submit" class="w-full bg-gradient-to-r from-bronzeDark via-bronzeMain to-bronzeDark text-darkBg font-black py-3.5 rounded-xl transition transform hover:scale-[1.01] tracking-wider text-sm shadow-lg shadow-bronzeMain/10">
                     ACCEDER AL SISTEMA
@@ -71,7 +74,51 @@
             <div id="login-error" class="hidden mt-4 p-3 bg-red-950/40 border border-red-500/30 rounded-xl text-xs text-red-300 text-center">
                 Acceso denegado: Usa heber@ciodarofitness.com / 123456
             </div>
+
+            <div class="mt-6 text-center border-t border-cardBorder pt-4">
+                <p class="text-xs text-silverMuted">¿Nuevo entrenador? <button onclick="toggleAuthView('register')" class="text-bronzeLight hover:underline font-bold">Solicitar Licencia Multi-Tenant</button></p>
+            </div>
         </div>
+
+        <!-- PANTALLA DE SOLICITUD DE LICENCIA -->
+        <div id="register-screen" class="hidden bg-cardBg border border-cardBorder rounded-2xl p-8 w-full max-w-md shadow-2xl relative overflow-hidden backdrop-blur-md">
+            <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-bronzeDark via-bronzeLight to-bronzeDark"></div>
+            
+            <div class="text-center mb-6 pt-2">
+                <h2 class="text-2xl font-black tracking-wider text-silverText">SOLICITAR INQUILINO</h2>
+                <p class="text-silverMuted text-[11px] mt-1 uppercase">Sujeto a aprobación estricta de Ciodarofitness</p>
+            </div>
+
+            <form onsubmit="handleRegister(event)" class="space-y-4">
+                <div>
+                    <label class="block text-[11px] font-bold uppercase tracking-widest text-silverMuted mb-1.5">Nombre del Entrenador</label>
+                    <input type="text" required class="w-full bg-darkBg border border-cardBorder rounded-xl px-4 py-3 text-silverText text-sm focus:outline-none focus:border-bronzeMain" placeholder="Tu Nombre">
+                </div>
+                <div>
+                    <label class="block text-[11px] font-bold uppercase tracking-widest text-silverMuted mb-1.5">Correo Electrónico</label>
+                    <input type="email" required class="w-full bg-darkBg border border-cardBorder rounded-xl px-4 py-3 text-silverText text-sm focus:outline-none focus:border-bronzeMain" placeholder="tucorreo@email.com">
+                </div>
+                <div>
+                    <label class="block text-[11px] font-bold uppercase tracking-widest text-silverMuted mb-1.5">Contraseña Deseada</label>
+                    <div class="relative">
+                        <input type="password" id="reg-pass" required class="w-full bg-darkBg border border-cardBorder rounded-xl px-4 py-3 pr-12 text-silverText text-sm focus:outline-none focus:border-bronzeMain" placeholder="••••••••">
+                        <button type="button" onclick="togglePassword('reg-pass', this)" class="absolute right-3 top-1/2 -translate-y-1/2 text-silverMuted hover:text-bronzeLight text-lg focus:outline-none">👁️</button>
+                    </div>
+                </div>
+                <button type="submit" class="w-full bg-gradient-to-r from-bronzeDark via-bronzeMain to-bronzeDark text-darkBg font-black py-3.5 rounded-xl transition tracking-wider text-sm shadow-lg">
+                    ENVIAR SOLICITUD MAESTRA
+                </button>
+            </form>
+
+            <div id="register-success" class="hidden mt-4 p-3 bg-emerald-950/40 border border-emerald-500/30 rounded-xl text-xs text-emerald-300 text-center">
+                ¡Solicitud enviada con éxito! Quedará en espera de habilitación manual.
+            </div>
+
+            <div class="mt-6 text-center border-t border-cardBorder pt-4">
+                <button onclick="toggleAuthView('login')" class="text-xs text-silverMuted hover:text-silverText font-bold uppercase">← Volver al Login</button>
+            </div>
+        </div>
+
     </div>
 
     <!-- DASHBOARD PRINCIPAL CON MÓDULOS (OCULTO HASTA LOGIN) -->
@@ -119,7 +166,7 @@
             <div id="tab-tenants" class="space-y-6">
                 <header class="flex justify-between items-center pb-6 border-b border-cardBorder">
                     <div>
-                        <h2 class="text-3xl font-black text-silverText tracking-tight">Licencias y Inquilinos</h2>
+                        <h2 class="text-3xl font-black text-silverText tracking-tight">Licencias e Inquilinos</h2>
                         <p class="text-sm text-silverMuted mt-1">Control jerárquico de entrenadores asociados.</p>
                     </div>
                 </header>
@@ -211,10 +258,31 @@
 
     <!-- SCRIPT DE NAVEGACIÓN Y FUNCIONALIDAD -->
     <script>
+        function togglePassword(fieldId, btn) {
+            const input = document.getElementById(fieldId);
+            if (input.type === "password") {
+                input.type = "text";
+                btn.innerText = "🙈";
+            } else {
+                input.type = "password";
+                btn.innerText = "👁️";
+            }
+        }
+
+        function toggleAuthView(view) {
+            if(view === 'register') {
+                document.getElementById('auth-screen').classList.add('hidden');
+                document.getElementById('register-screen').classList.remove('hidden');
+            } else {
+                document.getElementById('register-screen').classList.add('hidden');
+                document.getElementById('auth-screen').classList.remove('hidden');
+            }
+        }
+
         function handleLogin(event) {
             event.preventDefault();
-            const email = document.getElementById('login-email').value;
-            const pass = document.getElementById('login-pass').value;
+            const email = document.getElementById('login-email').value.trim();
+            const pass = document.getElementById('login-pass').value.trim();
 
             if (email === "heber@ciodarofitness.com" && pass === "123456") {
                 document.getElementById('login-container').classList.add('hidden');
@@ -224,15 +292,30 @@
             }
         }
 
+        function handleRegister(event) {
+            event.preventDefault();
+            document.getElementById('register-success').classList.remove('hidden');
+            setTimeout(() => {
+                toggleAuthView('login');
+                document.getElementById('register-success').classList.add('hidden');
+            }, 3000);
+        }
+
         function handleLogout() {
             document.getElementById('dashboard-screen').classList.add('hidden');
             document.getElementById('login-container').classList.remove('hidden');
             document.getElementById('login-email').value = '';
             document.getElementById('login-pass').value = '';
             document.getElementById('login-error').classList.add('hidden');
+            toggleAuthView('login');
         }
 
         function switchTab(tabId) {
+            document.getElementById('tab-tenants').classList.add('hidden');
+            document.getElementById('tab-clients').classList.add('hidden');
+            document.getElementById('tab-metrics').classList.add('hidden');
+            
+               function switchTab(tabId) {
             document.getElementById('tab-tenants').classList.add('hidden');
             document.getElementById('tab-clients').classList.add('hidden');
             document.getElementById('tab-metrics').classList.add('hidden');
@@ -259,7 +342,7 @@
         function calcularMetricas() {
             const peso = parseFloat(document.getElementById('calc-peso').value);
             const resultadoDiv = document.getElementById('calc-resultado');
-            const estimacionCalorica = peso * 30; // Fórmula base de estimación
+            const estimacionCalorica = peso * 30; 
             resultadoDiv.classList.remove('hidden');
             resultadoDiv.innerHTML = `<strong>Análisis Antropométrico Base:</strong><br>• Gasto Energético Estimado: ~${estimacionCalorica} kcal/día<br>• Protocolo Sugerido: Ajuste inteligente de macronutrientes bajo lineamientos de Ciodarofitness.`;
         }
