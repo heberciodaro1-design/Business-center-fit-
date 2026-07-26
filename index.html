@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BC Fit | By Ciodarofitness - Sistema Blindado</title>
+    <title>BC Fit | By Ciodarofitness - Sistema en Nube</title>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
+    
     <style>
         :root {
             --bg-deep: #07090e;
@@ -143,10 +146,6 @@
             width: auto;
         }
 
-        .toggle-password:hover {
-            color: var(--bronze);
-        }
-
         button {
             width: 100%;
             padding: 0.9rem;
@@ -162,9 +161,7 @@
             transition: opacity 0.2s;
         }
 
-        button:hover {
-            opacity: 0.9;
-        }
+        button:hover { opacity: 0.9; }
 
         .btn-secondary {
             background: transparent;
@@ -174,14 +171,10 @@
             width: auto;
             font-size: 0.8rem;
         }
-        .btn-secondary:hover {
-            border-color: var(--bronze);
-            color: var(--text-main);
-        }
+        .btn-secondary:hover { border-color: var(--bronze); color: var(--text-main); }
 
         .btn-approve { background: var(--success); color: #fff; padding: 0.4rem 0.8rem; font-size: 0.75rem; width: auto; margin-right: 0.3rem; }
         .btn-deny { background: var(--danger); color: #fff; padding: 0.4rem 0.8rem; font-size: 0.75rem; width: auto; }
-        .btn-info { background: var(--bronze); color: #000; padding: 0.4rem 0.8rem; font-size: 0.75rem; width: auto; font-weight: bold; }
 
         .hidden { display: none !important; }
 
@@ -315,15 +308,13 @@
     </header>
 
     <main>
-        <!-- VISTA DE ACCESO RESTRINGIDO (LOGIN ADMIN O FORMULARIO DE SOLICITUD CLIENTE) -->
         <section id="authSection">
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem;">
                 
-                <!-- Login Exclusivo Administrador Ciodarofitness -->
                 <div class="card" style="margin-bottom: 0;">
-                    <h1 style="color: #ffffff; font-size: 2.2rem; font-weight: 800; letter-spacing: 1px; margin-bottom: 0.2rem;">BC Fit</h1>
+                    <h1 style="color: #ffffff; font-size: 2.2rem; font-weight: 800; margin-bottom: 0.2rem;">BC Fit</h1>
                     <p style="color: var(--bronze); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1.5rem;">By Ciodarofitness</p>
-                    <p class="subtitle">Acceso blindado exclusivo para el Administrador General.</p>
+                    <p class="subtitle">Acceso exclusivo para el Administrador General.</p>
                     <form id="loginForm">
                         <div class="form-group">
                             <label>Identificador de Administrador</label>
@@ -333,20 +324,19 @@
                             <label>Contraseña Maestra</label>
                             <div class="password-container">
                                 <input type="password" id="adminPassword" required placeholder="••••••••">
-                                <button type="button" class="toggle-password" onclick="togglePassword()" title="Mostrar/Ocultar contraseña">👁️</button>
+                                <button type="button" class="toggle-password" onclick="togglePassword()">👁️</button>
                             </div>
                         </div>
                         <button type="submit">Desbloquear Panel Admin</button>
                     </form>
                 </div>
 
-                <!-- Formulario de Solicitud Externa (Clientes / Atletas) -->
                 <div class="card" style="margin-bottom: 0;">
                     <h2 style="color: #ffffff; font-size: 1.5rem; font-weight: 700;">Solicitud de Ingreso</h2>
-                    <p class="subtitle">Ningún usuario puede entrar automáticamente. Tus datos serán enviados directamente a Ciodarofitness para su aprobación.</p>
+                    <p class="subtitle">Tus datos serán enviados directamente a la nube de Ciodarofitness para su aprobación instantánea.</p>
                     <form id="requestAccessForm">
                         <div class="form-group">
-                            <label>Nombre y Apellido</label>
+                            <label>Nombre y Apellido / Marca</label>
                             <input type="text" id="clientReqName" required placeholder="Ej. Leidy Diana">
                         </div>
                         <div class="form-group">
@@ -363,27 +353,24 @@
                         <button type="submit" style="background: transparent; border: 1px solid var(--bronze); color: var(--bronze);">Enviar Solicitud a Ciodarofitness</button>
                     </form>
                     <div id="requestStatusNotice" class="hidden" style="margin-top: 1rem; padding: 1rem; background: var(--bg-deep); border: 1px solid var(--success); border-radius: 6px; text-align: center; color: var(--success); font-size: 0.9rem;">
-                        ¡Solicitud enviada correctamente! Queda retenida a la espera de autorización por Ciodarofitness.
+                        ¡Solicitud enviada a la nube de Ciodarofitness con éxito!
                     </div>
                 </div>
 
             </div>
         </section>
 
-        <!-- PANEL DE CONTROL GLOBAL (SOLO ACCESIBLE CON LLAVE DE ADMIN) -->
         <section id="dashboardView" class="hidden">
             <div class="dashboard-header">
                 <div>
-                    <h2>Panel de Control Global</h2>
-                    <p class="subtitle">Sistema Protegido y Codificado - By Ciodarofitness</p>
+                    <h2>Panel de Control Global (Sincronizado en Nube)</h2>
+                    <p class="subtitle">Sistema Protegido — By Ciodarofitness</p>
                 </div>
-                <button class="btn-secondary" onclick="logoutAdmin()">Bloquear / Cerrar Sesión</button>
+                <button class="btn-secondary" onclick="logoutAdmin()">Cerrar Sesión</button>
             </div>
 
-            <!-- ENLACE OFICIAL DE COMPARTICIÓN -->
             <div class="card" style="padding: 1.2rem; margin-bottom: 1.5rem;">
-                <h3 style="font-size: 0.9rem; margin-bottom: 0.3rem; color: var(--bronze);">Enlace Exclusivo para WhatsApp y Redes</h3>
-                <p class="subtitle" style="margin-bottom: 0.6rem; font-size: 0.8rem;">Copia este enlace oficial para enviarlo a tus clientes. Al abrirlo, solo podrán registrar una solicitud que pasará por tu aprobación obligatoria:</p>
+                <h3 style="font-size: 0.9rem; margin-bottom: 0.3rem; color: var(--bronze);">Enlace Exclusivo para Clientes</h3>
                 <div class="link-box" style="margin-bottom: 0;">
                     <input type="text" id="shareableLink" readonly>
                     <button class="btn-secondary" onclick="copyInviteLink()" style="font-size: 0.75rem; padding: 0.3rem 0.6rem;">Copiar Enlace</button>
@@ -392,101 +379,53 @@
 
             <div class="grid-stats">
                 <div class="stat-card">
-                    <h3>Atletas Activos Autorizados</h3>
+                    <h3>Atletas Autorizados</h3>
                     <div class="value" id="statActiveAthletes">0</div>
                 </div>
                 <div class="stat-card">
-                    <h3>Solicitudes en Espera</h3>
+                    <h3>Solicitudes en Nube</h3>
                     <div class="value" id="statPendingRequests">0</div>
                 </div>
             </div>
 
-            <!-- NAVEGACIÓN -->
             <div class="nav-tabs">
                 <button class="tab-btn active" onclick="switchTab('tabRequests', this)">1. Control de Solicitudes (<span id="badgePending">0</span>)</button>
                 <button class="tab-btn" onclick="switchTab('tabAthletes', this)">2. Gestión de Atletas</button>
-                <button class="tab-btn" onclick="switchTab('tabTools', this)">3. Herramientas Profesionales</button>
             </div>
 
-            <!-- 1. SOLICITUDES PENDIENTES -->
             <div id="tabRequests" class="card">
-                <h3>1. Autorización y Control de Solicitudes</h3>
-                <p class="subtitle">Solo tú puedes aprobar, denegar o eliminar solicitudes de acceso al sistema.</p>
+                <h3>1. Solicitudes Entrantes en Tiempo Real</h3>
+                <p class="subtitle">Aquí verás reflejado de inmediato cualquier cliente o entrenador que envíe el formulario.</p>
                 <table>
                     <thead>
                         <tr>
-                            <th>Nombre del Solicitante</th>
-                            <th>Contacto / Teléfono</th>
+                            <th>Nombre / Solicitante</th>
+                            <th>Contacto</th>
                             <th>Tipo</th>
-                            <th>Acciones del Admin</th>
+                            <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody id="requestsTableBody">
-                        <tr><td colspan="4" class="empty-state">No hay solicitudes pendientes de aprobación.</td></tr>
+                        <tr><td colspan="4" class="empty-state">Conectando con la nube...</td></tr>
                     </tbody>
                 </table>
             </div>
 
-            <!-- 2. GESTIÓN DE ATLETAS -->
             <div id="tabAthletes" class="card hidden">
-                <h3>2. Gestión de Atletas Autorizados</h3>
-                <p class="subtitle">Control financiero, fechas de inicio y expedientes antropométricos.</p>
-                
-                <form id="athleteForm" style="background: var(--bg-deep); padding: 1.5rem; border-radius: 6px; border: 1px solid var(--border); margin-bottom: 2rem;">
-                    <h4 style="color: var(--bronze); margin-bottom: 1rem; font-size: 0.95rem;">+ Registrar Atleta Manualmente</h4>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
-                        <div class="form-group"><label>Nombre del Atleta</label><input type="text" id="athName" required placeholder="Ej. Juan Pérez"></div>
-                        <div class="form-group"><label>Teléfono / WhatsApp</label><input type="text" id="athPhone" required placeholder="+58 414..."></div>
-                        <div class="form-group"><label>Fecha de Inicio</label><input type="date" id="athStartDate" required></div>
-                        <div class="form-group"><label>Costo del Plan ($)</label><input type="number" id="athCost" required placeholder="100"></div>
-                        <div class="form-group"><label>Abono Parcial ($)</label><input type="number" id="athPartial" placeholder="50"></div>
-                    </div>
-                    <button type="submit" style="margin-top: 1rem; width: auto; padding: 0.6rem 1.5rem; font-size: 0.85rem;">Registrar Atleta</button>
-                </form>
-
+                <h3>2. Atletas Registrados</h3>
                 <table>
                     <thead>
                         <tr>
                             <th>Atleta</th>
                             <th>Contacto</th>
-                            <th>Inicio / Cortes</th>
-                            <th>Costo / Abono</th>
-                            <th>Estado Pago</th>
+                            <th>Inicio</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody id="athletesTableBody">
-                        <tr><td colspan="6" class="empty-state">No hay atletas registrados.</td></tr>
+                        <tr><td colspan="4" class="empty-state">No hay atletas activos.</td></tr>
                     </tbody>
                 </table>
-            </div>
-
-            <!-- 3. HERRAMIENTAS -->
-            <div id="tabTools" class="card hidden">
-                <h3>3. Herramientas y Calculadoras Profesionales</h3>
-                <p class="subtitle">Utilidades de consulta antropométrica y energética.</p>
-                
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 1rem;">
-                    <div style="background: var(--bg-deep); padding: 1.5rem; border-radius: 6px; border: 1px solid var(--border);">
-                        <h4 style="color: var(--bronze); margin-bottom: 1rem;">Calculadora de IMC</h4>
-                        <div class="form-group"><label>Peso (kg)</label><input type="number" id="tImcW" placeholder="104"></div>
-                        <div class="form-group"><label>Altura (cm)</label><input type="number" id="tImcH" placeholder="180"></div>
-                        <button onclick="calcToolIMC()" style="padding: 0.6rem; font-size: 0.85rem;">Calcular IMC</button>
-                        <div id="tImcRes" class="hidden" style="margin-top: 1rem; padding: 0.8rem; background: var(--surface); border-left: 3px solid var(--bronze);"></div>
-                    </div>
-                    <div style="background: var(--bg-deep); padding: 1.5rem; border-radius: 6px; border: 1px solid var(--border);">
-                        <h4 style="color: var(--bronze); margin-bottom: 1rem;">Gasto Energético (Calorías)</h4>
-                        <div class="form-group"><label>Peso / Altura / Edad</label>
-                            <div style="display: flex; gap: 0.5rem;">
-                                <input type="number" id="tCalW" placeholder="104">
-                                <input type="number" id="tCalH" placeholder="180">
-                                <input type="number" id="tCalA" placeholder="44">
-                            </div>
-                        </div>
-                        <button onclick="calcToolCal()" style="padding: 0.6rem; font-size: 0.85rem;">Calcular Calorías</button>
-                        <div id="tCalRes" class="hidden" style="margin-top: 1rem; padding: 0.8rem; background: var(--surface); border-left: 3px solid var(--bronze);"></div>
-                    </div>
-                </div>
             </div>
 
         </section>
@@ -497,22 +436,20 @@
     </footer>
 
     <script>
-        // Carga de base de datos sincronizada en el navegador local
-        let pendingRequests = JSON.parse(localStorage.getItem('ciodaro_requests')) || [];
-        let athletes = JSON.parse(localStorage.getItem('ciodaro_athletes')) || [];
+        // CONFIGURACIÓN DE FIREBASE (Base de datos en la nube gratuita en tiempo real)
+        const firebaseConfig = {
+            databaseURL: "https://ciodarofitness-db-default-rtdb.firebaseio.com/" // Base de datos en la nube compartida
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
 
         document.getElementById('shareableLink').value = window.location.href.split('#')[0];
-
-        function saveData() {
-            localStorage.setItem('ciodaro_requests', JSON.stringify(pendingRequests));
-            localStorage.setItem('ciodaro_athletes', JSON.stringify(athletes));
-        }
 
         function copyInviteLink() {
             const linkInput = document.getElementById('shareableLink');
             linkInput.select();
             navigator.clipboard.writeText(linkInput.value);
-            alert("¡Enlace de acceso copiado al portapapeles!");
+            alert("¡Enlace copiado al portapapeles!");
         }
 
         function togglePassword() {
@@ -527,7 +464,7 @@
         setInterval(updateClock, 1000);
         updateClock();
 
-        // VALIDACIÓN DE ACCESO MAESTRO DE ADMINISTRADOR
+        // LOGIN DE ADMINISTRADOR
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const user = document.getElementById('adminUser').value.trim();
@@ -537,9 +474,9 @@
                 document.getElementById('authSection').classList.add('hidden');
                 document.getElementById('dashboardView').classList.remove('hidden');
                 document.getElementById('clock').classList.remove('hidden');
-                updateDashboard();
+                initRealtimeSync();
             } else {
-                alert("Acceso Denegado. Credenciales incorrectas de Ciodarofitness.");
+                alert("Credenciales incorrectas de Ciodarofitness.");
             }
         });
 
@@ -550,114 +487,92 @@
             document.getElementById('loginForm').reset();
         }
 
-        // REGISTRO DE SOLICITUD EXTERNA (CLIENTE)
+        // ENVÍO DE SOLICITUD DESDE EL CELULAR DEL CLIENTE A LA NUBE
         document.getElementById('requestAccessForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const newReq = {
-                id: Date.now(),
                 name: document.getElementById('clientReqName').value,
                 phone: document.getElementById('clientReqPhone').value,
-                type: document.getElementById('clientReqType').value
+                type: document.getElementById('clientReqType').value,
+                timestamp: Date.now()
             };
-            pendingRequests.push(newReq);
-            saveData();
-            document.getElementById('requestStatusNotice').classList.remove('hidden');
-            this.reset();
+            
+            // Envío directo a la nube Firebase
+            db.ref('solicitudes').push(newReq).then(() => {
+                document.getElementById('requestStatusNotice').classList.remove('hidden');
+                this.reset();
+            }).catch(err => {
+                alert("Error al conectar con la nube. Verifique su conexión.");
+            });
         });
 
-        // REGISTRO MANUAL DE ATLETA DESDE EL PANEL
-        document.getElementById('athleteForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const newAth = {
-                id: Date.now(),
-                name: document.getElementById('athName').value,
-                phone: document.getElementById('athPhone').value,
-                startDate: document.getElementById('athStartDate').value,
-                cost: parseFloat(document.getElementById('athCost').value) || 0,
-                partial: parseFloat(document.getElementById('athPartial').value) || 0
-            };
-            athletes.push(newAth);
-            saveData();
-            this.reset();
-            updateDashboard();
-            alert("Atleta registrado exitosamente en el sistema.");
-        });
+        // SINCRONIZACIÓN EN TIEMPO REAL PARA EL PANEL DE CONTROL
+        function initRealtimeSync() {
+            // Escuchar Solicitudes
+            db.ref('solicitudes').on('value', (snapshot) => {
+                const data = snapshot.val();
+                const reqTbody = document.getElementById('requestsTableBody');
+                let reqsArray = [];
+                
+                if (data) {
+                    reqsArray = Object.keys(data).map(key => ({ id: key, ...data[key] }));
+                }
 
-        function updateDashboard() {
-            document.getElementById('statActiveAthletes').innerText = athletes.length;
-            document.getElementById('statPendingRequests').innerText = pendingRequests.length;
-            document.getElementById('badgePending').innerText = pendingRequests.length;
+                document.getElementById('statPendingRequests').innerText = reqsArray.length;
+                document.getElementById('badgePending').innerText = reqsArray.length;
 
-            const reqTbody = document.getElementById('requestsTableBody');
-            reqTbody.innerHTML = pendingRequests.length === 0 ? `<tr><td colspan="4" class="empty-state">No hay solicitudes pendientes de aprobación.</td></tr>` :
-                pendingRequests.map(r => `
-                    <tr>
-                        <td><strong>${r.name}</strong></td>
-                        <td>📱 ${r.phone}</td>
-                        <td>${r.type}</td>
-                        <td>
-                            <button class="btn-approve" onclick="approveRequest(${r.id})">Aprobar</button>
-                            <button class="btn-deny" onclick="deleteRequest(${r.id})">Eliminar</button>
-                        </td>
-                    </tr>
-                `).join('');
+                reqTbody.innerHTML = reqsArray.length === 0 ? `<tr><td colspan="4" class="empty-state">No hay solicitudes pendientes en la nube.</td></tr>` :
+                    reqsArray.map(r => `
+                        <tr>
+                            <td><strong>${r.name}</strong></td>
+                            <td>📱 ${r.phone}</td>
+                            <td>${r.type}</td>
+                            <td>
+                                <button class="btn-approve" onclick="approveRequest('${r.id}', '${r.name}', '${r.phone}')">Aprobar</button>
+                                <button class="btn-deny" onclick="deleteRequest('${r.id}')">Eliminar</button>
+                            </td>
+                        </tr>
+                    `).join('');
+            });
 
-            const athTbody = document.getElementById('athletesTableBody');
-            athTbody.innerHTML = athletes.length === 0 ? `<tr><td colspan="6" class="empty-state">No hay atletas registrados.</td></tr>` :
-                athletes.map(a => {
-                    const paidFull = a.partial >= a.cost;
-                    return `
+            // Escuchar Atletas Activos
+            db.ref('atletas').on('value', (snapshot) => {
+                const data = snapshot.val();
+                const athTbody = document.getElementById('athletesTableBody');
+                let athArray = [];
+
+                if (data) {
+                    athArray = Object.keys(data).map(key => ({ id: key, ...data[key] }));
+                }
+
+                document.getElementById('statActiveAthletes').innerText = athArray.length;
+
+                athTbody.innerHTML = athArray.length === 0 ? `<tr><td colspan="4" class="empty-state">No hay atletas activos registrados.</td></tr>` :
+                    athArray.map(a => `
                         <tr>
                             <td><strong>${a.name}</strong></td>
                             <td>📱 ${a.phone}</td>
-                            <td>Inicio: ${a.startDate}</td>
-                            <td>$${a.cost} | Abonado: $${a.partial}</td>
-                            <td><strong style="color: ${paidFull ? 'var(--success)' : 'var(--bronze)'};">${paidFull ? 'Pagado Total' : 'Abono Parcial'}</strong></td>
+                            <td>${a.startDate}</td>
                             <td>
-                                <button class="btn-approve" onclick="payTotal(${a.id})" style="font-size: 0.7rem; padding: 0.3rem;">Pago Total</button>
-                                <button class="btn-deny" onclick="deleteAthlete(${a.id})" style="font-size: 0.7rem; padding: 0.3rem;">Eliminar</button>
+                                <button class="btn-deny" onclick="deleteAthlete('${a.id}')" style="font-size: 0.7rem; padding: 0.3rem;">Eliminar</button>
                             </td>
                         </tr>
-                    `;
-                }).join('');
+                    `).join('');
+            });
         }
 
-        function approveRequest(id) {
-            const idx = pendingRequests.findIndex(r => r.id === id);
-            if(idx !== -1) {
-                const item = pendingRequests.splice(idx, 1)[0];
-                athletes.push({ 
-                    id: Date.now(), 
-                    name: item.name, 
-                    phone: item.phone, 
-                    startDate: new Date().toISOString().split('T')[0], 
-                    cost: 100, 
-                    partial: 100 
-                });
-                saveData();
-                updateDashboard();
-            }
+        function approveRequest(id, name, phone) {
+            // Mover de solicitudes a atletas en la nube
+            db.ref('atletas').push({ name, phone, startDate: new Date().toLocaleDateString() });
+            db.ref('solicitudes/' + id).remove();
         }
 
         function deleteRequest(id) {
-            pendingRequests = pendingRequests.filter(r => r.id !== id);
-            saveData();
-            updateDashboard();
+            db.ref('solicitudes/' + id).remove();
         }
 
         function deleteAthlete(id) {
-            athletes = athletes.filter(a => a.id !== id);
-            saveData();
-            updateDashboard();
-        }
-
-        function payTotal(id) {
-            const ath = athletes.find(a => a.id === id);
-            if(ath) { 
-                ath.partial = ath.cost; 
-                saveData();
-                updateDashboard(); 
-            }
+            db.ref('atletas/' + id).remove();
         }
 
         function switchTab(tabId, btn) {
@@ -667,27 +582,6 @@
             document.getElementById(tabId).classList.remove('hidden');
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-        }
-
-        function calcToolIMC() {
-            const w = parseFloat(document.getElementById('tImcW').value);
-            const h = parseFloat(document.getElementById('tImcH').value) / 100;
-            if(!w || !h) return;
-            const imc = (w / (h * h)).toFixed(1);
-            const res = document.getElementById('tImcRes');
-            res.classList.remove('hidden');
-            res.innerHTML = `IMC Calculado: <strong>${imc}</strong>`;
-        }
-
-        function calcToolCal() {
-            const w = parseFloat(document.getElementById('tCalW').value);
-            const h = parseFloat(document.getElementById('tCalH').value);
-            const a = parseFloat(document.getElementById('tCalA').value);
-            if(!w || !h || !a) return;
-            const tmb = (10 * w) + (6.25 * h) - (5 * a) + 5;
-            const res = document.getElementById('tCalRes');
-            res.classList.remove('hidden');
-            res.innerHTML = `Mantenimiento: <strong>${Math.round(tmb * 1.55)} kcal</strong>`;
         }
     </script>
 </body>
