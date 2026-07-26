@@ -63,7 +63,7 @@
         main {
             flex: 1;
             padding: 2rem;
-            max-width: 1200px;
+            max-width: 1250px;
             margin: 0 auto;
             width: 100%;
         }
@@ -89,26 +89,26 @@
         }
 
         .form-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.2rem;
         }
 
         label {
             display: block;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             text-transform: uppercase;
             letter-spacing: 1px;
             color: var(--text-muted);
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.4rem;
         }
 
         input, select {
             width: 100%;
-            padding: 0.9rem 1rem;
+            padding: 0.8rem 1rem;
             background-color: var(--bg-deep);
             border: 1px solid var(--border);
             border-radius: 6px;
             color: var(--text-main);
-            font-size: 1rem;
+            font-size: 0.95rem;
             outline: none;
             transition: border-color 0.3s;
         }
@@ -132,19 +132,18 @@
             color: var(--text-muted);
             cursor: pointer;
             font-size: 1.1rem;
-            width: auto;
             padding: 0;
         }
 
         button {
             width: 100%;
-            padding: 1rem;
+            padding: 0.9rem;
             background: linear-gradient(135deg, #c5a059 0%, #d4af37 100%);
             color: #000;
             border: none;
             border-radius: 6px;
             font-weight: 700;
-            font-size: 1rem;
+            font-size: 0.95rem;
             cursor: pointer;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -168,26 +167,10 @@
             color: var(--text-main);
         }
 
-        .btn-approve {
-            background: var(--success);
-            color: #fff;
-            padding: 0.4rem 0.8rem;
-            font-size: 0.75rem;
-            width: auto;
-            margin-right: 0.5rem;
-        }
+        .btn-approve { background: var(--success); color: #fff; padding: 0.4rem 0.8rem; font-size: 0.75rem; width: auto; margin-right: 0.3rem; }
+        .btn-deny { background: var(--danger); color: #fff; padding: 0.4rem 0.8rem; font-size: 0.75rem; width: auto; }
 
-        .btn-deny {
-            background: var(--danger);
-            color: #fff;
-            padding: 0.4rem 0.8rem;
-            font-size: 0.75rem;
-            width: auto;
-        }
-
-        .hidden {
-            display: none !important;
-        }
+        .hidden { display: none !important; }
 
         .dashboard-header {
             display: flex;
@@ -200,9 +183,9 @@
 
         .grid-stats {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 1.5rem;
-            margin-bottom: 2.5rem;
+            margin-bottom: 2rem;
         }
 
         .stat-card {
@@ -213,14 +196,14 @@
         }
 
         .stat-card h3 {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: var(--text-muted);
             text-transform: uppercase;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.4rem;
         }
 
         .stat-card .value {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             font-weight: bold;
             color: var(--bronze);
         }
@@ -235,17 +218,17 @@
         }
 
         th, td {
-            padding: 1rem;
+            padding: 0.9rem 1rem;
             text-align: left;
             border-bottom: 1px solid var(--border);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
 
         th {
             background-color: var(--bg-deep);
             color: var(--bronze);
             text-transform: uppercase;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             letter-spacing: 1px;
         }
 
@@ -280,13 +263,14 @@
             margin-bottom: 1.5rem;
             border-bottom: 1px solid var(--border);
             padding-bottom: 0.5rem;
+            flex-wrap: wrap;
         }
 
         .tab-btn {
             background: none;
             border: none;
             color: var(--text-muted);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             cursor: pointer;
             padding: 0.5rem 1rem;
             text-transform: uppercase;
@@ -298,6 +282,12 @@
             color: var(--bronze);
             border-bottom: 2px solid var(--bronze);
         }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+        }
     </style>
 </head>
 <body>
@@ -308,14 +298,14 @@
     </header>
 
     <main>
-        <!-- VISTA DE LOGIN Y ACCESO PÚBLICO A LICENCIAS -->
+        <!-- VISTA DE LOGIN Y SOLICITUD PÚBLICA POR ENLACE -->
         <section id="authSection">
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem;">
                 
-                <!-- Acceso Administrador -->
+                <!-- Login Admin -->
                 <div class="card" style="margin-bottom: 0;">
                     <h2>Acceso Administrador</h2>
-                    <p class="subtitle">Panel de control exclusivo para Heber Ciodaro.</p>
+                    <p class="subtitle">Panel de control exclusivo - Heber Ciodaro.</p>
                     <form id="loginForm">
                         <div class="form-group">
                             <label>Correo Electrónico</label>
@@ -332,10 +322,10 @@
                     </form>
                 </div>
 
-                <!-- Solicitud Pública de Licencia para Nuevos Clientes/Entrenadores -->
-                <div class="card" style="margin-bottom: 0;" id="requestSection">
-                    <h2>Solicitar Licencia / Afiliación</h2>
-                    <p class="subtitle">¿Deseas unirte a Business Center Fit? Envía tu solicitud.</p>
+                <!-- Solicitud Pública de Afiliación (Entrada por Enlace) -->
+                <div class="card" style="margin-bottom: 0;">
+                    <h2>Solicitud de Licencia / Afiliación</h2>
+                    <p class="subtitle">Entrenadores o clientes interesados en adquirir la plataforma.</p>
                     <form id="requestLicenseForm">
                         <div class="form-group">
                             <label>Nombre y Apellido / Marca</label>
@@ -346,42 +336,46 @@
                             <input type="email" id="reqEmail" required placeholder="correo@ejemplo.com">
                         </div>
                         <div class="form-group">
+                            <label>Teléfono / WhatsApp</label>
+                            <input type="text" id="reqPhone" required placeholder="+58 412...">
+                        </div>
+                        <div class="form-group">
                             <label>Tipo de Solicitud</label>
                             <select id="reqType">
-                                <option value="Entrenador Afiliado">Entrenador (Licencia SaaS)</option>
-                                <option value="Atleta / Alumno">Atleta / Alumno directo</option>
+                                <option value="Licencia Entrenador SaaS">Licencia para Entrenador</option>
+                                <option value="Afiliación Cliente Directo">Afiliación Cliente Final</option>
                             </select>
                         </div>
-                        <button type="submit" style="background: transparent; border: 1px solid var(--bronze); color: var(--bronze);">Enviar Solicitud de Acceso</button>
+                        <button type="submit" style="background: transparent; border: 1px solid var(--bronze); color: var(--bronze);">Enviar Solicitud por Enlace</button>
                     </form>
                 </div>
 
             </div>
         </section>
 
-        <!-- VISTA DE DASHBOARD ADMIN (LIMPIO) -->
+        <!-- DASHBOARD GENERAL DEL ADMINISTRADOR -->
         <section id="dashboardView" class="hidden">
             <div class="dashboard-header">
                 <div>
                     <h2>Panel de Control Global</h2>
-                    <p class="subtitle">Administración General - Ciodarofitness</p>
+                    <p class="subtitle">Gestión Administrativa - Ciodarofitness</p>
                 </div>
                 <button class="btn-secondary" onclick="logout()">Cerrar Sesión</button>
             </div>
 
-            <!-- ENLACE DIRECTO PARA COMPARTIR A CLIENTES/ENTRENADORES -->
-            <div class="card" style="padding: 1.5rem; margin-bottom: 1.5rem;">
-                <h3 style="font-size: 0.95rem; margin-bottom: 0.5rem; color: var(--bronze);">Enlace de Solicitud para Clientes o Entrenadores</h3>
-                <p class="subtitle" style="margin-bottom: 0.8rem; font-size: 0.85rem;">Comparte este enlace por WhatsApp para que nuevos usuarios soliciten su acceso:</p>
-                <div class="link-box">
-                    <input type="text" id="shareableLink" readonly value="">
-                    <button class="btn-secondary" onclick="copyInviteLink()" style="font-size: 0.75rem; padding: 0.4rem 0.8rem;">Copiar Enlace</button>
+            <!-- ENLACE COMPARTIBLE PARA SOLICITUDES -->
+            <div class="card" style="padding: 1.2rem; margin-bottom: 1.5rem;">
+                <h3 style="font-size: 0.9rem; margin-bottom: 0.3rem; color: var(--bronze);">Enlace de Afiliación Directa</h3>
+                <p class="subtitle" style="margin-bottom: 0.6rem; font-size: 0.8rem;">Comparte este enlace para que nuevos interesados envíen sus solicitudes:</p>
+                <div class="link-box" style="margin-bottom: 0;">
+                    <input type="text" id="shareableLink" readonly>
+                    <button class="btn-secondary" onclick="copyInviteLink()" style="font-size: 0.75rem; padding: 0.3rem 0.6rem;">Copiar Enlace</button>
                 </div>
             </div>
 
             <div class="grid-stats">
                 <div class="stat-card">
-                    <h3>Alumnos / Afiliados Activos</h3>
+                    <h3>Atletas Activos</h3>
                     <div class="value" id="statActiveAthletes">0</div>
                 </div>
                 <div class="stat-card">
@@ -390,84 +384,161 @@
                 </div>
             </div>
 
-            <!-- NAVEGACIÓN ENTRE PESTAÑAS DEL ADMIN -->
+            <!-- NAVEGACIÓN -->
             <div class="nav-tabs">
-                <button class="tab-btn active" onclick="switchTab('tabRequests', this)">Solicitudes Pendientes (<span id="badgePending">0</span>)</button>
-                <button class="tab-btn" onclick="switchTab('tabAthletes', this)">Alumnos y Afiliados Activos</button>
+                <button class="tab-btn active" onclick="switchTab('tabRequests', this)">1. Gestión Afiliaciones (<span id="badgePending">0</span>)</button>
+                <button class="tab-btn" onclick="switchTab('tabAthletes', this)">2. Registro y Atletas</button>
+                <button class="tab-btn" onclick="switchTab('tabMetrics', this)">3. Antropometría Mensual</button>
+                <button class="tab-btn" onclick="switchTab('tabTools', this)">4. Herramientas y Calculadoras</button>
             </div>
 
-            <!-- SECCIÓN 1: SOLICITUDES PENDIENTES -->
+            <!-- 1. GESTIÓN DE AFILIACIONES / SOLICITUDES -->
             <div id="tabRequests" class="card">
-                <h3>Solicitudes de Afiliación y Licencias</h3>
-                <p class="subtitle">Aprueba o deniega el acceso a nuevos usuarios en tiempo real.</p>
+                <h3>Solicitudes de Licencias y Afiliaciones</h3>
+                <p class="subtitle">Aprueba, deniega o elimina definitivamente solicitudes de nuevos interesados.</p>
                 <table>
                     <thead>
                         <tr>
                             <th>Nombre / Marca</th>
-                            <th>Correo</th>
+                            <th>Contacto</th>
                             <th>Tipo</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody id="requestsTableBody">
-                        <tr>
-                            <td colspan="4" class="empty-state">No hay solicitudes pendientes en este momento.</td>
-                        </tr>
+                        <tr><td colspan="4" class="empty-state">No hay solicitudes pendientes.</td></tr>
                     </tbody>
                 </table>
             </div>
 
-            <!-- SECCIÓN 2: ALUMNOS ACTIVOS -->
+            <!-- 2. REGISTRO DE ATLETAS -->
             <div id="tabAthletes" class="card hidden">
-                <h3>Base de Datos de Alumnos y Afiliados Activos</h3>
-                <p class="subtitle">Usuarios con licencia aprobada en la plataforma.</p>
+                <h3>Registro General de Atletas</h3>
+                <p class="subtitle">Control de fechas, abonos parciales, costos y pagos totales.</p>
+                
+                <form id="athleteForm" style="background: var(--bg-deep); padding: 1.5rem; border-radius: 6px; border: 1px solid var(--border); margin-bottom: 2rem;">
+                    <h4 style="color: var(--bronze); margin-bottom: 1rem; font-size: 0.95rem;">+ Registrar Nuevo Atleta</h4>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem;">
+                        <div class="form-group"><label>Nombre del Atleta</label><input type="text" id="athName" required placeholder="Ej. Juan Pérez"></div>
+                        <div class="form-group"><label>Teléfono / WhatsApp</label><input type="text" id="athPhone" required placeholder="+58 414..."></div>
+                        <div class="form-group"><label>Fecha de Inicio</label><input type="date" id="athStartDate" required></div>
+                        <div class="form-group"><label>Costo Total del Plan ($)</label><input type="number" id="athCost" required placeholder="100"></div>
+                        <div class="form-group"><label>Abono Parcial ($)</label><input type="number" id="athPartial" placeholder="50"></div>
+                    </div>
+                    <button type="submit" style="margin-top: 1rem; width: auto; padding: 0.6rem 1.5rem; font-size: 0.85rem;">Registrar Atleta en el Sistema</button>
+                </form>
+
                 <table>
                     <thead>
                         <tr>
-                            <th>Nombre</th>
-                            <th>Correo</th>
-                            <th>Tipo de Membresía</th>
-                            <th>Estado</th>
+                            <th>Atleta</th>
+                            <th>Contacto</th>
+                            <th>Inicio / Corte</th>
+                            <th>Costo / Abono</th>
+                            <th>Estado Pago</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody id="athletesTableBody">
-                        <tr>
-                            <td colspan="5" class="empty-state">No hay alumnos activos registrados aún.</td>
-                        </tr>
+                        <tr><td colspan="6" class="empty-state">No hay atletas registrados.</td></tr>
                     </tbody>
                 </table>
+            </div>
+
+            <!-- 3. MEDIDAS ANTROPOMÉTRICAS MENSUALES -->
+            <div id="tabMetrics" class="card hidden">
+                <h3>Evaluación y Medidas Antropométricas Mensuales</h3>
+                <p class="subtitle">Historial comparativo mes a mes, cálculo automático de IMC y % de grasa, con opción a PDF.</p>
+                
+                <form id="metricForm" style="background: var(--bg-deep); padding: 1.5rem; border-radius: 6px; border: 1px solid var(--border); margin-bottom: 2rem;">
+                    <h4 style="color: var(--bronze); margin-bottom: 1rem; font-size: 0.95rem;">+ Agregar Registro Antropométrico Mensual</h4>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem;">
+                        <div class="form-group"><label>Seleccionar Atleta</label><select id="metricAthleteSelect"><option value="">-- Seleccione --</option></select></div>
+                        <div class="form-group"><label>Mes / Fecha Registro</label><input type="text" id="metricMonth" placeholder="Ej. Julio 2026"></div>
+                        <div class="form-group"><label>Peso Actual (kg)</label><input type="number" id="mWeight" step="0.1" placeholder="104"></div>
+                        <div class="form-group"><label>Estatura (cm)</label><input type="number" id="mHeight" placeholder="180"></div>
+                        <div class="form-group"><label>Cuello (cm)</label><input type="number" id="mNeck" step="0.1"></div>
+                        <div class="form-group"><label>Tórax (cm)</label><input type="number" id="mChest" step="0.1"></div>
+                        <div class="form-group"><label>Bíceps (cm)</label><input type="number" id="mBiceps" step="0.1"></div>
+                        <div class="form-group"><label>Cintura (cm)</label><input type="number" id="mWaist" step="0.1"></div>
+                        <div class="form-group"><label>Glúteo (cm)</label><input type="number" id="mGlutes" step="0.1"></div>
+                        <div class="form-group"><label>Cuádriceps (cm)</label><input type="number" id="mLeg" step="0.1"></div>
+                        <div class="form-group"><label>Pantorrilla (cm)</label><input type="number" id="mCalf" step="0.1"></div>
+                    </div>
+                    <button type="submit" style="margin-top: 1rem; width: auto; padding: 0.6rem 1.5rem; font-size: 0.85rem;">Guardar y Calcular Métricas</button>
+                </form>
+
+                <div id="metricsHistoryContainer">
+                    <p class="empty-state">Seleccione o agregue métricas para ver el historial comparativo.</p>
+                </div>
+            </div>
+
+            <!-- 4. HERRAMIENTAS Y CALCULADORAS GLOBALES -->
+            <div id="tabTools" class="card hidden">
+                <h3>Herramientas Profesionales de Evaluación</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 1rem;">
+                    
+                    <!-- IMC -->
+                    <div style="background: var(--bg-deep); padding: 1.5rem; border-radius: 6px; border: 1px solid var(--border);">
+                        <h4 style="color: var(--bronze); margin-bottom: 1rem;">Calculadora de IMC</h4>
+                        <div class="form-group"><label>Peso (kg)</label><input type="number" id="tImcW" placeholder="104"></div>
+                        <div class="form-group"><label>Altura (cm)</label><input type="number" id="tImcH" placeholder="180"></div>
+                        <button onclick="calcToolIMC()" style="padding: 0.6rem; font-size: 0.85rem;">Calcular IMC</button>
+                        <div id="tImcRes" class="result-box hidden" style="margin-top: 1rem; padding: 0.8rem; background: var(--surface); border-left: 3px solid var(--bronze);"></div>
+                    </div>
+
+                    <!-- Gasto Calórico -->
+                    <div style="background: var(--bg-deep); padding: 1.5rem; border-radius: 6px; border: 1px solid var(--border);">
+                        <h4 style="color: var(--bronze); margin-bottom: 1rem;">Gasto Energético (Calorías)</h4>
+                        <div class="form-group"><label>Peso (kg) / Altura (cm) / Edad</label>
+                            <div style="display: flex; gap: 0.5rem;">
+                                <input type="number" id="tCalW" placeholder="104">
+                                <input type="number" id="tCalH" placeholder="180">
+                                <input type="number" id="tCalA" placeholder="44">
+                            </div>
+                        </div>
+                        <button onclick="calcToolCal()" style="padding: 0.6rem; font-size: 0.85rem;">Calcular Calorías</button>
+                        <div id="tCalRes" class="result-box hidden" style="margin-top: 1rem; padding: 0.8rem; background: var(--surface); border-left: 3px solid var(--bronze);"></div>
+                    </div>
+
+                    <!-- Porcentaje de Grasa -->
+                    <div style="background: var(--bg-deep); padding: 1.5rem; border-radius: 6px; border: 1px solid var(--border);">
+                        <h4 style="color: var(--bronze); margin-bottom: 1rem;">Calculadora de % Grasa</h4>
+                        <div class="form-group"><label>Cintura (cm) y Cuello (cm)</label>
+                            <div style="display: flex; gap: 0.5rem;">
+                                <input type="number" id="tFatW" placeholder="Cintura">
+                                <input type="number" id="tFatN" placeholder="Cuello">
+                            </div>
+                        </div>
+                        <button onclick="calcToolFat()" style="padding: 0.6rem; font-size: 0.85rem;">Estimar Grasa</button>
+                        <div id="tFatRes" class="result-box hidden" style="margin-top: 1rem; padding: 0.8rem; background: var(--surface); border-left: 3px solid var(--bronze);"></div>
+                    </div>
+
+                </div>
             </div>
 
         </section>
     </main>
 
     <script>
-        // Memoria local de datos
         let pendingRequests = [];
-        let activeAthletes = [];
+        let athletes = [];
+        let anthropometrics = [];
 
-        // Generar enlace automático basado en la ubicación actual
         document.getElementById('shareableLink').value = window.location.href.split('#')[0];
 
         function copyInviteLink() {
             const linkInput = document.getElementById('shareableLink');
             linkInput.select();
             navigator.clipboard.writeText(linkInput.value);
-            alert("¡Enlace copiado al portapapeles! Compártelo con tus entrenadores o clientes.");
+            alert("¡Enlace de solicitud copiado con éxito!");
         }
 
-        // Mostrar / Ocultar Contraseña
         function togglePassword() {
-            const pwdInput = document.getElementById('password');
-            if (pwdInput.type === 'password') {
-                pwdInput.type = 'text';
-            } else {
-                pwdInput.type = 'password';
-            }
+            const pwd = document.getElementById('password');
+            pwd.type = pwd.type === 'password' ? 'text' : 'password';
         }
 
-        // Reloj en tiempo real
         function updateClock() {
             const now = new Date();
             document.getElementById('clock').innerText = now.toLocaleDateString() + ' ' + now.toLocaleTimeString();
@@ -475,7 +546,6 @@
         setInterval(updateClock, 1000);
         updateClock();
 
-        // Login Admin
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
             document.getElementById('authSection').classList.add('hidden');
@@ -488,34 +558,88 @@
             document.getElementById('authSection').classList.remove('hidden');
         }
 
-        // Envío de Solicitud Pública
         document.getElementById('requestLicenseForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            const name = document.getElementById('reqName').value;
-            const email = document.getElementById('reqEmail').value;
-            const type = document.getElementById('reqType').value;
-
-            pendingRequests.push({ id: Date.now(), name, email, type });
-            alert("¡Solicitud enviada con éxito! Heber Ciodaro evaluará tu acceso pronto.");
+            pendingRequests.push({
+                id: Date.now(),
+                name: document.getElementById('reqName').value,
+                email: document.getElementById('reqEmail').value,
+                phone: document.getElementById('reqPhone').value,
+                type: document.getElementById('reqType').value
+            });
+            alert("¡Solicitud enviada correctamente! Heber Ciodaro la revisará en breve.");
             this.reset();
             updateDashboard();
         });
 
-        // Actualizar estadísticas y tablas
+        // Registro de Atletas
+        document.getElementById('athleteForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const newAth = {
+                id: Date.now(),
+                name: document.getElementById('athName').value,
+                phone: document.getElementById('athPhone').value,
+                startDate: document.getElementById('athStartDate').value,
+                cost: parseFloat(document.getElementById('athCost').value) || 0,
+                partial: parseFloat(document.getElementById('athPartial').value) || 0
+            };
+            athletes.push(newAth);
+            this.reset();
+            updateDashboard();
+            updateAthleteDropdown();
+            alert("Atleta registrado con éxito.");
+        });
+
+        // Registro Antropométrico
+        document.getElementById('metricForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const athId = document.getElementById('metricAthleteSelect').value;
+            if(!athId) { alert("Seleccione un atleta."); return; }
+            
+            const w = parseFloat(document.getElementById('mWeight').value) || 0;
+            const h = parseFloat(document.getElementById('mHeight').value) || 0;
+            const waist = parseFloat(document.getElementById('mWaist').value) || 0;
+            const neck = parseFloat(document.getElementById('mNeck').value) || 0;
+
+            // Cálculos automáticos
+            const imc = h > 0 ? (w / Math.pow(h/100, 2)).toFixed(1) : 0;
+            const fatEst = (waist && neck) ? Math.max(5, Math.round(495 / (1.0324 - 0.19077 * Math.log10(waist - neck) + 0.15456 * Math.log10(h || 180)) - 450)) : 15;
+
+            const record = {
+                id: Date.now(),
+                athleteId: athId,
+                month: document.getElementById('metricMonth').value || "Mes Actual",
+                weight: w,
+                height: h,
+                neck: neck,
+                chest: document.getElementById('mChest').value,
+                biceps: document.getElementById('mBiceps').value,
+                waist: waist,
+                glutes: document.getElementById('mGlutes').value,
+                leg: document.getElementById('mLeg').value,
+                calf: document.getElementById('mCalf').value,
+                imc: imc,
+                fat: fatEst
+            };
+
+            anthropometrics.push(record);
+            this.reset();
+            renderMetricsHistory();
+            alert("Métricas mensuales y cálculos guardados correctamente.");
+        });
+
         function updateDashboard() {
-            document.getElementById('statActiveAthletes').innerText = activeAthletes.length;
+            document.getElementById('statActiveAthletes').innerText = athletes.length;
             document.getElementById('statPendingRequests').innerText = pendingRequests.length;
             document.getElementById('badgePending').innerText = pendingRequests.length;
 
-            // Renderizar Solicitudes
+            // Solicitudes
             const reqTbody = document.getElementById('requestsTableBody');
-            if (pendingRequests.length === 0) {
-                reqTbody.innerHTML = `<tr><td colspan="4" class="empty-state">No hay solicitudes pendientes en este momento.</td></tr>`;
-            } else {
-                reqTbody.innerHTML = pendingRequests.map(r => `
+            reqTbody.innerHTML = pendingRequests.length === 0 ? `<tr><td colspan="4" class="empty-state">No hay solicitudes pendientes.</td></tr>` :
+                pendingRequests.map(r => `
                     <tr>
                         <td>${r.name}</td>
-                        <td>${r.email}</td>
+                        <td>${r.email} / ${r.phone}</td>
                         <td>${r.type}</td>
                         <td>
                             <button class="btn-approve" onclick="approveRequest(${r.id})">Aprobar</button>
@@ -523,32 +647,40 @@
                         </td>
                     </tr>
                 `).join('');
-            }
 
-            // Renderizar Alumnos Activos
+            // Atletas
             const athTbody = document.getElementById('athletesTableBody');
-            if (activeAthletes.length === 0) {
-                athTbody.innerHTML = `<tr><td colspan="5" class="empty-state">No hay alumnos activos registrados aún.</td></tr>`;
-            } else {
-                athTbody.innerHTML = activeAthletes.map(a => `
-                    <tr>
-                        <td>${a.name}</td>
-                        <td>${a.email}</td>
-                        <td>${a.type}</td>
-                        <td style="color: var(--success);">Activo</td>
-                        <td><button class="btn-deny" onclick="removeAthlete(${a.id})" style="padding: 0.3rem 0.6rem; font-size: 0.7rem;">Dar de baja</button></td>
-                    </tr>
-                `).join('');
-            }
+            athTbody.innerHTML = athletes.length === 0 ? `<tr><td colspan="6" class="empty-state">No hay atletas registrados.</td></tr>` :
+                athletes.map(a => {
+                    const paidFull = a.partial >= a.cost;
+                    return `
+                        <tr>
+                            <td>${a.name}</td>
+                            <td>${a.phone}</td>
+                            <td>Inicio: ${a.startDate}</td>
+                            <td>$${a.cost} | Abonado: $${a.partial}</td>
+                            <td><strong style="color: ${paidFull ? 'var(--success)' : 'var(--bronze)'};">${paidFull ? 'Pagado Total' : 'Abono Parcial'}</strong></td>
+                            <td>
+                                <button class="btn-approve" onclick="payTotal(${a.id})" style="font-size: 0.7rem; padding: 0.3rem;">Pago Total</button>
+                                <button class="btn-deny" onclick="deleteAthlete(${a.id})" style="font-size: 0.7rem; padding: 0.3rem;">Eliminar</button>
+                            </td>
+                        </tr>
+                    `;
+                }).join('');
         }
 
-        // Acciones de Aprobación o Eliminación Total
+        function updateAthleteDropdown() {
+            const select = document.getElementById('metricAthleteSelect');
+            select.innerHTML = `<option value="">-- Seleccione Atleta --</option>` + athletes.map(a => `<option value="${a.id}">${a.name}</option>`).join('');
+        }
+
         function approveRequest(id) {
-            const index = pendingRequests.findIndex(r => r.id === id);
-            if (index !== -1) {
-                const approved = pendingRequests.splice(index, 1)[0];
-                activeAthletes.push(approved);
+            const idx = pendingRequests.findIndex(r => r.id === id);
+            if(idx !== -1) {
+                const item = pendingRequests.splice(idx, 1)[0];
+                athletes.push({ id: Date.now(), name: item.name, phone: item.phone, startDate: new Date().toISOString().split('T')[0], cost: 100, partial: 100 });
                 updateDashboard();
+                updateAthleteDropdown();
             }
         }
 
@@ -557,20 +689,119 @@
             updateDashboard();
         }
 
-        function removeAthlete(id) {
-            activeAthletes = activeAthletes.filter(a => a.id !== id);
+        function deleteAthlete(id) {
+            athletes = athletes.filter(a => a.id !== id);
+            anthropometrics = anthropometrics.filter(m => m.athleteId != id);
             updateDashboard();
+            updateAthleteDropdown();
+            renderMetricsHistory();
         }
 
-        // Pestañas del Dashboard
+        function payTotal(id) {
+            const ath = athletes.find(a => a.id === id);
+            if(ath) { ath.partial = ath.cost; updateDashboard(); }
+        }
+
+        function renderMetricsHistory() {
+            const container = document.getElementById('metricsHistoryContainer');
+            if(anthropometrics.length === 0) {
+                container.innerHTML = `<p class="empty-state">No hay registros antropométricos guardados.</p>`;
+                return;
+            }
+
+            container.innerHTML = athletes.map(ath => {
+                const athMetrics = anthropometrics.filter(m => m.athleteId == ath.id);
+                if(athMetrics.length === 0) return '';
+
+                return `
+                    <div style="background: var(--bg-deep); border: 1px solid var(--border); border-radius: 6px; padding: 1.5rem; margin-bottom: 1.5rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <h4 style="color: var(--bronze);">Atleta: ${ath.name} (Historial Mensual)</h4>
+                            <button class="btn-secondary" onclick="exportPDF('${ath.name}')" style="font-size: 0.75rem;">Extraer para PDF</button>
+                        </div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Mes</th>
+                                    <th>Peso</th>
+                                    <th>IMC</th>
+                                    <th>% Grasa</th>
+                                    <th>Cintura</th>
+                                    <th>Bíceps</th>
+                                    <th>Glúteo</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${athMetrics.map(m => `
+                                    <tr>
+                                        <td><strong>${m.month}</strong></td>
+                                        <td>${m.weight} kg</td>
+                                        <td>${m.imc}</td>
+                                        <td>${m.fat}%</td>
+                                        <td>${m.waist || '-'} cm</td>
+                                        <td>${m.biceps || '-'} cm</td>
+                                        <td>${m.glutes || '-'} cm</td>
+                                        <td>
+                                            <button onclick="deleteMetric(${m.id})" class="btn-deny" style="padding: 0.2rem 0.5rem; font-size: 0.7rem;">Eliminar</button>
+                                        </td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function deleteMetric(id) {
+            anthropometrics = anthropometrics.filter(m => m.id !== id);
+            renderMetricsHistory();
+        }
+
+        function exportPDF(athleteName) {
+            window.print(); // Abre el cuadro de impresión nativo optimizado para PDF del navegador
+        }
+
         function switchTab(tabId, btn) {
-            document.querySelectorAll('#dashboardView > .card').forEach(card => {
-                if(card.id && card.id.startsWith('tab')) card.classList.add('hidden');
+            document.querySelectorAll('#dashboardView > .card').forEach(c => {
+                if(c.id && c.id.startsWith('tab')) c.classList.add('hidden');
             });
             document.getElementById(tabId).classList.remove('hidden');
-            
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
+        }
+
+        // Herramientas
+        function calcToolIMC() {
+            const w = parseFloat(document.getElementById('tImcW').value);
+            const h = parseFloat(document.getElementById('tImcH').value) / 100;
+            if(!w || !h) return;
+            const imc = (w / (h * h)).toFixed(1);
+            const res = document.getElementById('tImcRes');
+            res.classList.remove('hidden');
+            res.innerHTML = `IMC Calculado: <strong>${imc}</strong>`;
+        }
+
+        function calcToolCal() {
+            const w = parseFloat(document.getElementById('tCalW').value);
+            const h = parseFloat(document.getElementById('tCalH').value);
+            const a = parseFloat(document.getElementById('tCalA').value);
+            if(!w || !h || !a) return;
+            const tmb = (10 * w) + (6.25 * h) - (5 * a) + 5;
+            const res = document.getElementById('tCalRes');
+            res.classList.remove('hidden');
+            res.innerHTML = `Mantenimiento: <strong>${Math.round(tmb * 1.55)} kcal</strong>`;
+        }
+
+        function calcToolFat() {
+            const w = parseFloat(document.getElementById('tFatW').value);
+            const n = parseFloat(document.getElementById('tFatN').value);
+            if(!w || !n) return;
+            const fat = Math.round(495 / (1.0324 - 0.19077 * Math.log10(w - n) + 0.15456 * Math.log10(180)) - 450);
+            const res = document.getElementById('tFatRes');
+            res.classList.remove('hidden');
+            res.innerHTML = `Grasa estimada: <strong>${fat > 0 ? fat : 15}%</strong>`;
         }
     </script>
 </body>
