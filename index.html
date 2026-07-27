@@ -728,7 +728,7 @@
                 timeoutTriggered = true;
                 submitBtn.disabled = false;
                 submitBtn.textContent = "Enviar Solicitud de Afiliación";
-                alert("La conexión está tardando demasiado. Revisa tus reglas de Firebase en la consola.");
+                alert("La conexión está tardando demasiado. Revisa que tus reglas de Firestore permitan escrituras y que tu dominio de GitHub Pages esté en los dominios autorizados de Firebase.");
             }, 6000);
 
             try {
