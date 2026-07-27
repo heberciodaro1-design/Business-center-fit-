@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BC Fit | By Ciodarofitness</title>
+    <title>Business Center Fit | By Ciodarofitness</title>
     
     <style>
         :root {
@@ -366,12 +366,11 @@
 
     <div class="app-container">
         <header class="no-print">
-            <div class="brand-title">BC Fit</div>
+            <div class="brand-title">Business Center Fit</div>
             <div class="status-badge">Activo</div>
         </header>
 
         <main>
-            <!-- VISTA DE ACCESO PRINCIPAL -->
             <section id="authSection" class="no-print">
                 <div style="display: flex; flex-direction: column; gap: 1.2rem;">
                     
@@ -439,40 +438,35 @@
                 </div>
             </section>
 
-            <!-- PANEL ADMIN GLOBAL CON APROBACIÓN Y WHATSAPP -->
             <section id="dashboardView" class="hidden no-print">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
                     <div>
                         <h2>Panel Global Admin</h2>
-                        <p class="subtitle" style="margin-bottom:0;">By Ciodarofitness</p>
+                        <p class="subtitle" style="margin-bottom:0;">Business Center Fit — Ciodarofitness</p>
                     </div>
                     <button class="btn-secondary" onclick="logoutSystem()">Cerrar</button>
                 </div>
 
-                <!-- BOTÓN DE ENLACE DE WHATSAPP PARA INVITACIONES -->
                 <div class="card" style="background: var(--surface-card); border-color: var(--whatsapp);">
-                    <h3 style="font-size: 0.9rem; color: var(--whatsapp); margin-bottom: 0.4rem;">💬 Enviar Invitación / Enlace</h3>
-                    <p class="subtitle" style="font-size: 0.75rem; margin-bottom: 0.8rem;">Comparte el enlace de acceso o información con entrenadores interesados.</p>
-                    <a href="https://wa.me/?text=Hola%2C%20te%20invito%20a%20unirte%20a%20Business%20Center%20Fit%20(%40ciodarofitness)%20para%20gestionar%20tus%20atletas." target="_blank" class="btn-wa">
-                        📤 Enviar Enlace por WhatsApp
+                    <h3 style="font-size: 0.9rem; color: var(--whatsapp); margin-bottom: 0.4rem;">💬 Enlace de Conexión por WhatsApp</h3>
+                    <p class="subtitle" style="font-size: 0.75rem; margin-bottom: 0.8rem;">Guarda y copia este enlace para enviárselo al entrenador interesado en afiliarse.</p>
+                    <a href="https://wa.me/?text=Hola%2C%20estoy%20interesado%20en%20afiliarme%20a%20Business%20Center%20Fit%20(%40ciodarofitness)%20para%20gestionar%20mis%20atletas." target="_blank" class="btn-wa">
+                        📤 Enviar Enlace de Solicitud por WhatsApp
                     </a>
                 </div>
 
-                <!-- SOLICITUDES PENDIENTES DE AFILIACIÓN -->
                 <div class="card">
                     <h3 style="font-size: 0.95rem; color: var(--warning); margin-bottom: 0.4rem;">⏳ Solicitudes de Afiliación Pendientes</h3>
-                    <p class="subtitle" style="font-size: 0.75rem;">Aprueba o deniega el acceso a nuevos entrenadores.</p>
+                    <p class="subtitle" style="font-size: 0.75rem;">Aprueba o deniega el acceso a nuevos entrenadores directamente aquí.</p>
                     <div id="adminPendingList" style="display: flex; flex-direction: column; gap: 0.6rem; margin-top: 0.8rem;"></div>
                 </div>
 
-                <!-- CUENTAS ACTIVAS / AFILIADOS APROBADOS -->
                 <div class="card">
                     <h3 style="font-size: 0.95rem; margin-bottom: 0.4rem;">✅ Cuentas Afiliadas Activas</h3>
                     <div id="adminAccountsList" style="display: flex; flex-direction: column; gap: 0.6rem; margin-top: 0.8rem;"></div>
                 </div>
             </section>
 
-            <!-- PORTAL DE AFILIADO -->
             <section id="clientPortalView" class="hidden">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;" class="no-print">
                     <div>
@@ -482,7 +476,6 @@
                     <button class="btn-secondary" onclick="logoutSystem()">Salir</button>
                 </div>
 
-                <!-- RESPALDO Y HERRAMIENTAS -->
                 <div class="card no-print" style="padding: 0.9rem;">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
                         <span style="font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase;">Respaldo de Base de Datos:</span>
@@ -497,7 +490,6 @@
                     </div>
                 </div>
 
-                <!-- PANEL DE HERRAMIENTAS / CALCULADORAS -->
                 <div id="toolsDropdownCard" class="card hidden no-print" style="background: var(--surface-card); border-color: var(--bronze);">
                     <h3 style="font-size: 0.9rem; color: var(--bronze); margin-bottom: 0.8rem;">🛠️ Calculadoras Profesionales</h3>
                     
@@ -533,7 +525,6 @@
                     </div>
                 </div>
 
-                <!-- KPI METRICS -->
                 <div class="kpi-grid no-print">
                     <div class="kpi-card">
                         <h3>Atletas Activos</h3>
@@ -553,7 +544,6 @@
                     </div>
                 </div>
 
-                <!-- REGISTRAR NUEVO ATLETA -->
                 <div class="card no-print">
                     <h3 style="font-size: 0.95rem; display: flex; align-items: center; gap: 6px;">⚡ Registrar Nuevo Atleta</h3>
                     <p class="subtitle" style="font-size: 0.75rem;">Añade un nuevo asesorado al sistema.</p>
@@ -573,7 +563,6 @@
                     <button type="button" onclick="addAthlete()" style="margin-top: 0.4rem;">Agregar a la Base de Datos</button>
                 </div>
 
-                <!-- CONTROL DE ATLETAS -->
                 <div class="card no-print">
                     <h3 style="font-size: 0.95rem; margin-bottom: 0.6rem;">📋 Control de Atletas</h3>
                     <div class="form-group" style="margin-bottom: 0.8rem;">
@@ -583,7 +572,6 @@
                 </div>
             </section>
 
-            <!-- VISTA EXCLUSIVA DEL EXPEDIENTE DEL ATLETA -->
             <section id="athleteDetailView" class="hidden">
                 <div class="no-print" style="margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center;">
                     <button class="btn-secondary" onclick="closeAthleteDetail()" style="font-size: 0.75rem;">← Volver al Panel Principal</button>
@@ -649,7 +637,7 @@
         </main>
 
         <footer class="no-print">
-            BC Fit — Desarrollado y Operado Exclusivamente By Ciodarofitness. Todos los Derechos Reservados.
+            Business Center Fit — Desarrollado y Operado Exclusivamente By Ciodarofitness. Todos los Derechos Reservados.
         </footer>
     </div>
 
@@ -737,7 +725,6 @@
         }
 
         function loadAdminData() {
-            // Cargar solicitudes pendientes
             let pending = JSON.parse(localStorage.getItem('bc_pending_requests')) || [];
             const pendingContainer = document.getElementById('adminPendingList');
             pendingContainer.innerHTML = pending.length === 0 ? `<p style="color:var(--text-muted); font-size:0.8rem; font-style:italic;">No hay solicitudes pendientes.</p>` :
@@ -751,7 +738,6 @@
                     </div>
                 `).join('');
 
-            // Cargar cuentas activas
             let accounts = JSON.parse(localStorage.getItem('bc_client_accounts')) || [];
             const container = document.getElementById('adminAccountsList');
             container.innerHTML = accounts.length === 0 ? `<p style="color:var(--text-muted); font-size:0.8rem; font-style:italic;">No hay cuentas activas.</p>` :
@@ -1218,7 +1204,7 @@
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `bc_fit_backup_${new Date().toISOString().slice(0,10)}.json`;
+            a.download = `business_center_fit_backup_${new Date().toISOString().slice(0,10)}.json`;
             a.click();
         }
 
