@@ -452,8 +452,8 @@
                 <!-- BOTÓN PERMANENTE DE ENLACE DE WHATSAPP PARA SOLICITUDES DE AFILIADOS -->
                 <div class="card" style="background: var(--surface-card); border-color: var(--whatsapp);">
                     <h3 style="font-size: 0.9rem; color: var(--whatsapp); margin-bottom: 0.4rem;">💬 Enlace de Conexión por WhatsApp</h3>
-                    <p class="subtitle" style="font-size: 0.75rem; margin-bottom: 0.8rem;">Guarda y copia este enlace para enviárselo al entrenador interesado en afiliarse.</p>
-                    <a href="https://wa.me/?text=Hola%2C%20estoy%20interesado%20en%20afiliarme%20a%20Business%20Center%20Fit%20(%40ciodarofitness)%20para%20gestionar%20mis%20atletas." target="_blank" class="btn-wa">
+                    <p class="subtitle" style="font-size: 0.75rem; margin-bottom: 0.8rem;">Haz clic para enviar directamente el enlace de registro de la aplicación al entrenador interesado.</p>
+                    <a id="adminWhatsAppLinkBtn" href="#" target="_blank" class="btn-wa">
                         📤 Enviar Enlace de Solicitud por WhatsApp
                     </a>
                 </div>
@@ -661,6 +661,14 @@
 
         // VALIDACIÓN DE SESIÓN AL CARGAR LA PÁGINA (EVITA QUE SE CIERRE AL ACTUALIZAR)
         document.addEventListener('DOMContentLoaded', function() {
+            // Configurar enlace directo de WhatsApp con la URL actual de la aplicación
+            const appUrl = window.location.href.split('#')[0];
+            const waMessage = encodeURIComponent(`Hola, estoy interesado en unirme a Business Center Fit (@ciodarofitness). Puedes registrar tu solicitud de afiliación directamente aquí: ${appUrl}`);
+            const waButton = document.getElementById('adminWhatsAppLinkBtn');
+            if(waButton) {
+                waButton.href = `https://wa.me/?text=${waMessage}`;
+            }
+
             const activeSessionType = localStorage.getItem('bc_session_type');
             if(activeSessionType === 'admin') {
                 document.getElementById('authSection').classList.add('hidden');
