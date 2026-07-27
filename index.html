@@ -707,7 +707,7 @@
             document.getElementById('toolsDropdownCard').classList.toggle('hidden');
         }
 
-        // ================= REGISTRO DE CLIENTES AFILIADOS (NUBE CON GESTIÓN DE ERRORES MÓVIL) =================
+        // ================= REGISTRO DE CLIENTES AFILIADOS (NUBE CON TIMEOUT DE SEGURIDAD) =================
         document.getElementById('registerClientForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             const name = document.getElementById('regName').value.trim();
@@ -723,6 +723,14 @@
             submitBtn.disabled = true;
             submitBtn.textContent = "ENVIANDO...";
 
+            let timeoutTriggered = false;
+            const safetyTimer = setTimeout(() => {
+                timeoutTriggered = true;
+                submitBtn.disabled = false;
+                submitBtn.textContent = "Enviar Solicitud de Afiliación";
+                alert("La conexión está tardando demasiado. Revisa tus reglas de Firebase en la consola.");
+            }, 6000);
+
             try {
                 await db.collection('pending_requests').add({
                     name: name,
@@ -731,14 +739,23 @@
                     date: new Date().toLocaleDateString(),
                     createdAt: firebase.firestore.FieldValue.serverTimestamp()
                 });
-                alert("¡Solicitud enviada con éxito a la nube! El administrador la evaluará.");
-                this.reset();
+
+                if (!timeoutTriggered) {
+                    clearTimeout(safetyTimer);
+                    alert("¡Solicitud enviada con éxito a la nube! El administrador la evaluará.");
+                    this.reset();
+                }
             } catch (error) {
-                console.error("Error al registrar solicitud:", error);
-                alert("No se pudo enviar la solicitud. Error: " + error.message);
+                if (!timeoutTriggered) {
+                    clearTimeout(safetyTimer);
+                    console.error("Error al registrar solicitud:", error);
+                    alert("No se pudo enviar la solicitud. Revisa las reglas de seguridad de Firestore. Error: " + error.message);
+                }
             } finally {
-                submitBtn.disabled = false;
-                submitBtn.textContent = "Enviar Solicitud de Afiliación";
+                if (!timeoutTriggered) {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = "Enviar Solicitud de Afiliación";
+                }
             }
         });
 
