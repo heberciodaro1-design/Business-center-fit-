@@ -340,14 +340,62 @@
         </header>
 
         <main>
-            <!-- PANTALLA PRINCIPAL: LOGIN ADMIN + CREAR CUENTA AFILIADO -->
+            <!-- PANTALLA PRINCIPAL: SOLICITUD DE AFILIADO + ACCESO AFILIADOS + ADMIN -->
             <section id="authSection" class="no-print">
                 <div style="display: flex; flex-direction: column; gap: 1.2rem;">
                     
-                    <!-- Tarjeta de Login Admin -->
+                    <!-- 1. Tarjeta Solicitud de Cuenta Afiliado -->
                     <div class="card">
                         <div style="margin-bottom: 0.8rem;">
-                            <h2 style="font-size: 1.1rem; font-weight: 700; color: var(--text-main);">Panel Admin</h2>
+                            <h2 style="font-size: 1.1rem; font-weight: 700; color: var(--text-main);">Solicitud de Cuenta Afiliado</h2>
+                            <p class="subtitle" style="margin-bottom: 0;">Envía tu solicitud para unirte al sistema.</p>
+                        </div>
+                        <form id="registerClientForm">
+                            <div class="form-group">
+                                <label>Nombre y Marca</label>
+                                <input type="text" id="regName" required placeholder="Ej. Leidy Diana">
+                            </div>
+                            <div class="form-group">
+                                <label>Correo Electrónico</label>
+                                <input type="email" id="regEmail" required placeholder="correo@domain.com">
+                            </div>
+                            <div class="form-group">
+                                <label>Contraseña</label>
+                                <div class="password-container">
+                                    <input type="password" id="regPassword" required placeholder="••••••••">
+                                    <button type="button" class="toggle-password" onclick="togglePassword('regPassword')">👁️</button>
+                                </div>
+                            </div>
+                            <button type="submit" style="margin-top: 0.5rem;">Enviar Solicitud de Afiliación</button>
+                        </form>
+                    </div>
+
+                    <!-- 2. Tarjeta Acceso Afiliados -->
+                    <div class="card">
+                        <div style="margin-bottom: 0.8rem;">
+                            <h2 style="font-size: 1.1rem; font-weight: 700; color: var(--text-main);">Acceso Afiliados</h2>
+                            <p class="subtitle" style="margin-bottom: 0;">Gestiona tus atletas y finanzas.</p>
+                        </div>
+                        <form id="affiliateLoginForm">
+                            <div class="form-group">
+                                <label>Correo Electrónico</label>
+                                <input type="email" id="affLoginEmail" required placeholder="correo@domain.com">
+                            </div>
+                            <div class="form-group">
+                                <label>Contraseña</label>
+                                <div class="password-container">
+                                    <input type="password" id="affLoginPassword" required placeholder="••••••••">
+                                    <button type="button" class="toggle-password" onclick="togglePassword('affLoginPassword')">👁️</button>
+                                </div>
+                            </div>
+                            <button type="submit" style="margin-top: 0.5rem;">Ingresar como Afiliado</button>
+                        </form>
+                    </div>
+
+                    <!-- 3. Tarjeta de Login Admin Maestro (Oculta o discreta para ti) -->
+                    <div class="card" style="border-color: var(--bronze);">
+                        <div style="margin-bottom: 0.8rem;">
+                            <h2 style="font-size: 1.1rem; font-weight: 700; color: var(--bronze);">Panel Admin Maestro</h2>
                             <p class="subtitle" style="margin-bottom: 0;">Ciodarofitness</p>
                         </div>
                         <form id="loginForm">
@@ -363,32 +411,6 @@
                                 </div>
                             </div>
                             <button type="submit">Ingresar como Admin</button>
-                        </form>
-                    </div>
-
-                    <!-- Tarjeta Crear Cuenta Afiliado -->
-                    <div class="card">
-                        <div style="margin-bottom: 0.8rem;">
-                            <h2 style="font-size: 1.1rem; font-weight: 700; color: var(--text-main);">Crear Cuenta Afiliado</h2>
-                            <p class="subtitle" style="margin-bottom: 0;">Envía tu solicitud para unirte al sistema.</p>
-                        </div>
-                        <form id="registerClientForm">
-                            <div class="form-group">
-                                <label>Nombre y Marca</label>
-                                <input type="text" id="regName" required placeholder="Ej. David Silva">
-                            </div>
-                            <div class="form-group">
-                                <label>Correo Electrónico</label>
-                                <input type="email" id="regEmail" required placeholder="correo@domain.com">
-                            </div>
-                            <div class="form-group">
-                                <label>Contraseña</label>
-                                <div class="password-container">
-                                    <input type="password" id="regPassword" required placeholder="••••••••">
-                                    <button type="button" class="toggle-password" onclick="togglePassword('regPassword')">👁️</button>
-                                </div>
-                            </div>
-                            <button type="submit" style="margin-top: 0.5rem;">Enviar Solicitud de Afiliación</button>
                         </form>
                     </div>
 
@@ -656,6 +678,27 @@
             this.reset();
         });
 
+        // ================= LOGIN AFILIADO =================
+        document.getElementById('affiliateLoginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('affLoginEmail').value.trim().toLowerCase();
+            const pass = document.getElementById('affLoginPassword').value.trim();
+
+            let accounts = JSON.parse(localStorage.getItem('bc_client_accounts')) || [];
+            let found = accounts.find(a => a.email.toLowerCase() === email && a.pass === pass);
+
+            if(found) {
+                currentAffiliateEmail = found.email;
+                localStorage.setItem('bc_current_affiliate', found.email);
+                document.getElementById('authSection').classList.add('hidden');
+                document.getElementById('clientPortalView').classList.remove('hidden');
+                document.getElementById('welcomeClientTitle').textContent = `Ciodarofitness — ${found.name}`;
+                loadAffiliateData();
+            } else {
+                alert("Correo o contraseña incorrectos, o la cuenta aún no ha sido aprobada por el administrador.");
+            }
+        });
+
         // ================= ADMIN GLOBAL LOGIN =================
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
@@ -668,19 +711,7 @@
                 document.getElementById('dashboardView').classList.remove('hidden');
                 loadGlobalAdminData();
             } else {
-                let accounts = JSON.parse(localStorage.getItem('bc_client_accounts')) || [];
-                let found = accounts.find(a => a.email.toLowerCase() === user && a.pass === pass);
-
-                if(found) {
-                    currentAffiliateEmail = found.email;
-                    localStorage.setItem('bc_current_affiliate', found.email);
-                    document.getElementById('authSection').classList.add('hidden');
-                    document.getElementById('clientPortalView').classList.remove('hidden');
-                    document.getElementById('welcomeClientTitle').textContent = `Ciodarofitness — ${found.name}`;
-                    loadAffiliateData();
-                } else {
-                    alert("Credenciales incorrectas.");
-                }
+                alert("Credenciales de Administrador Maestro incorrectas.");
             }
         });
 
