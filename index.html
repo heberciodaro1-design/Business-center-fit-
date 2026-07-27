@@ -353,12 +353,12 @@
                         <form id="loginForm">
                             <div class="form-group">
                                 <label>Identificador</label>
-                                <input type="text" id="adminUser" required placeholder="Ciodarofitness">
+                                <input type="text" id="adminUser" required autocomplete="username" placeholder="Ciodarofitness">
                             </div>
                             <div class="form-group">
                                 <label>Contraseña Maestra</label>
                                 <div class="password-container">
-                                    <input type="password" id="adminPassword" required placeholder="••••••••">
+                                    <input type="password" id="adminPassword" required autocomplete="current-password" placeholder="••••••••">
                                     <button type="button" class="toggle-password" onclick="togglePassword('adminPassword')">👁️</button>
                                 </div>
                             </div>
@@ -366,7 +366,7 @@
                         </form>
                     </div>
 
-                    <!-- Tarjeta Crear Cuenta Afiliado (Restaurada y protegida) -->
+                    <!-- Tarjeta Crear Cuenta Afiliado -->
                     <div class="card">
                         <div style="margin-bottom: 0.8rem;">
                             <h2 style="font-size: 1.1rem; font-weight: 700; color: var(--text-main);">Crear Cuenta Afiliado</h2>
@@ -654,20 +654,21 @@
             this.reset();
         });
 
-        // ================= ADMIN GLOBAL LOGIN (CON .trim() PARA EVITAR ESPACIOS DEL TECLADO) =================
+        // ================= ADMIN GLOBAL LOGIN (SÚPER ROBUSTO CONTRA ESPACIOS Y AUTOCORRECTOR) =================
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            const user = document.getElementById('adminUser').value.trim();
-            const pass = document.getElementById('adminPassword').value.trim();
+            // Limpiamos espacios, saltos de línea y convertimos el usuario a minúsculas para evitar errores del teclado móvil
+            const user = document.getElementById('adminUser').value.replace(/[\n\r]+/g, '').trim().toLowerCase();
+            const pass = document.getElementById('adminPassword').value.replace(/[\n\r]+/g, '').trim();
 
-            if((user.toLowerCase() === 'ciodarofitness' || user.toLowerCase() === 'admin') && pass === 'Ciodarofitness2026*') {
+            if((user === 'ciodarofitness' || user === 'admin') && pass === 'Ciodarofitness2026*') {
                 localStorage.setItem('bc_admin_logged', 'true');
                 document.getElementById('authSection').classList.add('hidden');
                 document.getElementById('dashboardView').classList.remove('hidden');
                 loadGlobalAdminData();
             } else {
                 let accounts = JSON.parse(localStorage.getItem('bc_client_accounts')) || [];
-                let found = accounts.find(a => a.email.toLowerCase() === user.toLowerCase() && a.pass === pass);
+                let found = accounts.find(a => a.email.toLowerCase() === user && a.pass === pass);
 
                 if(found) {
                     currentAffiliateEmail = found.email;
@@ -677,7 +678,7 @@
                     document.getElementById('welcomeClientTitle').textContent = `Ciodarofitness — ${found.name}`;
                     loadAffiliateData();
                 } else {
-                    alert("Identificador o Contraseña incorrectos.");
+                    alert("Credenciales incorrectas.");
                 }
             }
         });
