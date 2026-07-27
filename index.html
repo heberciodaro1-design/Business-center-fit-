@@ -393,15 +393,6 @@
                         </form>
                     </div>
 
-                    <!-- Botón de WhatsApp para entrenadores interesados en comprar/adquirir la app -->
-                    <div class="card" style="margin-bottom: 0; border-color: var(--bronze);">
-                        <h2 style="color: var(--bronze); font-size: 1rem; font-weight: 700;">📲 ¿Eres Entrenador?</h2>
-                        <p class="subtitle" style="font-size: 0.75rem; margin-bottom: 0.8rem;">Adquiere o solicita acceso a Business Center Fit directamente por WhatsApp con Ciodarofitness.</p>
-                        <button class="btn-wa" onclick="requestAppWhatsApp()">
-                            💬 Solicitar Aplicación por WhatsApp
-                        </button>
-                    </div>
-
                     <div class="card" style="margin-bottom: 0;">
                         <h2 style="color: #ffffff; font-size: 1.1rem; font-weight: 700;">Crear Cuenta Afiliado</h2>
                         <p class="subtitle">Envía tu solicitud para unirte al sistema.</p>
@@ -512,173 +503,164 @@
                         <div id="toolImcResult" style="font-size: 0.75rem; color: var(--bronze); margin-top: 0.4rem; font-weight: bold;"></div>
                     </div>
 
-                    <div style="background: var(--bg-deep); padding: 0.8rem; border-radius: 6px;">
-                        <h4 style="font-size: 0.8rem; color: var(--text-main); margin-bottom: 0.4rem;">Calculadora de Macronutrientes</h4>
-                        <div style="display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 0.4rem;">
-                            <input type="number" id="toolMacroWeight" placeholder="Peso (kg)" style="font-size: 0.8rem; padding: 0.5rem;">
-                            <select id="toolMacroGoal" style="font-size: 0.8rem; padding: 0.5rem;">
-                                <option value="maintain">Mantenimiento</option>
-                                <option value="cut">Definición (Pérdida de grasa)</option>
-                                <option value="bulk">Volumen (Hipertrofia)</option>
-                            </select>
+                    <div style="background: var(--bg-deep); padding: 0.8rem; border-radius: 6px; margin-bottom: 0.6rem;">
+                        <h4 style="font-size: 0.8rem; color: var(--text-main); margin-bottom: 0.4rem;">Porcentaje de Grasa Corporal</h4>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem; margin-bottom: 0.4rem;">
+                            <input type="number" id="toolFatCintura" placeholder="Cintura (cm)" style="font-size: 0.8rem; padding: 0.5rem;">
+                            <input type="number" id="toolFatCuello" placeholder="Cuello (cm)" style="font-size: 0.8rem; padding: 0.5rem;">
                         </div>
-                        <button type="button" onclick="calcToolMacros()" style="font-size: 0.7rem; padding: 0.4rem;">Calcular Macros</button>
-                        <div id="toolMacroResult" style="font-size: 0.75rem; color: var(--bronze); margin-top: 0.4rem; font-weight: bold;"></div>
+                        <button type="button" onclick="calcToolFat()" style="font-size: 0.7rem; padding: 0.4rem;">Calcular Grasa</button>
+                        <div id="toolFatResult" style="font-size: 0.75rem; color: var(--bronze); margin-top: 0.4rem; font-weight: bold;"></div>
+                    </div>
+
+                    <div style="background: var(--bg-deep); padding: 0.8rem; border-radius: 6px;">
+                        <h4 style="font-size: 0.8rem; color: var(--text-main); margin-bottom: 0.4rem;">Gasto Calórico (TDEE)</h4>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.4rem; margin-bottom: 0.4rem;">
+                            <input type="number" id="toolCalWeight" placeholder="Peso kg" style="font-size: 0.8rem; padding: 0.5rem;">
+                            <input type="number" id="toolCalHeight" placeholder="Alt cm" style="font-size: 0.8rem; padding: 0.5rem;">
+                            <input type="number" id="toolCalAge" placeholder="Edad" style="font-size: 0.8rem; padding: 0.5rem;">
+                        </div>
+                        <button type="button" onclick="calcToolCalories()" style="font-size: 0.7rem; padding: 0.4rem;">Calcular Calorías</button>
+                        <div id="toolCalResult" style="font-size: 0.75rem; color: var(--bronze); margin-top: 0.4rem; font-weight: bold;"></div>
                     </div>
                 </div>
 
                 <div class="kpi-grid no-print">
                     <div class="kpi-card">
                         <h3>Atletas Activos</h3>
-                        <div class="value" id="kpiTotalAthletes">0</div>
+                        <div class="value" id="statActiveAthletes">0</div>
                     </div>
                     <div class="kpi-card">
-                        <h3>Ingresos Totales</h3>
-                        <div class="value" id="kpiTotalIncome">$0.00</div>
+                        <h3>Meta Mensual</h3>
+                        <div class="value" id="statMonthlyGoal">$0</div>
+                    </div>
+                    <div class="kpi-card">
+                        <h3>Recaudado</h3>
+                        <div class="value" id="statCollected">$0</div>
+                    </div>
+                    <div class="kpi-card">
+                        <h3>Por Cobrar</h3>
+                        <div class="value" id="statPending">$0</div>
                     </div>
                 </div>
 
                 <div class="card no-print">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem;">
-                        <h3 style="font-size: 0.95rem;">Gestión de Atletas</h3>
-                        <button class="btn-success" onclick="openAddAthleteModal()" style="font-size: 0.75rem; width: auto; padding: 0.5rem 0.8rem;">+ Nuevo Atleta</button>
+                    <h3 style="font-size: 0.95rem; display: flex; align-items: center; gap: 6px;">⚡ Registrar Nuevo Atleta</h3>
+                    <p class="subtitle" style="font-size: 0.75rem;">Añade un nuevo asesorado al sistema.</p>
+                    
+                    <div class="form-group">
+                        <label>Nombre Completo</label>
+                        <input type="text" id="cName" placeholder="Ej. Juan Pérez">
                     </div>
-                    <div class="form-group" style="margin-bottom: 0;">
-                        <input type="text" id="searchAthleteInput" placeholder="Buscar por nombre o cédula..." oninput="renderAthletesList()" style="font-size: 0.8rem; padding: 0.5rem;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem;">
+                        <div class="form-group"><label>Edad</label><input type="number" id="cAge" placeholder="Ej. 30"></div>
+                        <div class="form-group"><label>WhatsApp</label><input type="text" id="cPhone" placeholder="Ej. 5841234"></div>
                     </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem;">
+                        <div class="form-group"><label>Costo Paquete ($)</label><input type="number" id="cCost" placeholder="Ej. 50"></div>
+                        <div class="form-group"><label>Fecha de Inicio Original</label><input type="date" id="cStartDate"></div>
+                    </div>
+                    <button type="button" onclick="addAthlete()" style="margin-top: 0.4rem;">Agregar a la Base de Datos</button>
                 </div>
 
-                <div id="athletesContainer"></div>
+                <div class="card no-print">
+                    <h3 style="font-size: 0.95rem; margin-bottom: 0.6rem;">📋 Control de Atletas</h3>
+                    <div class="form-group" style="margin-bottom: 0.8rem;">
+                        <input type="text" id="searchAthleteInput" placeholder="🔍 Buscar atleta por nombre..." oninput="filterAthletes()" style="font-size: 0.8rem; padding: 0.6rem;">
+                    </div>
+                    <div id="affiliateClientsList"></div>
+                </div>
+            </section>
+
+            <section id="athleteDetailView" class="hidden">
+                <div class="no-print" style="margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center;">
+                    <button class="btn-secondary" onclick="closeAthleteDetail()" style="font-size: 0.75rem;">← Volver al Panel Principal</button>
+                    <button class="btn-secondary" onclick="exportAthletePDF()" style="background: var(--surface-card); color: var(--bronze); border-color: var(--bronze); font-size: 0.75rem;">📄 Exportar a PDF</button>
+                </div>
+
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem; border-bottom: 1px solid var(--border); padding-bottom: 0.8rem;">
+                        <div>
+                            <h2 id="detAthleteTitle" style="color: var(--bronze); font-size: 1.2rem;">👤 Atleta: </h2>
+                        </div>
+                    </div>
+
+                    <div class="profile-info-grid" id="detAthleteHeaderInfo"></div>
+
+                    <div style="display: flex; gap: 0.6rem; margin-bottom: 1rem;" class="no-print">
+                        <button class="btn-secondary" onclick="togglePaymentStatus()" id="detTogglePayBtn" style="font-size: 0.75rem; flex: 1;">Marcar Pendiente</button>
+                        <a id="detWhatsAppBtn" href="#" target="_blank" class="btn-wa" style="flex: 1;">💬 Enviar WhatsApp</a>
+                    </div>
+
+                    <div class="card no-print" style="background: var(--surface-card); margin-bottom: 1rem;">
+                        <h4 style="font-size: 0.85rem; color: var(--bronze); margin-bottom: 0.6rem;">💵 Registrar Abono Parcial</h4>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; margin-bottom: 0.6rem;">
+                            <div class="form-group" style="margin-bottom:0;"><label>Monto Abono ($)</label><input type="number" id="abonoMonto" placeholder="Ej. 20"></div>
+                            <div class="form-group" style="margin-bottom:0;"><label>Fecha del Abono</label><input type="date" id="abonoFecha"></div>
+                        </div>
+                        <button type="button" onclick="saveAbono()" style="font-size: 0.75rem; padding: 0.6rem;">Agregar Abono</button>
+                        <div id="abonosHistorialContainer" style="margin-top: 0.8rem; font-size: 0.75rem; color: var(--text-muted);">
+                            <p>Historial de abonos: No hay abonos registrados aún.</p>
+                        </div>
+                    </div>
+
+                    <div class="card no-print" style="background: var(--surface-card); margin-bottom: 1rem;">
+                        <h4 style="font-size: 0.85rem; color: var(--bronze); margin-bottom: 0.6rem;" id="formMeasurementTitle">📏 Nueva Medición Antropométrica</h4>
+                        <input type="hidden" id="editMeasurementIndex" value="-1">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.5rem; margin-bottom: 0.6rem;">
+                            <div class="form-group" style="margin-bottom:0;"><label>Peso (kg)</label><input type="number" id="mWeight" placeholder="0"></div>
+                            <div class="form-group" style="margin-bottom:0;"><label>Estatura (cm)</label><input type="number" id="mHeight" placeholder="0"></div>
+                            <div class="form-group" style="margin-bottom:0;"><label>Fecha</label><input type="date" id="mDate"></div>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.5rem; margin-bottom: 0.8rem;">
+                            <div class="form-group" style="margin-bottom:0;"><label>Cuello</label><input type="number" id="mNeck" placeholder="0"></div>
+                            <div class="form-group" style="margin-bottom:0;"><label>Tórax</label><input type="number" id="mChest" placeholder="0"></div>
+                            <div class="form-group" style="margin-bottom:0;"><label>Bíceps</label><input type="number" id="mBiceps" placeholder="0"></div>
+                            <div class="form-group" style="margin-bottom:0;"><label>Abdomen</label><input type="number" id="mAbdomen" placeholder="0"></div>
+                            <div class="form-group" style="margin-bottom:0;"><label>Glúteos</label><input type="number" id="mGlute" placeholder="0"></div>
+                            <div class="form-group" style="margin-bottom:0;"><label>Cuádriceps</label><input type="number" id="mLeg" placeholder="0"></div>
+                            <div class="form-group" style="margin-bottom:0; grid-column: span 3;"><label>Pantorrilla</label><input type="number" id="mCalf" placeholder="0"></div>
+                        </div>
+                        <div style="display: flex; gap: 0.6rem;">
+                            <button type="button" id="btnSaveMeasurement" onclick="saveNewMeasurement()" style="font-size: 0.75rem; padding: 0.6rem; flex: 1;">Registrar y Calcular IMC</button>
+                            <button type="button" id="btnCancelEditMeasurement" onclick="cancelEditMeasurement()" class="btn-secondary hidden" style="font-size: 0.75rem; padding: 0.6rem;">Cancelar</button>
+                        </div>
+                    </div>
+
+                    <h3 style="font-size: 0.9rem; margin-bottom: 0.4rem;">📈 Historial y Comparativa Mensual</h3>
+                    <p class="subtitle" style="font-size: 0.75rem;">Evolución antropométrica detallada del atleta.</p>
+                    <div id="metricsHistoryList">
+                        <div class="empty-state" style="text-align:center; padding:1rem; color:var(--text-muted); font-style:italic; font-size:0.8rem;">No hay mediciones registradas.</div>
+                    </div>
+                </div>
             </section>
         </main>
 
         <footer class="no-print">
-            Business Center Fit — Ciodarofitness © 2026
+            Business Center Fit — Desarrollado y Operado Exclusivamente By Ciodarofitness. Todos los Derechos Reservados.
         </footer>
     </div>
 
-    <!-- MODAL / VISTA DE EXPEDIENTE DE ATLETA -->
-    <div id="athleteModal" class="hidden" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(7,9,14,0.95); z-index: 1000; overflow-y: auto; padding: 1.2rem;">
-        <div style="max-width: 600px; margin: 0 auto; display: flex; flex-direction: column; gap: 1rem;">
-            
-            <div style="display: flex; justify-content: space-between; align-items: center;" class="no-print">
-                <h2 id="modalAthleteTitle" style="color: var(--bronze); font-size: 1.2rem;">Expediente de Atleta</h2>
-                <button class="btn-secondary" onclick="closeAthleteModal()" style="font-size: 0.75rem;">Cerrar Expediente</button>
-            </div>
-
-            <div class="card">
-                <h3 style="font-size: 0.9rem; color: var(--bronze); margin-bottom: 0.8rem;">📋 Datos Personales y Antropométricos</h3>
-                <form id="athleteDetailsForm" onsubmit="saveAthleteDetails(event)">
-                    <input type="hidden" id="editAthleteId">
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; margin-bottom: 0.6rem;">
-                        <div class="form-group" style="margin-bottom: 0;">
-                            <label>Nombre Completo</label>
-                            <input type="text" id="detName" required style="font-size: 0.8rem; padding: 0.5rem;">
-                        </div>
-                        <div class="form-group" style="margin-bottom: 0;">
-                            <label>Teléfono / WhatsApp</label>
-                            <input type="text" id="detPhone" style="font-size: 0.8rem; padding: 0.5rem;">
-                        </div>
-                    </div>
-                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem; margin-bottom: 0.6rem;">
-                        <div class="form-group" style="margin-bottom: 0;">
-                            <label>Peso (kg)</label>
-                            <input type="number" step="0.1" id="detWeight" style="font-size: 0.8rem; padding: 0.5rem;">
-                        </div>
-                        <div class="form-group" style="margin-bottom: 0;">
-                            <label>Altura (m)</label>
-                            <input type="number" step="0.01" id="detHeight" style="font-size: 0.8rem; padding: 0.5rem;">
-                        </div>
-                        <div class="form-group" style="margin-bottom: 0;">
-                            <label>Edad</label>
-                            <input type="number" id="detAge" style="font-size: 0.8rem; padding: 0.5rem;">
-                        </div>
-                    </div>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; margin-bottom: 0.8rem;">
-                        <div class="form-group" style="margin-bottom: 0;">
-                            <label>Estado de Pago</label>
-                            <select id="detPaymentStatus" style="font-size: 0.8rem; padding: 0.5rem;">
-                                <option value="paid">Pagado</option>
-                                <option value="pending">Pendiente</option>
-                            </select>
-                        </div>
-                        <div class="form-group" style="margin-bottom: 0;">
-                            <label>Fecha de Corte / Mensualidad</label>
-                            <input type="date" id="detCutDate" style="font-size: 0.8rem; padding: 0.5rem;">
-                        </div>
-                    </div>
-                    <button type="submit" style="font-size: 0.75rem; padding: 0.6rem;">Guardar Cambios de Atleta</button>
-                </form>
-            </div>
-
-            <div class="card no-print">
-                <h3 style="font-size: 0.9rem; color: var(--bronze); margin-bottom: 0.8rem;">📊 Registrar Nueva Medición (Antropometría)</h3>
-                <form id="metricForm" onsubmit="saveNewMetric(event)">
-                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem; margin-bottom: 0.6rem;">
-                        <div class="form-group" style="margin-bottom: 0;">
-                            <label>Peso (kg)</label>
-                            <input type="number" step="0.1" id="mWeight" required style="font-size: 0.8rem; padding: 0.5rem;">
-                        </div>
-                        <div class="form-group" style="margin-bottom: 0;">
-                            <label>Cintura (cm)</label>
-                            <input type="number" step="0.1" id="mWm" style="font-size: 0.8rem; padding: 0.5rem;">
-                        </div>
-                        <div class="form-group" style="margin-bottom: 0;">
-                            <label>% Grasa (Est.)</label>
-                            <input type="number" step="0.1" id="mFat" style="font-size: 0.8rem; padding: 0.5rem;">
-                        </div>
-                    </div>
-                    <button type="submit" style="font-size: 0.75rem; padding: 0.6rem; background: var(--surface-card); color: var(--bronze); border: 1px solid var(--bronze);">Registrar Medición</button>
-                </form>
-            </div>
-
-            <div class="card no-print">
-                <h3 style="font-size: 0.9rem; color: var(--bronze); margin-bottom: 0.8rem;">🥗 Plan de Nutrición y Dieta</h3>
-                <div class="form-group">
-                    <textarea id="athleteNutritionPlan" rows="5" placeholder="Escribe o genera el plan de alimentación personalizado..." style="width: 100%; padding: 0.7rem; background: var(--bg-deep); border: 1px solid var(--border); color: var(--text-main); border-radius: 6px; font-size: 0.85rem; outline: none;"></textarea>
-                </div>
-                <button type="button" onclick="saveNutritionPlan()" style="font-size: 0.75rem; padding: 0.6rem;">Guardar Plan de Nutrición</button>
-            </div>
-
-            <div class="card no-print">
-                <h3 style="font-size: 0.9rem; color: var(--bronze); margin-bottom: 0.8rem;">🏋️ Rutina de Entrenamiento</h3>
-                <div class="form-group">
-                    <textarea id="athleteWorkoutPlan" rows="5" placeholder="Escribe la rutina de ejercicios semanal..." style="width: 100%; padding: 0.7rem; background: var(--bg-deep); border: 1px solid var(--border); color: var(--text-main); border-radius: 6px; font-size: 0.85rem; outline: none;"></textarea>
-                </div>
-                <button type="button" onclick="saveWorkoutPlan()" style="font-size: 0.75rem; padding: 0.6rem;">Guardar Rutina de Entrenamiento</button>
-            </div>
-
-            <div class="card">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem;" class="no-print">
-                    <h3 style="font-size: 0.9rem; color: var(--bronze);">📜 Historial de Mediciones</h3>
-                    <button class="btn-secondary" onclick="window.print()" style="font-size: 0.7rem; background: var(--surface-card);">🖨️ Imprimir / PDF</button>
-                </div>
-                <div id="metricHistoryContainer" style="display: flex; flex-direction: column; gap: 0.6rem;"></div>
-            </div>
-
-        </div>
-    </div>
-
     <script>
-        // Estructura de Datos Principal Global por Usuario Afiliado
-        let currentAffiliateEmail = null;
-
-        function getStorageKey(key) {
-            return `bc_${currentAffiliateEmail}_${key}`;
-        }
+        let currentSelectedAthleteId = null;
+        document.getElementById('cStartDate').valueAsDate = new Date();
+        document.getElementById('mDate').valueAsDate = new Date();
+        document.getElementById('abonoFecha').valueAsDate = new Date();
 
         document.addEventListener('DOMContentLoaded', function() {
-            // Verificar si hay sesión de admin global activa
-            if(localStorage.getItem('bc_admin_logged') === 'true') {
+            const activeSessionType = localStorage.getItem('bc_session_type');
+            if(activeSessionType === 'admin') {
                 document.getElementById('authSection').classList.add('hidden');
                 document.getElementById('dashboardView').classList.remove('hidden');
-                loadGlobalAdminData();
-            } else if(localStorage.getItem('bc_current_affiliate')) {
-                currentAffiliateEmail = localStorage.getItem('bc_current_affiliate');
-                document.getElementById('authSection').classList.add('hidden');
-                document.getElementById('clientPortalView').classList.remove('hidden');
-                document.getElementById('welcomeClientTitle').textContent = `Ciodarofitness — ${currentAffiliateEmail}`;
-                loadAffiliateData();
+                loadAdminData();
+            } else if(activeSessionType === 'client') {
+                const currentClient = JSON.parse(localStorage.getItem('bc_current_client'));
+                if(currentClient) {
+                    document.getElementById('authSection').classList.add('hidden');
+                    document.getElementById('clientPortalView').classList.remove('hidden');
+                    document.getElementById('welcomeClientTitle').innerText = currentClient.name;
+                    loadAffiliateDashboard();
+                }
             }
         });
 
@@ -692,111 +674,111 @@
             card.classList.toggle('hidden');
         }
 
-        // ================= CLIENTE / AFILIADO: REGISTRO E INICIO DE SESIÓN =================
-        document.getElementById('registerClientForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const name = document.getElementById('regName').value.trim();
-            const email = document.getElementById('regEmail').value.trim();
-            const pass = document.getElementById('regPassword').value.trim();
-
-            let pending = JSON.parse(localStorage.getItem('bc_pending_requests')) || [];
-            let accounts = JSON.parse(localStorage.getItem('bc_client_accounts')) || [];
-
-            if(accounts.some(a => a.email === email) || pending.some(p => p.email === email)) {
-                alert("Este correo ya está registrado o tiene una solicitud pendiente.");
-                return;
-            }
-
-            pending.push({ id: Date.now(), name, email, pass, date: new Date().toLocaleDateString() });
-            localStorage.setItem('bc_pending_requests', JSON.stringify(pending));
-            alert("¡Solicitud de afiliación enviada con éxito! El administrador principal la evaluará.");
-            this.reset();
-        });
-
-        document.getElementById('clientLoginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const email = document.getElementById('clientLoginEmail').value.trim();
-            const pass = document.getElementById('clientLoginPass').value.trim();
-
-            let accounts = JSON.parse(localStorage.getItem('bc_client_accounts')) || [];
-            let found = accounts.find(a => a.email === email && a.pass === pass);
-
-            if(found) {
-                currentAffiliateEmail = email;
-                localStorage.setItem('bc_current_affiliate', email);
-                document.getElementById('authSection').classList.add('hidden');
-                document.getElementById('clientPortalView').classList.remove('hidden');
-                document.getElementById('welcomeClientTitle').textContent = `Ciodarofitness — ${found.name}`;
-                loadAffiliateData();
-            } else {
-                alert("Credenciales incorrectas o cuenta aún no aprobada por el administrador.");
-            }
-        });
-
-        // ================= ADMIN GLOBAL LOGIN =================
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const user = document.getElementById('adminUser').value.trim();
             const pass = document.getElementById('adminPassword').value.trim();
 
             if((user.toLowerCase() === 'ciodarofitness' || user.toLowerCase() === 'admin') && pass === 'Ciodarofitness2026*') {
-                localStorage.setItem('bc_admin_logged', 'true');
+                localStorage.setItem('bc_session_type', 'admin');
                 document.getElementById('authSection').classList.add('hidden');
                 document.getElementById('dashboardView').classList.remove('hidden');
-                loadGlobalAdminData();
+                loadAdminData();
             } else {
-                alert("Identificador o Contraseña Maestra incorrectos.");
+                alert("Credenciales incorrectas.");
             }
         });
 
-        function logoutSystem() {
-            localStorage.removeItem('bc_admin_logged');
-            localStorage.removeItem('bc_current_affiliate');
-            currentAffiliateEmail = null;
-            location.reload();
-        }
+        document.getElementById('registerClientForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('regName').value.trim();
+            const email = document.getElementById('regEmail').value.trim().toLowerCase();
+            const password = document.getElementById('regPassword').value.trim();
 
-        // ================= GESTIÓN PANEL GLOBAL ADMIN & WHATSAPP =================
-        function requestAppWhatsApp() {
-            const text = "Hola Ciodarofitness, soy un entrenador interesado en comprar y adquirir la aplicación Business Center Fit. ¿Podemos conversar?";
-            window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
-        }
-
-        function sendWhatsAppInvite() {
-            const text = "Hola, únete a la red de Business Center Fit registrándote directamente en la plataforma de Ciodarofitness.";
-            window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
-        }
-
-        function loadGlobalAdminData() {
             let pending = JSON.parse(localStorage.getItem('bc_pending_requests')) || [];
             let accounts = JSON.parse(localStorage.getItem('bc_client_accounts')) || [];
 
+            if(accounts.some(acc => acc.email === email) || pending.some(p => p.email === email)) {
+                alert("Este correo ya está registrado o tiene una solicitud pendiente.");
+                return;
+            }
+
+            const newReq = { id: Date.now(), name, email, password, requestDate: new Date().toLocaleDateString() };
+            pending.push(newReq);
+            localStorage.setItem('bc_pending_requests', JSON.stringify(pending));
+
+            // Preguntar si desea enviar por WhatsApp para aprobación inmediata opcional
+            if(confirm("¿Deseas enviar tu solicitud directamente al administrador por WhatsApp para que la apruebe de inmediato?")) {
+                const waMsg = `Hola Ciodarofitness, acabo de enviar mi solicitud de afiliación en Business Center Fit.%0A*Nombre:* ${name}%0A*Correo:* ${email}%0APor favor, apruébala en el panel.`;
+                window.open(`https://wa.me/?text=${waMsg}`, '_blank');
+            }
+
+            alert("¡Solicitud enviada con éxito! Aparecerá en tu panel global de administración.");
+            this.reset();
+        });
+
+        document.getElementById('clientLoginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('clientLoginEmail').value.trim().toLowerCase();
+            const password = document.getElementById('clientLoginPass').value.trim();
+
+            let accounts = JSON.parse(localStorage.getItem('bc_client_accounts')) || [];
+            const client = accounts.find(acc => acc.email === email && acc.password === password);
+
+            if(client) {
+                localStorage.setItem('bc_current_client', JSON.stringify(client));
+                localStorage.setItem('bc_session_type', 'client');
+                openAffiliatePortal(client);
+            } else {
+                alert("Datos incorrectos o cuenta aún no aprobada.");
+            }
+        });
+
+        function sendWhatsAppInvite() {
+            const inviteUrl = window.location.href;
+            const text = `Hola, te invito a unirte a Business Center Fit. Puedes registrar tu solicitud aquí: ${inviteUrl}`;
+            window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+        }
+
+        function openAffiliatePortal(client) {
+            document.getElementById('authSection').classList.add('hidden');
+            document.getElementById('athleteDetailView').classList.add('hidden');
+            document.getElementById('clientPortalView').classList.remove('hidden');
+            document.getElementById('welcomeClientTitle').innerText = client.name;
+            loadAffiliateDashboard();
+        }
+
+        function logoutSystem() {
+            localStorage.removeItem('bc_session_type');
+            localStorage.removeItem('bc_current_client');
+            document.getElementById('dashboardView').classList.add('hidden');
+            document.getElementById('clientPortalView').classList.add('hidden');
+            document.getElementById('athleteDetailView').classList.add('hidden');
+            document.getElementById('authSection').classList.remove('hidden');
+            document.querySelectorAll('form').forEach(f => f.reset());
+        }
+
+        function loadAdminData() {
+            let pending = JSON.parse(localStorage.getItem('bc_pending_requests')) || [];
             const pendingContainer = document.getElementById('adminPendingList');
-            pendingContainer.innerHTML = pending.length === 0 ? 
-                `<p style="color:var(--text-muted); font-size:0.8rem; font-style:italic;">No hay solicitudes de afiliación pendientes.</p>` :
+            pendingContainer.innerHTML = pending.length === 0 ? `<p style="color:var(--text-muted); font-size:0.8rem; font-style:italic;">No hay solicitudes pendientes.</p>` :
                 pending.map(p => `
                     <div style="background:var(--bg-deep); padding:0.8rem; border-radius:6px; border:1px solid var(--border); display:flex; justify-content:space-between; align-items:center;">
-                        <div>
-                            <strong>${p.name}</strong><br>
-                            <span style="font-size:0.7rem; color:var(--text-muted);">${p.email} • Solicitado el ${p.date}</span>
-                        </div>
+                        <div><strong>${p.name}</strong><br><span style="font-size:0.7rem; color:var(--text-muted);">${p.email}</span></div>
                         <div style="display:flex; gap:0.4rem;">
-                            <button class="btn-success" onclick="approveRequest(${p.id})">Aceptar</button>
+                            <button class="btn-success" onclick="approveRequest(${p.id})">Aprobar</button>
                             <button class="btn-danger" onclick="denyRequest(${p.id})">Denegar</button>
                         </div>
                     </div>
                 `).join('');
 
-            const accountsContainer = document.getElementById('adminAccountsList');
-            accountsContainer.innerHTML = accounts.length === 0 ? 
-                `<p style="color:var(--text-muted); font-size:0.8rem; font-style:italic;">No hay cuentas afiliadas activas.</p>` :
+            let accounts = JSON.parse(localStorage.getItem('bc_client_accounts')) || [];
+            const container = document.getElementById('adminAccountsList');
+            container.innerHTML = accounts.length === 0 ? `<p style="color:var(--text-muted); font-size:0.8rem; font-style:italic;">No hay cuentas activas.</p>` :
                 accounts.map(acc => `
                     <div style="background:var(--bg-deep); padding:0.8rem; border-radius:6px; border:1px solid var(--border); display:flex; justify-content:space-between; align-items:center;">
-                        <div>
-                            <strong>${acc.name}</strong><br>
-                            <span style="font-size:0.7rem; color:var(--text-muted);">${acc.email}</span>
-                        </div>
-                        <button class="btn-danger" onclick="removeAccount(${acc.id})">Eliminar</button>
+                        <div><strong>${acc.name}</strong><br><span style="font-size:0.7rem; color:var(--text-muted);">${acc.email}</span></div>
+                        <button class="btn-danger" onclick="deleteAccount(${acc.id})">Borrar</button>
                     </div>
                 `).join('');
         }
@@ -804,15 +786,15 @@
         function approveRequest(id) {
             let pending = JSON.parse(localStorage.getItem('bc_pending_requests')) || [];
             let accounts = JSON.parse(localStorage.getItem('bc_client_accounts')) || [];
-            let index = pending.findIndex(p => p.id === id);
+            let reqIndex = pending.findIndex(p => p.id === id);
 
-            if(index !== -1) {
-                let approved = pending.splice(index, 1)[0];
-                accounts.push(approved);
+            if(reqIndex !== -1) {
+                let approvedClient = pending.splice(reqIndex, 1)[0];
+                accounts.push(approvedClient);
                 localStorage.setItem('bc_pending_requests', JSON.stringify(pending));
                 localStorage.setItem('bc_client_accounts', JSON.stringify(accounts));
-                loadGlobalAdminData();
-                alert("¡Afiliación aprobada con éxito!");
+                loadAdminData();
+                alert("¡Cuenta aprobada con éxito! Ya puede iniciar sesión como afiliado.");
             }
         }
 
@@ -820,261 +802,445 @@
             let pending = JSON.parse(localStorage.getItem('bc_pending_requests')) || [];
             pending = pending.filter(p => p.id !== id);
             localStorage.setItem('bc_pending_requests', JSON.stringify(pending));
-            loadGlobalAdminData();
+            loadAdminData();
+            alert("Solicitud denegada correctamente.");
         }
 
-        function removeAccount(id) {
+        function deleteAccount(id) {
             let accounts = JSON.parse(localStorage.getItem('bc_client_accounts')) || [];
             accounts = accounts.filter(acc => acc.id !== id);
             localStorage.setItem('bc_client_accounts', JSON.stringify(accounts));
-            loadGlobalAdminData();
+            loadAdminData();
         }
 
-        // ================= GESTIÓN DE ATLETAS DEL AFILIADO =================
-        function loadAffiliateData() {
-            renderAthletesList();
+        function getCycleDates(startDateStr) {
+            if(!startDateStr) return { cycleStart: '-', cycleEnd: '-' };
+            let parts = startDateStr.split('-');
+            let start;
+            if(parts.length === 3) {
+                start = new Date(parts[0], parts[1] - 1, parts[2]);
+            } else {
+                start = new Date(startDateStr);
+            }
+            if(isNaN(start.getTime())) return { cycleStart: startDateStr, cycleEnd: '-' };
+            let end = new Date(start);
+            end.setDate(end.getDate() + 30);
+            return {
+                cycleStart: start.toLocaleDateString('es-ES', { day: '2-digit', month: 'short', year: 'numeric' }),
+                cycleEnd: end.toLocaleDateString('es-ES', { day: '2-digit', month: 'short', year: 'numeric' })
+            };
         }
 
-        function getAthletes() {
-            return JSON.parse(localStorage.getItem(getStorageKey('athletes'))) || [];
-        }
-
-        function saveAthletes(athletes) {
-            localStorage.setItem(getStorageKey('athletes'), JSON.stringify(athletes));
-        }
-
-        function renderAthletesList() {
-            const athletes = getAthletes();
-            const search = document.getElementById('searchAthleteInput').value.toLowerCase();
-            const container = document.getElementById('athletesContainer');
+        function addAthlete() {
+            const name = document.getElementById('cName').value.trim();
+            const age = document.getElementById('cAge').value.trim();
+            const phone = document.getElementById('cPhone').value.trim();
+            const cost = parseFloat(document.getElementById('cCost').value) || 0;
+            const startDate = document.getElementById('cStartDate').value;
             
-            const filtered = athletes.filter(a => a.name.toLowerCase().includes(search));
+            if(!name || !phone) {
+                alert("Completa al menos el nombre y el WhatsApp.");
+                return;
+            }
 
-            // KPIs
-            document.getElementById('kpiTotalAthletes').textContent = athletes.length;
-            let totalIncome = athletes.filter(a => a.paymentStatus === 'paid').length * 50; 
-            document.getElementById('kpiTotalIncome').textContent = `$${totalIncome}.00`;
+            const currentClient = JSON.parse(localStorage.getItem('bc_current_client'));
+            if(!currentClient) return;
 
-            container.innerHTML = filtered.length === 0 ? 
-                `<div class="card"><p style="color: var(--text-muted); font-size: 0.85rem; text-align: center;">No hay atletas registrados.</p></div>` :
-                filtered.map(a => `
-                    <div class="athlete-item-card">
-                        <div class="athlete-item-header">
-                            <div>
-                                <strong style="font-size: 0.95rem; color: var(--text-main);">${a.name}</strong>
-                                <div class="athlete-meta-row" style="margin-top: 4px;">
-                                    <span>Tel: ${a.phone || 'No registrado'}</span>
-                                    <span>Corte: ${a.cutDate || 'No definida'}</span>
+            let allAthletes = JSON.parse(localStorage.getItem('bc_affiliate_athletes')) || {};
+            if(!allAthletes[currentClient.email]) allAthletes[currentClient.email] = [];
+
+            allAthletes[currentClient.email].push({ 
+                id: Date.now(), name, age: age || '-', phone, cost, startDate,
+                status: 'Pagado', abonos: [], metrics: []
+            });
+
+            localStorage.setItem('bc_affiliate_athletes', JSON.stringify(allAthletes));
+            document.getElementById('cName').value = '';
+            document.getElementById('cAge').value = '';
+            document.getElementById('cPhone').value = '';
+            document.getElementById('cCost').value = '';
+            document.getElementById('cStartDate').valueAsDate = new Date();
+            loadAffiliateDashboard();
+        }
+
+        function loadAffiliateDashboard() {
+            const currentClient = JSON.parse(localStorage.getItem('bc_current_client'));
+            if(!currentClient) return;
+
+            let allAthletes = JSON.parse(localStorage.getItem('bc_affiliate_athletes')) || {};
+            let myAthletes = allAthletes[currentClient.email] || [];
+
+            let totalActive = myAthletes.length;
+            let monthlyGoal = myAthletes.reduce((acc, a) => acc + (parseFloat(a.cost) || 0), 0);
+            let collected = myAthletes.filter(a => a.status === 'Pagado').reduce((acc, a) => acc + (parseFloat(a.cost) || 0), 0);
+            
+            myAthletes.forEach(a => {
+                if(a.abonos && a.abonos.length > 0) {
+                    let totalAbonos = a.abonos.reduce((sum, ab) => sum + (parseFloat(ab.monto) || 0), 0);
+                    collected += totalAbonos;
+                }
+            });
+
+            let pending = Math.max(0, monthlyGoal - collected);
+
+            document.getElementById('statActiveAthletes').innerText = totalActive;
+            document.getElementById('statMonthlyGoal').innerText = `$${monthlyGoal.toFixed(0)}`;
+            document.getElementById('statCollected').innerText = `$${collected.toFixed(0)}`;
+            document.getElementById('statPending').innerText = `$${pending.toFixed(0)}`;
+
+            renderAthletesList(myAthletes);
+        }
+
+        function renderAthletesList(athletes) {
+            const container = document.getElementById('affiliateClientsList');
+            container.innerHTML = athletes.length === 0 ? `<div style="text-align:center; padding:1rem; color:var(--text-muted); font-size:0.8rem; font-style:italic;">No hay atletas registrados.</div>` :
+                athletes.map(a => {
+                    let cycle = getCycleDates(a.startDate);
+                    let abonoSum = (a.abonos || []).reduce((sum, ab) => sum + (parseFloat(ab.monto) || 0), 0);
+                    let badgeText = a.status === 'Pagado' ? 'Al Día (30d)' : (abonoSum > 0 ? `Abonado: $${abonoSum}` : 'Pendiente');
+                    let badgeClass = a.status === 'Pagado' ? 'badge-paid' : 'badge-pending';
+
+                    return `
+                        <div class="athlete-item-card">
+                            <div class="athlete-item-header">
+                                <div>
+                                    <strong style="font-size: 0.95rem;">${a.name}</strong>
+                                    <div class="athlete-meta-row" style="margin-top: 4px;">
+                                        <span>✏️ Inicio: ${a.startDate || '-'}</span>
+                                        <span style="color: var(--bronze);">🔄 Ciclo actual: ${cycle.cycleStart} al ${cycle.cycleEnd}</span>
+                                    </div>
+                                </div>
+                                <div style="text-align: right;">
+                                    <span style="font-weight: bold; color: var(--bronze); font-size:0.9rem;">$${a.cost}</span>
+                                    <div style="margin-top: 4px;"><span class="${badgeClass}" style="font-size:0.65rem;">${badgeText}</span></div>
                                 </div>
                             </div>
-                            <div>
-                                <span class="${a.paymentStatus === 'paid' ? 'badge-paid' : 'badge-pending'}">
-                                    ${a.paymentStatus === 'paid' ? 'PAGADO' : 'PENDIENTE'}
-                                </span>
+                            <div class="athlete-actions-row">
+                                <button class="btn-expediente" onclick="openAthleteDetail(${a.id})">Expediente</button>
+                                <button class="btn-danger" onclick="deleteAthlete(${a.id})">Borrar</button>
                             </div>
                         </div>
-                        <div class="athlete-actions-row">
-                            <button class="btn-expediente" onclick="openAthleteModal(${a.id})" style="flex: 1;">Expediente</button>
-                            <a href="https://wa.me/${a.phone ? a.phone.replace(/[^0-9]/g,'') : ''}?text=${encodeURIComponent('Hola ' + a.name + ', te escribo desde Business Center Fit de Ciodarofitness.')}" target="_blank" class="btn-wa" style="flex: 1; padding: 0.5rem; font-size: 0.75rem;">WhatsApp</a>
-                            <button class="btn-danger" onclick="deleteAthlete(${a.id})" style="padding: 0.5rem 0.8rem;">Eliminar</button>
-                        </div>
-                    </div>
-                `).join('');
+                    `;
+                }).join('');
         }
 
-        function openAddAthleteModal() {
-            const name = prompt("Nombre Completo del Atleta:");
-            if(!name) return;
-            const phone = prompt("Teléfono / WhatsApp:");
-            
-            let athletes = getAthletes();
-            athletes.push({
-                id: Date.now(),
-                name,
-                phone: phone || '',
-                weight: '',
-                height: '',
-                age: '',
-                paymentStatus: 'pending',
-                cutDate: '',
-                nutritionPlan: '',
-                workoutPlan: '',
-                metrics: []
-            });
-            saveAthletes(athletes);
-            renderAthletesList();
+        function filterAthletes() {
+            const query = document.getElementById('searchAthleteInput').value.toLowerCase();
+            const currentClient = JSON.parse(localStorage.getItem('bc_current_client'));
+            let allAthletes = JSON.parse(localStorage.getItem('bc_affiliate_athletes')) || {};
+            let myAthletes = allAthletes[currentClient.email] || [];
+            let filtered = myAthletes.filter(a => a.name.toLowerCase().includes(query));
+            renderAthletesList(filtered);
         }
 
         function deleteAthlete(id) {
-            if(confirm("¿Estás seguro de eliminar este atleta?")) {
-                let athletes = getAthletes();
-                saveAthletes(athletes.filter(a => a.id !== id));
-                renderAthletesList();
+            const currentClient = JSON.parse(localStorage.getItem('bc_current_client'));
+            let allAthletes = JSON.parse(localStorage.getItem('bc_affiliate_athletes')) || {};
+            if(allAthletes[currentClient.email]) {
+                allAthletes[currentClient.email] = allAthletes[currentClient.email].filter(a => a.id !== id);
+                localStorage.setItem('bc_affiliate_athletes', JSON.stringify(allAthletes));
+                loadAffiliateDashboard();
             }
         }
 
-        // ================= EXPEDIENTE DE ATLETA =================
-        let currentModalAthleteId = null;
-
-        function openAthleteModal(id) {
-            currentModalAthleteId = id;
-            const athletes = getAthletes();
-            const athlete = athletes.find(a => a.id === id);
+        function openAthleteDetail(id) {
+            currentSelectedAthleteId = id;
+            const currentClient = JSON.parse(localStorage.getItem('bc_current_client'));
+            let allAthletes = JSON.parse(localStorage.getItem('bc_affiliate_athletes')) || {};
+            let athlete = (allAthletes[currentClient.email] || []).find(a => a.id === id);
             if(!athlete) return;
 
-            document.getElementById('editAthleteId').value = athlete.id;
-            document.getElementById('detName').value = athlete.name || '';
-            document.getElementById('detPhone').value = athlete.phone || '';
-            document.getElementById('detWeight').value = athlete.weight || '';
-            document.getElementById('detHeight').value = athlete.height || '';
-            document.getElementById('detAge').value = athlete.age || '';
-            document.getElementById('detPaymentStatus').value = athlete.paymentStatus || 'pending';
-            document.getElementById('detCutDate').value = athlete.cutDate || '';
-            document.getElementById('athleteNutritionPlan').value = athlete.nutritionPlan || '';
-            document.getElementById('athleteWorkoutPlan').value = athlete.workoutPlan || '';
+            let cycle = getCycleDates(athlete.startDate);
 
-            renderMetricHistory(athlete);
-            document.getElementById('athleteModal').classList.remove('hidden');
+            document.getElementById('detAthleteTitle').innerText = `👤 Atleta: ${athlete.name}`;
+            
+            document.getElementById('detAthleteHeaderInfo').innerHTML = `
+                <div class="profile-info-item">
+                    <span>Edad</span>
+                    <span>${athlete.age} años</span>
+                </div>
+                <div class="profile-info-item">
+                    <span>WhatsApp</span>
+                    <span>+${athlete.phone}</span>
+                </div>
+                <div class="profile-info-item">
+                    <span>Inicio Original</span>
+                    <span>${athlete.startDate || '-'}</span>
+                </div>
+                <div class="profile-info-item">
+                    <span>Paquete</span>
+                    <span style="color:var(--bronze);">$${athlete.cost}</span>
+                </div>
+                <div class="profile-info-item" style="grid-column: span 2;">
+                    <span>Ciclo Actual</span>
+                    <span>${cycle.cycleStart} al ${cycle.cycleEnd}</span>
+                </div>
+                <div class="profile-info-item" style="grid-column: span 2;">
+                    <span>Estatus Financiero</span>
+                    <span style="color:var(--success); font-weight:bold;">${athlete.status}</span>
+                </div>
+            `;
+
+            const toggleBtn = document.getElementById('detTogglePayBtn');
+            toggleBtn.innerText = athlete.status === 'Pagado' ? 'Marcar Pendiente' : 'Marcar Al Día';
+
+            const waBtn = document.getElementById('detWhatsAppBtn');
+            waBtn.href = `https://wa.me/${athlete.phone.replace(/\D/g,'')}`;
+
+            renderAbonosHistorial(athlete);
+            renderMetricsHistory(athlete);
+            cancelEditMeasurement();
+
+            document.getElementById('clientPortalView').classList.add('hidden');
+            document.getElementById('athleteDetailView').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        function closeAthleteModal() {
-            document.getElementById('athleteModal').classList.add('hidden');
-            currentModalAthleteId = null;
-            renderAthletesList();
+        function closeAthleteDetail() {
+            currentSelectedAthleteId = null;
+            document.getElementById('athleteDetailView').classList.add('hidden');
+            document.getElementById('clientPortalView').classList.remove('hidden');
         }
 
-        function saveAthleteDetails(e) {
-            e.preventDefault();
-            let athletes = getAthletes();
-            let athlete = athletes.find(a => a.id === currentModalAthleteId);
-            if(!athlete) return;
-
-            athlete.name = document.getElementById('detName').value;
-            athlete.phone = document.getElementById('detPhone').value;
-            athlete.weight = document.getElementById('detWeight').value;
-            athlete.height = document.getElementById('detHeight').value;
-            athlete.age = document.getElementById('detAge').value;
-            athlete.paymentStatus = document.getElementById('detPaymentStatus').value;
-            athlete.cutDate = document.getElementById('detCutDate').value;
-
-            saveAthletes(athletes);
-            alert("Datos de atleta guardados con éxito.");
+        function exportAthletePDF() {
+            window.print();
         }
 
-        function saveNutritionPlan() {
-            let athletes = getAthletes();
-            let athlete = athletes.find(a => a.id === currentModalAthleteId);
-            if(!athlete) return;
-            athlete.nutritionPlan = document.getElementById('athleteNutritionPlan').value;
-            saveAthletes(athletes);
-            alert("Plan de nutrición guardado.");
+        function togglePaymentStatus() {
+            const currentClient = JSON.parse(localStorage.getItem('bc_current_client'));
+            let allAthletes = JSON.parse(localStorage.getItem('bc_affiliate_athletes')) || {};
+            let list = allAthletes[currentClient.email] || [];
+            let athlete = list.find(a => a.id === currentSelectedAthleteId);
+
+            if(athlete) {
+                athlete.status = athlete.status === 'Pagado' ? 'Pendiente' : 'Pagado';
+                localStorage.setItem('bc_affiliate_athletes', JSON.stringify(allAthletes));
+                openAthleteDetail(athlete.id);
+            }
         }
 
-        function saveWorkoutPlan() {
-            let athletes = getAthletes();
-            let athlete = athletes.find(a => a.id === currentModalAthleteId);
-            if(!athlete) return;
-            athlete.workoutPlan = document.getElementById('athleteWorkoutPlan').value;
-            saveAthletes(athletes);
-            alert("Rutina de entrenamiento guardada.");
+        function saveAbono() {
+            const monto = parseFloat(document.getElementById('abonoMonto').value);
+            const fecha = document.getElementById('abonoFecha').value;
+
+            if(!monto || !fecha) {
+                alert("Completa el monto y la fecha del abono.");
+                return;
+            }
+
+            const currentClient = JSON.parse(localStorage.getItem('bc_current_client'));
+            let allAthletes = JSON.parse(localStorage.getItem('bc_affiliate_athletes')) || {};
+            let list = allAthletes[currentClient.email] || [];
+            let athlete = list.find(a => a.id === currentSelectedAthleteId);
+
+            if(athlete) {
+                if(!athlete.abonos) athlete.abonos = [];
+                athlete.abonos.push({ monto, fecha });
+                localStorage.setItem('bc_affiliate_athletes', JSON.stringify(allAthletes));
+                document.getElementById('abonoMonto').value = '';
+                openAthleteDetail(athlete.id);
+            }
         }
 
-        function saveNewMetric(e) {
-            e.preventDefault();
-            let athletes = getAthletes();
-            let athlete = athletes.find(a => a.id === currentModalAthleteId);
-            if(!athlete) return;
-
-            const w = document.getElementById('mWeight').value;
-            const wm = document.getElementById('mWm').value;
-            const f = document.getElementById('mFat').value;
-
-            if(!athlete.metrics) athlete.metrics = [];
-            athlete.metrics.push({
-                date: new Date().toLocaleDateString(),
-                weight: w,
-                wm: wm,
-                fat: f
-            });
-
-            athlete.weight = w; 
-            saveAthletes(athletes);
-            document.getElementById('metricForm').reset();
-            renderMetricHistory(athlete);
-            alert("Medición antropométrica registrada.");
+        function renderAbonosHistorial(athlete) {
+            const container = document.getElementById('abonosHistorialContainer');
+            const abonos = athlete.abonos || [];
+            container.innerHTML = abonos.length === 0 ? `<p>Historial de abonos: No hay abonos registrados aún.</p>` :
+                `<strong>Historial de abonos:</strong><div style="margin-top:4px; display:flex; flex-direction:column; gap:3px;">` +
+                abonos.map(ab => `<div>• $${ab.monto} — Fecha: ${ab.fecha}</div>`).join('') + `</div>`;
         }
 
-        function renderMetricHistory(athlete) {
-            const container = document.getElementById('metricHistoryContainer');
+        function saveNewMeasurement() {
+            const editIndex = parseInt(document.getElementById('editMeasurementIndex').value);
+            const weight = document.getElementById('mWeight').value;
+            const height = document.getElementById('mHeight').value;
+            const date = document.getElementById('mDate').value;
+            const neck = document.getElementById('mNeck').value;
+            const chest = document.getElementById('mChest').value;
+            const biceps = document.getElementById('mBiceps').value;
+            const abdomen = document.getElementById('mAbdomen').value;
+            const glute = document.getElementById('mGlute').value;
+            const leg = document.getElementById('mLeg').value;
+            const calf = document.getElementById('mCalf').value;
+
+            if(!date) {
+                alert("Selecciona la fecha de la medición.");
+                return;
+            }
+
+            let imc = '-';
+            if(weight && height) {
+                let hM = parseFloat(height) / 100;
+                imc = (parseFloat(weight) / (hM * hM)).toFixed(1);
+            }
+
+            const currentClient = JSON.parse(localStorage.getItem('bc_current_client'));
+            let allAthletes = JSON.parse(localStorage.getItem('bc_affiliate_athletes')) || {};
+            let list = allAthletes[currentClient.email] || [];
+            let athlete = list.find(a => a.id === currentSelectedAthleteId);
+
+            if(athlete) {
+                if(!athlete.metrics) athlete.metrics = [];
+                
+                const measurementData = {
+                    date,
+                    weight: weight ? weight + ' kg' : '-',
+                    height: height ? height + ' cm' : '-',
+                    rawWeight: weight,
+                    rawHeight: height,
+                    rawNeck: neck,
+                    rawChest: chest,
+                    rawBiceps: biceps,
+                    rawAbdomen: abdomen,
+                    rawGlute: glute,
+                    rawLeg: leg,
+                    rawCalf: calf,
+                    imc,
+                    neck: neck ? neck + ' cm' : '-',
+                    chest: chest ? chest + ' cm' : '-',
+                    biceps: biceps ? biceps + ' cm' : '-',
+                    abdomen: abdomen ? abdomen + ' cm' : '-',
+                    glute: glute ? glute + ' cm' : '-',
+                    leg: leg ? leg + ' cm' : '-',
+                    calf: calf ? calf + ' cm' : '-'
+                };
+
+                if(editIndex >= 0) {
+                    athlete.metrics[editIndex] = measurementData;
+                } else {
+                    athlete.metrics.push(measurementData);
+                }
+
+                localStorage.setItem('bc_affiliate_athletes', JSON.stringify(allAthletes));
+                openAthleteDetail(athlete.id);
+            }
+        }
+
+        function editMeasurement(index) {
+            const currentClient = JSON.parse(localStorage.getItem('bc_current_client'));
+            let allAthletes = JSON.parse(localStorage.getItem('bc_affiliate_athletes')) || {};
+            let athlete = (allAthletes[currentClient.email] || []).find(a => a.id === currentSelectedAthleteId);
+            if(!athlete || !athlete.metrics[index]) return;
+
+            let m = athlete.metrics[index];
+            document.getElementById('editMeasurementIndex').value = index;
+            document.getElementById('formMeasurementTitle').innerText = '✏️ Editar Medición Antropométrica';
+            document.getElementById('btnSaveMeasurement').innerText = 'Actualizar Medición';
+            document.getElementById('btnCancelEditMeasurement').classList.remove('hidden');
+
+            document.getElementById('mWeight').value = m.rawWeight || '';
+            document.getElementById('mHeight').value = m.rawHeight || '';
+            document.getElementById('mDate').value = m.date || '';
+            document.getElementById('mNeck').value = m.rawNeck || '';
+            document.getElementById('mChest').value = m.rawChest || '';
+            document.getElementById('mBiceps').value = m.rawBiceps || '';
+            document.getElementById('mAbdomen').value = m.rawAbdomen || '';
+            document.getElementById('mGlute').value = m.rawGlute || '';
+            document.getElementById('mLeg').value = m.rawLeg || '';
+            document.getElementById('mCalf').value = m.rawCalf || '';
+
+            window.scrollTo({ top: 400, behavior: 'smooth' });
+        }
+
+        function cancelEditMeasurement() {
+            document.getElementById('editMeasurementIndex').value = '-1';
+            document.getElementById('formMeasurementTitle').innerText = '📏 Nueva Medición Antropométrica';
+            document.getElementById('btnSaveMeasurement').innerText = 'Registrar y Calcular IMC';
+            document.getElementById('btnCancelEditMeasurement').classList.add('hidden');
+
+            document.getElementById('mWeight').value = '';
+            document.getElementById('mHeight').value = '';
+            document.getElementById('mDate').valueAsDate = new Date();
+            document.getElementById('mNeck').value = '';
+            document.getElementById('mChest').value = '';
+            document.getElementById('mBiceps').value = '';
+            document.getElementById('mAbdomen').value = '';
+            document.getElementById('mGlute').value = '';
+            document.getElementById('mLeg').value = '';
+            document.getElementById('mCalf').value = '';
+        }
+
+        function renderMetricsHistory(athlete) {
+            const container = document.getElementById('metricsHistoryList');
             const metrics = athlete.metrics || [];
 
-            container.innerHTML = metrics.length === 0 ? 
-                `<p style="color:var(--text-muted); font-size:0.8rem; font-style:italic;">No hay mediciones registradas en el historial.</p>` :
+            container.innerHTML = metrics.length === 0 ? `<div style="text-align:center; padding:1rem; color:var(--text-muted); font-style:italic; font-size:0.8rem;">No hay mediciones registradas.</div>` :
                 metrics.map((m, idx) => `
                     <div class="metric-history-card">
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
-                            <span style="font-size: 0.75rem; color: var(--bronze); font-weight: bold;">Fecha: ${m.date}</span>
-                            <button class="btn-danger" onclick="deleteMetric(${idx})" style="padding: 0.2rem 0.5rem; font-size: 0.65rem;">Borrar</button>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem; border-bottom: 1px solid var(--border); padding-bottom: 0.4rem;">
+                            <strong style="color: var(--bronze); font-size: 0.85rem;">📅 Registro: ${m.date}</strong>
+                            <div style="display: flex; gap: 0.4rem;">
+                                <button class="btn-secondary" onclick="editMeasurement(${idx})" style="font-size:0.6rem; padding:0.15rem 0.5rem; color:var(--bronze); border-color:var(--bronze);">Editar</button>
+                                <button class="btn-danger" onclick="deleteMetric(${idx})" style="font-size:0.6rem; padding:0.15rem 0.4rem;">Eliminar</button>
+                            </div>
                         </div>
-                        <div style="font-size: 0.8rem; color: var(--text-main); display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.4rem;">
-                            <span>Peso: <strong>${m.weight} kg</strong></span>
-                            <span>Cintura: <strong>${m.wm || '-'} cm</strong></span>
-                            <span>% Grasa: <strong>${m.fat || '-'}%</strong></span>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem; font-size: 0.75rem;">
+                            <div><strong>Peso:</strong> ${m.weight}</div>
+                            <div><strong>Estatura:</strong> ${m.height}</div>
+                            <div><strong>IMC:</strong> <span style="color: var(--bronze); font-weight:bold;">${m.imc}</span></div>
+                            <div><strong>Cuello:</strong> ${m.neck}</div>
+                            <div><strong>Tórax:</strong> ${m.chest}</div>
+                            <div><strong>Bíceps:</strong> ${m.biceps}</div>
+                            <div><strong>Abdomen:</strong> ${m.abdomen}</div>
+                            <div><strong>Glúteos:</strong> ${m.glute}</div>
+                            <div><strong>Cuádriceps:</strong> ${m.leg}</div>
+                            <div><strong>Pantorrilla:</strong> ${m.calf}</div>
                         </div>
                     </div>
                 `).join('');
         }
 
-        function deleteMetric(idx) {
-            let athletes = getAthletes();
-            let athlete = athletes.find(a => a.id === currentModalAthleteId);
-            if(!athlete) return;
-            athlete.metrics.splice(idx, 1);
-            saveAthletes(athletes);
-            renderMetricHistory(athlete);
+        function deleteMetric(index) {
+            const currentClient = JSON.parse(localStorage.getItem('bc_current_client'));
+            let allAthletes = JSON.parse(localStorage.getItem('bc_affiliate_athletes')) || {};
+            let list = allAthletes[currentClient.email] || [];
+            let athlete = list.find(a => a.id === currentSelectedAthleteId);
+
+            if(athlete) {
+                athlete.metrics.splice(index, 1);
+                localStorage.setItem('bc_affiliate_athletes', JSON.stringify(allAthletes));
+                openAthleteDetail(athlete.id);
+            }
         }
 
-        // ================= HERRAMIENTAS PRO & EXPORTAR/IMPORTAR =================
         function calcToolIMC() {
-            const w = parseFloat(document.getElementById('toolImcWeight').value);
-            const h = parseFloat(document.getElementById('toolImcHeight').value);
-            const res = document.getElementById('toolImcResult');
-            if(!w || !h || h <= 0) {
-                res.textContent = "Ingresa valores válidos.";
-                return;
-            }
-            const imc = (w / (h * h)).toFixed(2);
-            let cat = "";
-            if(imc < 18.5) cat = "Bajo peso";
-            else if(imc < 25) cat = "Peso normal (Saludable)";
-            else if(imc < 30) cat = "Sobrepeso";
-            else cat = "Obesidad";
-
-            res.textContent = `IMC: ${imc} — ${cat}`;
+            let w = parseFloat(document.getElementById('toolImcWeight').value);
+            let h = parseFloat(document.getElementById('toolImcHeight').value);
+            if(!w || !h) { alert("Completa peso y altura."); return; }
+            let imc = (w / (h * h)).toFixed(1);
+            let estado = imc < 18.5 ? "Bajo peso" : imc < 25 ? "Normal" : imc < 30 ? "Sobrepeso" : "Obesidad";
+            document.getElementById('toolImcResult').innerText = `IMC: ${imc} (${estado})`;
         }
 
-        function calcToolMacros() {
-            const w = parseFloat(document.getElementById('toolMacroWeight').value);
-            const goal = document.getElementById('toolMacroGoal').value;
-            const res = document.getElementById('toolMacroResult');
-            if(!w) {
-                res.textContent = "Ingresa un peso válido.";
-                return;
-            }
-            let prot = w * 2.2; 
-            let fat = w * 0.9;  
-            let carbs = goal === 'cut' ? w * 2 : goal === 'bulk' ? w * 4 : w * 3;
+        function calcToolFat() {
+            let cin = parseFloat(document.getElementById('toolFatCintura').value);
+            let cue = parseFloat(document.getElementById('toolFatCuello').value);
+            if(!cin || !cue) { alert("Ingresa cintura y cuello."); return; }
+            let fat = (495 / (1.0324 - 0.19077 * Math.log10(cin - cue) + 0.15456 * Math.log10(175)) - 450).toFixed(1);
+            document.getElementById('toolFatResult').innerText = `Grasa Aprox: ${fat}%`;
+        }
 
-            res.textContent = `Proteínas: ${Math.round(prot)}g | Grasas: ${Math.round(fat)}g | Carbohidratos: ${Math.round(carbs)}g`;
+        function calcToolCalories() {
+            let w = parseFloat(document.getElementById('toolCalWeight').value);
+            let h = parseFloat(document.getElementById('toolCalHeight').value);
+            let a = parseFloat(document.getElementById('toolCalAge').value);
+            if(!w || !h || !a) { alert("Completa peso, altura y edad."); return; }
+            let bmr = (10 * w) + (6.25 * h) - (5 * a) + 5;
+            let tdee = Math.round(bmr * 1.55);
+            document.getElementById('toolCalResult').innerText = `TDEE Moderado: ${tdee} kcal/día`;
         }
 
         function exportDatabase() {
-            const data = JSON.stringify(localStorage);
-            const blob = new Blob([data], { type: 'application/json' });
+            const data = {
+                accounts: localStorage.getItem('bc_client_accounts'),
+                athletes: localStorage.getItem('bc_affiliate_athletes'),
+                pending: localStorage.getItem('bc_pending_requests')
+            };
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `backup_business_center_fit_${currentAffiliateEmail}_${new Date().toISOString().slice(0,10)}.json`;
+            a.download = `business_center_fit_backup_${new Date().toISOString().slice(0,10)}.json`;
             a.click();
         }
 
@@ -1088,14 +1254,14 @@
             const reader = new FileReader();
             reader.onload = function(e) {
                 try {
-                    const data = JSON.parse(e.target.result);
-                    for(let key in data) {
-                        localStorage.setItem(key, data[key]);
-                    }
-                    alert("Base de datos importada con éxito.");
-                    location.reload();
+                    const parsed = JSON.parse(e.target.result);
+                    if(parsed.accounts) localStorage.setItem('bc_client_accounts', parsed.accounts);
+                    if(parsed.athletes) localStorage.setItem('bc_affiliate_athletes', parsed.athletes);
+                    if(parsed.pending) localStorage.setItem('bc_pending_requests', parsed.pending);
+                    alert("¡Base de datos importada con éxito!");
+                    loadAffiliateDashboard();
                 } catch(err) {
-                    alert("Error al importar el archivo JSON.");
+                    alert("Error al importar el archivo.");
                 }
             };
             reader.readAsText(file);
