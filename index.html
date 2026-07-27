@@ -399,7 +399,7 @@
                         <form id="registerClientForm">
                             <div class="form-group">
                                 <label>Nombre y Marca</label>
-                                <input type="text" id="regName" required placeholder="Ej. David Silva">
+                                <input type="text" id="regName" required placeholder="Ej. Leidy Diana">
                             </div>
                             <div class="form-group">
                                 <label>Correo Electrónico</label>
@@ -649,7 +649,6 @@
 
         // VALIDACIÓN Y SINCRONIZACIÓN DE SOLICITUDES DESDE PARÁMETROS URL O LOCALSTORAGE
         document.addEventListener('DOMContentLoaded', function() {
-            // Sincronizar datos vía URL si el cliente se registró en un enlace compartido
             const urlParams = new URLSearchParams(window.location.search);
             const sharedReq = urlParams.get('req');
             if(sharedReq) {
@@ -660,11 +659,11 @@
                     if(!pending.some(p => p.email === decodedReq.email) && !accounts.some(acc => acc.email === decodedReq.email)) {
                         pending.push(decodedReq);
                         localStorage.setItem('bc_pending_requests', JSON.stringify(pending));
+                        alert("¡Solicitud de afiliación sincronizada con éxito desde el enlace externo!");
                     }
                 } catch(e) { console.error("Error al sincronizar solicitud externa", e); }
             }
 
-            // Configurar enlace directo de WhatsApp con la URL y respaldo codificado
             const appUrl = window.location.href.split('#')[0].split('?')[0];
             const waButton = document.getElementById('adminWhatsAppLinkBtn');
             if(waButton) {
@@ -731,14 +730,12 @@
             pending.push(newReq);
             localStorage.setItem('bc_pending_requests', JSON.stringify(pending));
 
-            // Generar enlace con los datos codificados para que el admin los reciba por WhatsApp si lo desea
             const encodedReq = btoa(JSON.stringify(newReq));
             const adminNotifyUrl = `${window.location.href.split('#')[0].split('?')[0]}?req=${encodedReq}`;
             
-            alert("¡Solicitud enviada con éxito! Espera la aprobación del administrador.");
+            alert("¡Solicitud enviada con éxito! Ahora avisa al administrador.");
             
-            // Opcional: Permitir enviar la solicitud directamente por WhatsApp al admin si se desea
-            if(confirm("¿Deseas notificar tu solicitud al administrador por WhatsApp para una aprobación más rápida?")) {
+            if(confirm("¿Deseas enviar tu solicitud directamente al administrador por WhatsApp para que la apruebe de inmediato?")) {
                 const waAdminMsg = encodeURIComponent(`Hola Ciodarofitness, acabo de enviar mi solicitud de afiliación a Business Center Fit con el correo: ${email}. Puedes aprobarla haciendo clic aquí: ${adminNotifyUrl}`);
                 window.open(`https://wa.me/?text=${waAdminMsg}`, '_blank');
             }
@@ -817,6 +814,7 @@
                 localStorage.setItem('bc_pending_requests', JSON.stringify(pending));
                 localStorage.setItem('bc_client_accounts', JSON.stringify(accounts));
                 loadAdminData();
+                alert("¡Cuenta aprobada con éxito! El afiliado ya puede iniciar sesión.");
             }
         }
 
@@ -825,6 +823,7 @@
             pending = pending.filter(p => p.id !== id);
             localStorage.setItem('bc_pending_requests', JSON.stringify(pending));
             loadAdminData();
+            alert("Solicitud denegada correctamente.");
         }
 
         function deleteAccount(id) {
