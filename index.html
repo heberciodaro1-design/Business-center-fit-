@@ -340,19 +340,11 @@
         </header>
 
         <main>
-            <!-- PANTALLA PRINCIPAL / LOGIN Y ACCESOS -->
+            <!-- PANTALLA PRINCIPAL LIMPIA / LOGIN Y ACCESOS -->
             <section id="authSection" class="no-print">
                 <div style="display: flex; flex-direction: column; gap: 1.2rem;">
                     
-                    <!-- ENLACE / BOTÓN DESTACADO PARA SOLICITAR ACCESO DIRECTO A LA APP -->
-                    <div class="card" style="background: var(--surface-card); border-color: var(--bronze); text-align: center;">
-                        <h2 style="color: var(--bronze); font-size: 1.1rem; font-weight: 700; margin-bottom: 0.4rem;">🚀 ¿Quieres tu Cuenta en Business Center Fit?</h2>
-                        <p class="subtitle" style="font-size: 0.75rem; margin-bottom: 0.8rem;">Envía tu solicitud de acceso directamente a Ciodarofitness para que sea evaluada y aprobada desde el panel de control.</p>
-                        <button type="button" onclick="scrollToRegister()" style="background: var(--bronze); color: #000; font-weight: bold; padding: 0.7rem; font-size: 0.8rem;">
-                            📝 Solicitar Acceso a la App Aquí
-                        </button>
-                    </div>
-
+                    <!-- Tarjeta de Login Admin (Limpia y directa) -->
                     <div class="card" style="margin-bottom: 0;">
                         <h1 style="color: #ffffff; font-size: 1.3rem; font-weight: 800; margin-bottom: 0.2rem;">Panel Admin</h1>
                         <p style="color: var(--bronze); font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1rem;">Ciodarofitness</p>
@@ -372,19 +364,10 @@
                         </form>
                     </div>
 
-                    <!-- Botón de WhatsApp de contacto -->
-                    <div class="card" style="margin-bottom: 0; border-color: var(--whatsapp);">
-                        <h2 style="color: var(--whatsapp); font-size: 1rem; font-weight: 700;">📲 Contacto Directo</h2>
-                        <p class="subtitle" style="font-size: 0.75rem; margin-bottom: 0.8rem;">¿Tienes dudas o prefieres hablar por WhatsApp con Ciodarofitness?</p>
-                        <button class="btn-wa" onclick="requestAppWhatsApp()">
-                            💬 Escribir por WhatsApp
-                        </button>
-                    </div>
-
-                    <!-- FORMULARIO DE REGISTRO / SOLICITUD DE AFILIADO -->
-                    <div id="registerSectionCard" class="card" style="margin-bottom: 0; border: 1px dashed var(--bronze);">
+                    <!-- Sección para solicitar registro (Abierta mediante enlace externo o visible de forma discreta) -->
+                    <div id="registerSectionCard" class="card hidden" style="margin-bottom: 0; border: 1px dashed var(--bronze);">
                         <h2 style="color: #ffffff; font-size: 1.1rem; font-weight: 700;">Crear Cuenta Afiliado</h2>
-                        <p class="subtitle">Llena tus datos para enviar la solicitud al panel de control de Ciodarofitness.</p>
+                        <p class="subtitle">Envía tu solicitud al panel de control de Ciodarofitness tras recibir la invitación.</p>
                         <form id="registerClientForm">
                             <div class="form-group">
                                 <label>Nombre y Marca</label>
@@ -405,9 +388,10 @@
                         </form>
                     </div>
 
+                    <!-- Acceso para Afiliados ya aprobados -->
                     <div class="card" style="margin-bottom: 0;">
                         <h2 style="color: #ffffff; font-size: 1.1rem; font-weight: 700;">Acceso Afiliados</h2>
-                        <p class="subtitle">Gestiona tus atletas y finanzas una vez aprobada tu cuenta.</p>
+                        <p class="subtitle">Gestiona tus atletas una vez aprobada tu cuenta.</p>
                         <form id="clientLoginForm">
                             <div class="form-group">
                                 <label>Correo Electrónico</label>
@@ -437,18 +421,19 @@
                     <button class="btn-secondary" onclick="logoutSystem()">CERRAR</button>
                 </div>
 
-                <div class="card" style="background: var(--surface-card); border-color: var(--bronze);">
-                    <h3 style="font-size: 0.9rem; color: var(--bronze); margin-bottom: 0.3rem;">💬 Enlace de Invitación por WhatsApp</h3>
-                    <p class="subtitle" style="font-size: 0.75rem; margin-bottom: 0.8rem;">Comparte este enlace para que otros entrenadores se registren en la plataforma.</p>
+                <!-- ENLACE DE INVITACIÓN POR WHATSAPP (EXCLUSIVO DEL ADMIN) -->
+                <div class="card" style="background: var(--surface-card); border-color: var(--whatsapp);">
+                    <h3 style="font-size: 0.9rem; color: var(--whatsapp); margin-bottom: 0.3rem;">📲 Enviar Enlace de Invitación por WhatsApp</h3>
+                    <p class="subtitle" style="font-size: 0.75rem; margin-bottom: 0.8rem;">Envía este enlace al cliente para que realice su solicitud de acceso a la plataforma.</p>
                     <button class="btn-wa" onclick="sendWhatsAppInvite()">
-                        📲 Enviar Enlace de Invitación
+                        💬 Enviar Enlace de Solicitud
                     </button>
                 </div>
 
                 <!-- BANDEJA DE SOLICITUDES DE CLIENTES -->
                 <div class="card">
                     <h3 style="font-size: 0.95rem; color: var(--warning); margin-bottom: 0.3rem;">⏳ Bandeja de Solicitudes Pendientes</h3>
-                    <p class="subtitle" style="font-size: 0.75rem; margin-bottom: 0.6rem;">Aquí aparecen los clientes/entrenadores que enviaron su solicitud. Acéptalos para que puedan crear su cuenta e iniciar sesión.</p>
+                    <p class="subtitle" style="font-size: 0.75rem; margin-bottom: 0.6rem;">Solicitudes recibidas. Acéptalas para que el usuario pueda ingresar con su correo y contraseña.</p>
                     <div id="adminPendingList" style="display: flex; flex-direction: column; gap: 0.6rem; margin-top: 0.8rem;"></div>
                 </div>
 
@@ -650,6 +635,12 @@
         }
 
         document.addEventListener('DOMContentLoaded', function() {
+            // Comprobar si se abrió mediante un enlace de invitación con parámetro ?register=true
+            const urlParams = new URLSearchParams(window.location.search);
+            if(urlParams.get('register') === 'true') {
+                document.getElementById('registerSectionCard').classList.remove('hidden');
+            }
+
             if(localStorage.getItem('bc_admin_logged') === 'true') {
                 document.getElementById('authSection').classList.add('hidden');
                 document.getElementById('dashboardView').classList.remove('hidden');
@@ -673,13 +664,6 @@
             card.classList.toggle('hidden');
         }
 
-        function scrollToRegister() {
-            const section = document.getElementById('registerSectionCard');
-            section.scrollIntoView({ behavior: 'smooth' });
-            section.style.borderColor = 'var(--success)';
-            setTimeout(() => { section.style.borderColor = 'var(--bronze)'; }, 1500);
-        }
-
         // ================= REGISTRO DE AFILIADOS =================
         document.getElementById('registerClientForm').addEventListener('submit', function(e) {
             e.preventDefault();
@@ -699,6 +683,7 @@
             localStorage.setItem('bc_pending_requests', JSON.stringify(pending));
             alert("¡Solicitud de acceso enviada con éxito! El administrador principal la evaluará en su panel.");
             this.reset();
+            document.getElementById('registerSectionCard').classList.add('hidden');
         });
 
         document.getElementById('clientLoginForm').addEventListener('submit', function(e) {
@@ -744,14 +729,11 @@
             location.reload();
         }
 
-        // ================= WHATSAPP Y BANDEJA DE SOLICITUDES =================
-        function requestAppWhatsApp() {
-            const text = "Hola Ciodarofitness, soy un entrenador interesado en comprar y adquirir la aplicación Business Center Fit. ¿Podemos conversar?";
-            window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
-        }
-
+        // ================= ENLACE DE WHATSAPP Y BANDEJA =================
         function sendWhatsAppInvite() {
-            const text = "Hola, únete a la red de Business Center Fit registrándote directamente en la plataforma de Ciodarofitness.";
+            const currentUrl = window.location.href.split('?')[0];
+            const inviteUrl = `${currentUrl}?register=true`;
+            const text = `Hola, te comparto el enlace directo para enviar tu solicitud de acceso a la plataforma Business Center Fit de Ciodarofitness:\n\n${inviteUrl}`;
             window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
         }
 
@@ -1042,7 +1024,7 @@
 
         function calcToolMacros() {
             const w = parseFloat(document.getElementById('toolMacroWeight').value);
-            const goal = document.getElementById('toolMacroGoal').value;
+            const goal = document.getElementById('toolMacroGoal'].value;
             const res = document.getElementById('toolMacroResult');
             if(!w) {
                 res.textContent = "Ingresa un peso válido.";
