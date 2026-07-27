@@ -216,10 +216,10 @@
             color: var(--success);
             border: 1px solid var(--success);
             padding: 0.5rem 1rem;
-            font-size: 0.75rem; 
-            width: auto; 
-            border-radius: 6px; 
-            cursor: pointer; 
+            font-size: 0.75rem;
+            width: auto;
+            border-radius: 6px;
+            cursor: pointer;
             font-weight: bold;
         }
 
@@ -312,6 +312,37 @@
             margin-bottom: 0.8rem;
         }
 
+        .profile-info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.8rem;
+            background: var(--surface-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 0.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .profile-info-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .profile-info-item span:first-child {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 2px;
+        }
+
+        .profile-info-item span:last-child {
+            font-size: 0.85rem;
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
         footer {
             text-align: center;
             padding: 1rem;
@@ -340,27 +371,12 @@
         </header>
 
         <main>
-            <!-- PANTALLA PRINCIPAL: SOLICITUD DIRECTA + LOGIN ADMIN + CONTACTO -->
             <section id="authSection" class="no-print">
                 <div style="display: flex; flex-direction: column; gap: 1.2rem;">
                     
-                    <!-- Tarjeta para Solicitar Acceso (Visible directamente) -->
-                    <div class="card" style="border: 1px solid var(--bronze); background: linear-gradient(135deg, rgba(24,31,45,1) 0%, rgba(30,35,48,1) 100%);">
-                        <h2 style="color: var(--bronze); font-size: 1.1rem; font-weight: 700; display: flex; align-items: center; gap: 6px;">
-                            🚀 ¿Quieres tu Cuenta en Business Center Fit?
-                        </h2>
-                        <p class="subtitle" style="margin-bottom: 1rem; font-size: 0.8rem;">
-                            Envía tu solicitud de acceso directamente a Ciodarofitness para que sea evaluada y aprobada desde el panel de control.
-                        </p>
-                        <button type="button" onclick="openRegisterModal()" style="background: var(--bronze); color: #000; font-weight: bold;">
-                            📝 Solicitar Acceso a la App Aquí
-                        </button>
-                    </div>
-
-                    <!-- Tarjeta de Login Admin -->
-                    <div class="card">
-                        <h2 style="color: #ffffff; font-size: 1.1rem; font-weight: 700;">Panel Admin</h2>
-                        <p class="subtitle">Ciodarofitness</p>
+                    <div class="card" style="margin-bottom: 0;">
+                        <h1 style="color: #ffffff; font-size: 1.3rem; font-weight: 800; margin-bottom: 0.2rem;">Panel Admin</h1>
+                        <p style="color: var(--bronze); font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1rem;">Ciodarofitness</p>
                         <form id="loginForm">
                             <div class="form-group">
                                 <label>Identificador</label>
@@ -377,19 +393,60 @@
                         </form>
                     </div>
 
-                    <!-- Contacto Directo WhatsApp -->
-                    <div class="card" style="border-color: var(--whatsapp);">
-                        <h3 style="font-size: 0.9rem; color: var(--whatsapp); margin-bottom: 0.3rem;">📲 Contacto Directo</h3>
-                        <p class="subtitle" style="font-size: 0.75rem; margin-bottom: 0.8rem;">¿Tienes dudas o prefieres hablar por WhatsApp con Ciodarofitness?</p>
-                        <a href="https://wa.me/?text=Hola%2C%20quiero%20más%20información%20sobre%20Business%20Center%20Fit" target="_blank" class="btn-wa">
-                            💬 Escribir por WhatsApp
-                        </a>
+                    <!-- Botón de WhatsApp para entrenadores interesados en comprar/adquirir la app -->
+                    <div class="card" style="margin-bottom: 0; border-color: var(--bronze);">
+                        <h2 style="color: var(--bronze); font-size: 1rem; font-weight: 700;">📲 ¿Eres Entrenador?</h2>
+                        <p class="subtitle" style="font-size: 0.75rem; margin-bottom: 0.8rem;">Adquiere o solicita acceso a Business Center Fit directamente por WhatsApp con Ciodarofitness.</p>
+                        <button class="btn-wa" onclick="requestAppWhatsApp()">
+                            💬 Solicitar Aplicación por WhatsApp
+                        </button>
+                    </div>
+
+                    <div class="card" style="margin-bottom: 0;">
+                        <h2 style="color: #ffffff; font-size: 1.1rem; font-weight: 700;">Crear Cuenta Afiliado</h2>
+                        <p class="subtitle">Envía tu solicitud para unirte al sistema.</p>
+                        <form id="registerClientForm">
+                            <div class="form-group">
+                                <label>Nombre y Marca</label>
+                                <input type="text" id="regName" required placeholder="Ej. David Silva">
+                            </div>
+                            <div class="form-group">
+                                <label>Correo Electrónico</label>
+                                <input type="email" id="regEmail" required placeholder="correo@domain.com">
+                            </div>
+                            <div class="form-group">
+                                <label>Contraseña</label>
+                                <div class="password-container">
+                                    <input type="password" id="regPassword" required placeholder="••••••••">
+                                    <button type="button" class="toggle-password" onclick="togglePassword('regPassword')">👁️</button>
+                                </div>
+                            </div>
+                            <button type="submit">Enviar Solicitud de Afiliación</button>
+                        </form>
+                    </div>
+
+                    <div class="card" style="margin-bottom: 0;">
+                        <h2 style="color: #ffffff; font-size: 1.1rem; font-weight: 700;">Acceso Afiliados</h2>
+                        <p class="subtitle">Gestiona tus atletas y finanzas.</p>
+                        <form id="clientLoginForm">
+                            <div class="form-group">
+                                <label>Correo Electrónico</label>
+                                <input type="email" id="clientLoginEmail" required placeholder="correo@domain.com">
+                            </div>
+                            <div class="form-group">
+                                <label>Contraseña</label>
+                                <div class="password-container">
+                                    <input type="password" id="clientLoginPass" required placeholder="••••••••">
+                                    <button type="button" class="toggle-password" onclick="togglePassword('clientLoginPass')">👁️</button>
+                                </div>
+                            </div>
+                            <button type="submit" style="background: transparent; border: 1px solid var(--bronze); color: var(--bronze);">Entrar a mi Perfil</button>
+                        </form>
                     </div>
 
                 </div>
             </section>
 
-            <!-- PANEL DE CONTROL GLOBAL DE ADMINISTRADOR -->
             <section id="dashboardView" class="hidden no-print">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
                     <div>
@@ -399,10 +456,17 @@
                     <button class="btn-secondary" onclick="logoutSystem()">CERRAR</button>
                 </div>
 
-                <!-- BANDEJA DE SOLICITUDES DE CLIENTES -->
+                <div class="card" style="background: var(--surface-card); border-color: var(--bronze);">
+                    <h3 style="font-size: 0.9rem; color: var(--bronze); margin-bottom: 0.3rem;">💬 Enlace de Conexión por WhatsApp</h3>
+                    <p class="subtitle" style="font-size: 0.75rem; margin-bottom: 0.8rem;">Guarda y copia este enlace para enviárselo al entrenador interesado en afiliarse.</p>
+                    <button class="btn-wa" onclick="sendWhatsAppInvite()">
+                        📲 Enviar Enlace de Solicitud por WhatsApp
+                    </button>
+                </div>
+
                 <div class="card">
-                    <h3 style="font-size: 0.95rem; color: var(--warning); margin-bottom: 0.3rem;">⏳ Bandeja de Solicitudes Pendientes</h3>
-                    <p class="subtitle" style="font-size: 0.75rem; margin-bottom: 0.6rem;">Solicitudes recibidas desde la pantalla principal. Acéptalas para darles acceso.</p>
+                    <h3 style="font-size: 0.95rem; color: var(--warning); margin-bottom: 0.3rem;">⏳ Solicitudes de Afiliación Pendientes</h3>
+                    <p class="subtitle" style="font-size: 0.75rem; margin-bottom: 0.6rem;">Aprueba o deniega el acceso a nuevos entrenadores directamente aquí.</p>
                     <div id="adminPendingList" style="display: flex; flex-direction: column; gap: 0.6rem; margin-top: 0.8rem;"></div>
                 </div>
 
@@ -412,7 +476,6 @@
                 </div>
             </section>
 
-            <!-- PANEL DE PORTAL DEL AFILIADO -->
             <section id="clientPortalView" class="hidden">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;" class="no-print">
                     <div>
@@ -494,36 +557,7 @@
         </footer>
     </div>
 
-    <!-- MODAL DE SOLICITUD DE REGISTRO -->
-    <div id="registerModal" class="hidden" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(7,9,14,0.95); z-index: 1000; overflow-y: auto; padding: 1.2rem; display: flex; align-items: center; justify-content: center;">
-        <div class="card" style="width: 100%; max-width: 450px; margin-bottom: 0; border: 1px solid var(--bronze);">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                <h2 style="color: #ffffff; font-size: 1.1rem; font-weight: 700;">Solicitar Cuenta Afiliado</h2>
-                <button class="btn-secondary" onclick="closeRegisterModal()" style="font-size: 0.75rem;">✕</button>
-            </div>
-            <p class="subtitle">Envía tus datos para que Ciodarofitness evalúe y apruebe tu acceso al panel.</p>
-            <form id="registerClientForm">
-                <div class="form-group">
-                    <label>Nombre y Marca</label>
-                    <input type="text" id="regName" required placeholder="Ej. David Silva">
-                </div>
-                <div class="form-group">
-                    <label>Correo Electrónico</label>
-                    <input type="email" id="regEmail" required placeholder="correo@domain.com">
-                </div>
-                <div class="form-group">
-                    <label>Contraseña</label>
-                    <div class="password-container">
-                        <input type="password" id="regPassword" required placeholder="••••••••">
-                        <button type="button" class="toggle-password" onclick="togglePassword('regPassword')">👁️</button>
-                    </div>
-                </div>
-                <button type="submit" style="margin-top: 0.5rem;">Enviar Solicitud al Admin</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- MODAL DE EXPEDIENTE DE ATLETA -->
+    <!-- MODAL / VISTA DE EXPEDIENTE DE ATLETA -->
     <div id="athleteModal" class="hidden" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(7,9,14,0.95); z-index: 1000; overflow-y: auto; padding: 1.2rem;">
         <div style="max-width: 600px; margin: 0 auto; display: flex; flex-direction: column; gap: 1rem;">
             
@@ -626,6 +660,7 @@
     </div>
 
     <script>
+        // Estructura de Datos Principal Global por Usuario Afiliado
         let currentAffiliateEmail = null;
 
         function getStorageKey(key) {
@@ -633,6 +668,7 @@
         }
 
         document.addEventListener('DOMContentLoaded', function() {
+            // Verificar si hay sesión de admin global activa
             if(localStorage.getItem('bc_admin_logged') === 'true') {
                 document.getElementById('authSection').classList.add('hidden');
                 document.getElementById('dashboardView').classList.remove('hidden');
@@ -656,15 +692,7 @@
             card.classList.toggle('hidden');
         }
 
-        function openRegisterModal() {
-            document.getElementById('registerModal').classList.remove('hidden');
-        }
-
-        function closeRegisterModal() {
-            document.getElementById('registerModal').classList.add('hidden');
-        }
-
-        // ================= REGISTRO DE CLIENTES =================
+        // ================= CLIENTE / AFILIADO: REGISTRO E INICIO DE SESIÓN =================
         document.getElementById('registerClientForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const name = document.getElementById('regName').value.trim();
@@ -681,9 +709,28 @@
 
             pending.push({ id: Date.now(), name, email, pass, date: new Date().toLocaleDateString() });
             localStorage.setItem('bc_pending_requests', JSON.stringify(pending));
-            alert("¡Solicitud de acceso enviada con éxito! El administrador principal la evaluará en su panel.");
+            alert("¡Solicitud de afiliación enviada con éxito! El administrador principal la evaluará.");
             this.reset();
-            closeRegisterModal();
+        });
+
+        document.getElementById('clientLoginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('clientLoginEmail').value.trim();
+            const pass = document.getElementById('clientLoginPass').value.trim();
+
+            let accounts = JSON.parse(localStorage.getItem('bc_client_accounts')) || [];
+            let found = accounts.find(a => a.email === email && a.pass === pass);
+
+            if(found) {
+                currentAffiliateEmail = email;
+                localStorage.setItem('bc_current_affiliate', email);
+                document.getElementById('authSection').classList.add('hidden');
+                document.getElementById('clientPortalView').classList.remove('hidden');
+                document.getElementById('welcomeClientTitle').textContent = `Ciodarofitness — ${found.name}`;
+                loadAffiliateData();
+            } else {
+                alert("Credenciales incorrectas o cuenta aún no aprobada por el administrador.");
+            }
         });
 
         // ================= ADMIN GLOBAL LOGIN =================
@@ -698,20 +745,7 @@
                 document.getElementById('dashboardView').classList.remove('hidden');
                 loadGlobalAdminData();
             } else {
-                // Verificar si es una cuenta afiliada aprobada
-                let accounts = JSON.parse(localStorage.getItem('bc_client_accounts')) || [];
-                let found = accounts.find(a => a.email.toLowerCase() === user.toLowerCase() && a.pass === pass);
-
-                if(found) {
-                    currentAffiliateEmail = found.email;
-                    localStorage.setItem('bc_current_affiliate', found.email);
-                    document.getElementById('authSection').classList.add('hidden');
-                    document.getElementById('clientPortalView').classList.remove('hidden');
-                    document.getElementById('welcomeClientTitle').textContent = `Ciodarofitness — ${found.name}`;
-                    loadAffiliateData();
-                } else {
-                    alert("Identificador o Contraseña incorrectos.");
-                }
+                alert("Identificador o Contraseña Maestra incorrectos.");
             }
         });
 
@@ -722,13 +756,24 @@
             location.reload();
         }
 
+        // ================= GESTIÓN PANEL GLOBAL ADMIN & WHATSAPP =================
+        function requestAppWhatsApp() {
+            const text = "Hola Ciodarofitness, soy un entrenador interesado en comprar y adquirir la aplicación Business Center Fit. ¿Podemos conversar?";
+            window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+        }
+
+        function sendWhatsAppInvite() {
+            const text = "Hola, únete a la red de Business Center Fit registrándote directamente en la plataforma de Ciodarofitness.";
+            window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+        }
+
         function loadGlobalAdminData() {
             let pending = JSON.parse(localStorage.getItem('bc_pending_requests')) || [];
             let accounts = JSON.parse(localStorage.getItem('bc_client_accounts')) || [];
 
             const pendingContainer = document.getElementById('adminPendingList');
             pendingContainer.innerHTML = pending.length === 0 ? 
-                `<p style="color:var(--text-muted); font-size:0.8rem; font-style:italic;">No hay solicitudes de acceso pendientes en este momento.</p>` :
+                `<p style="color:var(--text-muted); font-size:0.8rem; font-style:italic;">No hay solicitudes de afiliación pendientes.</p>` :
                 pending.map(p => `
                     <div style="background:var(--bg-deep); padding:0.8rem; border-radius:6px; border:1px solid var(--border); display:flex; justify-content:space-between; align-items:center;">
                         <div>
@@ -767,7 +812,7 @@
                 localStorage.setItem('bc_pending_requests', JSON.stringify(pending));
                 localStorage.setItem('bc_client_accounts', JSON.stringify(accounts));
                 loadGlobalAdminData();
-                alert("¡Solicitud aceptada con éxito! El usuario ya puede iniciar sesión.");
+                alert("¡Afiliación aprobada con éxito!");
             }
         }
 
@@ -805,6 +850,7 @@
             
             const filtered = athletes.filter(a => a.name.toLowerCase().includes(search));
 
+            // KPIs
             document.getElementById('kpiTotalAthletes').textContent = athletes.length;
             let totalIncome = athletes.filter(a => a.paymentStatus === 'paid').length * 50; 
             document.getElementById('kpiTotalIncome').textContent = `$${totalIncome}.00`;
@@ -1028,7 +1074,7 @@
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `backup_business_center_fit_${currentAffiliateEmail || 'admin'}_${new Date().toISOString().slice(0,10)}.json`;
+            a.download = `backup_business_center_fit_${currentAffiliateEmail}_${new Date().toISOString().slice(0,10)}.json`;
             a.click();
         }
 
