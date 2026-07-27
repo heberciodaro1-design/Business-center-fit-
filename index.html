@@ -1,10 +1,15 @@
-}<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Business Center Fit | By Ciodarofitness</title>
     
+    <!-- SDKs de Firebase (Compat Version para máxima estabilidad) -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
     <style>
         :root {
             --bg-deep: #07090e;
@@ -336,13 +341,15 @@
     <div class="app-container">
         <header class="no-print">
             <div class="brand-title">Business Center Fit</div>
-            <div class="status-badge">Activo</div>
+            <div id="syncStatusBadge" class="status-badge">Conectando...</div>
         </header>
 
         <main>
+            <!-- PANTALLA PRINCIPAL: SOLICITUD DE AFILIADO + ACCESO AFILIADOS + ADMIN -->
             <section id="authSection" class="no-print">
                 <div style="display: flex; flex-direction: column; gap: 1.2rem;">
                     
+                    <!-- 1. Tarjeta Solicitud de Cuenta Afiliado -->
                     <div class="card">
                         <div style="margin-bottom: 0.8rem;">
                             <h2 style="font-size: 1.1rem; font-weight: 700; color: var(--text-main);">Solicitud de Cuenta Afiliado</h2>
@@ -368,6 +375,7 @@
                         </form>
                     </div>
 
+                    <!-- 2. Tarjeta Acceso Afiliados -->
                     <div class="card">
                         <div style="margin-bottom: 0.8rem;">
                             <h2 style="font-size: 1.1rem; font-weight: 700; color: var(--text-main);">Acceso Afiliados</h2>
@@ -389,6 +397,7 @@
                         </form>
                     </div>
 
+                    <!-- 3. Tarjeta de Login Admin Maestro -->
                     <div class="card" style="border-color: var(--bronze);">
                         <div style="margin-bottom: 0.8rem;">
                             <h2 style="font-size: 1.1rem; font-weight: 700; color: var(--bronze);">Panel Admin Maestro</h2>
@@ -413,6 +422,7 @@
                 </div>
             </section>
 
+            <!-- PANEL DE CONTROL GLOBAL DE ADMINISTRADOR -->
             <section id="dashboardView" class="hidden no-print">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
                     <div>
@@ -422,9 +432,10 @@
                     <button class="btn-secondary" onclick="logoutSystem()">CERRAR</button>
                 </div>
 
+                <!-- NUEVA TARJETA: ENLACE PARA COMPARTIR REGISTRO -->
                 <div class="card" style="border-color: var(--bronze);">
                     <h3 style="font-size: 0.95rem; color: var(--bronze); margin-bottom: 0.3rem;">🔗 Enlace de Solicitud de Afiliación</h3>
-                    <p class="subtitle" style="font-size: 0.75rem; margin-bottom: 0.6rem;">Copia este enlace para enviarlo por WhatsApp o redes sociales (abre directo en el formulario de solicitud):</p>
+                    <p class="subtitle" style="font-size: 0.75rem; margin-bottom: 0.6rem;">Copia este enlace para enviarlo por WhatsApp o redes sociales y que soliciten su cuenta:</p>
                     <div style="display: flex; gap: 0.5rem; margin-bottom: 0.6rem;">
                         <input type="text" id="shareRegistrationLink" readonly style="font-size: 0.75rem; background: var(--bg-deep);">
                         <button type="button" onclick="copyRegistrationLink()" style="width: auto; padding: 0.5rem 0.8rem; font-size: 0.75rem; background: var(--bronze); color: #000;">Copiar</button>
@@ -432,24 +443,27 @@
                     <a id="shareWAPerfil" href="#" target="_blank" class="btn-wa" style="font-size: 0.75rem; padding: 0.5rem;">📲 Compartir por WhatsApp</a>
                 </div>
 
+                <!-- BANDEJA DE SOLICITUDES DE CLIENTES -->
                 <div class="card">
                     <h3 style="font-size: 0.95rem; color: var(--warning); margin-bottom: 0.3rem;">⏳ Bandeja de Solicitudes Pendientes</h3>
-                    <p class="subtitle" style="font-size: 0.75rem; margin-bottom: 0.6rem;">Solicitudes recibidas. Acéptalas para darles acceso.</p>
+                    <p class="subtitle" style="font-size: 0.75rem; margin-bottom: 0.6rem;">Solicitudes recibidas en la nube. Acéptalas para darles acceso.</p>
                     <div id="adminPendingList" style="display: flex; flex-direction: column; gap: 0.6rem; margin-top: 0.8rem;"></div>
                 </div>
 
+                <!-- CUENTAS AFILIADAS ACTIVAS -->
                 <div class="card">
                     <h3 style="font-size: 0.95rem; color: var(--success); margin-bottom: 0.3rem;">✅ Cuentas Afiliadas Activas</h3>
-                    <p class="subtitle" style="font-size: 0.75rem; margin-bottom: 0.6rem;">Listado completo de entrenadores y cuentas con acceso activo al sistema.</p>
+                    <p class="subtitle" style="font-size: 0.75rem; margin-bottom: 0.6rem;">Listado completo de entrenadores y cuentas con acceso activo.</p>
                     <div id="adminAccountsList" style="display: flex; flex-direction: column; gap: 0.6rem; margin-top: 0.8rem;"></div>
                 </div>
             </section>
 
+            <!-- PANEL DE PORTAL DEL AFILIADO -->
             <section id="clientPortalView" class="hidden">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;" class="no-print">
                     <div>
                         <h2 id="welcomeClientTitle" style="font-size: 1.1rem; color: var(--bronze);">Ciodarofitness</h2>
-                        <p class="subtitle" style="margin-bottom:0; font-size:0.75rem;">Panel de Control y Asesorados</p>
+                        <p class="subtitle" style="margin-bottom:0; font-size:0.75rem;">Panel de Control y Asesorados (Nube)</p>
                     </div>
                     <button class="btn-secondary" onclick="logoutSystem()">Salir</button>
                 </div>
@@ -462,8 +476,8 @@
                         </button>
                     </div>
                     <div style="display: flex; gap: 0.6rem;">
-                        <button class="btn-secondary" onclick="exportDatabase()" style="flex: 1; background: var(--surface-card);">📤 Exportar</button>
-                        <button class="btn-secondary" onclick="triggerImport()" style="flex: 1; background: var(--surface-card);">📥 Importar</button>
+                        <button class="btn-secondary" onclick="exportDatabase()" style="flex: 1; background: var(--surface-card);">📤 Exportar JSON</button>
+                        <button class="btn-secondary" onclick="triggerImport()" style="flex: 1; background: var(--surface-card);">📥 Importar JSON</button>
                         <input type="file" id="importFile" class="hidden" accept=".json" onchange="importDatabase(event)">
                     </div>
                 </div>
@@ -526,6 +540,7 @@
         </footer>
     </div>
 
+    <!-- MODAL DE EXPEDIENTE DE ATLETA -->
     <div id="athleteModal" class="hidden" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(7,9,14,0.95); z-index: 1000; overflow-y: auto; padding: 1.2rem;">
         <div style="max-width: 600px; margin: 0 auto; display: flex; flex-direction: column; gap: 1rem;">
             
@@ -628,62 +643,62 @@
     </div>
 
     <script>
-        let currentAffiliateEmail = null;
+        // ================= CONFIGURACIÓN DE FIREBASE =================
+        // Reemplaza los siguientes datos con los de tu consola de Firebase
+        const firebaseConfig = {
+            apiKey: "TU_API_KEY_AQUI",
+            authDomain: "tu-proyecto.firebaseapp.com",
+            projectId: "tu-proyecto",
+            storageBucket: "tu-proyecto.appspot.com",
+            messagingSenderId: "TU_SENDER_ID",
+            appId: "TU_APP_ID"
+        };
 
-        function getStorageKey(key) {
-            return `bc_${currentAffiliateEmail}_${key}`;
+        // Inicializar Firebase
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
         }
+        const db = firebase.firestore();
+
+        let currentAffiliateEmail = null;
+        let cachedAthletes = [];
 
         document.addEventListener('DOMContentLoaded', function() {
-            // Generar enlace limpio con parámetro ?registro=true para garantizar vista de solicitud
-            const cleanBaseUrl = window.location.href.split('#')[0].split('?')[0];
-            const inviteUrl = cleanBaseUrl + "?registro=true";
-
+            // Enlace de registro para compartir
+            const currentUrl = window.location.href.split('#')[0];
             const shareInput = document.getElementById('shareRegistrationLink');
             if(shareInput) {
-                shareInput.value = inviteUrl;
+                shareInput.value = currentUrl;
                 const waBtn = document.getElementById('shareWAPerfil');
                 if(waBtn) {
-                    const msg = encodeURIComponent("¡Hola! Únete a Business Center Fit de Ciodarofitness solicitando tu cuenta aquí: " + inviteUrl);
+                    const msg = encodeURIComponent("¡Hola! Únete a Business Center Fit de Ciodarofitness solicitando tu cuenta aquí: " + currentUrl);
                     waBtn.href = `https://wa.me/?text=${msg}`;
                 }
             }
 
-            // Verificar si el enlace trae el parámetro de registro forzado o si no hay sesión activa
-            const urlParams = new URLSearchParams(window.location.search);
-            const isRegistrationRequest = urlParams.get('registro') === 'true';
-
-            if(isRegistrationRequest) {
-                // Forzar limpieza de cualquier sesión almacenada localmente en este dispositivo cliente
-                localStorage.removeItem('bc_admin_logged');
-                localStorage.removeItem('bc_current_affiliate');
-            }
-
-            // Lógica de inicio normal
-            if(!isRegistrationRequest && localStorage.getItem('bc_admin_logged') === 'true') {
+            // Comprobar estado de sesión local
+            if(localStorage.getItem('bc_admin_logged') === 'true') {
                 document.getElementById('authSection').classList.add('hidden');
                 document.getElementById('dashboardView').classList.remove('hidden');
+                document.getElementById('syncStatusBadge').textContent = 'Cloud Admin';
                 loadGlobalAdminData();
-            } else if(!isRegistrationRequest && localStorage.getItem('bc_current_affiliate')) {
+            } else if(localStorage.getItem('bc_current_affiliate')) {
                 currentAffiliateEmail = localStorage.getItem('bc_current_affiliate');
                 document.getElementById('authSection').classList.add('hidden');
                 document.getElementById('clientPortalView').classList.remove('hidden');
                 document.getElementById('welcomeClientTitle').textContent = `Ciodarofitness — ${currentAffiliateEmail}`;
+                document.getElementById('syncStatusBadge').textContent = 'Cloud Sincronizado';
                 loadAffiliateData();
             } else {
-                // Mostrar siempre la pantalla de autenticación y solicitud
-                document.getElementById('authSection').classList.remove('hidden');
-                document.getElementById('dashboardView').classList.add('hidden');
-                document.getElementById('clientPortalView').classList.add('hidden');
+                document.getElementById('syncStatusBadge').textContent = 'En Línea';
             }
         });
 
         function copyRegistrationLink() {
             const shareInput = document.getElementById('shareRegistrationLink');
             shareInput.select();
-            shareInput.setSelectionRange(0, 99999);
             navigator.clipboard.writeText(shareInput.value).then(() => {
-                alert("¡Enlace copiado al portapapeles! Ya puedes pegarlo en WhatsApp o redes sociales.");
+                alert("¡Enlace copiado al portapapeles!");
             });
         }
 
@@ -693,49 +708,58 @@
         }
 
         function toggleToolsMenu() {
-            const card = document.getElementById('toolsDropdownCard');
-            card.classList.toggle('hidden');
+            document.getElementById('toolsDropdownCard').classList.toggle('hidden');
         }
 
-        // ================= REGISTRO DE CLIENTES AFILIADOS =================
-        document.getElementById('registerClientForm').addEventListener('submit', function(e) {
+        // ================= REGISTRO DE CLIENTES AFILIADOS (NUBE) =================
+        document.getElementById('registerClientForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             const name = document.getElementById('regName').value.trim();
-            const email = document.getElementById('regEmail').value.trim();
+            const email = document.getElementById('regEmail').value.trim().toLowerCase();
             const pass = document.getElementById('regPassword').value.trim();
 
-            let pending = JSON.parse(localStorage.getItem('bc_pending_requests')) || [];
-            let accounts = JSON.parse(localStorage.getItem('bc_client_accounts')) || [];
-
-            if(accounts.some(a => a.email.toLowerCase() === email.toLowerCase()) || pending.some(p => p.email.toLowerCase() === email.toLowerCase())) {
-                alert("Este correo ya está registrado o tiene una solicitud pendiente.");
-                return;
+            try {
+                // Guardar en la colección 'pending_requests' de Firestore
+                await db.collection('pending_requests').add({
+                    name,
+                    email,
+                    pass,
+                    date: new Date().toLocaleDateString(),
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                alert("¡Solicitud enviada con éxito a la nube! El administrador la evaluará.");
+                this.reset();
+            } catch (error) {
+                console.error("Error al registrar:", error);
+                alert("Error al conectar con la base de datos en la nube.");
             }
-
-            pending.push({ id: Date.now(), name, email, pass, date: new Date().toLocaleDateString() });
-            localStorage.setItem('bc_pending_requests', JSON.stringify(pending));
-            alert("¡Solicitud de acceso enviada con éxito! El administrador principal la evaluará en su panel.");
-            this.reset();
         });
 
-        // ================= LOGIN AFILIADO =================
-        document.getElementById('affiliateLoginForm').addEventListener('submit', function(e) {
+        // ================= LOGIN AFILIADO (NUBE) =================
+        document.getElementById('affiliateLoginForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             const email = document.getElementById('affLoginEmail').value.trim().toLowerCase();
             const pass = document.getElementById('affLoginPassword').value.trim();
 
-            let accounts = JSON.parse(localStorage.getItem('bc_client_accounts')) || [];
-            let found = accounts.find(a => a.email.toLowerCase() === email && a.pass === pass);
-
-            if(found) {
-                currentAffiliateEmail = found.email;
-                localStorage.setItem('bc_current_affiliate', found.email);
-                document.getElementById('authSection').classList.add('hidden');
-                document.getElementById('clientPortalView').classList.remove('hidden');
-                document.getElementById('welcomeClientTitle').textContent = `Ciodarofitness — ${found.name}`;
-                loadAffiliateData();
-            } else {
-                alert("Correo o contraseña incorrectos, o la cuenta aún no ha sido aprobada por el administrador.");
+            try {
+                const snapshot = await db.collection('client_accounts').where('email', '==', email).get();
+                if(!snapshot.empty) {
+                    const accData = snapshot.docs[0].data();
+                    if(accData.pass === pass) {
+                        currentAffiliateEmail = accData.email;
+                        localStorage.setItem('bc_current_affiliate', accData.email);
+                        document.getElementById('authSection').classList.add('hidden');
+                        document.getElementById('clientPortalView').classList.remove('hidden');
+                        document.getElementById('welcomeClientTitle').textContent = `Ciodarofitness — ${accData.name}`;
+                        document.getElementById('syncStatusBadge').textContent = 'Cloud Sincronizado';
+                        loadAffiliateData();
+                        return;
+                    }
+                }
+                alert("Correo o contraseña incorrectos, o la cuenta no ha sido aprobada.");
+            } catch (error) {
+                console.error("Error en login:", error);
+                alert("Error de conexión con Firebase.");
             }
         });
 
@@ -749,6 +773,7 @@
                 localStorage.setItem('bc_admin_logged', 'true');
                 document.getElementById('authSection').classList.add('hidden');
                 document.getElementById('dashboardView').classList.remove('hidden');
+                document.getElementById('syncStatusBadge').textContent = 'Cloud Admin';
                 loadGlobalAdminData();
             } else {
                 alert("Credenciales de Administrador Maestro incorrectas.");
@@ -759,98 +784,116 @@
             localStorage.removeItem('bc_admin_logged');
             localStorage.removeItem('bc_current_affiliate');
             currentAffiliateEmail = null;
-            location.href = window.location.href.split('?')[0];
+            location.reload();
         }
 
-        function loadGlobalAdminData() {
-            let pending = JSON.parse(localStorage.getItem('bc_pending_requests')) || [];
-            let accounts = JSON.parse(localStorage.getItem('bc_client_accounts')) || [];
-
+        // ================= CARGAR DATOS ADMIN (FIRESTORE) =================
+        async function loadGlobalAdminData() {
             const pendingContainer = document.getElementById('adminPendingList');
-            pendingContainer.innerHTML = pending.length === 0 ? 
-                `<p style="color:var(--text-muted); font-size:0.8rem; font-style:italic;">No hay solicitudes de acceso pendientes en este momento.</p>` :
-                pending.map(p => `
-                    <div style="background:var(--bg-deep); padding:0.8rem; border-radius:6px; border:1px solid var(--border); display:flex; justify-content:space-between; align-items:center;">
-                        <div>
-                            <strong>${p.name}</strong><br>
-                            <span style="font-size:0.7rem; color:var(--text-muted);">${p.email} • Solicitado el ${p.date}</span>
-                        </div>
-                        <div style="display:flex; gap:0.4rem;">
-                            <button class="btn-success" onclick="approveRequest(${p.id})">Aceptar</button>
-                            <button class="btn-danger" onclick="denyRequest(${p.id})">Denegar</button>
-                        </div>
-                    </div>
-                `).join('');
-
             const accountsContainer = document.getElementById('adminAccountsList');
-            accountsContainer.innerHTML = accounts.length === 0 ? 
-                `<p style="color:var(--text-muted); font-size:0.8rem; font-style:italic;">No hay cuentas afiliadas activas.</p>` :
-                accounts.map(acc => `
-                    <div style="background:var(--bg-deep); padding:0.8rem; border-radius:6px; border:1px solid var(--border); display:flex; justify-content:space-between; align-items:center;">
-                        <div>
-                            <strong>${acc.name}</strong><br>
-                            <span style="font-size:0.7rem; color:var(--text-muted);">${acc.email}</span>
-                        </div>
-                        <button class="btn-danger" onclick="removeAccount(${acc.id})">Eliminar</button>
-                    </div>
-                `).join('');
-        }
 
-        function approveRequest(id) {
-            let pending = JSON.parse(localStorage.getItem('bc_pending_requests')) || [];
-            let accounts = JSON.parse(localStorage.getItem('bc_client_accounts')) || [];
-            let index = pending.findIndex(p => p.id === id);
+            try {
+                // Cargar Solicitudes Pendientes
+                const pendingSnap = await db.collection('pending_requests').get();
+                let pendingHtml = "";
+                pendingSnap.forEach(doc => {
+                    const p = doc.data();
+                    pendingHtml += `
+                        <div style="background:var(--bg-deep); padding:0.8rem; border-radius:6px; border:1px solid var(--border); display:flex; justify-content:space-between; align-items:center;">
+                            <div>
+                                <strong>${p.name}</strong><br>
+                                <span style="font-size:0.7rem; color:var(--text-muted);">${p.email} • ${p.date || ''}</span>
+                            </div>
+                            <div style="display:flex; gap:0.4rem;">
+                                <button class="btn-success" onclick="approveRequest('${doc.id}')">Aceptar</button>
+                                <button class="btn-danger" onclick="denyRequest('${doc.id}')">Denegar</button>
+                            </div>
+                        </div>`;
+                });
+                pendingContainer.innerHTML = pendingHtml || `<p style="color:var(--text-muted); font-size:0.8rem; font-style:italic;">No hay solicitudes pendientes.</p>`;
 
-            if(index !== -1) {
-                let approved = pending.splice(index, 1)[0];
-                accounts.push(approved);
-                localStorage.setItem('bc_pending_requests', JSON.stringify(pending));
-                localStorage.setItem('bc_client_accounts', JSON.stringify(accounts));
-                loadGlobalAdminData();
-                alert("¡Solicitud aceptada con éxito! El usuario ya puede iniciar sesión.");
+                // Cargar Cuentas Activas
+                const accountsSnap = await db.collection('client_accounts').get();
+                let accountsHtml = "";
+                accountsSnap.forEach(doc => {
+                    const acc = doc.data();
+                    accountsHtml += `
+                        <div style="background:var(--bg-deep); padding:0.8rem; border-radius:6px; border:1px solid var(--border); display:flex; justify-content:space-between; align-items:center;">
+                            <div>
+                                <strong>${acc.name}</strong><br>
+                                <span style="font-size:0.7rem; color:var(--text-muted);">${acc.email}</span>
+                            </div>
+                            <button class="btn-danger" onclick="removeAccount('${doc.id}')">Eliminar</button>
+                        </div>`;
+                });
+                accountsContainer.innerHTML = accountsHtml || `<p style="color:var(--text-muted); font-size:0.8rem; font-style:italic;">No hay cuentas activas.</p>`;
+
+            } catch (error) {
+                console.error("Error cargando panel admin:", error);
             }
         }
 
-        function denyRequest(id) {
-            let pending = JSON.parse(localStorage.getItem('bc_pending_requests')) || [];
-            pending = pending.filter(p => p.id !== id);
-            localStorage.setItem('bc_pending_requests', JSON.stringify(pending));
-            loadGlobalAdminData();
+        async function approveRequest(docId) {
+            try {
+                const docRef = db.collection('pending_requests').doc(docId);
+                const docSnap = await docRef.get();
+                if(docSnap.exists) {
+                    const data = docSnap.data();
+                    await db.collection('client_accounts').add(data);
+                    await docRef.delete();
+                    loadGlobalAdminData();
+                    alert("¡Cuenta aprobada e integrada en la nube con éxito!");
+                }
+            } catch (error) {
+                console.error("Error aprobando:", error);
+            }
         }
 
-        function removeAccount(id) {
-            let accounts = JSON.parse(localStorage.getItem('bc_client_accounts')) || [];
-            accounts = accounts.filter(acc => acc.id !== id);
-            localStorage.setItem('bc_client_accounts', JSON.stringify(accounts));
-            loadGlobalAdminData();
+        async function denyRequest(docId) {
+            try {
+                await db.collection('pending_requests').doc(docId).delete();
+                loadGlobalAdminData();
+            } catch (error) {
+                console.error("Error denegando:", error);
+            }
         }
 
-        // ================= GESTIÓN DE ATLETAS DEL AFILIADO =================
+        async function removeAccount(docId) {
+            if(confirm("¿Seguro de eliminar esta cuenta afiliada?")) {
+                try {
+                    await db.collection('client_accounts').doc(docId).delete();
+                    loadGlobalAdminData();
+                } catch (error) {
+                    console.error("Error eliminando cuenta:", error);
+                }
+            }
+        }
+
+        // ================= GESTIÓN DE ATLETAS EN TIEMPO REAL (FIRESTORE) =================
         function loadAffiliateData() {
-            renderAthletesList();
-        }
-
-        function getAthletes() {
-            return JSON.parse(localStorage.getItem(getStorageKey('athletes'))) || [];
-        }
-
-        function saveAthletes(athletes) {
-            localStorage.setItem(getStorageKey('athletes'), JSON.stringify(athletes));
+            // Escuchar cambios en tiempo real por cada afiliado (Colección 'athletes' filtrada por email)
+            db.collection('athletes')
+              .where('affiliateEmail', '==', currentAffiliateEmail)
+              .onSnapshot(snapshot => {
+                  cachedAthletes = [];
+                  snapshot.forEach(doc => {
+                      cachedAthletes.push({ id: doc.id, ...doc.data() });
+                  });
+                  renderAthletesList();
+              });
         }
 
         function renderAthletesList() {
-            const athletes = getAthletes();
             const search = document.getElementById('searchAthleteInput').value.toLowerCase();
             const container = document.getElementById('athletesContainer');
-            
-            const filtered = athletes.filter(a => a.name.toLowerCase().includes(search));
+            const filtered = cachedAthletes.filter(a => a.name.toLowerCase().includes(search));
 
-            document.getElementById('kpiTotalAthletes').textContent = athletes.length;
-            let totalIncome = athletes.filter(a => a.paymentStatus === 'paid').length * 50; 
+            document.getElementById('kpiTotalAthletes').textContent = cachedAthletes.length;
+            let totalIncome = cachedAthletes.filter(a => a.paymentStatus === 'paid').length * 50; 
             document.getElementById('kpiTotalIncome').textContent = `$${totalIncome}.00`;
 
             container.innerHTML = filtered.length === 0 ? 
-                `<div class="card"><p style="color: var(--text-muted); font-size: 0.85rem; text-align: center;">No hay atletas registrados.</p></div>` :
+                `<div class="card"><p style="color: var(--text-muted); font-size: 0.85rem; text-align: center;">No hay atletas registrados en la nube.</p></div>` :
                 filtered.map(a => `
                     <div class="athlete-item-card">
                         <div class="athlete-item-header">
@@ -868,42 +911,46 @@
                             </div>
                         </div>
                         <div class="athlete-actions-row">
-                            <button class="btn-expediente" onclick="openAthleteModal(${a.id})" style="flex: 1;">Expediente</button>
+                            <button class="btn-expediente" onclick="openAthleteModal('${a.id}')" style="flex: 1;">Expediente</button>
                             <a href="https://wa.me/${a.phone ? a.phone.replace(/[^0-9]/g,'') : ''}?text=${encodeURIComponent('Hola ' + a.name + ', te escribo desde Business Center Fit de Ciodarofitness.')}" target="_blank" class="btn-wa" style="flex: 1; padding: 0.5rem; font-size: 0.75rem;">WhatsApp</a>
-                            <button class="btn-danger" onclick="deleteAthlete(${a.id})" style="padding: 0.5rem 0.8rem;">Eliminar</button>
+                            <button class="btn-danger" onclick="deleteAthlete('${a.id}')" style="padding: 0.5rem 0.8rem;">Eliminar</button>
                         </div>
                     </div>
                 `).join('');
         }
 
-        function openAddAthleteModal() {
+        async function openAddAthleteModal() {
             const name = prompt("Nombre Completo del Atleta:");
             if(!name) return;
             const phone = prompt("Teléfono / WhatsApp:");
             
-            let athletes = getAthletes();
-            athletes.push({
-                id: Date.now(),
-                name,
-                phone: phone || '',
-                weight: '',
-                height: '',
-                age: '',
-                paymentStatus: 'pending',
-                cutDate: '',
-                nutritionPlan: '',
-                workoutPlan: '',
-                metrics: []
-            });
-            saveAthletes(athletes);
-            renderAthletesList();
+            try {
+                await db.collection('athletes').add({
+                    affiliateEmail: currentAffiliateEmail,
+                    name,
+                    phone: phone || '',
+                    weight: '',
+                    height: '',
+                    age: '',
+                    paymentStatus: 'pending',
+                    cutDate: '',
+                    nutritionPlan: '',
+                    workoutPlan: '',
+                    metrics: [],
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+            } catch (error) {
+                console.error("Error al agregar atleta:", error);
+            }
         }
 
-        function deleteAthlete(id) {
-            if(confirm("¿Estás seguro de eliminar este atleta?")) {
-                let athletes = getAthletes();
-                saveAthletes(athletes.filter(a => a.id !== id));
-                renderAthletesList();
+        async function deleteAthlete(id) {
+            if(confirm("¿Estás seguro de eliminar este atleta de la nube?")) {
+                try {
+                    await db.collection('athletes').doc(id).delete();
+                } catch (error) {
+                    console.error("Error al eliminar:", error);
+                }
             }
         }
 
@@ -912,8 +959,7 @@
 
         function openAthleteModal(id) {
             currentModalAthleteId = id;
-            const athletes = getAthletes();
-            const athlete = athletes.find(a => a.id === id);
+            const athlete = cachedAthletes.find(a => a.id === id);
             if(!athlete) return;
 
             document.getElementById('editAthleteId').value = athlete.id;
@@ -934,68 +980,74 @@
         function closeAthleteModal() {
             document.getElementById('athleteModal').classList.add('hidden');
             currentModalAthleteId = null;
-            renderAthletesList();
         }
 
-        function saveAthleteDetails(e) {
+        async function saveAthleteDetails(e) {
             e.preventDefault();
-            let athletes = getAthletes();
-            let athlete = athletes.find(a => a.id === currentModalAthleteId);
-            if(!athlete) return;
-
-            athlete.name = document.getElementById('detName').value;
-            athlete.phone = document.getElementById('detPhone').value;
-            athlete.weight = document.getElementById('detWeight').value;
-            athlete.height = document.getElementById('detHeight').value;
-            athlete.age = document.getElementById('detAge').value;
-            athlete.paymentStatus = document.getElementById('detPaymentStatus').value;
-            athlete.cutDate = document.getElementById('detCutDate').value;
-
-            saveAthletes(athletes);
-            alert("Datos de atleta guardados con éxito.");
+            try {
+                await db.collection('athletes').doc(currentModalAthleteId).update({
+                    name: document.getElementById('detName').value,
+                    phone: document.getElementById('detPhone').value,
+                    weight: document.getElementById('detWeight').value,
+                    height: document.getElementById('detHeight').value,
+                    age: document.getElementById('detAge').value,
+                    paymentStatus: document.getElementById('detPaymentStatus').value,
+                    cutDate: document.getElementById('detCutDate').value
+                });
+                alert("Datos de atleta guardados en la nube.");
+            } catch (error) {
+                console.error("Error guardando detalles:", error);
+            }
         }
 
-        function saveNutritionPlan() {
-            let athletes = getAthletes();
-            let athlete = athletes.find(a => a.id === currentModalAthleteId);
-            if(!athlete) return;
-            athlete.nutritionPlan = document.getElementById('athleteNutritionPlan').value;
-            saveAthletes(athletes);
-            alert("Plan de nutrición guardado.");
+        async function saveNutritionPlan() {
+            try {
+                const plan = document.getElementById('athleteNutritionPlan').value;
+                await db.collection('athletes').doc(currentModalAthleteId).update({ nutritionPlan: plan });
+                alert("Plan de nutrición guardado.");
+            } catch (error) {
+                console.error("Error:", error);
+            }
         }
 
-        function saveWorkoutPlan() {
-            let athletes = getAthletes();
-            let athlete = athletes.find(a => a.id === currentModalAthleteId);
-            if(!athlete) return;
-            athlete.workoutPlan = document.getElementById('athleteWorkoutPlan').value;
-            saveAthletes(athletes);
-            alert("Rutina de entrenamiento guardada.");
+        async function saveWorkoutPlan() {
+            try {
+                const plan = document.getElementById('athleteWorkoutPlan').value;
+                await db.collection('athletes').doc(currentModalAthleteId).update({ workoutPlan: plan });
+                alert("Rutina de entrenamiento guardada.");
+            } catch (error) {
+                console.error("Error:", error);
+            }
         }
 
-        function saveNewMetric(e) {
+        async function saveNewMetric(e) {
             e.preventDefault();
-            let athletes = getAthletes();
-            let athlete = athletes.find(a => a.id === currentModalAthleteId);
+            const athlete = cachedAthletes.find(a => a.id === currentModalAthleteId);
             if(!athlete) return;
 
             const w = document.getElementById('mWeight').value;
             const wm = document.getElementById('mWm').value;
             const f = document.getElementById('mFat').value;
 
-            if(!athlete.metrics) athlete.metrics = [];
-            athlete.metrics.push({
+            let metrics = athlete.metrics || [];
+            metrics.push({
                 date: new Date().toLocaleDateString(),
                 weight: w,
                 wm: wm,
                 fat: f
             });
 
-            athlete.weight = w; 
-            saveAthletes(athletes);
-            document.getElementById('metricForm').reset();
-            renderMetricHistory(athlete);
-            alert("Medición antropométrica registrada.");
+            try {
+                await db.collection('athletes').doc(currentModalAthleteId).update({
+                    weight: w,
+                    metrics: metrics
+                });
+                document.getElementById('metricForm').reset();
+                renderMetricHistory(athlete);
+                alert("Medición antropométrica registrada.");
+            } catch (error) {
+                console.error("Error registrando métrica:", error);
+            }
         }
 
         function renderMetricHistory(athlete) {
@@ -1003,7 +1055,7 @@
             const metrics = athlete.metrics || [];
 
             container.innerHTML = metrics.length === 0 ? 
-                `<p style="color:var(--text-muted); font-size:0.8rem; font-style:italic;">No hay mediciones registradas en el historial.</p>` :
+                `<p style="color:var(--text-muted); font-size:0.8rem; font-style:italic;">No hay mediciones registradas.</p>` :
                 metrics.map((m, idx) => `
                     <div class="metric-history-card">
                         <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
@@ -1019,13 +1071,16 @@
                 `).join('');
         }
 
-        function deleteMetric(idx) {
-            let athletes = getAthletes();
-            let athlete = athletes.find(a => a.id === currentModalAthleteId);
+        async function deleteMetric(idx) {
+            const athlete = cachedAthletes.find(a => a.id === currentModalAthleteId);
             if(!athlete) return;
             athlete.metrics.splice(idx, 1);
-            saveAthletes(athletes);
-            renderMetricHistory(athlete);
+            try {
+                await db.collection('athletes').doc(currentModalAthleteId).update({ metrics: athlete.metrics });
+                renderMetricHistory(athlete);
+            } catch (error) {
+                console.error("Error borrando métrica:", error);
+            }
         }
 
         // ================= HERRAMIENTAS PRO & EXPORTAR/IMPORTAR =================
@@ -1038,12 +1093,7 @@
                 return;
             }
             const imc = (w / (h * h)).toFixed(2);
-            let cat = "";
-            if(imc < 18.5) cat = "Bajo peso";
-            else if(imc < 25) cat = "Peso normal (Saludable)";
-            else if(imc < 30) cat = "Sobrepeso";
-            else cat = "Obesidad";
-
+            let cat = imc < 18.5 ? "Bajo peso" : imc < 25 ? "Peso normal" : imc < 30 ? "Sobrepeso" : "Obesidad";
             res.textContent = `IMC: ${imc} — ${cat}`;
         }
 
@@ -1058,17 +1108,16 @@
             let prot = w * 2.2; 
             let fat = w * 0.9;  
             let carbs = goal === 'cut' ? w * 2 : goal === 'bulk' ? w * 4 : w * 3;
-
             res.textContent = `Proteínas: ${Math.round(prot)}g | Grasas: ${Math.round(fat)}g | Carbohidratos: ${Math.round(carbs)}g`;
         }
 
         function exportDatabase() {
-            const data = JSON.stringify(localStorage);
+            const data = JSON.stringify(cachedAthletes);
             const blob = new Blob([data], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `backup_business_center_fit_${currentAffiliateEmail || 'admin'}_${new Date().toISOString().slice(0,10)}.json`;
+            a.download = `backup_athletes_${currentAffiliateEmail}_${new Date().toISOString().slice(0,10)}.json`;
             a.click();
         }
 
@@ -1080,14 +1129,15 @@
             const file = event.target.files[0];
             if(!file) return;
             const reader = new FileReader();
-            reader.onload = function(e) {
+            reader.onload = async function(e) {
                 try {
-                    const data = JSON.parse(e.target.result);
-                    for(let key in data) {
-                        localStorage.setItem(key, data[key]);
+                    const importedList = JSON.parse(e.target.result);
+                    for(let ath of importedList) {
+                        delete ath.id; // Remover id local para que Firebase cree uno nuevo
+                        ath.affiliateEmail = currentAffiliateEmail;
+                        await db.collection('athletes').add(ath);
                     }
-                    alert("Base de datos importada con éxito.");
-                    location.reload();
+                    alert("¡Atletas importados con éxito a la nube!");
                 } catch(err) {
                     alert("Error al importar el archivo JSON.");
                 }
