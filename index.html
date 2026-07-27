@@ -441,20 +441,28 @@
             <section id="dashboardView" class="hidden no-print">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
                     <div>
-                        <h2>Panel Global</h2>
-                        <p class="subtitle" style="margin-bottom:0;">By Ciodarofitness</p>
+                        <h2>Panel Global Admin</h2>
+                        <p class="subtitle" style="margin-bottom:0;">Business Center Fit — Ciodarofitness</p>
                     </div>
-                    <button class="btn-secondary" onclick="logoutSystem()">Cerrar</button>
+                    <button class="btn-secondary" onclick="logoutSystem()">CERRAR</button>
+                </div>
+
+                <div class="card" style="background: var(--surface-card); border-color: var(--bronze);">
+                    <h3 style="font-size: 0.9rem; color: var(--bronze); margin-bottom: 0.3rem;">💬 Enlace de Conexión por WhatsApp</h3>
+                    <p class="subtitle" style="font-size: 0.75rem; margin-bottom: 0.8rem;">Guarda y copia este enlace para enviárselo al entrenador interesado en afiliarse.</p>
+                    <button class="btn-wa" onclick="sendWhatsAppInvite()">
+                        📲 Enviar Enlace de Solicitud por WhatsApp
+                    </button>
                 </div>
 
                 <div class="card">
-                    <h3 style="font-size: 0.95rem; color: var(--warning); margin-bottom: 0.4rem;">⏳ Solicitudes de Afiliación Pendientes</h3>
-                    <p class="subtitle" style="font-size: 0.75rem;">Aprueba o deniega el acceso a nuevos entrenadores.</p>
+                    <h3 style="font-size: 0.95rem; color: var(--warning); margin-bottom: 0.3rem;">⏳ Solicitudes de Afiliación Pendientes</h3>
+                    <p class="subtitle" style="font-size: 0.75rem; margin-bottom: 0.6rem;">Aprueba o deniega el acceso a nuevos entrenadores directamente aquí.</p>
                     <div id="adminPendingList" style="display: flex; flex-direction: column; gap: 0.6rem; margin-top: 0.8rem;"></div>
                 </div>
 
                 <div class="card">
-                    <h3 style="font-size: 0.95rem; margin-bottom: 0.4rem;">📋 Listado de Cuentas Afiliadas</h3>
+                    <h3 style="font-size: 0.95rem; margin-bottom: 0.4rem;">✅ Cuentas Afiliadas Activas</h3>
                     <div id="adminAccountsList" style="display: flex; flex-direction: column; gap: 0.6rem; margin-top: 0.8rem;"></div>
                 </div>
             </section>
@@ -671,7 +679,7 @@
             const user = document.getElementById('adminUser').value.trim();
             const pass = document.getElementById('adminPassword').value.trim();
 
-            if((user.toLowerCase() === 'ciodarofitness' || user.toLowerCase() === 'admin') && pass === 'Ciodarofitness26*') {
+            if((user.toLowerCase() === 'ciodarofitness' || user.toLowerCase() === 'admin') && pass === 'Ciodarofitness2026*') {
                 localStorage.setItem('bc_session_type', 'admin');
                 document.getElementById('authSection').classList.add('hidden');
                 document.getElementById('dashboardView').classList.remove('hidden');
@@ -699,7 +707,13 @@
             pending.push(newReq);
             localStorage.setItem('bc_pending_requests', JSON.stringify(pending));
 
-            alert("¡Solicitud enviada con éxito! El administrador la revisará y aprobará pronto.");
+            // Preguntar si desea enviar por WhatsApp para aprobación inmediata opcional
+            if(confirm("¿Deseas enviar tu solicitud directamente al administrador por WhatsApp para que la apruebe de inmediato?")) {
+                const waMsg = `Hola Ciodarofitness, acabo de enviar mi solicitud de afiliación en Business Center Fit.%0A*Nombre:* ${name}%0A*Correo:* ${email}%0APor favor, apruébala en el panel.`;
+                window.open(`https://wa.me/?text=${waMsg}`, '_blank');
+            }
+
+            alert("¡Solicitud enviada con éxito! Aparecerá en tu panel global de administración.");
             this.reset();
         });
 
@@ -719,6 +733,12 @@
                 alert("Datos incorrectos o cuenta aún no aprobada.");
             }
         });
+
+        function sendWhatsAppInvite() {
+            const inviteUrl = window.location.href;
+            const text = `Hola, te invito a unirte a Business Center Fit. Puedes registrar tu solicitud aquí: ${inviteUrl}`;
+            window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+        }
 
         function openAffiliatePortal(client) {
             document.getElementById('authSection').classList.add('hidden');
@@ -774,7 +794,7 @@
                 localStorage.setItem('bc_pending_requests', JSON.stringify(pending));
                 localStorage.setItem('bc_client_accounts', JSON.stringify(accounts));
                 loadAdminData();
-                alert("¡Cuenta aprobada con éxito!");
+                alert("¡Cuenta aprobada con éxito! Ya puede iniciar sesión como afiliado.");
             }
         }
 
