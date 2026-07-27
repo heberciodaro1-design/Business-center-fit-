@@ -412,8 +412,10 @@
                     <div id="adminPendingList" style="display: flex; flex-direction: column; gap: 0.6rem; margin-top: 0.8rem;"></div>
                 </div>
 
+                <!-- CUENTAS AFILIADAS ACTIVAS (RESTAURADO) -->
                 <div class="card">
-                    <h3 style="font-size: 0.95rem; margin-bottom: 0.4rem;">✅ Cuentas Afiliadas Activas</h3>
+                    <h3 style="font-size: 0.95rem; color: var(--success); margin-bottom: 0.3rem;">✅ Cuentas Afiliadas Activas</h3>
+                    <p class="subtitle" style="font-size: 0.75rem; margin-bottom: 0.6rem;">Listado completo de entrenadores y cuentas con acceso activo al sistema.</p>
                     <div id="adminAccountsList" style="display: flex; flex-direction: column; gap: 0.6rem; margin-top: 0.8rem;"></div>
                 </div>
             </section>
@@ -657,7 +659,6 @@
         // ================= ADMIN GLOBAL LOGIN (SÚPER ROBUSTO CONTRA ESPACIOS Y AUTOCORRECTOR) =================
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            // Limpiamos espacios, saltos de línea y convertimos el usuario a minúsculas para evitar errores del teclado móvil
             const user = document.getElementById('adminUser').value.replace(/[\n\r]+/g, '').trim().toLowerCase();
             const pass = document.getElementById('adminPassword').value.replace(/[\n\r]+/g, '').trim();
 
