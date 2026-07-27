@@ -707,7 +707,7 @@
             document.getElementById('toolsDropdownCard').classList.toggle('hidden');
         }
 
-        // ================= REGISTRO DE CLIENTES AFILIADOS (NUBE CORREGIDO) =================
+        // ================= REGISTRO DE CLIENTES AFILIADOS (NUBE CON GESTIÓN DE ERRORES MÓVIL) =================
         document.getElementById('registerClientForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             const name = document.getElementById('regName').value.trim();
@@ -718,6 +718,10 @@
                 alert("Por favor completa todos los campos.");
                 return;
             }
+
+            const submitBtn = this.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.textContent = "ENVIANDO...";
 
             try {
                 await db.collection('pending_requests').add({
@@ -731,7 +735,10 @@
                 this.reset();
             } catch (error) {
                 console.error("Error al registrar solicitud:", error);
-                alert("No se pudo enviar la solicitud. Verifica tu conexión a internet.");
+                alert("No se pudo enviar la solicitud. Error: " + error.message);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = "Enviar Solicitud de Afiliación";
             }
         });
 
