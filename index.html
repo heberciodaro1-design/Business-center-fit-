@@ -340,7 +340,7 @@
         </header>
 
         <main>
-            <!-- PANTALLA PRINCIPAL: LOGIN ADMIN + REGISTRO Y GESTIÓN DE CUENTAS AFILIADAS -->
+            <!-- PANTALLA PRINCIPAL: LOGIN ADMIN + CREAR CUENTA AFILIADO -->
             <section id="authSection" class="no-print">
                 <div style="display: flex; flex-direction: column; gap: 1.2rem;">
                     
@@ -366,13 +366,12 @@
                         </form>
                     </div>
 
-                    <!-- Renglón Directo: Ingreso / Registro de Cuentas Afiliadas -->
-                    <div class="card" style="border-color: var(--bronze);">
+                    <!-- Tarjeta Crear Cuenta Afiliado -->
+                    <div class="card">
                         <div style="margin-bottom: 0.8rem;">
-                            <h2 style="font-size: 1.1rem; font-weight: 700; color: var(--bronze);">Acceso y Registro de Cuentas Afiliadas</h2>
-                            <p class="subtitle" style="margin-bottom: 0;">Regístrate para unirte o administra las cuentas afiliadas activas directamente.</p>
+                            <h2 style="font-size: 1.1rem; font-weight: 700; color: var(--text-main);">Crear Cuenta Afiliado</h2>
+                            <p class="subtitle" style="margin-bottom: 0;">Envía tu solicitud para unirte al sistema.</p>
                         </div>
-                        
                         <form id="registerClientForm">
                             <div class="form-group">
                                 <label>Nombre y Marca</label>
@@ -389,13 +388,8 @@
                                     <button type="button" class="toggle-password" onclick="togglePassword('regPassword')">👁️</button>
                                 </div>
                             </div>
-                            <button type="submit" style="margin-top: 0.5rem; background: var(--surface-card); color: var(--bronze); border: 1px solid var(--bronze);">Enviar Solicitud de Afiliación</button>
+                            <button type="submit" style="margin-top: 0.5rem;">Enviar Solicitud de Afiliación</button>
                         </form>
-
-                        <div style="margin-top: 1.2rem; border-top: 1px solid var(--border); padding-top: 1rem;">
-                            <h3 style="font-size: 0.9rem; color: var(--success); margin-bottom: 0.4rem;">✅ Cuentas Afiliadas Activas (Acceso Rápido)</h3>
-                            <div id="homeActiveAccountsList" style="display: flex; flex-direction: column; gap: 0.6rem; margin-top: 0.6rem;"></div>
-                        </div>
                     </div>
 
                 </div>
@@ -414,14 +408,14 @@
                 <!-- BANDEJA DE SOLICITUDES DE CLIENTES -->
                 <div class="card">
                     <h3 style="font-size: 0.95rem; color: var(--warning); margin-bottom: 0.3rem;">⏳ Bandeja de Solicitudes Pendientes</h3>
-                    <p class="subtitle" style="font-size: 0.75rem; margin-bottom: 0.6rem;">Solicitudes recibidas. Acéptalas para darles acceso al sistema.</p>
+                    <p class="subtitle" style="font-size: 0.75rem; margin-bottom: 0.6rem;">Solicitudes recibidas. Acéptalas para darles acceso.</p>
                     <div id="adminPendingList" style="display: flex; flex-direction: column; gap: 0.6rem; margin-top: 0.8rem;"></div>
                 </div>
 
                 <!-- CUENTAS AFILIADAS ACTIVAS -->
                 <div class="card">
                     <h3 style="font-size: 0.95rem; color: var(--success); margin-bottom: 0.3rem;">✅ Cuentas Afiliadas Activas</h3>
-                    <p class="subtitle" style="font-size: 0.75rem; margin-bottom: 0.6rem;">Listado completo de entrenadores y cuentas con acceso activo.</p>
+                    <p class="subtitle" style="font-size: 0.75rem; margin-bottom: 0.6rem;">Listado completo de entrenadores y cuentas con acceso activo al sistema.</p>
                     <div id="adminAccountsList" style="display: flex; flex-direction: column; gap: 0.6rem; margin-top: 0.8rem;"></div>
                 </div>
             </section>
@@ -628,8 +622,6 @@
                 document.getElementById('clientPortalView').classList.remove('hidden');
                 document.getElementById('welcomeClientTitle').textContent = `Ciodarofitness — ${currentAffiliateEmail}`;
                 loadAffiliateData();
-            } else {
-                loadHomeActiveAccounts();
             }
         });
 
@@ -660,36 +652,9 @@
 
             pending.push({ id: Date.now(), name, email, pass, date: new Date().toLocaleDateString() });
             localStorage.setItem('bc_pending_requests', JSON.stringify(pending));
-            alert("¡Solicitud de acceso enviada con éxito!");
+            alert("¡Solicitud de acceso enviada con éxito! El administrador principal la evaluará en su panel.");
             this.reset();
         });
-
-        function loadHomeActiveAccounts() {
-            let accounts = JSON.parse(localStorage.getItem('bc_client_accounts')) || [];
-            const container = document.getElementById('homeActiveAccountsList');
-            if(!container) return;
-
-            container.innerHTML = accounts.length === 0 ? 
-                `<p style="color:var(--text-muted); font-size:0.75rem; font-style:italic;">No hay cuentas afiliadas activas todavía.</p>` :
-                accounts.map(acc => `
-                    <div style="background:var(--bg-deep); padding:0.6rem; border-radius:6px; border:1px solid var(--border); display:flex; justify-content:space-between; align-items:center;">
-                        <div>
-                            <strong style="font-size:0.85rem;">${acc.name}</strong><br>
-                            <span style="font-size:0.65rem; color:var(--text-muted);">${acc.email}</span>
-                        </div>
-                        <button class="btn-success" onclick="quickLogin('${acc.email}', '${acc.pass}')" style="padding: 0.3rem 0.6rem; font-size: 0.7rem;">Entrar</button>
-                    </div>
-                `).join('');
-        }
-
-        function quickLogin(email, pass) {
-            currentAffiliateEmail = email;
-            localStorage.setItem('bc_current_affiliate', email);
-            document.getElementById('authSection').classList.add('hidden');
-            document.getElementById('clientPortalView').classList.remove('hidden');
-            document.getElementById('welcomeClientTitle').textContent = `Ciodarofitness — ${email}`;
-            loadAffiliateData();
-        }
 
         // ================= ADMIN GLOBAL LOGIN =================
         document.getElementById('loginForm').addEventListener('submit', function(e) {
@@ -732,12 +697,12 @@
 
             const pendingContainer = document.getElementById('adminPendingList');
             pendingContainer.innerHTML = pending.length === 0 ? 
-                `<p style="color:var(--text-muted); font-size:0.8rem; font-style:italic;">No hay solicitudes pendientes.</p>` :
+                `<p style="color:var(--text-muted); font-size:0.8rem; font-style:italic;">No hay solicitudes de acceso pendientes en este momento.</p>` :
                 pending.map(p => `
                     <div style="background:var(--bg-deep); padding:0.8rem; border-radius:6px; border:1px solid var(--border); display:flex; justify-content:space-between; align-items:center;">
                         <div>
                             <strong>${p.name}</strong><br>
-                            <span style="font-size:0.7rem; color:var(--text-muted);">${p.email}</span>
+                            <span style="font-size:0.7rem; color:var(--text-muted);">${p.email} • Solicitado el ${p.date}</span>
                         </div>
                         <div style="display:flex; gap:0.4rem;">
                             <button class="btn-success" onclick="approveRequest(${p.id})">Aceptar</button>
@@ -771,7 +736,7 @@
                 localStorage.setItem('bc_pending_requests', JSON.stringify(pending));
                 localStorage.setItem('bc_client_accounts', JSON.stringify(accounts));
                 loadGlobalAdminData();
-                alert("¡Solicitud aceptada!");
+                alert("¡Solicitud aceptada con éxito! El usuario ya puede iniciar sesión.");
             }
         }
 
@@ -787,10 +752,9 @@
             accounts = accounts.filter(acc => acc.id !== id);
             localStorage.setItem('bc_client_accounts', JSON.stringify(accounts));
             loadGlobalAdminData();
-            loadHomeActiveAccounts();
         }
 
-        // ================= GESTIÓN DE ATLETAS =================
+        // ================= GESTIÓN DE ATLETAS DEL AFILIADO =================
         function loadAffiliateData() {
             renderAthletesList();
         }
@@ -917,7 +881,7 @@
             athlete.cutDate = document.getElementById('detCutDate').value;
 
             saveAthletes(athletes);
-            alert("Datos guardados con éxito.");
+            alert("Datos de atleta guardados con éxito.");
         }
 
         function saveNutritionPlan() {
@@ -935,7 +899,7 @@
             if(!athlete) return;
             athlete.workoutPlan = document.getElementById('athleteWorkoutPlan').value;
             saveAthletes(athletes);
-            alert("Rutina guardada.");
+            alert("Rutina de entrenamiento guardada.");
         }
 
         function saveNewMetric(e) {
@@ -960,7 +924,7 @@
             saveAthletes(athletes);
             document.getElementById('metricForm').reset();
             renderMetricHistory(athlete);
-            alert("Medición registrada.");
+            alert("Medición antropométrica registrada.");
         }
 
         function renderMetricHistory(athlete) {
@@ -968,7 +932,7 @@
             const metrics = athlete.metrics || [];
 
             container.innerHTML = metrics.length === 0 ? 
-                `<p style="color:var(--text-muted); font-size:0.8rem; font-style:italic;">No hay mediciones registradas.</p>` :
+                `<p style="color:var(--text-muted); font-size:0.8rem; font-style:italic;">No hay mediciones registradas en el historial.</p>` :
                 metrics.map((m, idx) => `
                     <div class="metric-history-card">
                         <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
@@ -1003,7 +967,12 @@
                 return;
             }
             const imc = (w / (h * h)).toFixed(2);
-            let cat = imc < 18.5 ? "Bajo peso" : imc < 25 ? "Peso normal" : imc < 30 ? "Sobrepeso" : "Obesidad";
+            let cat = "";
+            if(imc < 18.5) cat = "Bajo peso";
+            else if(imc < 25) cat = "Peso normal (Saludable)";
+            else if(imc < 30) cat = "Sobrepeso";
+            else cat = "Obesidad";
+
             res.textContent = `IMC: ${imc} — ${cat}`;
         }
 
@@ -1018,6 +987,7 @@
             let prot = w * 2.2; 
             let fat = w * 0.9;  
             let carbs = goal === 'cut' ? w * 2 : goal === 'bulk' ? w * 4 : w * 3;
+
             res.textContent = `Proteínas: ${Math.round(prot)}g | Grasas: ${Math.round(fat)}g | Carbohidratos: ${Math.round(carbs)}g`;
         }
 
