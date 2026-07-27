@@ -371,7 +371,6 @@
         </header>
 
         <main>
-            <!-- VISTA DE ACCESO PRINCIPAL -->
             <section id="authSection" class="no-print">
                 <div style="display: flex; flex-direction: column; gap: 1.2rem;">
                     
@@ -439,7 +438,6 @@
                 </div>
             </section>
 
-            <!-- PANEL ADMIN GLOBAL CON APROBACIÓN Y WHATSAPP -->
             <section id="dashboardView" class="hidden no-print">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
                     <div>
@@ -449,7 +447,6 @@
                     <button class="btn-secondary" onclick="logoutSystem()">Cerrar</button>
                 </div>
 
-                <!-- BOTÓN PERMANENTE DE ENLACE DE WHATSAPP PARA SOLICITUDES DE AFILIADOS -->
                 <div class="card" style="background: var(--surface-card); border-color: var(--whatsapp);">
                     <h3 style="font-size: 0.9rem; color: var(--whatsapp); margin-bottom: 0.4rem;">💬 Enlace de Conexión por WhatsApp</h3>
                     <p class="subtitle" style="font-size: 0.75rem; margin-bottom: 0.8rem;">Haz clic para enviar directamente el enlace de registro de la aplicación al entrenador interesado.</p>
@@ -458,21 +455,18 @@
                     </a>
                 </div>
 
-                <!-- SOLICITUDES PENDIENTES DE AFILIACIÓN -->
                 <div class="card">
                     <h3 style="font-size: 0.95rem; color: var(--warning); margin-bottom: 0.4rem;">⏳ Solicitudes de Afiliación Pendientes</h3>
                     <p class="subtitle" style="font-size: 0.75rem;">Aprueba o deniega el acceso a nuevos entrenadores directamente aquí.</p>
                     <div id="adminPendingList" style="display: flex; flex-direction: column; gap: 0.6rem; margin-top: 0.8rem;"></div>
                 </div>
 
-                <!-- CUENTAS ACTIVAS / AFILIADOS APROBADOS -->
                 <div class="card">
                     <h3 style="font-size: 0.95rem; margin-bottom: 0.4rem;">✅ Cuentas Afiliadas Activas</h3>
                     <div id="adminAccountsList" style="display: flex; flex-direction: column; gap: 0.6rem; margin-top: 0.8rem;"></div>
                 </div>
             </section>
 
-            <!-- PORTAL DE AFILIADO -->
             <section id="clientPortalView" class="hidden">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;" class="no-print">
                     <div>
@@ -482,7 +476,6 @@
                     <button class="btn-secondary" onclick="logoutSystem()">Salir</button>
                 </div>
 
-                <!-- RESPALDO Y HERRAMIENTAS -->
                 <div class="card no-print" style="padding: 0.9rem;">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
                         <span style="font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase;">Respaldo de Base de Datos:</span>
@@ -497,7 +490,6 @@
                     </div>
                 </div>
 
-                <!-- PANEL DE HERRAMIENTAS / CALCULADORAS -->
                 <div id="toolsDropdownCard" class="card hidden no-print" style="background: var(--surface-card); border-color: var(--bronze);">
                     <h3 style="font-size: 0.9rem; color: var(--bronze); margin-bottom: 0.8rem;">🛠️ Calculadoras Profesionales</h3>
                     
@@ -533,7 +525,6 @@
                     </div>
                 </div>
 
-                <!-- KPI METRICS -->
                 <div class="kpi-grid no-print">
                     <div class="kpi-card">
                         <h3>Atletas Activos</h3>
@@ -553,7 +544,6 @@
                     </div>
                 </div>
 
-                <!-- REGISTRAR NUEVO ATLETA -->
                 <div class="card no-print">
                     <h3 style="font-size: 0.95rem; display: flex; align-items: center; gap: 6px;">⚡ Registrar Nuevo Atleta</h3>
                     <p class="subtitle" style="font-size: 0.75rem;">Añade un nuevo asesorado al sistema.</p>
@@ -573,7 +563,6 @@
                     <button type="button" onclick="addAthlete()" style="margin-top: 0.4rem;">Agregar a la Base de Datos</button>
                 </div>
 
-                <!-- CONTROL DE ATLETAS -->
                 <div class="card no-print">
                     <h3 style="font-size: 0.95rem; margin-bottom: 0.6rem;">📋 Control de Atletas</h3>
                     <div class="form-group" style="margin-bottom: 0.8rem;">
@@ -583,7 +572,6 @@
                 </div>
             </section>
 
-            <!-- VISTA EXCLUSIVA DEL EXPEDIENTE DEL ATLETA -->
             <section id="athleteDetailView" class="hidden">
                 <div class="no-print" style="margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center;">
                     <button class="btn-secondary" onclick="closeAthleteDetail()" style="font-size: 0.75rem;">← Volver al Panel Principal</button>
@@ -659,13 +647,28 @@
         document.getElementById('mDate').valueAsDate = new Date();
         document.getElementById('abonoFecha').valueAsDate = new Date();
 
-        // VALIDACIÓN DE SESIÓN AL CARGAR LA PÁGINA (EVITA QUE SE CIERRE AL ACTUALIZAR)
+        // VALIDACIÓN Y SINCRONIZACIÓN DE SOLICITUDES DESDE PARÁMETROS URL O LOCALSTORAGE
         document.addEventListener('DOMContentLoaded', function() {
-            // Configurar enlace directo de WhatsApp con la URL actual de la aplicación
-            const appUrl = window.location.href.split('#')[0];
-            const waMessage = encodeURIComponent(`Hola, estoy interesado en unirme a Business Center Fit (@ciodarofitness). Puedes registrar tu solicitud de afiliación directamente aquí: ${appUrl}`);
+            // Sincronizar datos vía URL si el cliente se registró en un enlace compartido
+            const urlParams = new URLSearchParams(window.location.search);
+            const sharedReq = urlParams.get('req');
+            if(sharedReq) {
+                try {
+                    const decodedReq = JSON.parse(atob(sharedReq));
+                    let pending = JSON.parse(localStorage.getItem('bc_pending_requests')) || [];
+                    let accounts = JSON.parse(localStorage.getItem('bc_client_accounts')) || [];
+                    if(!pending.some(p => p.email === decodedReq.email) && !accounts.some(acc => acc.email === decodedReq.email)) {
+                        pending.push(decodedReq);
+                        localStorage.setItem('bc_pending_requests', JSON.stringify(pending));
+                    }
+                } catch(e) { console.error("Error al sincronizar solicitud externa", e); }
+            }
+
+            // Configurar enlace directo de WhatsApp con la URL y respaldo codificado
+            const appUrl = window.location.href.split('#')[0].split('?')[0];
             const waButton = document.getElementById('adminWhatsAppLinkBtn');
             if(waButton) {
+                const waMessage = encodeURIComponent(`Hola, haz clic en este enlace para registrar tu solicitud de afiliación a Business Center Fit (@ciodarofitness): ${appUrl}`);
                 waButton.href = `https://wa.me/?text=${waMessage}`;
             }
 
@@ -724,9 +727,22 @@
                 return;
             }
 
-            pending.push({ id: Date.now(), name, email, password, requestDate: new Date().toLocaleDateString() });
+            const newReq = { id: Date.now(), name, email, password, requestDate: new Date().toLocaleDateString() };
+            pending.push(newReq);
             localStorage.setItem('bc_pending_requests', JSON.stringify(pending));
+
+            // Generar enlace con los datos codificados para que el admin los reciba por WhatsApp si lo desea
+            const encodedReq = btoa(JSON.stringify(newReq));
+            const adminNotifyUrl = `${window.location.href.split('#')[0].split('?')[0]}?req=${encodedReq}`;
+            
             alert("¡Solicitud enviada con éxito! Espera la aprobación del administrador.");
+            
+            // Opcional: Permitir enviar la solicitud directamente por WhatsApp al admin si se desea
+            if(confirm("¿Deseas notificar tu solicitud al administrador por WhatsApp para una aprobación más rápida?")) {
+                const waAdminMsg = encodeURIComponent(`Hola Ciodarofitness, acabo de enviar mi solicitud de afiliación a Business Center Fit con el correo: ${email}. Puedes aprobarla haciendo clic aquí: ${adminNotifyUrl}`);
+                window.open(`https://wa.me/?text=${waAdminMsg}`, '_blank');
+            }
+
             this.reset();
         });
 
