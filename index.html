@@ -394,12 +394,12 @@
                     </div>
 
                     <div class="card" style="margin-bottom: 0;">
-                        <h2 style="color: #ffffff; font-size: 1.1rem; font-weight: 700;">Solicitud de Cuenta Afiliado</h2>
+                        <h2 style="color: #ffffff; font-size: 1.1rem; font-weight: 700;">Crear Cuenta Afiliado</h2>
                         <p class="subtitle">Envía tu solicitud para unirte al sistema.</p>
                         <form id="registerClientForm">
                             <div class="form-group">
                                 <label>Nombre y Marca</label>
-                                <input type="text" id="regName" required placeholder="Ej. Leidy Diana">
+                                <input type="text" id="regName" required placeholder="Ej. David Silva">
                             </div>
                             <div class="form-group">
                                 <label>Correo Electrónico</label>
@@ -412,7 +412,7 @@
                                     <button type="button" class="toggle-password" onclick="togglePassword('regPassword')">👁️</button>
                                 </div>
                             </div>
-                            <button type="submit" style="background: transparent; border: 1px solid var(--bronze); color: var(--bronze);">Enviar Solicitud de Afiliación</button>
+                            <button type="submit">Enviar Solicitud de Afiliación</button>
                         </form>
                     </div>
 
@@ -431,7 +431,7 @@
                                     <button type="button" class="toggle-password" onclick="togglePassword('clientLoginPass')">👁️</button>
                                 </div>
                             </div>
-                            <button type="submit">Entrar a mi Perfil</button>
+                            <button type="submit" style="background: transparent; border: 1px solid var(--bronze); color: var(--bronze);">Entrar a mi Perfil</button>
                         </form>
                     </div>
 
@@ -441,28 +441,20 @@
             <section id="dashboardView" class="hidden no-print">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
                     <div>
-                        <h2>Panel Global Admin</h2>
-                        <p class="subtitle" style="margin-bottom:0;">Business Center Fit — Ciodarofitness</p>
+                        <h2>Panel Global</h2>
+                        <p class="subtitle" style="margin-bottom:0;">By Ciodarofitness</p>
                     </div>
                     <button class="btn-secondary" onclick="logoutSystem()">Cerrar</button>
                 </div>
 
-                <div class="card" style="background: var(--surface-card); border-color: var(--whatsapp);">
-                    <h3 style="font-size: 0.9rem; color: var(--whatsapp); margin-bottom: 0.4rem;">💬 Enlace de Conexión por WhatsApp</h3>
-                    <p class="subtitle" style="font-size: 0.75rem; margin-bottom: 0.8rem;">Haz clic para enviar directamente el enlace de registro de la aplicación al entrenador interesado.</p>
-                    <a id="adminWhatsAppLinkBtn" href="#" target="_blank" class="btn-wa">
-                        📤 Enviar Enlace de Solicitud por WhatsApp
-                    </a>
-                </div>
-
                 <div class="card">
                     <h3 style="font-size: 0.95rem; color: var(--warning); margin-bottom: 0.4rem;">⏳ Solicitudes de Afiliación Pendientes</h3>
-                    <p class="subtitle" style="font-size: 0.75rem;">Aprueba o deniega el acceso a nuevos entrenadores directamente aquí.</p>
+                    <p class="subtitle" style="font-size: 0.75rem;">Aprueba o deniega el acceso a nuevos entrenadores.</p>
                     <div id="adminPendingList" style="display: flex; flex-direction: column; gap: 0.6rem; margin-top: 0.8rem;"></div>
                 </div>
 
                 <div class="card">
-                    <h3 style="font-size: 0.95rem; margin-bottom: 0.4rem;">✅ Cuentas Afiliadas Activas</h3>
+                    <h3 style="font-size: 0.95rem; margin-bottom: 0.4rem;">📋 Listado de Cuentas Afiliadas</h3>
                     <div id="adminAccountsList" style="display: flex; flex-direction: column; gap: 0.6rem; margin-top: 0.8rem;"></div>
                 </div>
             </section>
@@ -647,30 +639,7 @@
         document.getElementById('mDate').valueAsDate = new Date();
         document.getElementById('abonoFecha').valueAsDate = new Date();
 
-        // VALIDACIÓN Y SINCRONIZACIÓN DE SOLICITUDES DESDE PARÁMETROS URL O LOCALSTORAGE
         document.addEventListener('DOMContentLoaded', function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const sharedReq = urlParams.get('req');
-            if(sharedReq) {
-                try {
-                    const decodedReq = JSON.parse(atob(sharedReq));
-                    let pending = JSON.parse(localStorage.getItem('bc_pending_requests')) || [];
-                    let accounts = JSON.parse(localStorage.getItem('bc_client_accounts')) || [];
-                    if(!pending.some(p => p.email === decodedReq.email) && !accounts.some(acc => acc.email === decodedReq.email)) {
-                        pending.push(decodedReq);
-                        localStorage.setItem('bc_pending_requests', JSON.stringify(pending));
-                        alert("¡Solicitud de afiliación sincronizada con éxito desde el enlace externo!");
-                    }
-                } catch(e) { console.error("Error al sincronizar solicitud externa", e); }
-            }
-
-            const appUrl = window.location.href.split('#')[0].split('?')[0];
-            const waButton = document.getElementById('adminWhatsAppLinkBtn');
-            if(waButton) {
-                const waMessage = encodeURIComponent(`Hola, haz clic en este enlace para registrar tu solicitud de afiliación a Business Center Fit (@ciodarofitness): ${appUrl}`);
-                waButton.href = `https://wa.me/?text=${waMessage}`;
-            }
-
             const activeSessionType = localStorage.getItem('bc_session_type');
             if(activeSessionType === 'admin') {
                 document.getElementById('authSection').classList.add('hidden');
@@ -702,7 +671,7 @@
             const user = document.getElementById('adminUser').value.trim();
             const pass = document.getElementById('adminPassword').value.trim();
 
-            if((user.toLowerCase() === 'ciodarofitness' || user.toLowerCase() === 'admin') && pass === 'Ciodarofitness2026*') {
+            if((user.toLowerCase() === 'ciodarofitness' || user.toLowerCase() === 'admin') && pass === 'Ciodarofitness26*') {
                 localStorage.setItem('bc_session_type', 'admin');
                 document.getElementById('authSection').classList.add('hidden');
                 document.getElementById('dashboardView').classList.remove('hidden');
@@ -730,16 +699,7 @@
             pending.push(newReq);
             localStorage.setItem('bc_pending_requests', JSON.stringify(pending));
 
-            const encodedReq = btoa(JSON.stringify(newReq));
-            const adminNotifyUrl = `${window.location.href.split('#')[0].split('?')[0]}?req=${encodedReq}`;
-            
-            alert("¡Solicitud enviada con éxito! Ahora avisa al administrador.");
-            
-            if(confirm("¿Deseas enviar tu solicitud directamente al administrador por WhatsApp para que la apruebe de inmediato?")) {
-                const waAdminMsg = encodeURIComponent(`Hola Ciodarofitness, acabo de enviar mi solicitud de afiliación a Business Center Fit con el correo: ${email}. Puedes aprobarla haciendo clic aquí: ${adminNotifyUrl}`);
-                window.open(`https://wa.me/?text=${waAdminMsg}`, '_blank');
-            }
-
+            alert("¡Solicitud enviada con éxito! El administrador la revisará y aprobará pronto.");
             this.reset();
         });
 
@@ -814,7 +774,7 @@
                 localStorage.setItem('bc_pending_requests', JSON.stringify(pending));
                 localStorage.setItem('bc_client_accounts', JSON.stringify(accounts));
                 loadAdminData();
-                alert("¡Cuenta aprobada con éxito! El afiliado ya puede iniciar sesión.");
+                alert("¡Cuenta aprobada con éxito!");
             }
         }
 
