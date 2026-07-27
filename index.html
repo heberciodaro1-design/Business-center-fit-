@@ -644,7 +644,6 @@
 
     <script>
         // ================= CONFIGURACIÓN DE FIREBASE =================
-        // Reemplaza los siguientes datos con los de tu consola de Firebase
         const firebaseConfig = {
             apiKey: "TU_API_KEY_AQUI",
             authDomain: "tu-proyecto.firebaseapp.com",
@@ -654,7 +653,6 @@
             appId: "TU_APP_ID"
         };
 
-        // Inicializar Firebase
         if (!firebase.apps.length) {
             firebase.initializeApp(firebaseConfig);
         }
@@ -664,7 +662,6 @@
         let cachedAthletes = [];
 
         document.addEventListener('DOMContentLoaded', function() {
-            // Enlace de registro para compartir
             const currentUrl = window.location.href.split('#')[0];
             const shareInput = document.getElementById('shareRegistrationLink');
             if(shareInput) {
@@ -676,7 +673,6 @@
                 }
             }
 
-            // Comprobar estado de sesión local
             if(localStorage.getItem('bc_admin_logged') === 'true') {
                 document.getElementById('authSection').classList.add('hidden');
                 document.getElementById('dashboardView').classList.remove('hidden');
@@ -711,27 +707,31 @@
             document.getElementById('toolsDropdownCard').classList.toggle('hidden');
         }
 
-        // ================= REGISTRO DE CLIENTES AFILIADOS (NUBE) =================
+        // ================= REGISTRO DE CLIENTES AFILIADOS (NUBE CORREGIDO) =================
         document.getElementById('registerClientForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             const name = document.getElementById('regName').value.trim();
             const email = document.getElementById('regEmail').value.trim().toLowerCase();
             const pass = document.getElementById('regPassword').value.trim();
 
+            if (!name || !email || !pass) {
+                alert("Por favor completa todos los campos.");
+                return;
+            }
+
             try {
-                // Guardar en la colección 'pending_requests' de Firestore
                 await db.collection('pending_requests').add({
-                    name,
-                    email,
-                    pass,
+                    name: name,
+                    email: email,
+                    pass: pass,
                     date: new Date().toLocaleDateString(),
                     createdAt: firebase.firestore.FieldValue.serverTimestamp()
                 });
                 alert("¡Solicitud enviada con éxito a la nube! El administrador la evaluará.");
                 this.reset();
             } catch (error) {
-                console.error("Error al registrar:", error);
-                alert("Error al conectar con la base de datos en la nube.");
+                console.error("Error al registrar solicitud:", error);
+                alert("No se pudo enviar la solicitud. Verifica tu conexión a internet.");
             }
         });
 
@@ -793,7 +793,6 @@
             const accountsContainer = document.getElementById('adminAccountsList');
 
             try {
-                // Cargar Solicitudes Pendientes
                 const pendingSnap = await db.collection('pending_requests').get();
                 let pendingHtml = "";
                 pendingSnap.forEach(doc => {
@@ -812,7 +811,6 @@
                 });
                 pendingContainer.innerHTML = pendingHtml || `<p style="color:var(--text-muted); font-size:0.8rem; font-style:italic;">No hay solicitudes pendientes.</p>`;
 
-                // Cargar Cuentas Activas
                 const accountsSnap = await db.collection('client_accounts').get();
                 let accountsHtml = "";
                 accountsSnap.forEach(doc => {
@@ -871,7 +869,6 @@
 
         // ================= GESTIÓN DE ATLETAS EN TIEMPO REAL (FIRESTORE) =================
         function loadAffiliateData() {
-            // Escuchar cambios en tiempo real por cada afiliado (Colección 'athletes' filtrada por email)
             db.collection('athletes')
               .where('affiliateEmail', '==', currentAffiliateEmail)
               .onSnapshot(snapshot => {
@@ -1133,7 +1130,7 @@
                 try {
                     const importedList = JSON.parse(e.target.result);
                     for(let ath of importedList) {
-                        delete ath.id; // Remover id local para que Firebase cree uno nuevo
+                        delete ath.id;
                         ath.affiliateEmail = currentAffiliateEmail;
                         await db.collection('athletes').add(ath);
                     }
