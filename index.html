@@ -211,20 +211,33 @@
             font-weight: bold;
         }
 
+        .btn-success {
+            background: rgba(34, 197, 94, 0.15);
+            color: var(--success);
+            border: 1px solid var(--success);
+            padding: 0.5rem 1rem;
+            font-size: 0.75rem;
+            width: auto;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
         .btn-wa { 
             background: rgba(37, 211, 102, 0.15); 
             color: var(--whatsapp); 
             border: 1px solid var(--whatsapp); 
-            padding: 0.5rem 0.8rem; 
-            font-size: 0.75rem; 
+            padding: 0.6rem 0.9rem; 
+            font-size: 0.8rem; 
             border-radius: 6px; 
             font-weight: bold; 
             cursor: pointer; 
             display: inline-flex; 
             align-items: center; 
-            gap: 5px; 
+            gap: 6px; 
             text-decoration: none; 
             justify-content: center; 
+            width: 100%;
         }
 
         .badge-paid { background: rgba(34, 197, 94, 0.15); color: var(--success); border: 1px solid var(--success); padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.7rem; font-weight: bold; }
@@ -299,7 +312,6 @@
             margin-bottom: 0.8rem;
         }
 
-        /* DISEÑO PROFESIONAL DE LA TARJETA DE PERFIL DEL ATLETA */
         .profile-info-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -383,8 +395,8 @@
                     </div>
 
                     <div class="card" style="margin-bottom: 0;">
-                        <h2 style="color: #ffffff; font-size: 1.1rem; font-weight: 700;">Crear Cuenta Afiliado</h2>
-                        <p class="subtitle">Regístrate tras recibir autorización.</p>
+                        <h2 style="color: #ffffff; font-size: 1.1rem; font-weight: 700;">Solicitud de Cuenta Afiliado</h2>
+                        <p class="subtitle">Envía tu solicitud para unirte al sistema.</p>
                         <form id="registerClientForm">
                             <div class="form-group">
                                 <label>Nombre y Marca</label>
@@ -401,7 +413,7 @@
                                     <button type="button" class="toggle-password" onclick="togglePassword('regPassword')">👁️</button>
                                 </div>
                             </div>
-                            <button type="submit" style="background: transparent; border: 1px solid var(--bronze); color: var(--bronze);">Registrarse como Afiliado</button>
+                            <button type="submit" style="background: transparent; border: 1px solid var(--bronze); color: var(--bronze);">Enviar Solicitud de Afiliación</button>
                         </form>
                     </div>
 
@@ -427,23 +439,40 @@
                 </div>
             </section>
 
-            <!-- PANEL ADMIN GENERAL -->
+            <!-- PANEL ADMIN GLOBAL CON APROBACIÓN Y WHATSAPP -->
             <section id="dashboardView" class="hidden no-print">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
                     <div>
-                        <h2>Panel Global</h2>
+                        <h2>Panel Global Admin</h2>
                         <p class="subtitle" style="margin-bottom:0;">By Ciodarofitness</p>
                     </div>
                     <button class="btn-secondary" onclick="logoutSystem()">Cerrar</button>
                 </div>
 
+                <!-- BOTÓN DE ENLACE DE WHATSAPP PARA INVITACIONES -->
+                <div class="card" style="background: var(--surface-card); border-color: var(--whatsapp);">
+                    <h3 style="font-size: 0.9rem; color: var(--whatsapp); margin-bottom: 0.4rem;">💬 Enviar Invitación / Enlace</h3>
+                    <p class="subtitle" style="font-size: 0.75rem; margin-bottom: 0.8rem;">Comparte el enlace de acceso o información con entrenadores interesados.</p>
+                    <a href="https://wa.me/?text=Hola%2C%20te%20invito%20a%20unirte%20a%20Business%20Center%20Fit%20(%40ciodarofitness)%20para%20gestionar%20tus%20atletas." target="_blank" class="btn-wa">
+                        📤 Enviar Enlace por WhatsApp
+                    </a>
+                </div>
+
+                <!-- SOLICITUDES PENDIENTES DE AFILIACIÓN -->
                 <div class="card">
-                    <h3>Listado de Cuentas Afiliadas</h3>
+                    <h3 style="font-size: 0.95rem; color: var(--warning); margin-bottom: 0.4rem;">⏳ Solicitudes de Afiliación Pendientes</h3>
+                    <p class="subtitle" style="font-size: 0.75rem;">Aprueba o deniega el acceso a nuevos entrenadores.</p>
+                    <div id="adminPendingList" style="display: flex; flex-direction: column; gap: 0.6rem; margin-top: 0.8rem;"></div>
+                </div>
+
+                <!-- CUENTAS ACTIVAS / AFILIADOS APROBADOS -->
+                <div class="card">
+                    <h3 style="font-size: 0.95rem; margin-bottom: 0.4rem;">✅ Cuentas Afiliadas Activas</h3>
                     <div id="adminAccountsList" style="display: flex; flex-direction: column; gap: 0.6rem; margin-top: 0.8rem;"></div>
                 </div>
             </section>
 
-            <!-- PORTAL DE AFILIADO (PANTALLA PRINCIPAL) -->
+            <!-- PORTAL DE AFILIADO -->
             <section id="clientPortalView" class="hidden">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;" class="no-print">
                     <div>
@@ -554,7 +583,7 @@
                 </div>
             </section>
 
-            <!-- VISTA EXCLUSIVA DEL EXPEDIENTE DEL ATLETA (PANTALLA SEPARADA) -->
+            <!-- VISTA EXCLUSIVA DEL EXPEDIENTE DEL ATLETA -->
             <section id="athleteDetailView" class="hidden">
                 <div class="no-print" style="margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center;">
                     <button class="btn-secondary" onclick="closeAthleteDetail()" style="font-size: 0.75rem;">← Volver al Panel Principal</button>
@@ -568,17 +597,13 @@
                         </div>
                     </div>
 
-                    <!-- BLOQUE DE INFORMACIÓN LIMPIO, PROFESIONAL Y ESPACIADO -->
-                    <div class="profile-info-grid" id="detAthleteHeaderInfo">
-                        <!-- Generado dinámicamente -->
-                    </div>
+                    <div class="profile-info-grid" id="detAthleteHeaderInfo"></div>
 
                     <div style="display: flex; gap: 0.6rem; margin-bottom: 1rem;" class="no-print">
                         <button class="btn-secondary" onclick="togglePaymentStatus()" id="detTogglePayBtn" style="font-size: 0.75rem; flex: 1;">Marcar Pendiente</button>
                         <a id="detWhatsAppBtn" href="#" target="_blank" class="btn-wa" style="flex: 1;">💬 Enviar WhatsApp</a>
                     </div>
 
-                    <!-- REGISTRAR ABONO PARCIAL -->
                     <div class="card no-print" style="background: var(--surface-card); margin-bottom: 1rem;">
                         <h4 style="font-size: 0.85rem; color: var(--bronze); margin-bottom: 0.6rem;">💵 Registrar Abono Parcial</h4>
                         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; margin-bottom: 0.6rem;">
@@ -591,7 +616,6 @@
                         </div>
                     </div>
 
-                    <!-- NUEVA MEDICIÓN ANTROPOMÉTRICA -->
                     <div class="card no-print" style="background: var(--surface-card); margin-bottom: 1rem;">
                         <h4 style="font-size: 0.85rem; color: var(--bronze); margin-bottom: 0.6rem;" id="formMeasurementTitle">📏 Nueva Medición Antropométrica</h4>
                         <input type="hidden" id="editMeasurementIndex" value="-1">
@@ -615,7 +639,6 @@
                         </div>
                     </div>
 
-                    <!-- HISTORIAL Y COMPARATIVA MENSUAL -->
                     <h3 style="font-size: 0.9rem; margin-bottom: 0.4rem;">📈 Historial y Comparativa Mensual</h3>
                     <p class="subtitle" style="font-size: 0.75rem;">Evolución antropométrica detallada del atleta.</p>
                     <div id="metricsHistoryList">
@@ -666,15 +689,17 @@
             const email = document.getElementById('regEmail').value.trim().toLowerCase();
             const password = document.getElementById('regPassword').value.trim();
 
+            let pending = JSON.parse(localStorage.getItem('bc_pending_requests')) || [];
             let accounts = JSON.parse(localStorage.getItem('bc_client_accounts')) || [];
-            if(accounts.some(acc => acc.email === email)) {
-                alert("Este correo ya está registrado.");
+
+            if(accounts.some(acc => acc.email === email) || pending.some(p => p.email === email)) {
+                alert("Este correo ya está registrado o tiene una solicitud pendiente.");
                 return;
             }
 
-            accounts.push({ id: Date.now(), name, email, password, startDate: new Date().toLocaleDateString() });
-            localStorage.setItem('bc_client_accounts', JSON.stringify(accounts));
-            alert("¡Cuenta de afiliado creada con éxito!");
+            pending.push({ id: Date.now(), name, email, password, requestDate: new Date().toLocaleDateString() });
+            localStorage.setItem('bc_pending_requests', JSON.stringify(pending));
+            alert("¡Solicitud enviada con éxito! Espera la aprobación del administrador.");
             this.reset();
         });
 
@@ -690,7 +715,7 @@
                 localStorage.setItem('bc_current_client', JSON.stringify(client));
                 openAffiliatePortal(client);
             } else {
-                alert("Datos incorrectos.");
+                alert("Datos incorrectos o cuenta aún no aprobada.");
             }
         });
 
@@ -712,15 +737,51 @@
         }
 
         function loadAdminData() {
+            // Cargar solicitudes pendientes
+            let pending = JSON.parse(localStorage.getItem('bc_pending_requests')) || [];
+            const pendingContainer = document.getElementById('adminPendingList');
+            pendingContainer.innerHTML = pending.length === 0 ? `<p style="color:var(--text-muted); font-size:0.8rem; font-style:italic;">No hay solicitudes pendientes.</p>` :
+                pending.map(p => `
+                    <div style="background:var(--bg-deep); padding:0.8rem; border-radius:6px; border:1px solid var(--border); display:flex; justify-content:space-between; align-items:center;">
+                        <div><strong>${p.name}</strong><br><span style="font-size:0.7rem; color:var(--text-muted);">${p.email}</span></div>
+                        <div style="display:flex; gap:0.4rem;">
+                            <button class="btn-success" onclick="approveRequest(${p.id})">Aprobar</button>
+                            <button class="btn-danger" onclick="denyRequest(${p.id})">Denegar</button>
+                        </div>
+                    </div>
+                `).join('');
+
+            // Cargar cuentas activas
             let accounts = JSON.parse(localStorage.getItem('bc_client_accounts')) || [];
             const container = document.getElementById('adminAccountsList');
-            container.innerHTML = accounts.length === 0 ? `<p style="color:var(--text-muted); font-size:0.8rem;">No hay cuentas.</p>` :
+            container.innerHTML = accounts.length === 0 ? `<p style="color:var(--text-muted); font-size:0.8rem; font-style:italic;">No hay cuentas activas.</p>` :
                 accounts.map(acc => `
                     <div style="background:var(--bg-deep); padding:0.8rem; border-radius:6px; border:1px solid var(--border); display:flex; justify-content:space-between; align-items:center;">
                         <div><strong>${acc.name}</strong><br><span style="font-size:0.7rem; color:var(--text-muted);">${acc.email}</span></div>
-                        <button class="btn-danger" onclick="deleteAccount(${acc.id})" style="font-size:0.65rem; padding:0.2rem 0.4rem;">Borrar</button>
+                        <button class="btn-danger" onclick="deleteAccount(${acc.id})">Borrar</button>
                     </div>
                 `).join('');
+        }
+
+        function approveRequest(id) {
+            let pending = JSON.parse(localStorage.getItem('bc_pending_requests')) || [];
+            let accounts = JSON.parse(localStorage.getItem('bc_client_accounts')) || [];
+            let reqIndex = pending.findIndex(p => p.id === id);
+
+            if(reqIndex !== -1) {
+                let approvedClient = pending.splice(reqIndex, 1)[0];
+                accounts.push(approvedClient);
+                localStorage.setItem('bc_pending_requests', JSON.stringify(pending));
+                localStorage.setItem('bc_client_accounts', JSON.stringify(accounts));
+                loadAdminData();
+            }
+        }
+
+        function denyRequest(id) {
+            let pending = JSON.parse(localStorage.getItem('bc_pending_requests')) || [];
+            pending = pending.filter(p => p.id !== id);
+            localStorage.setItem('bc_pending_requests', JSON.stringify(pending));
+            loadAdminData();
         }
 
         function deleteAccount(id) {
@@ -871,7 +932,6 @@
 
             document.getElementById('detAthleteTitle').innerText = `👤 Atleta: ${athlete.name}`;
             
-            // Perfil estructurado y profesional en cuadrícula
             document.getElementById('detAthleteHeaderInfo').innerHTML = `
                 <div class="profile-info-item">
                     <span>Edad</span>
@@ -1151,7 +1211,8 @@
         function exportDatabase() {
             const data = {
                 accounts: localStorage.getItem('bc_client_accounts'),
-                athletes: localStorage.getItem('bc_affiliate_athletes')
+                athletes: localStorage.getItem('bc_affiliate_athletes'),
+                pending: localStorage.getItem('bc_pending_requests')
             };
             const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
@@ -1174,6 +1235,7 @@
                     const parsed = JSON.parse(e.target.result);
                     if(parsed.accounts) localStorage.setItem('bc_client_accounts', parsed.accounts);
                     if(parsed.athletes) localStorage.setItem('bc_affiliate_athletes', parsed.athletes);
+                    if(parsed.pending) localStorage.setItem('bc_pending_requests', parsed.pending);
                     alert("¡Base de datos importada con éxito!");
                     loadAffiliateDashboard();
                 } catch(err) {
