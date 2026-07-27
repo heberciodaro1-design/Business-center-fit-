@@ -371,6 +371,7 @@
         </header>
 
         <main>
+            <!-- VISTA DE ACCESO PRINCIPAL -->
             <section id="authSection" class="no-print">
                 <div style="display: flex; flex-direction: column; gap: 1.2rem;">
                     
@@ -438,6 +439,7 @@
                 </div>
             </section>
 
+            <!-- PANEL ADMIN GLOBAL CON APROBACIÓN Y WHATSAPP -->
             <section id="dashboardView" class="hidden no-print">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
                     <div>
@@ -447,6 +449,7 @@
                     <button class="btn-secondary" onclick="logoutSystem()">Cerrar</button>
                 </div>
 
+                <!-- BOTÓN PERMANENTE DE ENLACE DE WHATSAPP PARA SOLICITUDES DE AFILIADOS -->
                 <div class="card" style="background: var(--surface-card); border-color: var(--whatsapp);">
                     <h3 style="font-size: 0.9rem; color: var(--whatsapp); margin-bottom: 0.4rem;">💬 Enlace de Conexión por WhatsApp</h3>
                     <p class="subtitle" style="font-size: 0.75rem; margin-bottom: 0.8rem;">Guarda y copia este enlace para enviárselo al entrenador interesado en afiliarse.</p>
@@ -455,18 +458,21 @@
                     </a>
                 </div>
 
+                <!-- SOLICITUDES PENDIENTES DE AFILIACIÓN -->
                 <div class="card">
                     <h3 style="font-size: 0.95rem; color: var(--warning); margin-bottom: 0.4rem;">⏳ Solicitudes de Afiliación Pendientes</h3>
                     <p class="subtitle" style="font-size: 0.75rem;">Aprueba o deniega el acceso a nuevos entrenadores directamente aquí.</p>
                     <div id="adminPendingList" style="display: flex; flex-direction: column; gap: 0.6rem; margin-top: 0.8rem;"></div>
                 </div>
 
+                <!-- CUENTAS ACTIVAS / AFILIADOS APROBADOS -->
                 <div class="card">
                     <h3 style="font-size: 0.95rem; margin-bottom: 0.4rem;">✅ Cuentas Afiliadas Activas</h3>
                     <div id="adminAccountsList" style="display: flex; flex-direction: column; gap: 0.6rem; margin-top: 0.8rem;"></div>
                 </div>
             </section>
 
+            <!-- PORTAL DE AFILIADO -->
             <section id="clientPortalView" class="hidden">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;" class="no-print">
                     <div>
@@ -476,6 +482,7 @@
                     <button class="btn-secondary" onclick="logoutSystem()">Salir</button>
                 </div>
 
+                <!-- RESPALDO Y HERRAMIENTAS -->
                 <div class="card no-print" style="padding: 0.9rem;">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
                         <span style="font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase;">Respaldo de Base de Datos:</span>
@@ -490,6 +497,7 @@
                     </div>
                 </div>
 
+                <!-- PANEL DE HERRAMIENTAS / CALCULADORAS -->
                 <div id="toolsDropdownCard" class="card hidden no-print" style="background: var(--surface-card); border-color: var(--bronze);">
                     <h3 style="font-size: 0.9rem; color: var(--bronze); margin-bottom: 0.8rem;">🛠️ Calculadoras Profesionales</h3>
                     
@@ -525,6 +533,7 @@
                     </div>
                 </div>
 
+                <!-- KPI METRICS -->
                 <div class="kpi-grid no-print">
                     <div class="kpi-card">
                         <h3>Atletas Activos</h3>
@@ -544,6 +553,7 @@
                     </div>
                 </div>
 
+                <!-- REGISTRAR NUEVO ATLETA -->
                 <div class="card no-print">
                     <h3 style="font-size: 0.95rem; display: flex; align-items: center; gap: 6px;">⚡ Registrar Nuevo Atleta</h3>
                     <p class="subtitle" style="font-size: 0.75rem;">Añade un nuevo asesorado al sistema.</p>
@@ -563,6 +573,7 @@
                     <button type="button" onclick="addAthlete()" style="margin-top: 0.4rem;">Agregar a la Base de Datos</button>
                 </div>
 
+                <!-- CONTROL DE ATLETAS -->
                 <div class="card no-print">
                     <h3 style="font-size: 0.95rem; margin-bottom: 0.6rem;">📋 Control de Atletas</h3>
                     <div class="form-group" style="margin-bottom: 0.8rem;">
@@ -572,6 +583,7 @@
                 </div>
             </section>
 
+            <!-- VISTA EXCLUSIVA DEL EXPEDIENTE DEL ATLETA -->
             <section id="athleteDetailView" class="hidden">
                 <div class="no-print" style="margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center;">
                     <button class="btn-secondary" onclick="closeAthleteDetail()" style="font-size: 0.75rem;">← Volver al Panel Principal</button>
@@ -647,6 +659,24 @@
         document.getElementById('mDate').valueAsDate = new Date();
         document.getElementById('abonoFecha').valueAsDate = new Date();
 
+        // VALIDACIÓN DE SESIÓN AL CARGAR LA PÁGINA (EVITA QUE SE CIERRE AL ACTUALIZAR)
+        document.addEventListener('DOMContentLoaded', function() {
+            const activeSessionType = localStorage.getItem('bc_session_type');
+            if(activeSessionType === 'admin') {
+                document.getElementById('authSection').classList.add('hidden');
+                document.getElementById('dashboardView').classList.remove('hidden');
+                loadAdminData();
+            } else if(activeSessionType === 'client') {
+                const currentClient = JSON.parse(localStorage.getItem('bc_current_client'));
+                if(currentClient) {
+                    document.getElementById('authSection').classList.add('hidden');
+                    document.getElementById('clientPortalView').classList.remove('hidden');
+                    document.getElementById('welcomeClientTitle').innerText = currentClient.name;
+                    loadAffiliateDashboard();
+                }
+            }
+        });
+
         function togglePassword(id) {
             const pwd = document.getElementById(id);
             pwd.type = pwd.type === 'password' ? 'text' : 'password';
@@ -663,6 +693,7 @@
             const pass = document.getElementById('adminPassword').value.trim();
 
             if((user.toLowerCase() === 'ciodarofitness' || user.toLowerCase() === 'admin') && pass === 'Ciodarofitness2026*') {
+                localStorage.setItem('bc_session_type', 'admin');
                 document.getElementById('authSection').classList.add('hidden');
                 document.getElementById('dashboardView').classList.remove('hidden');
                 loadAdminData();
@@ -701,6 +732,7 @@
 
             if(client) {
                 localStorage.setItem('bc_current_client', JSON.stringify(client));
+                localStorage.setItem('bc_session_type', 'client');
                 openAffiliatePortal(client);
             } else {
                 alert("Datos incorrectos o cuenta aún no aprobada.");
@@ -716,11 +748,12 @@
         }
 
         function logoutSystem() {
+            localStorage.removeItem('bc_session_type');
+            localStorage.removeItem('bc_current_client');
             document.getElementById('dashboardView').classList.add('hidden');
             document.getElementById('clientPortalView').classList.add('hidden');
             document.getElementById('athleteDetailView').classList.add('hidden');
             document.getElementById('authSection').classList.remove('hidden');
-            localStorage.removeItem('bc_current_client');
             document.querySelectorAll('form').forEach(f => f.reset());
         }
 
