@@ -392,7 +392,7 @@
                         </form>
                     </div>
 
-                    <!-- 3. Tarjeta de Login Admin Maestro (Oculta o discreta para ti) -->
+                    <!-- 3. Tarjeta de Login Admin Maestro -->
                     <div class="card" style="border-color: var(--bronze);">
                         <div style="margin-bottom: 0.8rem;">
                             <h2 style="font-size: 1.1rem; font-weight: 700; color: var(--bronze);">Panel Admin Maestro</h2>
@@ -425,6 +425,17 @@
                         <p class="subtitle" style="margin-bottom:0;">Business Center Fit — Ciodarofitness</p>
                     </div>
                     <button class="btn-secondary" onclick="logoutSystem()">CERRAR</button>
+                </div>
+
+                <!-- NUEVA TARJETA: ENLACE PARA COMPARTIR REGISTRO -->
+                <div class="card" style="border-color: var(--bronze);">
+                    <h3 style="font-size: 0.95rem; color: var(--bronze); margin-bottom: 0.3rem;">🔗 Enlace de Solicitud de Afiliación</h3>
+                    <p class="subtitle" style="font-size: 0.75rem; margin-bottom: 0.6rem;">Copia este enlace para enviarlo por WhatsApp o redes sociales y que soliciten su cuenta:</p>
+                    <div style="display: flex; gap: 0.5rem; margin-bottom: 0.6rem;">
+                        <input type="text" id="shareRegistrationLink" readonly style="font-size: 0.75rem; background: var(--bg-deep);">
+                        <button type="button" onclick="copyRegistrationLink()" style="width: auto; padding: 0.5rem 0.8rem; font-size: 0.75rem; background: var(--bronze); color: #000;">Copiar</button>
+                    </div>
+                    <a id="shareWAPerfil" href="#" target="_blank" class="btn-wa" style="font-size: 0.75rem; padding: 0.5rem;">📲 Compartir por WhatsApp</a>
                 </div>
 
                 <!-- BANDEJA DE SOLICITUDES DE CLIENTES -->
@@ -634,6 +645,18 @@
         }
 
         document.addEventListener('DOMContentLoaded', function() {
+            // Mostrar enlace actual de la aplicación en el panel admin
+            const currentUrl = window.location.href.split('#')[0];
+            const shareInput = document.getElementById('shareRegistrationLink');
+            if(shareInput) {
+                shareInput.value = currentUrl;
+                const waBtn = document.getElementById('shareWAPerfil');
+                if(waBtn) {
+                    const msg = encodeURIComponent("¡Hola! Únete a Business Center Fit de Ciodarofitness solicitando tu cuenta aquí: " + currentUrl);
+                    waBtn.href = `https://wa.me/?text=${msg}`;
+                }
+            }
+
             if(localStorage.getItem('bc_admin_logged') === 'true') {
                 document.getElementById('authSection').classList.add('hidden');
                 document.getElementById('dashboardView').classList.remove('hidden');
@@ -646,6 +669,15 @@
                 loadAffiliateData();
             }
         });
+
+        function copyRegistrationLink() {
+            const shareInput = document.getElementById('shareRegistrationLink');
+            shareInput.select();
+            shareInput.setSelectionRange(0, 99999);
+            navigator.clipboard.writeText(shareInput.value).then(() => {
+                alert("¡Enlace copiado al portapapeles! Ya puedes pegarlo en WhatsApp o redes sociales.");
+            });
+        }
 
         function togglePassword(id) {
             const pwd = document.getElementById(id);
@@ -667,7 +699,7 @@
             let pending = JSON.parse(localStorage.getItem('bc_pending_requests')) || [];
             let accounts = JSON.parse(localStorage.getItem('bc_client_accounts')) || [];
 
-            if(accounts.some(a => a.email === email) || pending.some(p => p.email === email)) {
+            if(accounts.some(a => a.email.toLowerCase() === email.toLowerCase()) || pending.some(p => p.email.toLowerCase() === email.toLowerCase())) {
                 alert("Este correo ya está registrado o tiene una solicitud pendiente.");
                 return;
             }
